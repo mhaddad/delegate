@@ -21,6 +21,9 @@ const client = new pg.Client({
   password: 'delegado',
   database: 'delegado',
 });
+client.on('error', (err: Error) => {
+  console.warn('⚠ aviso na ligação pg da Porta:', err.message);
+});
 
 let registoEventos: Registo | undefined;
 

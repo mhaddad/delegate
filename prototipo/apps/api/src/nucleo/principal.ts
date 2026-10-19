@@ -126,6 +126,44 @@ escutaNucleo.on('notification', async (aviso: any) => {
   }
 });
 
+async function processarValidacaoCalcada(m: any): Promise<void> {
+  await orquestrador.mudarEstado('MIS-0001', 'preparado', 'Medição validada com corredor pedonal livre (2,10 m >= 2,00 m)');
+
+  await cofre.prepararPacoteMinimo(
+    m.pessoa,
+    'MIS-0001',
+    'Câmara Municipal de Guimarães',
+    'Mera Comunicação Prévia de Esplanada',
+    {
+      localizacao: 'Largo da Oliveira, 12, Guimarães',
+      area_m2: 10,
+      numero_mesas: 4,
+      periodo: 'Anual (2026)',
+      fotografia_passeio: 'fotografia_calcada_largura_livre_2_10m.jpg',
+      corredor_pedonal_livre: '2,10 metros',
+    },
+    ['terreno_ponte', 'conversas_privadas', 'declaracoes_fiscais', 'dados_bancarios'],
+  );
+
+  await canal.enviar(
+    m.conversa,
+    [
+      'Recebi a validação da calçada! ✅',
+      '',
+      'Corredor pedonal livre aferido: <b>2,10 metros</b> (cumpre a exigência regulamentar do Art. 8.º de pelo menos 2,00 m).',
+      '',
+      '<b>Proteção de Dados e Minimização (RGPD):</b>',
+      'Pacote mínimo <code>PAC-0001</code> preparado sob <b>Mandato D3</b>. Apenas saem as dimensões estritamente necessárias. <b>Não são partilhados</b> património, dados bancários ou preferências.',
+      '',
+      'O pedido está <b>pronto para submissão formal</b> com a sua confirmação.',
+    ].join('\n'),
+    [
+      [{ texto: '✍️ Rever e Submeter com CMD (Simulação)', dados: 'submeter_esplanada' }],
+      [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+    ],
+  );
+}
+
 canal._aoReceber(async (m) => {
   conversasPorPessoa.set(m.pessoa, m.conversa);
   ultimaConversa = m.conversa;
@@ -305,7 +343,7 @@ canal._aoReceber(async (m) => {
           '',
           ...(linhas.length > 0 ? linhas : ['Nenhum registo recente de acesso aos seus dados.']),
           '',
-          '<i>Cada acesso é auditado criptograficamente com selo SHA-256 no Observatório.</i>',
+          '<i>Cada acesso é auditado com registo de hash SHA-256 na plataforma Delegate.</i>',
         ].join('\n'),
       );
       await regista('canal.mensagem.enviada', m, { comando: '/dados' });
@@ -415,10 +453,15 @@ canal._aoReceber(async (m) => {
           `Concedeu ao Afonso o <b>Mandato ${mandato.nivel}</b> (${mandato.id}): preparar e submeter com a sua confirmação explícita.`,
           '',
           '<b>Próximo passo da checklist:</b>',
-          'Envie uma <b>fotografia do passeio</b> à porta da Casa Joaquim para validarmos a calçada e o corredor livre de pelo menos 2,00 metros.',
+          'Envie uma <b>fotografia do passeio</b> à porta da Casa Joaquim ou confirme que tem pelo menos 2,00 metros livres de calçada.',
         ].join('\n'),
-        [[{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]],
+        [
+          [{ texto: '📸 Confirmar Medição: 2,10 m livres', dados: 'enviar_foto_calcada' }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+        ],
       );
+    } else if (m.texto === 'enviar_foto_calcada') {
+      await processarValidacaoCalcada(m);
     } else if (m.texto === 'submeter_esplanada') {
       // 1. Aprovar pacote mínimo
       await cofre.aprovarPacoteMinimo(m.pessoa, 'MIS-0001', 'PAC-0001');
@@ -514,43 +557,11 @@ canal._aoReceber(async (m) => {
       await canal.enviar(m.conversa, `Carregaste <b>${escapar(m.texto ?? '')}</b>`);
     }
   } else if (m.tipo === 'foto') {
-    // 3. Receção da fotografia da calçada
-    await orquestrador.mudarEstado('MIS-0001', 'preparado', 'Fotografia validada com corredor pedonal livre');
-
-    await cofre.prepararPacoteMinimo(
-      m.pessoa,
-      'MIS-0001',
-      'Câmara Municipal de Guimarães',
-      'Mera Comunicação Prévia de Esplanada',
-      {
-        localizacao: 'Largo da Oliveira, 12, Guimarães',
-        area_m2: 10,
-        numero_mesas: 4,
-        periodo: 'Anual (2026)',
-        fotografia_passeio: 'fotografia_calcada_largura_livre_2_10m.jpg',
-      },
-      ['terreno_ponte', 'conversas_privadas', 'declaracoes_fiscais', 'dados_bancarios'],
-    );
-
-    await canal.enviar(
-      m.conversa,
-      [
-        'Recebi a fotografia da calçada ✅',
-        '',
-        'Verifiquei o corredor pedonal livre: <b>2,10 metros</b> (cumpre a regra regulamentar de pelo menos 2,00 m).',
-        '',
-        '<b>Guardião de Contexto:</b>',
-        'Pacote mínimo <code>PAC-0001</code> preparado. Apenas saem as dimensões e a fotografia. <b>Não são partilhados</b> os seus terrenos, preferências ou conversas.',
-        '',
-        'O rascunho está <b>preparado</b> para envio formal à Câmara.',
-      ].join('\n'),
-      [
-        [{ texto: '✍️ Rever e Submeter com CMD (Simulação)', dados: 'submeter_esplanada' }],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ],
-    );
+    await processarValidacaoCalcada(m);
   } else if (m.texto && !m.texto.startsWith('/')) {
-    if (aguardaFachada && /8\s*(metros?|m)?/i.test(m.texto)) {
+    const missaoAtiva = orquestrador.obterAtiva(m.pessoa);
+
+    if (aguardaFachada && (m.texto === 'responder_8m' || /8/i.test(m.texto))) {
       aguardaFachada = false;
       await clientePorta.chamarFerramenta('responder_pedido_elementos', {
         processo: 'OEP/2026/0001',
@@ -569,6 +580,15 @@ canal._aoReceber(async (m) => {
         ].join('\n'),
       );
       await regista('canal.mensagem.enviada', m, {});
+      return;
+    }
+
+    if (
+      missaoAtiva &&
+      (missaoAtiva.estado === 'entendido' || missaoAtiva.estado === 'a_verificar' || missaoAtiva.estado === 'em_curso') &&
+      (/2[,.]10|metro|calcada|calçada|passeio|fita|largura|livre/i.test(m.texto))
+    ) {
+      await processarValidacaoCalcada(m);
       return;
     }
 

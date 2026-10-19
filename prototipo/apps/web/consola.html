@@ -75,10 +75,14 @@
         border-bottom: 3px solid var(--cmg-azul-medio);
         padding: 0.65rem 1.75rem;
         flex-shrink: 0;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
       }
 
       .header-conteudo {
         max-width: 1720px;
+        width: 100%;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -139,6 +143,24 @@
       .nav-item:hover, .nav-item.ativo {
         background: rgba(255, 255, 255, 0.12);
         color: #ffffff;
+      }
+
+      .nav-item.destaque-delegate {
+        background: rgba(139, 92, 246, 0.22);
+        border: 1px solid rgba(168, 85, 247, 0.45);
+        color: #e9d5ff;
+        font-weight: 600;
+      }
+      .nav-item.destaque-delegate:hover {
+        background: rgba(139, 92, 246, 0.4);
+        color: #ffffff;
+      }
+
+      .divisor-menu {
+        height: 18px;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.22);
+        margin: 0 0.35rem;
       }
 
       .header-utilizador {
@@ -955,15 +977,17 @@
                   <img class="logo-guimaraes" src="/assets/logo_guimaraes_branco.png" alt="Município de Guimarães" />
                   <div class="divisor-vertical"></div>
                   <div class="titulos-autarquia">
-                    <h1>Divisão de Gestão do Espaço Público</h1>
-                    <p>Posto de Trabalho Técnico · Tramitação de Ocupação do Espaço Público</p>
+                    <h1>MUNICÍPIO DE GUIMARÃES</h1>
+                    <p>Consola Técnica · Divisão de Gestão do Espaço Público</p>
                   </div>
                 </div>
 
                 <nav class="nav-links-menu">
-                  <a href="/" class="nav-item">Observatório Municipal</a>
-                  <a href="/consola" class="nav-item ativo">Consola de Processos</a>
+                  <a href="/" class="nav-item">Painel de Atividade</a>
+                  <a href="/consola" class="nav-item ativo">Consola Técnica</a>
                   <a href="https://www.cm-guimaraes.pt" target="_blank" class="nav-item">Portal Autárquico</a>
+                  <span class="divisor-menu"></span>
+                  <a href="/delegate" class="nav-item destaque-delegate" title="Aceder à plataforma técnica de integração">Plataforma Delegate ↗</a>
                 </nav>
 
                 <div class="header-utilizador">

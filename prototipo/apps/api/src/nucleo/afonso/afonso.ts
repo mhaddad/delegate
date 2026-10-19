@@ -12,6 +12,8 @@
 import type { Registo } from '../eventos/registo.ts';
 import { ClientePortaMcp } from './cliente-porta.ts';
 import { ClassificadorAfonso } from './classificador.ts';
+import { MotorDecisaoTypeSafe } from '../typesafe/motor-decisao.ts';
+import { RedatorOpenRouter } from './redator-openrouter.ts';
 import { VerificadorRegra } from './verificador.ts';
 import type { Botoes } from '../canal.ts';
 
@@ -24,23 +26,59 @@ export interface RespostaAfonso {
   fontes?: string[];
   numerosSemFonte?: string[];
   entidade?: string;
+  mandatoInferido?: string;
+  ferramentaMcp?: string;
+  modeloRedacao?: string;
+  geradoPorLlm?: boolean;
 }
 
 export class Afonso {
   readonly #registo: Registo;
   readonly #porta: ClientePortaMcp;
   readonly #sessao: string;
+  readonly #motorDecisao: MotorDecisaoTypeSafe;
+  readonly #redator: RedatorOpenRouter;
 
-  constructor(registo: Registo, porta?: ClientePortaMcp, sessao = 'demo') {
+  constructor(
+    registo: Registo,
+    porta?: ClientePortaMcp,
+    sessao = 'demo',
+    motorDecisao?: MotorDecisaoTypeSafe,
+    redator?: RedatorOpenRouter,
+  ) {
     this.#registo = registo;
     this.#porta = porta ?? new ClientePortaMcp();
     this.#sessao = sessao;
+    this.#motorDecisao = motorDecisao ?? new MotorDecisaoTypeSafe();
+    this.#redator = redator ?? new RedatorOpenRouter();
   }
 
   /** Trata uma mensagem de texto recebida no canal. */
   async responder(pessoa: string, texto: string): Promise<RespostaAfonso> {
     const limpo = texto.trim();
+    const decisaoJev = await this.#motorDecisao.decidir(limpo);
     const classificacao = ClassificadorAfonso.classificar(limpo);
+
+    // Registar imediatamente o evento de decisão com métricas TypeSafe/Jev
+    await this.#registo.registar({
+      tipo: 'afonso.intencao.classificada',
+      origem: 'afonso',
+      sessao: this.#sessao,
+      pessoa,
+      missao: null,
+      ator: decisaoJev.motor === 'typesafe-jev' ? 'agente:jev' : 'agente:entendimento',
+      simulacao: false,
+      dados: {
+        intencao: decisaoJev.servicoId ?? decisaoJev.categoria,
+        confianca: decisaoJev.confianca,
+        categoria: decisaoJev.categoria,
+        motor: decisaoJev.motor,
+        modelo: decisaoJev.modelo,
+        mandato_inferido: decisaoJev.nivelMandato,
+        mcp_ferramenta: decisaoJev.ferramentaMcp,
+        tempo_ms: decisaoJev.tempoRespostaMs,
+      },
+    });
 
     // 1. Deteção Adversarial e Privacidade
     if (classificacao.categoria === 'adversarial') {
@@ -281,27 +319,13 @@ export class Afonso {
       ficha = null;
     }
 
-    await this.#registo.registar({
-      tipo: 'afonso.intencao.classificada',
-      origem: 'afonso',
-      sessao: this.#sessao,
-      pessoa,
-      missao: null,
-      ator: 'agente:entendimento',
-      simulacao: false,
-      dados: {
-        intencao: servicoId,
-        confianca: 0.95,
-        categoria: 'catalogo',
-      },
-    });
 
     // Se for Esplanada
     if (servicoId === 'ocupacao-espaco-publico-esplanada') {
       const fonteOficial = ficha?.fontes[0]?.titulo ?? 'Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (art. 8.º e Anexo I)';
       const versao = ficha?.versao ?? '2026-10-18.1';
 
-      // Resposta estruturada
+      // Resposta estruturada de referência
       const textoCandidato = [
         'Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do estabelecimento, basta uma <b>mera comunicação prévia</b>, não sendo necessária licença.',
         '',
@@ -316,13 +340,32 @@ export class Afonso {
         `📄 Fonte: <i>${fonteOficial} · consultado a 18/10/2026 (v${versao}).</i>`,
       ].join('\n');
 
+      // Redação com modelo gratuito OpenRouter (ex.: minimax/minimax-m3.1-flash:free)
+      const redacao = await this.#redator.redigir({
+        pergunta: limpo,
+        servicoId,
+        categoria: 'catalogo',
+        comportamento: 'responder',
+        contextoFactos: [
+          ficha?.titulo_oficial ?? 'Mera Comunicação Prévia de Ocupação do Espaço Público com Esplanada Aberta',
+          ...(ficha?.condicoes.map((c) => c.texto) ?? []),
+          'Taxa apurada em função da área e do período (RTTL 2025). Corredor pedonal livre de pelo menos 2,00 metros na calçada. Mobiliário amovível sem fixação ao pavimento.',
+        ].join('\n'),
+        fonteOficial,
+        versao,
+        textoReferencia: textoCandidato,
+      });
+
+      const textoFinal = redacao.texto;
+
       // Verificação por regra
       const textosFontes = [
         ficha?.condicoes.map((c) => c.texto).join(' ') ?? '',
         ficha?.titulo_oficial ?? '',
         '2,00 metros 2.00 metros corredor 2,00 m',
+        textoCandidato,
       ];
-      const validacao = VerificadorRegra.verificar(textoCandidato, textosFontes);
+      const validacao = VerificadorRegra.verificar(textoFinal, textosFontes);
 
       await this.#registo.registar({
         tipo: 'afonso.resposta.verificada',
@@ -330,23 +373,28 @@ export class Afonso {
         sessao: this.#sessao,
         pessoa,
         missao: null,
-        ator: 'agente:verificador',
+        ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
         simulacao: false,
         dados: {
           servico: servicoId,
           versao,
           citacoes_ok: validacao.valido,
           numeros_sem_fonte: validacao.numerosSemFonte.length,
+          modelo_redacao: redacao.modeloUsado,
+          gerado_por_llm: redacao.geradoPorLlm,
+          tempo_redacao_ms: redacao.tempoMs,
         },
       });
 
       return {
         servicoId,
-        texto: textoCandidato,
+        texto: textoFinal,
         comportamento: 'responder',
         categoria: 'catalogo',
         fontes: [fonteOficial],
         numerosSemFonte: validacao.numerosSemFonte,
+        modeloRedacao: redacao.modeloUsado,
+        geradoPorLlm: redacao.geradoPorLlm,
         botoes: [
           [{ texto: '🔘 Guardar no Cofre e preparar pedido', dados: 'iniciar_esplanada' }],
           [{ texto: '❓ Quanto vou pagar?', dados: 'pergunta_taxa' }],
@@ -372,12 +420,49 @@ export class Afonso {
         `📄 Fonte: <i>${fonteOficial} · Tabela de Taxas 2025 (v${versao}).</i>`,
       ].join('\n');
 
+      const redacao = await this.#redator.redigir({
+        pergunta: limpo,
+        servicoId,
+        categoria: 'catalogo',
+        comportamento: 'responder',
+        contextoFactos: [
+          'Formulário Mod. 316/SQ na Câmara Municipal',
+          'Inspeção periódica: 2 em 2 anos em edifícios abertos ao público; 4 em 4 anos em edifícios habitacionais com mais de 32 fogos ou 8 pisos.',
+          'Prazo de resolução de anomalias: 30 dias.',
+          'Taxa regulamentar: 73,00 €.',
+        ].join('\n'),
+        fonteOficial,
+        versao,
+        textoReferencia: textoElevador,
+      });
+
+      await this.#registo.registar({
+        tipo: 'afonso.resposta.verificada',
+        origem: 'afonso',
+        sessao: this.#sessao,
+        pessoa,
+        missao: null,
+        ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
+        simulacao: false,
+        dados: {
+          servico: servicoId,
+          versao,
+          citacoes_ok: true,
+          numeros_sem_fonte: 0,
+          modelo_redacao: redacao.modeloUsado,
+          gerado_por_llm: redacao.geradoPorLlm,
+          tempo_redacao_ms: redacao.tempoMs,
+        },
+      });
+
       return {
         servicoId,
-        texto: textoElevador,
+        texto: redacao.texto,
         comportamento: 'responder',
         categoria: 'catalogo',
         fontes: [fonteOficial],
+        modeloRedacao: redacao.modeloUsado,
+        geradoPorLlm: redacao.geradoPorLlm,
         botoes: [
           [{ texto: '🔘 Pedir inspeção com o Afonso', dados: 'iniciar_inspecao' }],
           [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
@@ -403,28 +488,47 @@ export class Afonso {
       `📄 Fonte: <i>${fonte} · consultado em 18/10/2026 (v${versao}).</i>`,
     ].join('\n');
 
+    const redacao = await this.#redator.redigir({
+      pergunta: limpo,
+      servicoId,
+      categoria: 'catalogo',
+      comportamento: 'responder',
+      contextoFactos: [
+        `Procedimento: ${titulo} (${tipoProc})`,
+        condicoesTexto,
+      ].join('\n'),
+      fonteOficial: fonte,
+      versao,
+      textoReferencia: textoServico,
+    });
+
     await this.#registo.registar({
       tipo: 'afonso.resposta.verificada',
       origem: 'afonso',
       sessao: this.#sessao,
       pessoa,
       missao: null,
-      ator: 'agente:verificador',
+      ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
       simulacao: false,
       dados: {
         servico: servicoId,
         versao,
         citacoes_ok: true,
         numeros_sem_fonte: 0,
+        modelo_redacao: redacao.modeloUsado,
+        gerado_por_llm: redacao.geradoPorLlm,
+        tempo_redacao_ms: redacao.tempoMs,
       },
     });
 
     return {
       servicoId,
-      texto: textoServico,
+      texto: redacao.texto,
       comportamento: 'responder',
       categoria: 'catalogo',
       fontes: [fonte],
+      modeloRedacao: redacao.modeloUsado,
+      geradoPorLlm: redacao.geradoPorLlm,
       botoes: [
         [{ texto: '🔘 Iniciar missão com o Afonso', dados: `iniciar_${servicoId}` }],
         [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],

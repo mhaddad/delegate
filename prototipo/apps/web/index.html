@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DELEGATE · Observatório Municipal de Guimarães</title>
+    <title>Município de Guimarães · Painel de Atividade</title>
 
     <!-- Favicon e Ícones Oficiais do Município de Guimarães -->
     <link rel="shortcut icon" href="/favicon.png" type="image/png" />
@@ -73,10 +73,14 @@
         padding: 0.65rem 1.75rem;
         flex-shrink: 0;
         z-index: 100;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
       }
 
       .header-conteudo {
         max-width: 1720px;
+        width: 100%;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -136,6 +140,36 @@
       .nav-item:hover, .nav-item.ativo {
         background: rgba(255, 255, 255, 0.12);
         color: #ffffff;
+      }
+
+      .nav-item.destaque-delegate {
+        background: rgba(139, 92, 246, 0.22);
+        border: 1px solid rgba(168, 85, 247, 0.45);
+        color: #e9d5ff;
+        font-weight: 600;
+      }
+      .nav-item.destaque-delegate:hover {
+        background: rgba(139, 92, 246, 0.4);
+        color: #ffffff;
+      }
+
+      .divisor-menu {
+        height: 18px;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.22);
+        margin: 0 0.35rem;
+      }
+
+      .badge-simulacao {
+        background: #fff8e1;
+        color: #b78103;
+        border: 1px solid #ffe082;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 0.25rem 0.65rem;
+        border-radius: 2px;
       }
 
       .header-controles {
@@ -233,9 +267,9 @@
       }
 
       /* =========================================================================
-         3. CORPO DO OBSERVATÓRIO (Layout de Projeção em 2 Zonas)
-         ========================================================= */
-      .observatorio-layout {
+         3. CORPO DO PAINEL DE ATIVIDADE (Layout em 2 Zonas)
+         ========================================================================= */
+      .painel-layout {
         flex: 1;
         display: grid;
         grid-template-columns: 1fr 410px;
@@ -420,9 +454,9 @@
       }
 
       /* =========================================================================
-         4. PAINEL LATERAL (Missão e Enclave Criptográfico)
+         4. PAINEL LATERAL (Tramitação e Proteção de Dados)
          ========================================================================= */
-      .zona-lateral-observatorio {
+      .zona-lateral-painel {
         display: flex;
         flex-direction: column;
         gap: 1.25rem;
@@ -472,24 +506,24 @@
         color: var(--cmg-texto-suave);
       }
 
-      /* Cofre Digital Pessoal (Enclave Criptográfico) */
-      .enclave-camada-item {
+      /* Armazenamento Local Cifrado */
+      .camada-cifrada-item {
         padding: 0.75rem 1rem;
         border-bottom: 1px solid #e2e8f0;
       }
 
-      .enclave-camada-item:last-child {
+      .camada-cifrada-item:last-child {
         border-bottom: none;
       }
 
-      .enclave-camada-topo {
+      .camada-cifrada-topo {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 0.35rem;
       }
 
-      .enclave-camada-titulo {
+      .camada-cifrada-titulo {
         font-family: var(--font-condensed);
         font-size: 11.5px;
         font-weight: 700;
@@ -498,7 +532,7 @@
         letter-spacing: 0.04em;
       }
 
-      .enclave-camada-pill {
+      .camada-cifrada-pill {
         font-size: 9.5px;
         font-weight: 700;
         text-transform: uppercase;
@@ -512,13 +546,13 @@
         border: 1px solid var(--cmg-verde-borda);
       }
 
-      .pill-enclave {
+      .pill-privado {
         background: #f1f5f9;
         color: var(--cmg-texto-suave);
         border: 1px solid var(--cmg-borda);
       }
 
-      .enclave-camada-dados {
+      .camada-cifrada-dados {
         background: #f8fafc;
         border: 1px solid var(--cmg-borda);
         border-radius: 2px;
@@ -529,7 +563,7 @@
       }
 
       /* =========================================================================
-         5. LINHA DE AUDITORIA CRIPTOGRÁFICA (Rodapé Oficial)
+         5. LINHA DE AUDITORIA DE EVENTOS (Rodapé Oficial)
          ========================================================================= */
       footer.cmg-auditoria-footer {
         background: #ffffff;
@@ -552,7 +586,7 @@
         white-space: nowrap;
       }
 
-      .selos-stream-scroll {
+      .auditoria-stream-scroll {
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -560,7 +594,7 @@
         flex: 1;
       }
 
-      .selo-badge-pill {
+      .auditoria-badge-pill {
         display: inline-flex;
         align-items: center;
         gap: 0.35rem;
@@ -572,17 +606,17 @@
         white-space: nowrap;
       }
 
-      .selo-seq {
+      .auditoria-seq {
         font-weight: 700;
         color: var(--cmg-azul-medio);
       }
 
-      .selo-tipo {
+      .auditoria-tipo {
         font-family: var(--font-mono);
         color: var(--cmg-texto);
       }
 
-      .selo-hash {
+      .auditoria-hash {
         font-family: var(--font-mono);
         color: var(--cmg-texto-suave);
         font-size: 10px;
@@ -600,7 +634,7 @@
 
       const html = htm.bind(React.createElement);
 
-      function ObservatorioApp() {
+      function PainelAtividadeApp() {
         const [eventos, setEventos] = useState([]);
         const [ultimoEvento, setUltimoEvento] = useState(null);
         const [modoTecnico, setModoTecnico] = useState(false);
@@ -657,26 +691,31 @@
                   <img class="logo-guimaraes" src="/assets/logo_guimaraes_branco.png" alt="Município de Guimarães" />
                   <div class="divisor-vertical"></div>
                   <div class="titulos-autarquia">
-                    <h1>DELEGATE · Observatório Municipal</h1>
-                    <p>Barramento e Infraestrutura Agêntica Autárquica · Município de Guimarães</p>
+                    <h1>MUNICÍPIO DE GUIMARÃES</h1>
+                    <p>Painel de Atividade · Gestão e Transparência Municipal</p>
                   </div>
                 </div>
 
                 <nav class="nav-links-menu">
-                  <a href="/" class="nav-item ativo">Observatório Geral</a>
+                  <a href="/" class="nav-item ativo">Painel de Atividade</a>
                   <a href="/consola" class="nav-item">Consola Técnica</a>
                   <a href="https://www.cm-guimaraes.pt" target="_blank" class="nav-item">Portal Autárquico</a>
+                  <span class="divisor-menu"></span>
+                  <a href="/delegate" class="nav-item destaque-delegate" title="Aceder à plataforma técnica de integração">Plataforma Delegate ↗</a>
                 </nav>
 
                 <div class="header-controles">
-                  <button
-                    class=${`btn-modo ${!modoTecnico ? 'ativo' : ''}`}
-                    onClick=${() => setModoTecnico(false)}
-                  >Modo Geral</button>
-                  <button
-                    class=${`btn-modo ${modoTecnico ? 'ativo' : ''}`}
-                    onClick=${() => setModoTecnico(true)}
-                  >Modo de Auditoria</button>
+                  <span class="badge-simulacao">Ambiente de Simulação</span>
+                  <div style=${{ display: 'flex', gap: '0.35rem' }}>
+                    <button
+                      class=${`btn-modo ${!modoTecnico ? 'ativo' : ''}`}
+                      onClick=${() => setModoTecnico(false)}
+                    >Modo Geral</button>
+                    <button
+                      class=${`btn-modo ${modoTecnico ? 'ativo' : ''}`}
+                      onClick=${() => setModoTecnico(true)}
+                    >Modo Auditoria</button>
+                  </div>
 
                   <div class="indicador-ao-vivo">
                     <span class="ponto-vivo" style=${{ background: conectado ? '#27ae60' : '#e67e22' }}></span>
@@ -697,8 +736,8 @@
               </div>
             </div>
 
-            <!-- 3. Corpo Principal do Observatório -->
-            <main class="observatorio-layout">
+            <!-- 3. Corpo Principal do Painel de Atividade -->
+            <main class="painel-layout">
               <!-- Zona Esquerda: Palco e Grafo de Barramento -->
               <div class="zona-palco-grafo">
                 <!-- Palco da Munícipe -->
@@ -751,9 +790,9 @@
                 <!-- Grafo de Barramento Autárquico -->
                 <div class="modulo-autarquico">
                   <div class="modulo-cabecalho">
-                    <h2>Arquitetura e Barramento de Integração Agêntica</h2>
+                    <h2>Barramento de Integração Agêntica</h2>
                     <span style=${{ fontSize: '11px', color: 'var(--cmg-verde)', fontWeight: '700' }}>
-                      Ativação Criptográfica por Eventos
+                      Processamento em Tempo Real por Eventos
                     </span>
                   </div>
                   <div class="grafo-corpo">
@@ -772,13 +811,13 @@
                     <div class=${`nodo-barramento ${nodoAtivo === 'politica' ? 'ativo' : ''}`}>
                       <span class="nodo-protocolo-tag">AES-256-GCM</span>
                       <span class="nodo-titulo-texto">Cofre e Mandatos</span>
-                      <span class="nodo-descricao-texto">Enclave de Privacidade</span>
+                      <span class="nodo-descricao-texto">Filtro de Privacidade</span>
                     </div>
 
                     <div class=${`nodo-barramento ${nodoAtivo === 'porta' ? 'ativo' : ''}`}>
                       <span class="nodo-protocolo-tag">MCP v2 · 4001</span>
-                      <span class="nodo-titulo-texto">Porta Agêntica</span>
-                      <span class="nodo-descricao-texto">Barramento da Cidade</span>
+                      <span class="nodo-titulo-texto">Entrada de Processos</span>
+                      <span class="nodo-descricao-texto">Interoperabilidade MCP</span>
                     </div>
 
                     <div class=${`nodo-barramento ${nodoAtivo === 'su' ? 'ativo' : ''}`}>
@@ -797,8 +836,8 @@
                 </div>
               </div>
 
-              <!-- Zona Direita: Procedimento e Enclave Criptográfico -->
-              <aside class="zona-lateral-observatorio">
+              <!-- Zona Direita: Procedimento e Armazenamento Local Cifrado -->
+              <aside class="zona-lateral-painel">
                 <!-- Módulo Procedimento -->
                 <div class="modulo-autarquico">
                   <div class="modulo-cabecalho">
@@ -843,42 +882,42 @@
                   </table>
                 </div>
 
-                <!-- Módulo Enclave Criptográfico (Cofre) -->
+                <!-- Módulo de Armazenamento Local Cifrado -->
                 <div class="modulo-autarquico">
                   <div class="modulo-cabecalho">
-                    <h3>Cofre Pessoal e Enclave Criptográfico</h3>
+                    <h3>Armazenamento Local Cifrado</h3>
                     <span style=${{ fontSize: '10.5px', color: 'var(--cmg-azul-medio)', fontFamily: 'var(--font-mono)' }}>
                       AES-256-GCM
                     </span>
                   </div>
 
-                  <div class="enclave-camada-item">
-                    <div class="enclave-camada-topo">
-                      <span class="enclave-camada-titulo">Camada 1: Intenção Registada</span>
-                      <span class="enclave-camada-pill pill-autorizado">Cifrado Local</span>
+                  <div class="camada-cifrada-item">
+                    <div class="camada-cifrada-topo">
+                      <span class="camada-cifrada-titulo">Camada 1: Intenção Registada</span>
+                      <span class="camada-cifrada-pill pill-autorizado">Cifrado Local</span>
                     </div>
-                    <div class="enclave-camada-dados">
+                    <div class="camada-cifrada-dados">
                       esplanada_casa_joaquim · 10,00 m² · 4 mesas
                     </div>
                   </div>
 
-                  <div class="enclave-camada-item">
-                    <div class="enclave-camada-topo">
-                      <span class="enclave-camada-titulo">Camada 2: Pacote Mínimo Transmitido</span>
-                      <span class="enclave-camada-pill pill-autorizado">Mandato D3</span>
+                  <div class="camada-cifrada-item">
+                    <div class="camada-cifrada-topo">
+                      <span class="camada-cifrada-titulo">Camada 2: Pacote Mínimo Transmitido</span>
+                      <span class="camada-cifrada-pill pill-autorizado">Mandato D3</span>
                     </div>
-                    <div class="enclave-camada-dados">
+                    <div class="camada-cifrada-dados">
                       localizacao: Largo da Oliveira, n.º 12<br />
                       corredor_pedonal_aferido: 2,10 m (≥ 2,00 m)
                     </div>
                   </div>
 
-                  <div class="enclave-camada-item">
-                    <div class="enclave-camada-topo">
-                      <span class="enclave-camada-titulo">Camada 3: Enclave Pessoal Reservado</span>
-                      <span class="enclave-camada-pill pill-enclave">Inacessível à Câmara</span>
+                  <div class="camada-cifrada-item">
+                    <div class="camada-cifrada-topo">
+                      <span class="camada-cifrada-titulo">Camada 3: Dados Privados do Munícipe</span>
+                      <span class="camada-cifrada-pill pill-privado">Inacessível à Câmara</span>
                     </div>
-                    <div class="enclave-camada-dados" style=${{ color: 'var(--cmg-texto-suave)' }}>
+                    <div class="camada-cifrada-dados" style=${{ color: 'var(--cmg-texto-suave)' }}>
                       dados_patrimoniais · chaves_privadas_locais
                     </div>
                   </div>
@@ -886,16 +925,16 @@
               </aside>
             </main>
 
-            <!-- 4. Rodapé Oficial de Auditoria Criptográfica -->
+            <!-- 4. Rodapé Oficial de Auditoria de Eventos -->
             <footer class="cmg-auditoria-footer">
-              <div class="auditoria-rotulo">Cadeia de Auditoria SHA-256:</div>
-              <div class="selos-stream-scroll">
+              <div class="auditoria-rotulo">Registo de Auditoria SHA-256:</div>
+              <div class="auditoria-stream-scroll">
                 ${eventos.slice(0, 10).map(
                   (ev, idx) => html`
-                    <div key=${idx} class="selo-badge-pill">
-                      <span class="selo-seq">#${eventos.length - idx}</span>
-                      <span class="selo-tipo">${ev.tipo}</span>
-                      <span class="selo-hash">${(ev.selo?.hash_evento || 'e739ab6e').substring(0, 8)}</span>
+                    <div key=${idx} class="auditoria-badge-pill">
+                      <span class="auditoria-seq">#${eventos.length - idx}</span>
+                      <span class="auditoria-tipo">${ev.tipo}</span>
+                      <span class="auditoria-hash">${(ev.selo?.hash_evento || ev.hash || 'e739ab6e').substring(0, 8)}</span>
                     </div>
                   `
                 )}
@@ -906,7 +945,7 @@
       }
 
       const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(React.createElement(ObservatorioApp));
+      root.render(React.createElement(PainelAtividadeApp));
     </script>
   </body>
 </html>

@@ -504,6 +504,103 @@ export async function criarServidorPorta(opcoes: OpcoesPorta = {}): Promise<{
 
     const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`);
 
+    // Endpoint REST para listar as ferramentas MCP expostas
+    if (req.method === 'GET' && (url.pathname === '/ferramentas' || url.pathname === '/api/ferramentas')) {
+      const ferramentas = [
+        {
+          nome: 'procurar_servicos',
+          tipo: 'leitura',
+          mandato: 'nenhum',
+          sistema: 'Registo Municipal',
+          descricao: 'Procura no catálogo de serviços municipais por texto livre. Devolve resumos e pontuação.',
+          parametros: {
+            consulta: { tipo: 'string', obrigatorio: true, descricao: 'Texto livre com a necessidade ou assunto a procurar' },
+            limite: { tipo: 'number', obrigatorio: false, descricao: 'Número máximo de resultados (omissão: 3)' },
+            cliente: { tipo: 'string', obrigatorio: false, descricao: 'Identificador do agente ou cliente' },
+          },
+        },
+        {
+          nome: 'obter_servico',
+          tipo: 'leitura',
+          mandato: 'nenhum',
+          sistema: 'Registo Municipal',
+          descricao: 'Devolve a ficha completa de um serviço municipal do catálogo oficial, com todas as fontes, condições e versão.',
+          parametros: {
+            id: { tipo: 'string', obrigatorio: true, descricao: 'Identificador único do serviço (ex.: ocupacao-espaco-publico-esplanada)' },
+            cliente: { tipo: 'string', obrigatorio: false, descricao: 'Identificador do agente ou cliente' },
+          },
+        },
+        {
+          nome: 'criar_rascunho_ocupacao',
+          tipo: 'acao',
+          mandato: 'D2',
+          sistema: 'Serviços Urbanos (Simulação)',
+          descricao: 'Cria um rascunho de comunicação prévia de ocupação do espaço público. Exige mandato D2+.',
+          parametros: {
+            mandato: { tipo: 'string', obrigatorio: true, descricao: 'Identificador do mandato concedido pela pessoa' },
+            localizacao: { tipo: 'string', obrigatorio: true, descricao: 'Morada ou localização do estabelecimento em Guimarães' },
+            area_m2: { tipo: 'number', obrigatorio: true, descricao: 'Área em m2 a ocupar' },
+            numero_mesas: { tipo: 'number', obrigatorio: true, descricao: 'Número de mesas' },
+            periodo: { tipo: 'string', obrigatorio: false, descricao: 'Meses ou período de ocupação' },
+            cliente: { tipo: 'string', obrigatorio: false, descricao: 'Identificador do agente ou cliente' },
+          },
+        },
+        {
+          nome: 'submeter_comunicacao_previa',
+          tipo: 'acao',
+          mandato: 'D3 + CMD',
+          sistema: 'Serviços Urbanos (Simulação)',
+          descricao: 'Submete formalmente a comunicação prévia aos Serviços Urbanos. Exige mandato D3 e token de confirmação da pessoa.',
+          parametros: {
+            processo: { tipo: 'string', obrigatorio: true, descricao: 'Número do processo a submeter (ex.: OEP/2026/0001)' },
+            mandato: { tipo: 'string', obrigatorio: true, descricao: 'Identificador do mandato concedido' },
+            token_confirmacao: { tipo: 'string', obrigatorio: true, descricao: 'Token de confirmação com Chave Móvel Digital' },
+            cliente: { tipo: 'string', obrigatorio: false, descricao: 'Identificador do agente ou cliente' },
+          },
+        },
+        {
+          nome: 'consultar_estado_processo',
+          tipo: 'leitura',
+          mandato: 'D1',
+          sistema: 'Serviços Urbanos (Simulação)',
+          descricao: 'Consulta o estado, elementos e histórico de um processo nos Serviços Urbanos. Exige mandato D1+.',
+          parametros: {
+            processo: { tipo: 'string', obrigatorio: true, descricao: 'Número do processo municipal (ex.: OEP/2026/0001)' },
+            mandato: { tipo: 'string', obrigatorio: true, descricao: 'Identificador do mandato concedido' },
+            cliente: { tipo: 'string', obrigatorio: false, descricao: 'Identificador do agente ou cliente' },
+          },
+        },
+        {
+          nome: 'responder_pedido_elementos',
+          tipo: 'acao',
+          mandato: 'D3',
+          sistema: 'Serviços Urbanos (Simulação)',
+          descricao: 'Junta elementos adicionais solicitados pelos Serviços Urbanos a um processo existente. Exige mandato D3.',
+          parametros: {
+            processo: { tipo: 'string', obrigatorio: true, descricao: 'Número do processo municipal (ex.: OEP/2026/0001)' },
+            elementos: { tipo: 'object', obrigatorio: true, descricao: 'Dicionário com os novos dados ou documentos' },
+            mandato: { tipo: 'string', obrigatorio: true, descricao: 'Identificador do mandato concedido' },
+            cliente: { tipo: 'string', obrigatorio: false, descricao: 'Identificador do agente ou cliente' },
+          },
+        },
+        {
+          nome: 'obter_referencia_pagamento',
+          tipo: 'acao',
+          mandato: 'D2',
+          sistema: 'Tesouraria (Simulação)',
+          descricao: 'Obtém a referência de pagamento fictícia após deferimento de um processo. Exige mandato D2+.',
+          parametros: {
+            processo: { tipo: 'string', obrigatorio: true, descricao: 'Número do processo municipal (ex.: OEP/2026/0001)' },
+            mandato: { tipo: 'string', obrigatorio: true, descricao: 'Identificador do mandato concedido' },
+            cliente: { tipo: 'string', obrigatorio: false, descricao: 'Identificador do agente ou cliente' },
+          },
+        },
+      ];
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ total: ferramentas.length, ferramentas }, null, 2));
+      return;
+    }
+
     // Endpoint REST para listar serviços
     if (req.method === 'GET' && url.pathname === '/servicos') {
       const q = url.searchParams.get('q') ?? '';
