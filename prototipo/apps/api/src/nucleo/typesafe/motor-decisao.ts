@@ -14,18 +14,26 @@ import type { NivelMandato } from '../mandatos/mandatos.ts';
 
 export type TipoComportamento = 'responder' | 'abster' | 'encaminhar' | 'recusar';
 export type CategoriaIntencao = 'catalogo' | 'sem_fonte' | 'fora_competencia' | 'juizo_tecnico' | 'adversarial' | 'geral';
+export type FocoServico = 'mesmo_servico' | 'novo_servico' | 'primeiro_contacto';
 
 export interface ContextoDecisao {
   pessoa?: string;
+  servicoAtivo?: string;
+  servicoTituloAtivo?: string;
   missaoAtiva?: boolean;
+  missaoId?: string;
   estadoMissao?: string;
   mandatoAtivoNivel?: NivelMandato;
+  historicoRecente?: Array<{ autor: 'pessoa' | 'afonso'; texto: string }>;
 }
 
 export interface ResultadoDecisao {
   motor: 'typesafe-jev' | 'calibrado-local';
   modelo: string;
   servicoId?: string;
+  focoServico: FocoServico;
+  mudancaServico: boolean;
+  servicoAnterior?: string;
   categoria: CategoriaIntencao;
   comportamento: TipoComportamento;
   nivelMandato: NivelMandato;
@@ -38,6 +46,12 @@ export interface ResultadoDecisao {
   entidade?: string;
   proibicao?: string;
 }
+
+const CRITERIOS_FOCO_SERVICO = {
+  'manter_mesmo_servico': 'O cidadão continua focado no mesmo serviço já em curso ou previamente abordado (fornece dados, tira dúvidas ou avança no mesmo pedido)',
+  'mudar_outro_servico': 'O cidadão muda de assunto, faz uma pergunta sobre um novo serviço ou quer tratar de algo diferente do serviço ativo',
+  'primeiro_contacto': 'É o primeiro contacto da conversa ou não existe nenhum serviço ativo prévio',
+} as const;
 
 const CRITERIOS_SERVICO = {
   'ocupacao-espaco-publico-esplanada': 'Instalação de esplanada, mesas, cadeiras ou guarda-ventos na via pública',
@@ -94,7 +108,7 @@ export class MotorDecisaoTypeSafe {
   }
 
   /**
-   * Avalia a intenção da mensagem com System One Jev (ou alternativa calibrado ultra-rápido).
+   * Avalia a intenção da mensagem com System One Jev (ou alternativa calibrada ultra-rápida).
    */
   async decidir(pergunta: string, contexto: ContextoDecisao = {}): Promise<ResultadoDecisao> {
     const inicio = Date.now();
@@ -106,7 +120,10 @@ export class MotorDecisaoTypeSafe {
         const resposta = await this.#client.systemOne({
           state: {
             mensagem_cidadao: texto,
+            servico_ativo: contexto.servicoAtivo ?? null,
+            servico_titulo_ativo: contexto.servicoTituloAtivo ?? null,
             contexto_atual: {
+              servico_ativo: contexto.servicoAtivo ?? null,
               missao_ativa: contexto.missaoAtiva ?? false,
               estado_missao: contexto.estadoMissao ?? 'nenhuma',
               nivel_mandato_atual: contexto.mandatoAtivoNivel ?? 'D0',
@@ -114,28 +131,55 @@ export class MotorDecisaoTypeSafe {
             municipio: 'Guimarães',
           },
           questions: {
+            foco_servico: choice(
+              'O cidadão continua a falar do mesmo serviço ativo ou está a mudar de assunto para um serviço diferente?',
+              CRITERIOS_FOCO_SERVICO,
+            ),
             servico: choice('Qual o serviço municipal ou categoria pretendida pelo cidadão?', CRITERIOS_SERVICO),
             comportamento: choice('Qual o comportamento estrito que o agente leal do cidadão deve adotar?', CRITERIOS_COMPORTAMENTO),
-            nivel_mandato: choice('Qual o nível de mandato (D0 a D4) necessário para realizar a vontade do cidadão?', CRITERIOS_MANDATO),
+            nivel_mandato: choice('Qual a intencionalidade e o nível de mandato (D0 a D4) necessário para realizar a vontade do cidadão?', CRITERIOS_MANDATO),
             ferramenta_mcp: choice('Qual a ferramenta MCP da Porta Agêntica mais indicada a acionar?', CRITERIOS_FERRAMENTA_MCP),
             exige_consentimento: noul('Esta ação compromete legalmente o cidadão, acede ao cofre ou submete um ato formal vinculativo?'),
           },
         });
 
+        const qFoco = resposta.answers.foco_servico as ChoiceResponse<string>;
         const qServico = resposta.answers.servico as ChoiceResponse<string>;
         const qComp = resposta.answers.comportamento as ChoiceResponse<string>;
         const qMandato = resposta.answers.nivel_mandato as ChoiceResponse<string>;
         const qMcp = resposta.answers.ferramenta_mcp as ChoiceResponse<string>;
         const qConsent = resposta.answers.exige_consentimento as NoulResponse;
 
+        const servicoAtivoPrevio = contexto.servicoAtivo;
+        let focoServico: FocoServico = (qFoco?.choice as FocoServico) ?? (servicoAtivoPrevio ? 'mesmo_servico' : 'primeiro_contacto');
+        if (!servicoAtivoPrevio) {
+          focoServico = 'primeiro_contacto';
+        }
+
         const servicoEscolhido = qServico.choice;
         const categoria = this.#mapearCategoria(servicoEscolhido);
-        const servicoId = categoria === 'catalogo' ? servicoEscolhido : (servicoEscolhido.startsWith('ocupacao-') || servicoEscolhido.startsWith('pedido-') ? servicoEscolhido : undefined);
+
+        let servicoId: string | undefined;
+        let mudancaServico = false;
+
+        if (focoServico === 'mesmo_servico' && servicoAtivoPrevio) {
+          servicoId = servicoAtivoPrevio;
+          mudancaServico = false;
+        } else if (focoServico === 'mudar_outro_servico' && servicoAtivoPrevio) {
+          mudancaServico = true;
+          servicoId = categoria === 'catalogo' ? servicoEscolhido : (servicoEscolhido.startsWith('ocupacao-') || servicoEscolhido.startsWith('pedido-') ? servicoEscolhido : undefined);
+        } else {
+          servicoId = categoria === 'catalogo' ? servicoEscolhido : (servicoEscolhido.startsWith('ocupacao-') || servicoEscolhido.startsWith('pedido-') ? servicoEscolhido : undefined);
+          mudancaServico = false;
+        }
 
         return {
           motor: 'typesafe-jev',
           modelo: 'jev',
           servicoId,
+          focoServico,
+          mudancaServico,
+          servicoAnterior: mudancaServico ? servicoAtivoPrevio : undefined,
           categoria,
           comportamento: (qComp.choice as TipoComportamento) || 'responder',
           nivelMandato: (qMandato.choice as NivelMandato) || 'D0',
@@ -165,17 +209,19 @@ export class MotorDecisaoTypeSafe {
   }
 
   /**
-   * Avaliador determinístico local baseado nas regras do contrato R0.
+   * Avaliador determinístico local calibrado nas regras do contrato R0.
    */
   #decidirLocalmente(texto: string, contexto: ContextoDecisao, inicio: number): ResultadoDecisao {
     const t = texto.toLowerCase();
 
-    // 1. Adversarial
+    // 1. Deteção Adversarial e Privacidade
     if (t.includes('ignora as') || t.includes('ignore previous') || (t.includes('nif') && t.includes('vizinho')) || t.includes('és um funcionário')) {
       return {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
         categoria: 'adversarial',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
         comportamento: 'recusar',
         nivelMandato: 'D0',
         ferramentaMcp: 'nenhuma',
@@ -186,12 +232,14 @@ export class MotorDecisaoTypeSafe {
       };
     }
 
-    // 2. Juízo Técnico
+    // 2. Juízo Técnico Discricionário
     if (t.includes('vai ser aprovada') || t.includes('pode multar') || (t.includes('posso construir') && t.includes('ponte'))) {
       return {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
         categoria: 'juizo_tecnico',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
         comportamento: 'recusar',
         nivelMandato: 'D0',
         ferramentaMcp: 'consultar_catalogo',
@@ -203,12 +251,15 @@ export class MotorDecisaoTypeSafe {
       };
     }
 
-    // 3. Fora de Competência
+    // 3. Fora de Competência Autárquica
     if (t.includes('cartão de cidadão') || t.includes('cartao de cidadao')) {
       return {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
         categoria: 'fora_competencia',
+        focoServico: 'novo_servico',
+        mudancaServico: Boolean(contexto.servicoAtivo),
+        servicoAnterior: contexto.servicoAtivo,
         comportamento: 'encaminhar',
         nivelMandato: 'D0',
         ferramentaMcp: 'nenhuma',
@@ -223,6 +274,9 @@ export class MotorDecisaoTypeSafe {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
         categoria: 'fora_competencia',
+        focoServico: 'novo_servico',
+        mudancaServico: Boolean(contexto.servicoAtivo),
+        servicoAnterior: contexto.servicoAtivo,
         comportamento: 'encaminhar',
         nivelMandato: 'D0',
         ferramentaMcp: 'nenhuma',
@@ -239,48 +293,125 @@ export class MotorDecisaoTypeSafe {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
         categoria: 'sem_fonte',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
         comportamento: 'abster',
         nivelMandato: 'D0',
         ferramentaMcp: 'calcular_taxa_esplanada',
         confianca: 0.99,
         exigeConsentimento: false,
         tempoRespostaMs: Date.now() - inicio,
-        servicoId: 'ocupacao-espaco-publico-esplanada',
+        servicoId: contexto.servicoAtivo ?? 'ocupacao-espaco-publico-esplanada',
         motivo: 'taxa_esplanada_sem_fonte_unica',
       };
     }
 
-    // O estado por omissão é sempre D0 (Informar, Questionar e Clarificar)
+    // 5. Avaliação da Continuidade do Serviço vs Mudança de Assunto
+    const servicoAtivoPrevio = contexto.servicoAtivo;
+    let focoServico: FocoServico = servicoAtivoPrevio ? 'mesmo_servico' : 'primeiro_contacto';
+    let mudancaServico = false;
+    let servicoId = servicoAtivoPrevio;
+
+    // Detetar se a mensagem introduz explicitamente outro serviço
+    let novoServicoDetetado: string | undefined;
+    if (t.includes('esplanada') || t.includes('mesas na rua') || (t.includes('restaurante') && !servicoAtivoPrevio?.includes('esplanada') && (t.includes('abrir') || t.includes('mesas')))) {
+      novoServicoDetetado = 'ocupacao-espaco-publico-esplanada';
+    } else if (t.includes('andaime') || t.includes('tapume') || t.includes('contentor')) {
+      novoServicoDetetado = 'ocupacao-espaco-publico-andaimes';
+    } else if (t.includes('elevador') || t.includes('ascensor')) {
+      novoServicoDetetado = 'inspecao-ascensores';
+    } else if (
+      t.includes('pdm') ||
+      t.includes('informação prévia') ||
+      t.includes('informacao previa') ||
+      t.includes('pip') ||
+      t.includes('construir') ||
+      t.includes('moradia') ||
+      (t.includes('terreno') && (t.includes('casa') || t.includes('construir') || t.includes('viabilidade')))
+    ) {
+      novoServicoDetetado = 'pedido-informacao-previa-urbanismo';
+    } else if (t.includes('publicidade') || t.includes('reclamo') || t.includes('tabuleta')) {
+      novoServicoDetetado = 'publicidade-reclamo-fachada';
+    } else if (t.includes('ruído') || t.includes('ruido') || t.includes('musica')) {
+      novoServicoDetetado = 'ruido-licenca-especial';
+    }
+
+    if (servicoAtivoPrevio) {
+      if (novoServicoDetetado && novoServicoDetetado !== servicoAtivoPrevio) {
+        // Mudança de assunto/serviço deliberada pelo cidadão
+        focoServico = 'novo_servico';
+        mudancaServico = true;
+        servicoId = novoServicoDetetado;
+      } else {
+        // Continua no mesmo serviço em curso
+        focoServico = 'mesmo_servico';
+        mudancaServico = false;
+        servicoId = servicoAtivoPrevio;
+      }
+    } else {
+      // Primeiro contacto
+      focoServico = 'primeiro_contacto';
+      mudancaServico = false;
+      servicoId = novoServicoDetetado ?? 'ocupacao-espaco-publico-esplanada';
+    }
+
+    // 6. Avaliação da Intencionalidade e Nível de Mandato
     let nivelMandato: NivelMandato = 'D0';
     let ferramentaMcp = 'consultar_catalogo';
 
-    // Apenas ordens expressas de submissão formal com CMD elevam para D3
-    if (t.includes('autorizo a submeter') || t.includes('assinar com chave') || t.includes('confirmar submissao') || t.includes('submeter com cmd')) {
+    if (
+      t.includes('autorizo a submeter') ||
+      t.includes('assinar com chave') ||
+      t.includes('confirmar submissao') ||
+      t.includes('submeter com cmd') ||
+      t.includes('submeter formalmente') ||
+      t.includes('pode submeter')
+    ) {
       nivelMandato = 'D3';
       ferramentaMcp = 'submeter_comunicacao_previa';
-    } else if (t.includes('preparar rascunho') || t.includes('guardar no cofre') || t.includes('iniciar rascunho') || t.includes('analisar terreno')) {
+    } else if (
+      t.includes('pagar') ||
+      t.includes('liquidar') ||
+      t.includes('debito financeiro') ||
+      t.includes('pagamento imediato')
+    ) {
+      nivelMandato = 'D4';
+      ferramentaMcp = 'obter_referencia_pagamento';
+    } else if (
+      t.includes('preparar') ||
+      t.includes('rascunho') ||
+      t.includes('guardar no cofre') ||
+      t.includes('anexar') ||
+      t.includes('caderneta') ||
+      t.includes('coordenadas') ||
+      t.includes('maps') ||
+      t.includes('fotografia') ||
+      t.includes('planta') ||
+      t.includes('iniciar rascunho')
+    ) {
       nivelMandato = 'D2';
-      ferramentaMcp = 'criar_rascunho_ocupacao';
+      ferramentaMcp = servicoId?.includes('urbanismo') ? 'criar_rascunho_pip' : 'criar_rascunho_ocupacao';
+    } else if (
+      t.includes('consultar processo') ||
+      t.includes('estado do processo') ||
+      t.includes('acompanhar') ||
+      t.includes('como vai o processo')
+    ) {
+      nivelMandato = 'D1';
+      ferramentaMcp = 'consultar_estado_processo';
     } else if (t.includes('taxa') || t.includes('custo') || t.includes('valor')) {
       ferramentaMcp = 'calcular_taxa_esplanada';
     } else if (t.includes('passeio') || t.includes('largura') || t.includes('medida')) {
       ferramentaMcp = 'verificar_conformidade_tecnica';
     }
 
-    if (t.includes('andaime') || t.includes('tapume') || t.includes('contentor')) {
-      servicoId = 'ocupacao-espaco-publico-andaimes';
-    } else if (t.includes('elevador') || t.includes('ascensor')) {
-      servicoId = 'inspecao-ascensores';
-    } else if (t.includes('construir') || t.includes('informação prévia') || t.includes('pdm')) {
-      servicoId = 'pedido-informacao-previa-urbanismo';
-    } else if (t.includes('publicidade') || t.includes('reclamo') || t.includes('tabuleta')) {
-      servicoId = 'publicidade-reclamo-fachada';
-    }
-
     return {
       motor: 'calibrado-local',
       modelo: 'regras-deterministas',
       servicoId,
+      focoServico,
+      mudancaServico,
+      servicoAnterior: mudancaServico ? servicoAtivoPrevio : undefined,
       categoria: 'catalogo',
       comportamento: 'responder',
       nivelMandato,

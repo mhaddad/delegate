@@ -679,7 +679,16 @@ canal._aoReceber(async (m) => {
         ].join('\n'),
       );
     } else if (m.texto === 'pergunta_taxa') {
-      const resp = await afonso.responder(m.pessoa, 'quanto vou pagar');
+      const missaoAtiva = orquestrador.obterAtiva(m.pessoa);
+      const resp = await afonso.responder(m.pessoa, 'quanto vou pagar', {
+        pessoa: m.pessoa,
+        servicoAtivo: missaoAtiva?.servico ?? 'ocupacao-espaco-publico-esplanada',
+        servicoTituloAtivo: missaoAtiva?.servicoTitulo,
+        missaoAtiva: Boolean(missaoAtiva),
+        missaoId: missaoAtiva?.id,
+        estadoMissao: missaoAtiva?.estado,
+        mandatoAtivoNivel: missaoAtiva ? 'D2' : 'D0',
+      });
       await canal.enviar(m.conversa, resp.texto, resp.botoes);
     } else if (m.texto === 'iniciar_esplanada' || m.texto === 'voltar_esplanada') {
       // 1. Guardar no Cofre Digital com consentimento
@@ -925,7 +934,15 @@ canal._aoReceber(async (m) => {
 
     // 4. Pergunta em linguagem natural: responde com o Afonso e a Porta
     await canal.aEscrever(m.conversa);
-    const resp = await afonso.responder(m.pessoa, m.texto);
+    const resp = await afonso.responder(m.pessoa, m.texto, {
+      pessoa: m.pessoa,
+      servicoAtivo: missaoAtiva?.servico,
+      servicoTituloAtivo: missaoAtiva?.servicoTitulo,
+      missaoAtiva: Boolean(missaoAtiva),
+      missaoId: missaoAtiva?.id,
+      estadoMissao: missaoAtiva?.estado,
+      mandatoAtivoNivel: missaoAtiva ? 'D2' : 'D0',
+    });
     await canal.enviar(m.conversa, resp.texto, resp.botoes);
   } else {
     return;

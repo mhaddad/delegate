@@ -12,7 +12,7 @@
 import type { Registo } from '../eventos/registo.ts';
 import { ClientePortaMcp } from './cliente-porta.ts';
 import { ClassificadorAfonso } from './classificador.ts';
-import { MotorDecisaoTypeSafe } from '../typesafe/motor-decisao.ts';
+import { MotorDecisaoTypeSafe, type ContextoDecisao } from '../typesafe/motor-decisao.ts';
 import { RedatorOpenRouter } from './redator-openrouter.ts';
 import { VerificadorRegra } from './verificador.ts';
 import type { Botoes } from '../canal.ts';
@@ -21,6 +21,8 @@ export interface RespostaAfonso {
   texto: string;
   botoes?: Botoes;
   servicoId?: string;
+  focoServico?: string;
+  mudancaServico?: boolean;
   comportamento?: 'responder' | 'abster' | 'encaminhar' | 'recusar';
   categoria?: string;
   fontes?: string[];
@@ -38,6 +40,7 @@ export class Afonso {
   readonly #sessao: string;
   readonly #motorDecisao: MotorDecisaoTypeSafe;
   readonly #redator: RedatorOpenRouter;
+  readonly #contextoConversa = new Map<string, { ultimoServicoId?: string; ultimoServicoTitulo?: string }>();
 
   constructor(
     registo: Registo,
@@ -53,10 +56,22 @@ export class Afonso {
     this.#redator = redator ?? new RedatorOpenRouter();
   }
 
-  /** Trata uma mensagem de texto recebida no canal. */
-  async responder(pessoa: string, texto: string): Promise<RespostaAfonso> {
+  /** Trata uma mensagem de texto recebida no canal com acompanhamento de continuidade de serviço. */
+  async responder(pessoa: string, texto: string, contextoExterno: ContextoDecisao = {}): Promise<RespostaAfonso> {
     const limpo = texto.trim();
-    const decisaoJev = await this.#motorDecisao.decidir(limpo);
+    const anterior = this.#contextoConversa.get(pessoa);
+
+    const contextoDecisao: ContextoDecisao = {
+      pessoa,
+      servicoAtivo: contextoExterno.servicoAtivo ?? anterior?.ultimoServicoId,
+      servicoTituloAtivo: contextoExterno.servicoTituloAtivo ?? anterior?.ultimoServicoTitulo,
+      missaoAtiva: contextoExterno.missaoAtiva,
+      missaoId: contextoExterno.missaoId,
+      estadoMissao: contextoExterno.estadoMissao,
+      mandatoAtivoNivel: contextoExterno.mandatoAtivoNivel,
+    };
+
+    const decisaoJev = await this.#motorDecisao.decidir(limpo, contextoDecisao);
     const classificacao = ClassificadorAfonso.classificar(limpo);
 
     // Registar imediatamente o evento de decisão com métricas TypeSafe/Jev
@@ -65,10 +80,14 @@ export class Afonso {
       origem: 'afonso',
       sessao: this.#sessao,
       pessoa,
-      missao: null,
+      missao: contextoDecisao.missaoId ?? null,
       ator: decisaoJev.motor === 'typesafe-jev' ? 'agente:jev' : 'agente:entendimento',
       simulacao: false,
       dados: {
+        servico: decisaoJev.servicoId,
+        foco_servico: decisaoJev.focoServico,
+        mudanca_servico: decisaoJev.mudancaServico,
+        servico_anterior: decisaoJev.servicoAnterior ?? contextoDecisao.servicoAtivo ?? null,
         intencao: decisaoJev.servicoId ?? decisaoJev.categoria,
         confianca: decisaoJev.confianca,
         categoria: decisaoJev.categoria,
@@ -309,7 +328,7 @@ export class Afonso {
     }
 
     // 5. Catálogo de Serviços Oficiais
-    const servicoId = classificacao.servicoId ?? decisaoJev.servicoId ?? 'ocupacao-espaco-publico-esplanada';
+    const servicoId = decisaoJev.servicoId ?? classificacao.servicoId ?? 'ocupacao-espaco-publico-esplanada';
 
     // Obter ficha do catálogo da Porta
     let ficha;
@@ -318,6 +337,16 @@ export class Afonso {
     } catch {
       ficha = null;
     }
+
+    // Memorizar o serviço ativo na conversa desta pessoa
+    this.#contextoConversa.set(pessoa, {
+      ultimoServicoId: servicoId,
+      ultimoServicoTitulo: ficha?.titulo_simples ?? ficha?.titulo_oficial ?? servicoId,
+    });
+
+    const prefixoMudanca = (decisaoJev.mudancaServico && contextoDecisao.missaoAtiva && contextoDecisao.servicoTituloAtivo)
+      ? `💡 <i>Nota: O seu pedido em curso sobre «${contextoDecisao.servicoTituloAtivo}» permanece guardado em segurança no seu Cofre Digital.</i>\n\n`
+      : '';
 
 
     // Se for Esplanada
@@ -388,7 +417,9 @@ export class Afonso {
 
       return {
         servicoId,
-        texto: textoFinal,
+        focoServico: decisaoJev.focoServico,
+        mudancaServico: decisaoJev.mudancaServico,
+        texto: prefixoMudanca + textoFinal,
         comportamento: 'responder',
         categoria: 'catalogo',
         fontes: [fonteOficial],
@@ -457,7 +488,9 @@ export class Afonso {
 
       return {
         servicoId,
-        texto: redacao.texto,
+        focoServico: decisaoJev.focoServico,
+        mudancaServico: decisaoJev.mudancaServico,
+        texto: prefixoMudanca + redacao.texto,
         comportamento: 'responder',
         categoria: 'catalogo',
         fontes: [fonteOficial],
@@ -534,7 +567,9 @@ export class Afonso {
 
     return {
       servicoId,
-      texto: redacao.texto,
+      focoServico: decisaoJev.focoServico,
+      mudancaServico: decisaoJev.mudancaServico,
+      texto: prefixoMudanca + redacao.texto,
       comportamento: 'responder',
       categoria: 'catalogo',
       fontes: [fonte],
