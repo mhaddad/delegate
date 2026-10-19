@@ -3,7 +3,7 @@ id: "DOC-FORMULARIOS-formularios-municipais"
 url: "https://www.cm-guimaraes.pt/servicos-online/formularios"
 titulo: "Formulários"
 categoria: "formularios"
-consultado_em: "2026-10-19T20:23:16.257Z"
+consultado_em: "2026-10-19T20:48:04.696Z"
 hash_sha256: "9daf05f2e5e17294dc7bf32270c7485848e8cf9efb92a7194faae4bffd3e0af8"
 tamanho_bytes: 10645
 fonte_extracao: "Cloudflare Browser Run /markdown"

@@ -3,7 +3,7 @@ id: "DOC-DIRETORIO-isencao-licenca-utilizacao"
 url: "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/isencao-de-licenca-de-utilizacao"
 titulo: "Diretório de Serviços"
 categoria: "diretorio"
-consultado_em: "2026-10-19T20:23:15.467Z"
+consultado_em: "2026-10-19T20:48:02.655Z"
 hash_sha256: "82de9cb12512141f1071b95719f86453c03c59b5cc91e10c0388f27d63392252"
 tamanho_bytes: 7163
 fonte_extracao: "Cloudflare Browser Run /markdown"

@@ -19,6 +19,7 @@
     "registo:validar": "tsx scripts/validar-registo.ts",
     "avaliar": "tsx avaliacao/executor.ts",
     "demo:repor": "tsx scripts/repor-demo.ts",
+    "ingerir": "tsx --env-file=.env scripts/ingerir-conhecimento.ts",
     "t:texto": "tsx scripts/varrer-texto.ts"
   },
   "devDependencies": {

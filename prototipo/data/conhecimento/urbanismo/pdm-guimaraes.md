@@ -3,7 +3,7 @@ id: "DOC-URBANISMO-pdm-guimaraes"
 url: "https://pdm.guimaraes.pt/"
 titulo: "Converted Content"
 categoria: "urbanismo"
-consultado_em: "2026-10-19T20:23:18.884Z"
+consultado_em: "2026-10-19T20:48:06.618Z"
 hash_sha256: "7990ac010df843f0cab1e585ebd101ee2359637e9e11a251550da9886409788f"
 tamanho_bytes: 2527
 fonte_extracao: "Cloudflare Browser Run /markdown"

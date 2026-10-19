@@ -3,7 +3,7 @@ id: "DOC-DIRETORIO-bolsas-de-estudo"
 url: "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/acao-social/bolsas-de-estudo"
 titulo: "Diretório de Serviços"
 categoria: "diretorio"
-consultado_em: "2026-10-19T20:23:16.069Z"
+consultado_em: "2026-10-19T20:48:03.475Z"
 hash_sha256: "10cb47b09e7100a2cc5f42762f2e110fb646ad1e501d75711c96d2738570a901"
 tamanho_bytes: 2544
 fonte_extracao: "Cloudflare Browser Run /markdown"

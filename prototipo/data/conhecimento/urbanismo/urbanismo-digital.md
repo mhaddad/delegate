@@ -3,7 +3,7 @@ id: "DOC-URBANISMO-urbanismo-digital"
 url: "https://www.cm-guimaraes.pt/municipio/camara-municipal/servicos/urbanismo/urbanismo-digital"
 titulo: "Urbanismo Digital"
 categoria: "urbanismo"
-consultado_em: "2026-10-19T20:23:16.920Z"
+consultado_em: "2026-10-19T20:48:05.551Z"
 hash_sha256: "5e131243aa5231973beb551a6716fa1ecd3730eb4ed19354babcb90c1d940c2f"
 tamanho_bytes: 7563
 fonte_extracao: "Cloudflare Browser Run /markdown"

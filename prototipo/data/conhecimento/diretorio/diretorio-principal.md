@@ -3,7 +3,7 @@ id: "DOC-DIRETORIO-diretorio-principal"
 url: "https://diretorio.cm-guimaraes.pt/"
 titulo: "Diretório de Serviços - Guimarães"
 categoria: "diretorio"
-consultado_em: "2026-10-19T20:23:14.562Z"
+consultado_em: "2026-10-19T20:48:01.759Z"
 hash_sha256: "9d03ab0b9ef3082930f8b0e7458e70a6c0251a0194e8fadef57ac481eb26bc6a"
 tamanho_bytes: 6854
 fonte_extracao: "Cloudflare Browser Run /markdown"

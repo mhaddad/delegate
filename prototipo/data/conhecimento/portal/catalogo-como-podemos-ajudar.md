@@ -3,7 +3,7 @@ id: "DOC-PORTAL-catalogo-como-podemos-ajudar"
 url: "https://www.cm-guimaraes.pt/como-podemos-ajudar/servicos"
 titulo: "Serviços"
 categoria: "portal"
-consultado_em: "2026-10-19T20:23:20.032Z"
+consultado_em: "2026-10-19T20:48:07.594Z"
 hash_sha256: "66e54db276e1eaf106bf8216dbcb1f6e0da3a6a3fe4052b31c4286506ec60648"
 tamanho_bytes: 5670
 fonte_extracao: "Cloudflare Browser Run /markdown"
