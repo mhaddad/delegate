@@ -36,6 +36,7 @@ Esta pasta transforma a proposta da equipa para a semana do hackathon numa estra
 | 08 | [Plano de execução](08-plano-de-execucao.md) | Frentes de trabalho, dia a dia, ordem de corte |
 | 09 | [Roteiro da demo](09-roteiro-da-demo.md) | Coreografia da demo, versões de 2 e 4 minutos, plano B |
 | 10 | [Riscos, decisões e impacto nas especificações](10-riscos-decisoes-e-impacto.md) | Novos riscos, ADR-013 a ADR-019, alterações a propagar |
+| 11 | [Ajustes após a mentoria](11-ajustes-pos-mentoria.md) | Integração invertida, base de conhecimento, calculadora de impacto: o que muda na semana e na demo |
 
 ## Três regras que não mudam
 

@@ -42,6 +42,11 @@ Demonstrar, com fontes públicas reais e um sistema a funcionar:
 | **W** | Integração com Urbanismo Digital ou Serviços Online | — |
 | **W** | Pagamentos | — |
 | **W** | Agentes terceiros certificados em produção | — |
+| **M** | Base de conhecimento ampla para respostas D0 (mentoria) | [25](25-base-de-conhecimento.md) |
+| **M** | Contrato de capacidades OpenAPI publicado; sistemas simulados como implementação de referência (mentoria) | [24](24-processos-canonicos-e-integracao.md) |
+| **S** | Testes de conformidade do contrato a correr contra a implementação de referência | [24](24-processos-canonicos-e-integracao.md) |
+| **S** | Calculadora de impacto na Consola (mentoria) | [26](26-modelo-de-impacto-e-custos.md) |
+| **S** | Nível de integração (I0–I3) visível por serviço | [24](24-processos-canonicos-e-integracao.md) |
 
 <a id="criterios-de-saida"></a>
 ### 2.3 Critérios de saída de R0 (definição de pronto do produto)
