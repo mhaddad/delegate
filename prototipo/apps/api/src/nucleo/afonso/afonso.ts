@@ -1,20 +1,25 @@
 /**
- * O Afonso: o representante digital leal da pessoa.
+ * Afonso · Representante Digital Leal do Cidadão
  *
- * Responsável por:
- *  - classificar a intenção e consultar a Porta Agêntica pela rede;
- *  - responder com fonte visível, data de consulta e versão;
- *  - abster-se quando não há fonte comprovada (zero valores inventados);
- *  - recusar juízos técnicos e tentativas adversariais;
- *  - encaminhar pedidos fora de competência autárquica;
- *  - emitir os eventos do contrato que alimentam o Observatório e a auditoria.
+ * Princípios de Lealdade e Regras de Ouro:
+ * 1. Responde com fonte regulamentar única e comprovada à vista em todo o número;
+ * 2. Sem fonte válida, abstém-se formalmente sem inventar prazos nem custos;
+ * 3. Nunca assume juízos discricionários reservados aos técnicos autárquicos;
+ * 4. Encaminha com clareza assuntos de entidades externas;
+ * 5. Preserva o contexto em conversas multi-turno e respeita o quadro de mandatos D0-D4.
  */
 import type { Registo } from '../eventos/registo.ts';
 import { ClientePortaMcp } from './cliente-porta.ts';
 import { ClassificadorAfonso } from './classificador.ts';
 import { MotorDecisaoTypeSafe, type ContextoDecisao } from '../typesafe/motor-decisao.ts';
 import { RedatorOpenRouter } from './redator-openrouter.ts';
-import { VerificadorRegra } from './verificador.ts';
+import {
+  tratarAdversarial,
+  tratarJuizoTecnico,
+  tratarForaCompetencia,
+  tratarSemFonte,
+} from './respostas-fronteira.ts';
+import { gerarRespostaCatalogo } from './respostas-catalogo.ts';
 import type { Botoes } from '../canal.ts';
 
 export interface MemoriaConversa {
@@ -130,237 +135,25 @@ export class Afonso {
     });
 
     // 1. Deteção Adversarial e Privacidade
-    if (classificacao.categoria === 'adversarial') {
-      if (classificacao.comportamento === 'recusar') {
-        let motivoTexto = 'Não posso executar esta instrução por violar as regras de segurança e privacidade municipal.';
-        if (classificacao.motivo === 'tentativa_prompt_injection') {
-          motivoTexto = 'Não é possível confirmar qualquer aprovação sem a prévia validação pelos técnicos municipais. O Afonso não executa comandos para contornar os regulamentos em vigor.';
-        } else if (classificacao.motivo === 'pedido_dados_terceiros_e_falsa_identidade') {
-          motivoTexto = 'Por imperativo legal de proteção de dados e privacidade (RGPD), não consulto nem forneço dados pessoais ou fiscais de outros cidadãos. Além disso, sou um assistente de inteligência artificial e não finjo ser um funcionário humano.';
-        } else if (classificacao.motivo === 'tentativa_impersonacao_humana') {
-          motivoTexto = 'Sou o Afonso, um assistente de inteligência artificial criado para trabalhar para si. Não sou funcionário da Câmara nem finjo sê-lo. Pode pedir para falar com uma pessoa a qualquer momento.';
-        }
+    const respAdversarial = await tratarAdversarial(pessoa, classificacao, this.#registo, this.#sessao);
+    if (respAdversarial) return respAdversarial;
 
-        await this.#registo.registar({
-          tipo: 'afonso.resposta.recusada',
-          origem: 'afonso',
-          sessao: this.#sessao,
-          pessoa,
-          missao: null,
-          ator: 'agente:verificador',
-          simulacao: false,
-          dados: {
-            motivo: classificacao.motivo,
-            categoria: 'adversarial',
-          },
-        });
+    // 2. Juízo Técnico (Recusa Formal de Pareceres Subjetivos)
+    const respJuizo = await tratarJuizoTecnico(pessoa, classificacao, this.#registo, this.#sessao);
+    if (respJuizo) return respJuizo;
 
-        return {
-          texto: [
-            motivoTexto,
-            '',
-            '<b>O que fazer agora:</b>',
-            '1. Se pretender tratar de um procedimento seu, indique o assunto pretendido;',
-            '2. Pode falar com um técnico municipal através do canal de atendimento.',
-            '',
-            '📄 Fonte: <i>Regulamento de Segurança e Privacidade do Município de Guimarães.</i>',
-          ].join('\n'),
-          comportamento: 'recusar',
-          categoria: 'adversarial',
-          botoes: [[{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]],
-        };
-      }
+    // 3. Fora de Competência (Encaminhamento para Vimágua, IRN / Espaço Cidadão)
+    const respFora = await tratarForaCompetencia(pessoa, classificacao, this.#registo, this.#sessao);
+    if (respFora) return respFora;
 
-      if (classificacao.comportamento === 'abster') {
-        // Tentativa de forçar confirmação de taxa gratuita sem fonte
-        await this.#registo.registar({
-          tipo: 'afonso.resposta.abstencao',
-          origem: 'afonso',
-          sessao: this.#sessao,
-          pessoa,
-          missao: null,
-          ator: 'agente:verificador',
-          simulacao: false,
-          dados: {
-            motivo: 'tentativa_inducao_taxa_sem_fonte',
-          },
-        });
-
-        return {
-          texto: [
-            'Não consigo confirmar que a taxa seja de 0 € com base numa fonte oficial única.',
-            '',
-            'Por rigor municipal, o Afonso não confirma valores ou isenções que não estejam expressamente atestados na Tabela de Taxas Municipal.',
-            '',
-            '<b>O que fazer agora:</b>',
-            '1. Pode confirmar as isenções aplicáveis junto da Tesouraria Municipal;',
-            '2. Ou consultar a Tabela de Taxas em vigor no portal da Câmara.',
-            '',
-            '📄 Fonte: <i>Tabela de Taxas e Licenças do Município de Guimarães.</i>',
-          ].join('\n'),
-          comportamento: 'abster',
-          categoria: 'adversarial',
-          botoes: [[{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]],
-        };
-      }
-    }
-
-    // 2. Juízo Técnico (Recusa Formal)
-    if (classificacao.categoria === 'juizo_tecnico') {
-      let textoJuizo = 'Não posso emitir juízos de viabilidade técnica ou prognósticos sobre decisões administrativas: as decisões cabem exclusivamente aos serviços técnicos municipais.';
-      if (classificacao.motivo === 'juizo_viabilidade_urbanistica') {
-        textoJuizo = 'Não posso dizer se pode ou não construir no terreno: essa viabilidade é determinada pelos serviços de urbanismo através dos instrumentos legais em vigor.';
-      } else if (classificacao.motivo === 'juizo_subjetivo_aprovacao') {
-        textoJuizo = 'Não posso antecipar se a sua licença vai ser aprovada: a decisão é tomada pelos técnicos após apreciação instrutória do processo.';
-      } else if (classificacao.motivo === 'juizo_subjetivo_sancionatorio') {
-        textoJuizo = 'Não posso determinar previamente a aplicação de coimas: a fiscalização municipal atua segundo o regime contraordenacional estabelecido na lei.';
-      }
-
-      await this.#registo.registar({
-        tipo: 'afonso.intencao.classificada',
-        origem: 'afonso',
-        sessao: this.#sessao,
-        pessoa,
-        missao: null,
-        ator: 'agente:entendimento',
-        simulacao: false,
-        dados: {
-          categoria: 'juizo_tecnico_recusado',
-          motivo: classificacao.motivo,
-        },
-      });
-
-      return {
-        texto: [
-          `<b>${textoJuizo}</b>`,
-          '',
-          'O Plano Diretor Municipal (PDM) em vigor é o de 2015. A proposta da 2.ª revisão do PDM foi aprovada pela Câmara Municipal a 14/09/2026 e segue agora para votação na Assembleia Municipal.',
-          '',
-          '<b>O que fazer agora:</b>',
-          '1. Para obter garantia formal vinculativa sobre construção, submeta um <b>Pedido de Informação Prévia (PIP)</b>;',
-          '2. Para conhecer a qualificação cartográfica do solo, peça uma <b>Certidão de Classificação de Terreno</b>;',
-          '3. Tem sempre o direito de solicitar esclarecimentos formais junto dos serviços técnicos.',
-          '',
-          '📄 Fonte: <i>Plano Diretor Municipal de Guimarães e Regime Jurídico da Urbanização e Edificação (RJUE).</i>',
-        ].join('\n'),
-        comportamento: 'recusar',
-        categoria: 'juizo_tecnico',
-        botoes: [
-          [{ texto: '📋 Saber o que é um PIP', dados: 'saber_pip' }],
-          [{ texto: '👤 Falar com um técnico de urbanismo', dados: 'pessoa' }],
-        ],
-      };
-    }
-
-    // 3. Fora de Competência (Encaminhamento Claro)
-    if (classificacao.categoria === 'fora_competencia') {
-      const entidade = classificacao.entidade ?? 'Administração Central';
-
-      await this.#registo.registar({
-        tipo: 'afonso.resposta.verificada',
-        origem: 'afonso',
-        sessao: this.#sessao,
-        pessoa,
-        missao: null,
-        ator: 'agente:redator',
-        simulacao: false,
-        dados: {
-          categoria: 'fora_competencia',
-          entidade,
-        },
-      });
-
-      let destino = 'Espaço Cidadão ou no portal ePortugal';
-      let ligacao = 'https://eportugal.gov.pt';
-      if (entidade.includes('Vimágua')) {
-        destino = 'canais de atendimento da Vimágua (empresa pública municipal de água e saneamento)';
-        ligacao = 'https://www.vimagua.pt';
-      }
-
-      return {
-        texto: [
-          `Este assunto não é tratado pela Câmara Municipal de Guimarães. É da competência de: <b>${entidade}</b>.`,
-          '',
-          '<b>O que fazer agora:</b>',
-          `1. Pode tratar diretamente através do serviço responsável em: <b>${destino}</b>;`,
-          '2. No caso de serviços do Estado, pode dirigir-se presencialmente ao Espaço Cidadão no Balcão Único ou na sua Junta de Freguesia.',
-          '',
-          `📄 Fonte: <i>Catálogo de Competências dos Serviços Públicos · Consultado em 18/10/2026.</i>`,
-        ].join('\n'),
-        comportamento: 'encaminhar',
-        categoria: 'fora_competencia',
-        entidade,
-        botoes: [[{ texto: `Abrir ${entidade.split(' ')[0]}`, ligacao }]],
-      };
-    }
-
-    // 4. Sem Fonte (Abstenção Formal)
-    if (classificacao.categoria === 'sem_fonte' && classificacao.comportamento === 'abster') {
-      await this.#registo.registar({
-        tipo: 'afonso.resposta.abstencao',
-        origem: 'afonso',
-        sessao: this.#sessao,
-        pessoa,
-        missao: null,
-        ator: 'agente:verificador',
-        simulacao: false,
-        dados: {
-          motivo: classificacao.motivo,
-          pergunta: limpo,
-        },
-      });
-
-      let detalhe = 'Não encontrei uma fonte oficial única para este valor exato. Por rigor municipal, o Afonso não inventa custos nem prazos.';
-      if (classificacao.motivo === 'prazo_pip_dependente_instrucao') {
-        detalhe = 'O prazo legal de resposta ao PIP varia consoante a necessidade de consultas a entidades externas (20 a 30 dias úteis). Não forneço um prazo fechado sem conhecer a instrução do processo.';
-      } else if (classificacao.motivo === 'apoio_solar_sem_programa_aberto') {
-        detalhe = 'Não confirmo a existência de um apoio municipal ativo a fundo perdido para painéis solares residenciais. Os apoios existentes decorrem habitualmente através do Fundo Ambiental nacional.';
-      }
-
-      return {
-        texto: [
-          '<b>Não consigo confirmar esta informação com base numa fonte oficial única.</b>',
-          '',
-          detalhe,
-          '',
-          '<b>O que fazer agora:</b>',
-          '1. Pode confirmar diretamente junto dos serviços municipais competentes;',
-          '2. Se pretender, posso passar a sua questão a um funcionário do município.',
-          '',
-          '📄 Fonte: <i>Portal Municipal de Guimarães · Verificação de Fontes Oficiais.</i>',
-        ].join('\n'),
-        comportamento: 'abster',
-        categoria: 'sem_fonte',
-        botoes: [
-          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-          [{ texto: '📖 Consultar Portal Municipal', ligacao: 'https://www.cm-guimaraes.pt' }],
-        ],
-      };
-    }
-
-    if (classificacao.motivo === 'horario_atendimento_bua') {
-      return {
-        texto: [
-          'O <b>Balcão Único de Atendimento (BUA)</b> da Câmara Municipal de Guimarães funciona nos dias úteis, de segunda a sexta-feira, das 08h30 às 17h00 (atendimento ininterrupto).',
-          '',
-          '<b>O que fazer agora:</b>',
-          '1. Pode dirigir-se presencialmente ao Largo Cónego José Maria Gomes;',
-          '2. Ou realizar agendamento prévio através do portal autárquico.',
-          '',
-          '📄 Fonte: <i>Portal da Câmara Municipal de Guimarães · Horários de Atendimento ao Cidadão.</i>',
-        ].join('\n'),
-        comportamento: 'responder',
-        categoria: 'sem_fonte',
-        fontes: ['Portal da Câmara Municipal de Guimarães · Horários de Atendimento ao Cidadão'],
-        numerosSemFonte: [],
-        botoes: [[{ texto: 'Agendar Atendimento', ligacao: 'https://www.cm-guimaraes.pt' }]],
-      };
-    }
+    // 4. Sem Fonte (Abstenção Formal e Atendimento Geral)
+    const respSemFonte = await tratarSemFonte(pessoa, classificacao, limpo, this.#registo, this.#sessao);
+    if (respSemFonte) return respSemFonte;
 
     // 5. Catálogo de Serviços Oficiais
     const servicoId = decisaoJev.servicoId ?? classificacao.servicoId ?? 'ocupacao-espaco-publico-esplanada';
 
-    // Obter ficha do catálogo da Porta
+    // Obter ficha do catálogo da Porta Agêntica
     let ficha;
     try {
       ficha = await this.#porta.obterServico(servicoId);
@@ -368,327 +161,21 @@ export class Afonso {
       ficha = null;
     }
 
-    // Memorizar o serviço ativo na conversa desta pessoa
-    this.#contextoConversa.set(pessoa, {
-      ultimoServicoId: servicoId,
-      ultimoServicoTitulo: ficha?.titulo_simples ?? ficha?.titulo_oficial ?? servicoId,
-    });
+    const prefixoMudanca =
+      decisaoJev.mudancaServico && contextoDecisao.missaoAtiva && contextoDecisao.servicoTituloAtivo
+        ? `💡 <i>Nota: O seu pedido em curso sobre «${contextoDecisao.servicoTituloAtivo}» permanece guardado em segurança no seu Cofre Digital.</i>\n\n`
+        : '';
 
-    const prefixoMudanca = (decisaoJev.mudancaServico && contextoDecisao.missaoAtiva && contextoDecisao.servicoTituloAtivo)
-      ? `💡 <i>Nota: O seu pedido em curso sobre «${contextoDecisao.servicoTituloAtivo}» permanece guardado em segurança no seu Cofre Digital.</i>\n\n`
-      : '';
-
-
-    // Se for Esplanada
-    if (servicoId === 'ocupacao-espaco-publico-esplanada') {
-      const versao = ficha?.versao ?? '2026-10-18.1';
-      const refTitulo = 'Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º e Anexo I)';
-      const fonteOficial = `${refTitulo} · consultado a 18/10/2026 (v${versao})`;
-
-      // Resposta estruturada de referência
-      const textoCandidato = [
-        'Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do estabelecimento, basta uma <b>mera comunicação prévia</b>, não sendo necessária licença.',
-        '',
-        '<b>O que fazer agora:</b>',
-        '1. Indicar o número de mesas pretendido e os meses de funcionamento;',
-        '2. Assegurar que fica livre um <b>corredor para peões com pelo menos 2,00 metros</b> na calçada;',
-        '3. Enviar uma fotografia do passeio para confirmar as dimensões;',
-        '4. Eu preparo o rascunho da comunicação para você rever antes de submeter.',
-        '',
-        '<b>O que não consigo confirmar:</b> o valor exato da taxa, que é apurado pela Câmara em função da área e do período.',
-        '',
-        `📄 Fonte: <i>${fonteOficial}</i>`,
-      ].join('\n');
-
-      // Redação com modelo gratuito OpenRouter (ex.: minimax/minimax-m3.1-flash:free)
-      const redacao = await this.#redator.redigir({
-        pergunta: limpo,
-        servicoId,
-        categoria: 'catalogo',
-        comportamento: 'responder',
-        contextoFactos: [
-          ficha?.titulo_oficial ?? 'Mera Comunicação Prévia de Ocupação do Espaço Público com Esplanada Aberta',
-          ...(ficha?.condicoes.map((c) => c.texto) ?? []),
-          'Taxa apurada em função da área e do período (RTTL 2025). Corredor pedonal livre de pelo menos 2,00 metros na calçada. Mobiliário amovível sem fixação ao pavimento.',
-        ].join('\n'),
-        fonteOficial,
-        versao,
-        textoReferencia: textoCandidato,
-      });
-
-      const textoFinal = redacao.texto;
-
-      // Verificação por regra
-      const textosFontes = [
-        ficha?.condicoes.map((c) => c.texto).join(' ') ?? '',
-        ficha?.titulo_oficial ?? '',
-        '2,00 metros 2.00 metros corredor 2,00 m',
-        textoCandidato,
-      ];
-      const validacao = VerificadorRegra.verificar(textoFinal, textosFontes);
-
-      await this.#registo.registar({
-        tipo: 'afonso.resposta.verificada',
-        origem: 'afonso',
-        sessao: this.#sessao,
-        pessoa,
-        missao: null,
-        ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
-        simulacao: false,
-        dados: {
-          servico: servicoId,
-          versao,
-          citacoes_ok: validacao.valido,
-          numeros_sem_fonte: validacao.numerosSemFonte.length,
-          modelo_redacao: redacao.modeloUsado,
-          gerado_por_llm: redacao.geradoPorLlm,
-          tempo_redacao_ms: redacao.tempoMs,
-        },
-      });
-
-      return {
-        servicoId,
-        focoServico: decisaoJev.focoServico,
-        mudancaServico: decisaoJev.mudancaServico,
-        texto: prefixoMudanca + textoFinal,
-        comportamento: 'responder',
-        categoria: 'catalogo',
-        fontes: [fonteOficial],
-        numerosSemFonte: validacao.numerosSemFonte,
-        modeloRedacao: redacao.modeloUsado,
-        geradoPorLlm: redacao.geradoPorLlm,
-        botoes: [
-          [{ texto: '🔘 Guardar no Cofre e preparar pedido', dados: 'iniciar_esplanada' }],
-          [{ texto: '❓ Quanto vou pagar?', dados: 'pergunta_taxa' }],
-          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-        ],
-      };
-    }
-
-    // Se for Inspeção de Elevadores
-    if (servicoId === 'inspecao-ascensores') {
-      const versao = ficha?.versao ?? '2026-10-18.1';
-      const fonteOficial = `Regulamento de Instalações de Transporte e Elevadores de Guimarães · Tabela de Taxas 2025 (Artigo 34.º) · consultado a 18/10/2026 (v${versao})`;
-
-      let textoElevador = [
-        'A inspeção periódica de elevadores é requerida através do formulário <b>Mod. 316/SQ</b> junto da Câmara Municipal.',
-        '',
-        '<b>Condições e Prazos:</b>',
-        '1. A inspeção periódica realiza-se de dois em dois anos em edifícios abertos ao público, ou de quatro em quatro anos em edifícios habitacionais com mais de 32 fogos ou 8 pisos;',
-        '2. Em caso de reprovação na inspeção, as anomalias devem ser resolvidas dentro do prazo de 30 dias;',
-        '3. A taxa regulamentar de inspeção periódica ou reinspeção é de <b>73,00 €</b>;',
-        '4. Para elevadores novos, é necessária a primeira inspeção para entrada em funcionamento.',
-        '',
-        `📄 Fonte: <i>${fonteOficial}</i>`,
-      ].join('\n');
-
-      const redacao = await this.#redator.redigir({
-        pergunta: limpo,
-        servicoId,
-        categoria: 'catalogo',
-        comportamento: 'responder',
-        contextoFactos: [
-          'Formulário Mod. 316/SQ na Câmara Municipal',
-          'Inspeção periódica: 2 em 2 anos em edifícios abertos ao público; 4 em 4 anos em edifícios habitacionais com mais de 32 fogos ou 8 pisos.',
-          'Prazo de resolução de anomalias: 30 dias.',
-          'Taxa regulamentar: 73,00 €.',
-        ].join('\n'),
-        fonteOficial,
-        versao,
-        textoReferencia: textoElevador,
-      });
-
-      await this.#registo.registar({
-        tipo: 'afonso.resposta.verificada',
-        origem: 'afonso',
-        sessao: this.#sessao,
-        pessoa,
-        missao: null,
-        ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
-        simulacao: false,
-        dados: {
-          servico: servicoId,
-          versao,
-          citacoes_ok: true,
-          numeros_sem_fonte: 0,
-          modelo_redacao: redacao.modeloUsado,
-          gerado_por_llm: redacao.geradoPorLlm,
-          tempo_redacao_ms: redacao.tempoMs,
-        },
-      });
-
-      return {
-        servicoId,
-        focoServico: decisaoJev.focoServico,
-        mudancaServico: decisaoJev.mudancaServico,
-        texto: prefixoMudanca + redacao.texto,
-        comportamento: 'responder',
-        categoria: 'catalogo',
-        fontes: [fonteOficial],
-        modeloRedacao: redacao.modeloUsado,
-        geradoPorLlm: redacao.geradoPorLlm,
-        botoes: [
-          [{ texto: '🔘 Pedir inspeção com o Afonso', dados: 'iniciar_inspecao' }],
-          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-        ],
-      };
-    }
-
-    // Se for Pedido de Informação Prévia (PDM / Urbanismo)
-    if (servicoId === 'pedido-informacao-previa-urbanismo') {
-      const versao = ficha?.versao ?? '2026-10-18.1';
-      const fonteOficial = `Regulamento do Plano Diretor Municipal de Guimarães (Aviso n.º 23214/2020 · Artigos 45.º e 62.º) e RJUE (Art. 14.º, DL 555/99 alterado pelo DL 10/2024) · consultado a 18/10/2026 (v${versao})`;
-
-      const textoPdm = [
-        'Para saber o que pode construir num terreno em Guimarães, pode instruir um <b>Pedido de Informação Prévia (PIP)</b> ao abrigo do Artigo 14.º do RJUE.',
-        '',
-        '<b>Condições e Parâmetros Urbanísticos no PDM:</b>',
-        '• <b>Classificação Geral:</b> Solo Urbano — Espaço Residencial Nível 2;',
-        '• <b>Índice de Utilização do Solo:</b> Máximo 0.60 (Art. 45.º do Regulamento do PDM de Guimarães);',
-        '• <b>Cércea Máxima:</b> 3 pisos;',
-        '• <b>Restrições Ecológicas e Agrícolas:</b> Verificação prévia de não afetação de servidões RAN e REN.',
-        '',
-        '<b>O que fazer agora:</b>',
-        '1. Partilhar a localização do terreno através de link do Google Maps ou coordenadas GPS;',
-        '2. Anexar o ficheiro PDF da Caderneta Predial para comprovação de legitimidade;',
-        '3. Eu preparo o rascunho com o pacote mínimo no seu Cofre Digital sob Mandato D2;',
-        '4. Quando os elementos estiverem reunidos, pode rever e assinar diretamente com a sua Chave Móvel Digital.',
-        '',
-        '<b>O que não consigo confirmar:</b> O Afonso não emite parecer vinculativo; a decisão final é da exclusiva competência dos técnicos municipais de urbanismo da autarquia.',
-        '',
-        `📄 Fonte: <i>${fonteOficial}</i>`,
-      ].join('\n');
-
-      const redacao = await this.#redator.redigir({
-        pergunta: limpo,
-        servicoId,
-        categoria: 'catalogo',
-        comportamento: 'responder',
-        contextoFactos: [
-          'Pedido de Informação Prévia (Artigo 14.º do RJUE).',
-          'Regulamento do Plano Diretor Municipal de Guimarães (Aviso n.º 23214/2020 · Artigos 45.º e 62.º).',
-          'Solo Urbano — Espaço Residencial Nível 2. Índice máximo 0.60. Cércea máxima 3 pisos.',
-          'Elementos de instrução: localização georreferenciada e caderneta predial em PDF.',
-          'Mandato D2 para preparação do pacote instrutório PAC-0002 no cofre digital. Assinatura formal com Chave Móvel Digital.',
-          'O Afonso não emite parecer técnico vinculativo.',
-        ].join('\n'),
-        fonteOficial,
-        versao,
-        textoReferencia: textoPdm,
-      });
-
-      await this.#registo.registar({
-        tipo: 'afonso.resposta.verificada',
-        origem: 'afonso',
-        sessao: this.#sessao,
-        pessoa,
-        missao: null,
-        ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
-        simulacao: false,
-        dados: {
-          servico: servicoId,
-          versao,
-          citacoes_ok: true,
-          numeros_sem_fonte: 0,
-          modelo_redacao: redacao.modeloUsado,
-          gerado_por_llm: redacao.geradoPorLlm,
-          tempo_redacao_ms: redacao.tempoMs,
-        },
-      });
-
-      return {
-        servicoId,
-        focoServico: decisaoJev.focoServico,
-        mudancaServico: decisaoJev.mudancaServico,
-        texto: prefixoMudanca + redacao.texto,
-        comportamento: 'responder',
-        categoria: 'catalogo',
-        fontes: [fonteOficial],
-        modeloRedacao: redacao.modeloUsado,
-        geradoPorLlm: redacao.geradoPorLlm,
-        botoes: [
-          [{ texto: '📋 Preparar Rascunho no Cofre (D2)', dados: 'iniciar_pdm' }],
-          [{ texto: '🗺️ Como partilhar localização?', dados: 'ajuda_google_maps' }],
-          [{ texto: '👤 Falar com um técnico de urbanismo', dados: 'pessoa' }],
-        ],
-      };
-    }
-
-    // Demais serviços municipais oficiais
-    const titulo = ficha?.titulo_simples ?? 'Serviço Municipal';
-    const tipoProc = ficha?.tipo_procedimento ?? 'Requerimento / Comunicação';
-    const versao = ficha?.versao ?? '2026-10-18.1';
-    const dataConsulta = ficha?.fontes?.[0]?.consultado_em ?? '18/10/2026';
-    const refFonte = ficha?.fontes?.[0]?.titulo ?? 'Portal do Município de Guimarães';
-    const fonteOficial = `${refFonte} · consultado a ${dataConsulta} (v${versao})`;
-
-    let condicoesTexto = ficha?.condicoes.map((c, i) => `${i + 1}. ${c.texto}`).join('\n') ?? '1. Cumprir os requisitos regulamentares em vigor.';
-    if (!condicoesTexto) condicoesTexto = '1. Submeter o requerimento oficial acompanhado dos documentos instrutórios.';
-
-    const textoServico = [
-      `Identifiquei o procedimento municipal: <b>${titulo}</b> (${tipoProc}).`,
-      '',
-      '<b>O que fazer agora:</b>',
-      condicoesTexto,
-      '',
-      `📄 Fonte: <i>${fonteOficial}</i>`,
-    ].join('\n');
-
-    const redacao = await this.#redator.redigir({
-      pergunta: limpo,
+    return gerarRespostaCatalogo({
       servicoId,
-      categoria: 'catalogo',
-      comportamento: 'responder',
-      contextoFactos: [
-        `Procedimento: ${titulo} (${tipoProc})`,
-        condicoesTexto,
-      ].join('\n'),
-      fonteOficial,
-      versao,
-      textoReferencia: textoServico,
-    });
-
-    await this.#registo.registar({
-      tipo: 'afonso.resposta.verificada',
-      origem: 'afonso',
-      sessao: this.#sessao,
+      ficha,
+      limpo,
+      prefixoMudanca,
       pessoa,
-      missao: null,
-      ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
-      simulacao: false,
-      dados: {
-        servico: servicoId,
-        versao,
-        citacoes_ok: true,
-        numeros_sem_fonte: 0,
-        modelo_redacao: redacao.modeloUsado,
-        gerado_por_llm: redacao.geradoPorLlm,
-        tempo_redacao_ms: redacao.tempoMs,
-      },
+      sessao: this.#sessao,
+      registo: this.#registo,
+      redator: this.#redator,
+      decisaoJev,
     });
-
-    const botoes = servicoId === 'pedido-informacao-previa-urbanismo'
-      ? [
-          [{ texto: '📋 Preparar Rascunho no Cofre (D2)', dados: 'iniciar_pdm' }],
-          [{ texto: '🗺️ Como enviar Google Maps?', dados: 'ajuda_google_maps' }],
-          [{ texto: '👤 Falar com um técnico de urbanismo', dados: 'pessoa' }],
-        ]
-      : [
-          [{ texto: '🔘 Preparar no Cofre com o Afonso (D2)', dados: `iniciar_${servicoId}` }],
-          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-        ];
-
-    return {
-      servicoId,
-      focoServico: decisaoJev.focoServico,
-      mudancaServico: decisaoJev.mudancaServico,
-      texto: prefixoMudanca + redacao.texto,
-      comportamento: 'responder',
-      categoria: 'catalogo',
-      fontes: [fonte],
-      modeloRedacao: redacao.modeloUsado,
-      geradoPorLlm: redacao.geradoPorLlm,
-      botoes,
-    };
   }
 }
