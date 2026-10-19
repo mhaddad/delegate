@@ -20,6 +20,7 @@ import {
   tratarSemFonte,
 } from './respostas-fronteira.ts';
 import { gerarRespostaCatalogo } from './respostas-catalogo.ts';
+import { BuscadorConhecimento } from '../conhecimento/buscador.ts';
 import type { Botoes } from '../canal.ts';
 
 export interface MemoriaConversa {
@@ -52,6 +53,7 @@ export class Afonso {
   readonly #sessao: string;
   readonly #motorDecisao: MotorDecisaoTypeSafe;
   readonly #redator: RedatorOpenRouter;
+  readonly #buscador: BuscadorConhecimento;
   readonly #contextoConversa = new Map<string, MemoriaConversa>();
 
   constructor(
@@ -60,12 +62,14 @@ export class Afonso {
     sessao = 'demo',
     motorDecisao?: MotorDecisaoTypeSafe,
     redator?: RedatorOpenRouter,
+    buscador?: BuscadorConhecimento,
   ) {
     this.#registo = registo;
     this.#porta = porta ?? new ClientePortaMcp();
     this.#sessao = sessao;
     this.#motorDecisao = motorDecisao ?? new MotorDecisaoTypeSafe();
     this.#redator = redator ?? new RedatorOpenRouter();
+    this.#buscador = buscador ?? new BuscadorConhecimento();
   }
 
   /** Trata uma mensagem de texto recebida no canal com acompanhamento de continuidade de serviço. */
@@ -150,7 +154,46 @@ export class Afonso {
     const respSemFonte = await tratarSemFonte(pessoa, classificacao, limpo, this.#registo, this.#sessao);
     if (respSemFonte) return respSemFonte;
 
-    // 5. Catálogo de Serviços Oficiais
+    // 5. Base de Conhecimento RAG D0 (Site e Diretório de Guimarães via Cloudflare /markdown)
+    const pediuEsplanadaExplicitamente = /esplanada|mesas na rua|abrir esplanada|toldo|estrado/i.test(limpo);
+    const temServicoExplicito =
+      (decisaoJev.servicoId && (decisaoJev.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente)) ||
+      (classificacao.servicoId && (classificacao.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente));
+    if (!temServicoExplicito) {
+      const matchRAG = this.#buscador.buscar(limpo);
+      if (matchRAG && matchRAG.pontuacao >= 7) {
+        await this.#registo.registar({
+          tipo: 'afonso.resposta.verificada',
+          origem: 'afonso',
+          sessao: this.#sessao,
+          pessoa,
+          missao: contextoDecisao.missaoId ?? null,
+          ator: 'agente:conhecimento-rag',
+          simulacao: false,
+          dados: {
+            fonte: matchRAG.url,
+            titulo: matchRAG.titulo,
+            categoria: matchRAG.categoria,
+            hash_sha256: matchRAG.hashSha256,
+            consultado_em: matchRAG.consultadoEm,
+            pontuacao: matchRAG.pontuacao,
+          },
+        });
+
+        const respFormatada = this.#buscador.formatarResposta(matchRAG);
+        return {
+          texto: respFormatada.texto,
+          botoes: respFormatada.botoes,
+          servicoId: matchRAG.id,
+          servicoTitulo: matchRAG.titulo,
+          comportamento: 'responder',
+          categoria: 'conhecimento_d0',
+          fontes: [matchRAG.url],
+        };
+      }
+    }
+
+    // 6. Catálogo de Serviços Oficiais
     const servicoId = decisaoJev.servicoId ?? classificacao.servicoId ?? 'ocupacao-espaco-publico-esplanada';
 
     // Obter ficha do catálogo da Porta Agêntica
