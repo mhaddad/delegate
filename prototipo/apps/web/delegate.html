@@ -9,37 +9,45 @@
     <link rel="shortcut icon" href="/assets/delegate-symbol.png" type="image/png" />
     <link rel="apple-touch-icon" href="/assets/delegate-symbol.png" />
 
-    <!-- Tipografia Moderna: Plus Jakarta Sans & JetBrains Mono -->
+    <!-- Tipografia partilhada com os ecrãs da Câmara (Barlow + JetBrains Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
     <style>
       :root {
-        /* Paleta Delegate · Plataforma de Integração MCP */
-        --del-fundo-obs: #07090e;
-        --del-fundo: #0d111a;
-        --del-cartao: rgba(18, 24, 38, 0.75);
-        --del-cartao-destaque: rgba(26, 34, 54, 0.85);
-        --del-borda: rgba(255, 255, 255, 0.08);
-        --del-borda-brilhante: rgba(139, 92, 246, 0.35);
+        /* Paleta Delegate — derivada do símbolo oficial (assets/delegate-symbol.png).
+           Navy #121b2c, verde Delegate #70bb86, tinta #e9edf2. Não são tokens
+           de biblioteca: são as cores medidas no activo da marca. */
+        --del-fundo-obs: #0a0f18;
+        --del-fundo: #0d131e;
+        --del-cartao: rgba(18, 27, 44, 0.75);
+        --del-cartao-destaque: rgba(24, 35, 55, 0.85);
+        --del-borda: rgba(233, 237, 242, 0.10);
+        --del-borda-brilhante: rgba(112, 187, 134, 0.40);
 
-        --del-indigo: #6366f1;
-        --del-roxo: #8b5cf6;
-        --del-violeta: #a855f7;
-        --del-ciano: #06b6d4;
-        --del-verde: #10b981;
-        --del-ambar: #f59e0b;
-        --del-vermelho: #ef4444;
+        /* Verde Delegate como acento único. Os estados semânticos derivam dele
+           por luminosidade e saturação, não de outra paleta de biblioteca. */
+        --del-acento: #70bb86;
+        --del-acento-forte: #8ccfa0;
+        --del-acento-escuro: #4f8f63;
+        --del-acento-veu: rgba(112, 187, 134, 0.14);
 
-        --del-texto: #f8fafc;
-        --del-texto-secundario: #94a3b8;
-        --del-texto-suave: #64748b;
+        /* Estados: derivam do acento, não de uma escala arco-íris. */
+        --del-espera: #c9a227;   /* D0–D1 · ainda não actua */
+        --del-aviso: #d98c3f;    /* D2 · prepara */
+        --del-ativa: #70bb86;    /* D3–D4 · mandato activo */
+        --del-erro: #c25b52;     /* revogado / falhado */
 
-        --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        --del-texto: #e9edf2;
+        --del-texto-secundario: #9aa8b8;
+        --del-texto-suave: #66748a;
+
+        --font-primary: 'Barlow', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-condensed: 'Barlow Condensed', 'Arial Narrow', sans-serif;
         --font-mono: 'JetBrains Mono', monospace;
       }
 
@@ -47,10 +55,6 @@
 
       body {
         background-color: var(--del-fundo-obs);
-        background-image:
-          radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
-          radial-gradient(circle at 85% 25%, rgba(168, 85, 247, 0.10) 0%, transparent 45%),
-          radial-gradient(circle at 50% 85%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
         color: var(--del-texto);
         font-family: var(--font-primary);
         font-size: 13.5px;
@@ -63,9 +67,7 @@
 
       /* 1. CABEÇALHO DELEGA */
       header.del-header {
-        background: rgba(13, 17, 26, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background: rgba(10, 15, 24, 0.92);
         border-bottom: 1px solid var(--del-borda);
         padding: 0.75rem 2rem;
         position: sticky;
@@ -92,15 +94,14 @@
         height: 38px;
         width: auto;
         display: block;
-        filter: drop-shadow(0 2px 8px rgba(99, 102, 241, 0.3));
       }
 
       .tag-intermediario {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
-        border: 1px solid rgba(139, 92, 246, 0.4);
-        color: #c084fc;
+        background: var(--del-acento-veu);
+        border: 1px solid rgba(112, 187, 134, 0.40);
+        color: var(--del-acento-forte);
         padding: 3px 10px;
-        border-radius: 999px;
+        border-radius: 3px;
         font-size: 10px;
         font-weight: 700;
         letter-spacing: 0.06em;
@@ -109,6 +110,21 @@
         align-items: center;
         gap: 0.35rem;
       }
+
+      /* Ícones: um único traço, herdam currentColor. Substituem os emojis,
+         que traziam o seu próprio glossótipo e eram lidos em voz alta. */
+      .ico {
+        width: 1em;
+        height: 1em;
+        flex: none;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vertical-align: -0.125em;
+      }
+      .ico-lista { display: inline-flex; align-items: center; gap: 0.5rem; }
 
       .header-nav {
         display: flex;
@@ -137,13 +153,12 @@
 
       .nav-link.ativo {
         color: #ffffff;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.35);
-        box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
+        background: var(--del-acento-veu);
+        border: 1px solid rgba(112, 187, 134, 0.45);
       }
 
       .nav-link.externo {
-        color: #38bdf8;
+        color: #8ccfa0;
         border: 1px solid rgba(56, 189, 248, 0.2);
         background: rgba(56, 189, 248, 0.05);
       }
@@ -155,21 +170,20 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
+        background: rgba(112, 187, 134, 0.10);
+        border: 1px solid rgba(112, 187, 134, 0.32);
         padding: 0.35rem 0.8rem;
         border-radius: 999px;
         font-size: 11px;
         font-weight: 600;
-        color: #34d399;
+        color: #8ccfa0;
       }
 
       .status-dot {
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: #10b981;
-        box-shadow: 0 0 10px #10b981;
+        background: var(--del-acento);
         animation: pulso 2s infinite;
       }
 
@@ -195,8 +209,8 @@
       }
 
       .faixa-separacao-sistema {
-        background: linear-gradient(90deg, rgba(30, 27, 75, 0.95), rgba(17, 24, 39, 0.95));
-        border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        background: rgba(10, 15, 24, 0.96);
+        border-bottom: 1px solid rgba(112, 187, 134, 0.28);
         padding: 0.65rem 1.75rem;
       }
 
@@ -212,8 +226,8 @@
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        background: rgba(139, 92, 246, 0.25);
-        border: 1px solid rgba(168, 85, 247, 0.5);
+        background: rgba(112, 187, 134, 0.22);
+        border: 1px solid rgba(112, 187, 134, 0.48);
         color: #e9d5ff;
         font-family: var(--font-mono);
         font-size: 11px;
@@ -232,7 +246,19 @@
       }
 
       .separacao-texto strong {
-        color: #f8fafc;
+        color: var(--del-texto);
+      }
+
+      /* Links dentro da frase: alvo de toque sem partir o ritmo da linha. */
+      .separacao-texto a {
+        display: inline-block;
+        padding: 0.85rem 0;
+        color: var(--del-acento-forte);
+        text-decoration: underline;
+      }
+      .separacao-texto a:focus-visible {
+        outline: 2px solid var(--del-acento-forte);
+        outline-offset: 2px;
       }
 
       /* 2. LAYOUT PRINCIPAL */
@@ -260,8 +286,6 @@
         border-radius: 12px;
         padding: 1.25rem 1.4rem;
         position: relative;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
         transition: border-color 0.2s ease, transform 0.2s ease;
       }
 
@@ -270,17 +294,16 @@
       }
 
       .mundo-card.municipe {
-        border-top: 3px solid var(--del-ciano);
+        border-top: 3px solid var(--del-acento-escuro);
       }
 
       .mundo-card.intermediario {
-        border-top: 3px solid var(--del-roxo);
-        background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(18, 24, 38, 0.85) 100%);
-        box-shadow: 0 4px 30px rgba(124, 58, 237, 0.12);
+        border-top: 3px solid var(--del-acento);
+        background: var(--del-acento-veu);
       }
 
       .mundo-card.camara {
-        border-top: 3px solid var(--del-ambar);
+        border-top: 3px solid var(--del-espera);
       }
 
       .mundo-topo {
@@ -310,9 +333,9 @@
         text-transform: uppercase;
       }
 
-      .badge-municipe { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); }
-      .badge-del { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
-      .badge-camara { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+      .badge-municipe { background: rgba(112, 187, 134, 0.16); color: #8ccfa0; border: 1px solid rgba(112, 187, 134, 0.32); }
+      .badge-del { background: rgba(112, 187, 134, 0.20); color: #8ccfa0; border: 1px solid rgba(112, 187, 134, 0.42); }
+      .badge-camara { background: rgba(201, 162, 39, 0.16); color: #d9b344; border: 1px solid rgba(201, 162, 39, 0.34); }
 
       .lista-itens {
         display: flex;
@@ -364,7 +387,7 @@
 
       .radar-top-row {
         display: grid;
-        grid-template-columns: 1.4fr 1fr;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
         gap: 1.5rem;
         align-items: center;
       }
@@ -379,14 +402,13 @@
         width: 38px;
         height: 38px;
         border-radius: 10px;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.4);
+        background: var(--del-acento-veu);
+        border: 1px solid rgba(112, 187, 134, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 18px;
         flex-shrink: 0;
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
       }
 
       .radar-texto h2 {
@@ -437,10 +459,8 @@
       }
 
       .mandato-pill.ativo {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3));
-        border: 1px solid rgba(245, 158, 11, 0.7);
-        box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
-        transform: translateY(-2px);
+        background: var(--del-acento-veu);
+        border: 1px solid rgba(112, 187, 134, 0.7);
       }
 
       .mandato-pill.ativo .sigla {
@@ -508,14 +528,13 @@
       }
 
       .ferramenta-card:hover {
-        background: rgba(99, 102, 241, 0.06);
-        border-color: rgba(99, 102, 241, 0.3);
+        background: rgba(112, 187, 134, 0.06);
+        border-color: rgba(112, 187, 134, 0.32);
       }
 
       .ferramenta-card.selecionada {
-        background: rgba(99, 102, 241, 0.12);
-        border-color: rgba(99, 102, 241, 0.6);
-        box-shadow: 0 0 14px rgba(99, 102, 241, 0.2);
+        background: var(--del-acento-veu);
+        border-color: rgba(112, 187, 134, 0.6);
       }
 
       .ferramenta-header-row {
@@ -545,9 +564,9 @@
         text-transform: uppercase;
       }
 
-      .badge-publico { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-      .badge-mandato-d2 { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
-      .badge-mandato-d3 { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+      .badge-publico { background: rgba(112, 187, 134, 0.15); color: #8ccfa0; border: 1px solid rgba(112, 187, 134, 0.32); }
+      .badge-mandato-d2 { background: rgba(56, 189, 248, 0.15); color: #8ccfa0; border: 1px solid rgba(56, 189, 248, 0.3); }
+      .badge-mandato-d3 { background: rgba(201, 162, 39, 0.16); color: #d9b344; border: 1px solid rgba(201, 162, 39, 0.34); }
 
       /* Playground MCP */
       .playground-corpo {
@@ -580,8 +599,8 @@
       }
 
       .cliente-btn.ativo {
-        background: rgba(99, 102, 241, 0.2);
-        border-color: rgba(99, 102, 241, 0.5);
+        background: rgba(112, 187, 134, 0.20);
+        border-color: rgba(112, 187, 134, 0.52);
         color: #ffffff;
       }
 
@@ -591,7 +610,7 @@
         background: #080a10;
         border: 1px solid var(--del-borda);
         border-radius: 8px;
-        color: #38bdf8;
+        color: #8ccfa0;
         font-family: var(--font-mono);
         font-size: 12px;
         padding: 0.75rem;
@@ -599,8 +618,8 @@
       }
 
       button.btn-executar {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        color: #ffffff;
+        background: var(--del-acento);
+        color: #06120b;
         border: none;
         padding: 0.75rem 1.2rem;
         border-radius: 8px;
@@ -612,12 +631,13 @@
         justify-content: center;
         gap: 0.5rem;
         transition: all 0.2s ease;
-        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
       }
 
       button.btn-executar:hover {
+        background: var(--del-acento-forte);
         transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       }
 
       pre.resposta-box {
@@ -666,9 +686,96 @@
         font-size: 10.5px;
         color: var(--del-texto-suave);
       }
+
+      /* Seta de saída: comunica que o link sai do sistema Delegate para a Câmara.
+         aria-hidden — o nome acessível está no aria-label do link. */
+      .ico-saida { font-size: 0.9em; opacity: 0.65; }
+
+      /* Visibilidade de foco: teclado tem de ver onde está. */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 2px solid var(--del-acento-forte);
+        outline-offset: 2px;
+        border-radius: 3px;
+      }
+
+      /* Alvos de toque: mínimo ~44px, para uso com telemóvel na mão. */
+      .nav-link { min-height: 44px; }
+      .nav-link > span { display: inline-flex; align-items: center; }
+      .cliente-btn { min-height: 44px; }
+      button.btn-executar { min-height: 44px; }
+
+      /* Movimento reduzido: o pulso do indicador de servidor vivo deixa de
+         pulsar, mas o estado continua legível pela cor e pelo texto. */
+      @media (prefers-reduced-motion: reduce) {
+        .status-dot { animation: none; }
+        * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      }
+
+      /* ---- Responsivo ----
+         O ecrã é composto para projeção, mas transbordava na horizontal em
+         ecrãs estreitos: a navegação e o tríptico têm largura fixa. Aqui a
+         largura deixa de ser imposta e passa a ser derivada do espaço. */
+
+      @media (max-width: 1100px) {
+        .triptico-container { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 900px) {
+        header.del-header { padding: 0.75rem 1.25rem; }
+        .header-conteudo { flex-wrap: wrap; gap: 0.75rem; }
+        .header-nav { flex-wrap: wrap; gap: 0.35rem; min-width: 0; }
+        .logo-area { min-width: 0; flex-wrap: wrap; }
+        .nav-link { min-height: 44px; padding: 0.5rem 0.75rem; }
+        .divisor-vertical-del { display: none; }
+        main.del-corpo { padding: 1rem 1.25rem 2.5rem; }
+        .faixa-separacao-sistema { padding: 0.75rem 1.25rem; }
+      }
+
+      @media (max-width: 640px) {
+        body { font-size: 13px; }
+        .logo-delegate-header { height: 30px; }
+        .header-conteudo { flex-direction: column; align-items: flex-start; }
+        .header-nav { flex-direction: column; align-items: stretch; width: 100%; }
+        .nav-link { width: 100%; justify-content: flex-start; }
+        .etiqueta-lado-camara { margin: 0.5rem 0 0.25rem; }
+        main.del-corpo { padding: 0.875rem 1rem 2rem; gap: 1rem; }
+        .mundo-card { padding: 1rem; }
+        .radar-top-row { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+        pre.resposta-box { font-size: 11px; }
+        /* Tabelas de dados: scroll controlado em vez de transbordo da página. */
+        .tabela-auditoria { display: block; overflow-x: auto; white-space: nowrap; }
+      }
     </style>
   </head>
   <body>
+
+    <!-- Conjunto de ícones da Plataforma: um traço, sem preenchimento, herdando
+         currentColor. Substituem os emojis, que traziam glossótipo próprio
+         (inadequado a uma instituição autárquica), variavam entre sistemas
+         operativos e eram lidos em voz alta pelos leitores de ecrã. -->
+    <svg width="0" height="0" aria-hidden="true" focusable="false"
+         style="position:absolute;overflow:hidden">
+      <symbol id="ico-engrenagem" viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></symbol>
+      <symbol id="ico-raio" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></symbol>
+      <symbol id="ico-painel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15h18M8 15v5"/></symbol>
+      <symbol id="ico-bustos" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M17 8h4M19 6v4"/></symbol>
+      <symbol id="ico-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+      <symbol id="ico-telemovel" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18.5h2"/></symbol>
+      <symbol id="ico-cadeado" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+      <symbol id="ico-mandato" viewBox="0 0 24 24"><path d="M8 12 5 15l3 3"/><path d="m16 12 3 3-3 3"/><path d="M13.5 8.5 10.5 15.5"/></symbol>
+      <symbol id="ico-escudo" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4 2.9 7.7 7 9.5 4.1-1.8 7-5.5 7-9.5V6l-7-3Z"/></symbol>
+      <symbol id="ico-rede" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></symbol>
+      <symbol id="ico-camara" viewBox="0 0 24 24"><path d="M3 21h18M4 21V10l8-6 8 6v11M9 21v-5h6v5"/><path d="M9 11h.01M15 11h.01"/></symbol>
+      <symbol id="ico-documento" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+      <symbol id="ico-carteira" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M17 14.5h.01"/></symbol>
+      <symbol id="ico-laboratorio" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.5L4.6 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></symbol>
+      <symbol id="ico-aviso" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19L12 4Z"/><path d="M12 10v4M12 17.5h.01"/></symbol>
+      <symbol id="ico-selo" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6V2Z"/><path d="M15 2v5h5M9 12h6M9 16h4"/></symbol>
+    </svg>
+
     <div id="root"></div>
 
     <!-- Preact + HTM via CDN ESM -->
@@ -678,6 +785,9 @@
       import htm from 'https://esm.sh/htm@3.1.1';
 
       const html = htm.bind(h);
+
+      const ico = (nome, tam = '1em') =>
+        html`<svg class="ico" style=${{ fontSize: tam }} aria-hidden="true" focusable="false"><use href=${'#ico-' + nome} /></svg>`;
 
       const FERRAMENTAS_MCP = [
         {
@@ -813,7 +923,7 @@
           if (t === 'afonso.intencao.classificada') {
             const isJev = ultimoEvento.dados?.motor === 'typesafe-jev';
             return {
-              titulo: isJev ? '⚡ TypeSafe Jev inferiu Intenção e Mandato em Tempo Real' : 'Afonso classificou a intenção do munícipe',
+              titulo: isJev ? 'TypeSafe Jev inferiu Intenção e Mandato em Tempo Real' : 'Afonso classificou a intenção do munícipe',
               descricao: `Procedimento: ${ultimoEvento.dados?.intencao} · Mandato: ${ultimoEvento.dados?.mandato_inferido || 'D0'} · Confiança: ${Math.round((ultimoEvento.dados?.confianca || 1)*100)}% (${ultimoEvento.dados?.tempo_ms || 250}ms).`,
               origem: 'typesafe:jev'
             };
@@ -936,25 +1046,27 @@
               <div class="logo-area">
                 <img src="/assets/delegate-header.png" alt="Delegate" class="logo-delegate-header" />
                 <span class="tag-intermediario">
-                  <span>⚙️</span>
+                  ${ico('engrenagem')}
                   <span>Plataforma de Integração</span>
                 </span>
               </div>
 
               <nav class="header-nav">
                 <a href="/delegate" class="nav-link ativo" title="Visão de Sistema: Protocolo Agêntico, Mandatos e Chamadas MCP">
-                  <span>⚡</span>
+                  ${ico('raio')}
                   <span>Plataforma Delegate (Integração & MCP)</span>
                 </a>
                 <span class="divisor-vertical-del"></span>
                 <span class="etiqueta-lado-camara">Sistemas da Câmara:</span>
-                <a href="/" class="nav-link externo" title="Aceder ao Painel de Atividade Municipal">
-                  <span>📊</span>
-                  <span>Painel de Atividade ↗</span>
+                <a href="/" class="nav-link externo" title="Aceder ao Painel de Atividade Municipal" aria-label="Aceder ao Painel de Atividade Municipal, que sai do sistema Delegate">
+                  ${ico('painel')}
+                  <span>Painel de Atividade</span>
+                  <span class="ico-saida" aria-hidden="true">↗</span>
                 </a>
-                <a href="/consola" class="nav-link externo" title="Aceder à Consola Técnica dos Serviços Urbanos">
-                  <span>👩‍💼</span>
-                  <span>Consola Técnica ↗</span>
+                <a href="/consola" class="nav-link externo" title="Aceder à Consola Técnica dos Serviços Urbanos" aria-label="Aceder à Consola Técnica, que sai do sistema Delegate">
+                  ${ico('bustos')}
+                  <span>Consola Técnica</span>
+                  <span class="ico-saida" aria-hidden="true">↗</span>
                 </a>
               </nav>
 
@@ -971,12 +1083,12 @@
           <div class="faixa-separacao-sistema">
             <div class="separacao-conteudo">
               <div class="pill-distincao-sistema">
-                <span>⚙️</span>
+                ${ico('engrenagem')}
                 <span>ARQUITETURA DO SISTEMA</span>
               </div>
               <div class="separacao-texto">
                 <strong>Plataforma de Integração Delegate:</strong> Monitorização em tempo real das chamadas MCP, decisões TypeSafe (Jev), inferência tipada de mandatos (D0 a D4) e fluxo de eventos.
-                A Câmara Municipal acede exclusivamente aos seus postos oficiais (<a href="/" style=${{ color: '#93c5fd', textDecoration: 'underline' }}>Painel de Atividade</a> e <a href="/consola" style=${{ color: '#93c5fd', textDecoration: 'underline' }}>Consola Técnica</a>).
+                A Câmara Municipal acede exclusivamente aos seus postos oficiais (<a href="/">Painel de Atividade</a> e <a href="/consola">Consola Técnica</a>).
               </div>
             </div>
           </div>
@@ -987,8 +1099,8 @@
               <!-- CAMADA 1: O CIDADÃO -->
               <div class="mundo-card municipe">
                 <div class="mundo-topo">
-                  <div class="mundo-titulo" style=${{ color: '#38bdf8' }}>
-                    <span>👤</span>
+                  <div class="mundo-titulo" style=${{ color: '#8ccfa0' }}>
+                    ${ico('pessoa')}
                     <span>1. Camada do Cidadão</span>
                   </div>
                   <span class="badge-mundo badge-municipe">Telemóvel & Atendimento</span>
@@ -996,21 +1108,21 @@
                 <div class="lista-itens">
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">📱 Assistente no Telegram</span>
-                      <span style=${{ color: '#34d399', fontSize: '11px', fontWeight: '700' }}>● Ligado</span>
+                      <span class="item-nome ico-lista">${ico('telemovel')} Assistente no Telegram</span>
+                      <span style=${{ color: '#8ccfa0', fontSize: '11px', fontWeight: '700' }}>● Ligado</span>
                     </div>
                     <span class="item-sub">Assistente digital do cidadão (@afonso_cm_bot). Atua em nome do munícipe.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">🔐 Armazenamento Local Cifrado</span>
-                      <span style=${{ color: '#c084fc', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>AES-256-GCM</span>
+                      <span class="item-nome ico-lista">${ico('cadeado')} Armazenamento Local Cifrado</span>
+                      <span style=${{ color: '#8ccfa0', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>AES-256-GCM</span>
                     </div>
                     <span class="item-sub">Dados e chaves privadas cifrados localmente com controlo exclusivo do munícipe.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">🤝 Mandato Autorizado do Cidadão</span>
+                      <span class="item-nome ico-lista">${ico('mandato')} Mandato Autorizado do Cidadão</span>
                       <span style=${{ color: '#f59e0b', fontSize: '11px', fontWeight: '800', fontFamily: 'var(--font-mono)' }}>${mandatoAtivo.nivel}</span>
                     </div>
                     <span class="item-sub">${mandatoAtivo.id}: ${mandatoAtivo.objeto}. Pode ser revogado a qualquer instante.</span>
@@ -1021,31 +1133,31 @@
               <!-- CAMADA 2: PLATAFORMA DE INTEGRAÇÃO DELEGATE (PORTA AGÊNTICA & JEV) -->
               <div class="mundo-card intermediario">
                 <div class="mundo-topo">
-                  <div class="mundo-titulo" style=${{ color: '#c084fc' }}>
-                    <span>⚡</span>
+                  <div class="mundo-titulo" style=${{ color: '#8ccfa0' }}>
+                    ${ico('raio')}
                     <span>2. Camada de Integração (Delegate)</span>
                   </div>
                   <span class="badge-mundo badge-del">Middleware & MCP</span>
                 </div>
                 <div class="lista-itens">
-                  <div class="item-camada" style=${{ border: '1px solid rgba(139, 92, 246, 0.35)', background: 'rgba(124, 58, 237, 0.08)' }}>
+                  <div class="item-camada" style=${{ border: '1px solid rgba(112, 187, 134, 0.38)', background: 'rgba(112, 187, 134, 0.07)' }}>
                     <div class="item-cabecalho">
-                      <span class="item-nome">⚡ TypeSafe System One (Jev)</span>
+                      <span class="item-nome ico-lista">${ico('raio')} TypeSafe System One (Jev)</span>
                       <span style=${{ background: '#7c3aed', color: '#ffffff', fontSize: '9px', fontWeight: '800', padding: '1px 6px', borderRadius: '4px' }}>DECISÃO</span>
                     </div>
                     <span class="item-sub">Classificação instantânea (&lt;300ms) de intenções, inferência de mandatos (D0–D4) e seleção de ferramentas MCP.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">🛡️ Filtro de Privacidade (RGPD)</span>
-                      <span style=${{ color: '#34d399', fontSize: '11px' }}>Minimização</span>
+                      <span class="item-nome ico-lista">${ico('escudo')} Filtro de Privacidade (RGPD)</span>
+                      <span style=${{ color: '#8ccfa0', fontSize: '11px' }}>Minimização</span>
                     </div>
                     <span class="item-sub">Empacota estritamente os parâmetros necessários para instrução do pedido municipal.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">🌐 Servidor MCP v2 (:4001)</span>
-                      <span style=${{ color: '#38bdf8', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>Streamable HTTP</span>
+                      <span class="item-nome ico-lista">${ico('rede')} Servidor MCP v2 (:4001)</span>
+                      <span style=${{ color: '#8ccfa0', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>Streamable HTTP</span>
                     </div>
                     <span class="item-sub">Protocolo aberto padrão Model Context Protocol para representação autárquica sem atrito.</span>
                   </div>
@@ -1055,8 +1167,8 @@
               <!-- CAMADA 3: SERVIÇOS MUNICIPAIS -->
               <div class="mundo-card camara">
                 <div class="mundo-topo">
-                  <div class="mundo-titulo" style=${{ color: '#fbbf24' }}>
-                    <span>🏛️</span>
+                  <div class="mundo-titulo" style=${{ color: '#d9b344' }}>
+                    ${ico('camara')}
                     <span>3. Camada Municipal (Câmara de Guimarães)</span>
                   </div>
                   <span class="badge-mundo badge-camara">Sistemas Autárquicos</span>
@@ -1064,21 +1176,21 @@
                 <div class="lista-itens">
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">📋 Serviços Urbanos</span>
-                      <span style=${{ color: '#fbbf24', fontSize: '11px', fontWeight: '700' }}>Tramitação</span>
+                      <span class="item-nome ico-lista">${ico('documento')} Serviços Urbanos</span>
+                      <span style=${{ color: '#d9b344', fontSize: '11px', fontWeight: '700' }}>Tramitação</span>
                     </div>
                     <span class="item-sub">Recebe apenas comunicações prévias e requerimentos instruídos sob mandato D3 comprovado.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">👩‍💼 Consola Técnica</span>
-                      <span style=${{ color: '#38bdf8', fontSize: '11px' }}>Apreciação</span>
+                      <span class="item-nome ico-lista">${ico('bustos')} Consola Técnica</span>
+                      <span style=${{ color: '#8ccfa0', fontSize: '11px' }}>Apreciação</span>
                     </div>
                     <span class="item-sub">Ambiente de trabalho dos funcionários da autarquia para despacho e validação técnica de processos.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
-                      <span class="item-nome">💳 Tesouraria Municipal</span>
+                      <span class="item-nome ico-lista">${ico('carteira')} Tesouraria Municipal</span>
                       <span style=${{ color: '#94a3b8', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>RTTL 2025</span>
                     </div>
                     <span class="item-sub">Emissão de guias e referências de pagamento das taxas devidas pelo munícipe.</span>
@@ -1092,11 +1204,11 @@
               <div class="radar-top-row">
                 <!-- Atividade Atual do Agente -->
                 <div class="radar-atividade-box">
-                  <div class="radar-icone-pulsar">⚡</div>
+                  <div class="radar-icone-pulsar">${ico('raio')}</div>
                   <div class="radar-texto">
                     <h2>
                       <span>Atividade do Sistema em Tempo Real:</span>
-                      <span style=${{ color: '#c084fc' }}>${atividadeAgente.titulo}</span>
+                      <span style=${{ color: '#8ccfa0' }}>${atividadeAgente.titulo}</span>
                     </h2>
                     <p>${atividadeAgente.descricao}</p>
                   </div>
@@ -1108,8 +1220,8 @@
                     <span style=${{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--del-texto-secundario)', letterSpacing: '0.05em' }}>
                       Nível de Mandato Inferido:
                     </span>
-                    <span style=${{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(124, 58, 237, 0.15)', border: '1px solid rgba(139, 92, 246, 0.4)', borderRadius: '999px', padding: '2px 8px', color: '#c084fc', fontSize: '10px', fontWeight: '700' }}>
-                      <span>⚡</span>
+                    <span style=${{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(112, 187, 134, 0.16)', border: '1px solid rgba(112, 187, 134, 0.42)', borderRadius: '999px', padding: '2px 8px', color: '#8ccfa0', fontSize: '10px', fontWeight: '700' }}>
+                      ${ico('raio')}
                       <span>TypeSafe Jev</span>
                     </span>
                   </div>
@@ -1145,7 +1257,7 @@
               <div class="painel-box">
                 <div class="painel-cabecalho">
                   <h3>
-                    <span>⚙️</span>
+                    ${ico('engrenagem')}
                     <span>Capacidades Expostas no Barramento MCP (:4001)</span>
                   </h3>
                   <span style=${{ fontSize: '11px', color: 'var(--del-texto-suave)', fontFamily: 'var(--font-mono)' }}>MCP Protocol v2</span>
@@ -1172,10 +1284,10 @@
               <div class="painel-box">
                 <div class="painel-cabecalho">
                   <h3>
-                    <span>🧪</span>
+                    ${ico('laboratorio')}
                     <span>Consola de Chamada MCP em Direto</span>
                   </h3>
-                  <span style=${{ fontSize: '11px', color: '#c084fc', fontWeight: '700' }}>Streamable HTTP</span>
+                  <span style=${{ fontSize: '11px', color: '#8ccfa0', fontWeight: '700' }}>Streamable HTTP</span>
                 </div>
                 <div class="playground-corpo">
                   <div>
@@ -1187,14 +1299,14 @@
                         class="cliente-btn ${clienteId === 'afonso' ? 'ativo' : ''}"
                         onClick=${() => mudarCliente('afonso')}
                       >
-                        <span>🛡️</span>
+                        ${ico('escudo')}
                         <span>Afonso (Representante com Mandato)</span>
                       </button>
                       <button
                         class="cliente-btn ${clienteId === 'agente_externo' ? 'ativo' : ''}"
                         onClick=${() => mudarCliente('agente_externo')}
                       >
-                        <span>⚠️</span>
+                        ${ico('aviso')}
                         <span>Agente Externo (Sem Mandato)</span>
                       </button>
                     </div>
@@ -1205,7 +1317,7 @@
                       <label style=${{ fontSize: '11.5px', fontWeight: '600', color: 'var(--del-texto-secundario)' }}>
                         Parâmetros da Chamada (JSON):
                       </label>
-                      <span style=${{ fontSize: '11px', color: '#38bdf8', fontFamily: 'var(--font-mono)' }}>
+                      <span style=${{ fontSize: '11px', color: '#8ccfa0', fontFamily: 'var(--font-mono)' }}>
                         ${ferramentaAtiva.nome}
                       </span>
                     </div>
@@ -1231,7 +1343,7 @@
                         <label style=${{ fontSize: '11.5px', fontWeight: '600', color: 'var(--del-texto-secundario)' }}>
                           Resposta do Servidor MCP (:4001):
                         </label>
-                        <span style=${{ fontSize: '11px', color: resposta.status === 200 ? '#34d399' : '#ef4444', fontFamily: 'var(--font-mono)' }}>
+                        <span style=${{ fontSize: '11px', color: resposta.status === 200 ? '#8ccfa0' : '#ef4444', fontFamily: 'var(--font-mono)' }}>
                           Status ${resposta.status} (${resposta.tempoMs}ms)
                         </span>
                       </div>
@@ -1246,7 +1358,7 @@
             <section class="painel-box">
               <div class="painel-cabecalho">
                 <h3>
-                  <span>📜</span>
+                  ${ico('selo')}
                   <span>Registo de Auditoria de Eventos do Sistema (SSE)</span>
                 </h3>
                 <span style=${{ fontSize: '11px', color: 'var(--del-texto-suave)', fontFamily: 'var(--font-mono)' }}>
@@ -1270,7 +1382,7 @@
                     ${eventos.map(
                       (ev) => html`
                         <tr>
-                          <td style=${{ fontFamily: 'var(--font-mono)', fontWeight: '700', color: '#c084fc' }}>
+                          <td style=${{ fontFamily: 'var(--font-mono)', fontWeight: '700', color: '#8ccfa0' }}>
                             #${ev.seq || '—'}
                           </td>
                           <td style=${{ color: 'var(--del-texto-suave)' }}>
@@ -1280,7 +1392,7 @@
                             ${ev.tipo}
                           </td>
                           <td>
-                            <span style=${{ color: ev.ator.includes('jev') ? '#c084fc' : '#38bdf8', fontWeight: '600' }}>
+                            <span style=${{ color: ev.ator.includes('jev') ? '#8ccfa0' : '#8ccfa0', fontWeight: '600' }}>
                               ${ev.ator}
                             </span>
                           </td>

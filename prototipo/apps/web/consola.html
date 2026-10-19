@@ -232,15 +232,20 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        min-width: 0;
       }
 
       .breadcrumb-lista {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         gap: 0.5rem;
         list-style: none;
         font-size: 12px;
         color: var(--cmg-texto-suave);
+        min-width: 0;
       }
 
       .breadcrumb-lista a {
@@ -281,6 +286,7 @@
         border: 1px solid var(--cmg-borda);
         background: #f8fafc;
         transition: all 0.15s;
+        min-height: 44px;
       }
 
       .btn-atalho-svg:hover {
@@ -852,6 +858,58 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+      }
+
+      /* Visibilidade de foco: o teclado tem de ver onde está. */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 2px solid var(--cmg-azul-medio);
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      /* Alvos de toque: mínimo ~44px. */
+      .nav-item { min-height: 44px; display: inline-flex; align-items: center; }
+      .btn-filtro-aba { min-height: 44px; }
+      .breadcrumb-lista a { min-height: 44px; display: inline-flex; align-items: center; }
+
+      /* Movimento reduzido: mantém o feedback de estado, remove o movimento. */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* ---- Responsivo ----
+         A navegação e a grelha de três colunas tinham largura fixa e
+         empurravam o documento na horizontal em ecrãs estreitos. */
+      @media (max-width: 1200px) {
+        /* minmax(0,1fr) e não 1fr: sem o zero, a coluna não encolhe abaixo do
+           conteúdo mínimo e volta a empurrar o documento na horizontal. */
+        .area-trabalho-autarquica { grid-template-columns: minmax(0, 1fr); padding: 0 1.25rem; }
+        .lista-itens-processo { max-height: 320px; }
+      }
+
+      @media (max-width: 900px) {
+        .nav-links-menu { flex-wrap: wrap; min-width: 0; gap: 0.25rem; }
+        .cmg-header { padding-left: 1.25rem; padding-right: 1.25rem; }
+        .header-conteudo { flex-wrap: wrap; gap: 0.75rem; }
+      }
+
+      @media (max-width: 640px) {
+        .nav-links-menu { flex-direction: column; align-items: stretch; width: 100%; }
+        .nav-item { justify-content: flex-start; }
+        .barra-atalhos-municipais { flex-wrap: wrap; min-width: 0; }
+        .btn-atalho-svg { min-height: 44px; padding: 0.35rem 0.5rem; }
+        .filtros-tramitacao { grid-template-columns: repeat(2, 1fr); }
+        .cmg-footer { padding: 0.85rem 1.25rem; }
+        .footer-conteudo { flex-direction: column; gap: 0.5rem; text-align: center; }
+        /* Tabelas de dados: scroll controlado em vez de transbordo da página. */
+        table { display: block; overflow-x: auto; }
       }
     </style>
   </head>

@@ -621,6 +621,45 @@
         color: var(--cmg-texto-suave);
         font-size: 10px;
       }
+
+      /* Visibilidade de foco: o teclado tem de ver onde está. */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 2px solid var(--cmg-azul-medio);
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      /* Alvos de toque: mínimo ~44px. */
+      .btn-modo { min-height: 44px; }
+
+      /* Movimento reduzido: mantém o feedback de estado, remove o movimento. */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* ---- Responsivo ----
+         O painel não transbordava, mas a grelha de duas zonas e a de seis
+         colunas do grafo ficariam ilegíveis estreitas. */
+      @media (max-width: 1100px) {
+        .painel-layout { grid-template-columns: 1fr; }
+        .grafo-corpo { grid-template-columns: repeat(3, 1fr); }
+      }
+
+      @media (max-width: 640px) {
+        .painel-layout { padding: 1rem 1.25rem; gap: 1rem; }
+        .grafo-corpo { grid-template-columns: repeat(2, 1fr); }
+        .cmg-header { padding-left: 1.25rem; padding-right: 1.25rem; }
+        .header-conteudo { flex-wrap: wrap; gap: 0.75rem; }
+        /* Tabelas de dados: scroll controlado em vez de transbordo da página. */
+        table { display: block; overflow-x: auto; }
+      }
     </style>
   </head>
   <body>

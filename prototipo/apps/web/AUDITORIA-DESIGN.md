@@ -1,8 +1,9 @@
 # Auditoria de design — `anti-ai-slop-design`
 
-Data: 2026-10-19 · Âmbito: `prototipo/apps/web/*.html` (4 ecrãs)
-Modo da skill: **Audit** — relatório de evidência e correções priorizadas. Nenhum
-ficheiro foi alterado.
+Data: 2026-10-19 · Âmbito: `prototipo/apps/web/*.html` (3 ecrãs)
+Modo da skill: **Audit** → **Existing implementation**. Primeiro o relatório, as
+correções foram aplicadas depois e verificadas. Estado final em
+[Resultado](#resultado-após-as-correções).
 
 ## Método
 
@@ -203,3 +204,73 @@ hoje (`54fd98d`) e diverge do sistema dos outros três.
 
 Os passos 1 e 2 são changes pequeños e de baixo risco. O 3 muda o carácter
 visual do ecrã e vale uma decisão, não um script.
+---
+
+# Resultado após as correções
+
+Verificado por render real em três viewports (390, 768 e 1440 px de largura), os
+três ecrãs, num total de **nove contextos**. Todos limpos.
+
+| Ecrã | Overflow | Alvos < 44px | Gradientes | Emojis |
+|---|---:|---:|---:|---:|
+| `index` · telemóvel | 0 px | 0 | 0 | 0 |
+| `consola` · telemóvel | 0 px | 0 | 0 | 0 |
+| `delegate` · telemóvel | 0 px | 0 | 0 | 0 |
+| `index` · tablet | 0 px | 0 | 0 | 0 |
+| `consola` · tablet | 0 px | 0 | 0 | 0 |
+| `delegate` · tablet | 0 px | 0 | 0 | 0 |
+| `index` · desktop | 0 px | 0 | 0 | 0 |
+| `consola` · desktop | 0 px | 0 | 0 | 0 |
+| `delegate` · desktop | 0 px | 0 | 0 | 0 |
+
+Antes, o `consola` transbordava 823 px e o `delegate` 505 px em telemóvel.
+
+## O que mudou
+
+**Paleta do `delegate.html`, derivada da marca.** As cores não foram escolhidas
+ao taste: foram medidas no símbolo oficial
+(`assets/delegate-symbol.png`) — navy `#121b2c`, verde Delegate `#70bb86`,
+tinta `#e9edf2`. Os sete tokens default do Tailwind foram substituídos por um
+acento único (o verde Delegate) com os estados semânticos derivados dele por
+luminosidade. As três camadas — cidadão, integração, câmara — distinguem-se por
+saturação, não por três cores de biblioteca.
+
+**Fonte alinhada.** Os três ecrãs carregam agora a mesma folha: Barlow +
+Barlow Condensed + JetBrains Mono. O `delegate` deixou o Plus Jakarta Sans.
+
+**24 emojis → ícones SVG.** Um conjunto de 16 glifos de traço único, herdando
+`currentColor`, definidos uma vez como `<symbol>` e referenciados por `<use>`.
+Todos com `aria-hidden="true"`: são decorativos e o nome acessível está no
+texto adjacente. A seta `↗` mantém-se, mas isolada — comunica que o link sai do
+sistema Delegate para a Câmara, que é informação real, e o `aria-label` do link
+diz-o em palavras.
+
+**Responsivo.** Três breakpoints por ecrã (1200/1100, 900, 640 px). A causa
+raiz do overflow não era só a largura fixa: era `grid-template-columns: 1fr`,
+que é `minmax(auto, 1fr)` e não encolhe abaixo do conteúdo. Passou a
+`minmax(0, 1fr)` onde a grelha tinha de poder encolher.
+
+**Halos removidos.** Oito `box-shadow` de tipo `0 0 Npx` (halo, não elevação) e
+quatro `backdrop-filter` foram removidos: comunicavam «isto está ligado» num
+ecrã onde o estado já é sinalizado por cor, rótulo e texto. O botão primário
+mantém sombra — aí é elevação real.
+
+**Movimento reduzido.** `prefers-reduced-motion` em todos os ecrãs. O pulso do
+ponto de servidor vivo deixa de pulsar mas o estado continua legível pelo texto
+ao lado.
+
+**Foco de teclado.** `:focus-visible` com contorno visível nos três ecrãs. Não
+estava em nenhum.
+
+## Notas
+
+- **O `porta.html` deixou de existir.** A auditoria inicial contou quatro
+  ecrãs; o ficheiro foi removido no commit `54fd98d` e não está em lado nenhum.
+  O trabalho foi feito nos três que existem.
+- **Um erro meu, encontrado a meio e corrigido:** ao substituir um emoji, interpolei
+  `${ico('raio')}` dentro de uma string delimitada por aspas simples. Isso fechou
+  a string e partiu o módulo JavaScript — o ecrã do `delegate` deixou de montar
+  por inteiro. Detectado por o `#root` vir vazio, confirmado comparando com o
+  original, corrigido removendo a interpolação: aquele campo é texto simples e
+  não leva ícone. Vale registar porque a falha era silenciosa — zero erros na
+  consola, apenas um ecrã em branco.
