@@ -159,11 +159,11 @@
 
       .nav-link.externo {
         color: #8ccfa0;
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        background: rgba(56, 189, 248, 0.05);
+        border: 1px solid rgba(112, 187, 134, 0.20);
+        background: rgba(112, 187, 134, 0.05);
       }
       .nav-link.externo:hover {
-        background: rgba(56, 189, 248, 0.15);
+        background: rgba(112, 187, 134, 0.15);
       }
 
       .status-pill {
@@ -226,16 +226,12 @@
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        background: rgba(112, 187, 134, 0.22);
-        border: 1px solid rgba(112, 187, 134, 0.48);
-        color: #e9d5ff;
-        font-family: var(--font-mono);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        padding: 0.3rem 0.75rem;
-        border-radius: 4px;
+        background: transparent;
+        border: none;
+        color: var(--del-acento-forte);
+        font-size: 11.5px;
+        font-weight: 700;
+        padding: 0.3rem 0;
         white-space: nowrap;
       }
 
@@ -273,85 +269,85 @@
         flex: 1;
       }
 
-      /* 3. ARQUITETURA DE INTEGRAÇÃO (3 CAMADAS) */
+      /* 3. ARQUITETURA DE INTEGRAÇÃO (3 CAMADAS)
+
+         Não são três caixas paralelas: são três momentos de um percurso. O
+         desenho é uma linha de fluxo — o cidadão à esquerda, o Delegate ao
+         centro, a Câmara à direita — e o que liga é o assunto da secção.
+         Um primitivo só, repetido, em vez de três cards iguais. */
       .triptico-container {
         display: grid;
-        grid-template-columns: 1fr 1.35fr 1fr;
-        gap: 1.25rem;
+        grid-template-columns: 1fr 1.4fr 1fr;
+        gap: 0;
+        border: 1px solid var(--del-borda);
+        border-radius: 4px;
+        overflow: hidden;
       }
 
       .mundo-card {
-        background: var(--del-cartao);
-        border: 1px solid var(--del-borda);
-        border-radius: 12px;
-        padding: 1.25rem 1.4rem;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 1.35rem 1.5rem 1.5rem;
         position: relative;
-        transition: border-color 0.2s ease, transform 0.2s ease;
       }
 
-      .mundo-card:hover {
-        border-color: rgba(255, 255, 255, 0.15);
-      }
-
-      .mundo-card.municipe {
-        border-top: 3px solid var(--del-acento-escuro);
-      }
-
+      /* A camada do centro é o eixo do percurso: mais peso, sem caixa. */
       .mundo-card.intermediario {
-        border-top: 3px solid var(--del-acento);
-        background: var(--del-acento-veu);
+        background: rgba(112, 187, 134, 0.06);
+        border-left: 1px solid var(--del-borda);
+        border-right: 1px solid var(--del-borda);
       }
 
-      .mundo-card.camara {
-        border-top: 3px solid var(--del-espera);
+      /* A marca de cada momento é um peso tipográfico, não uma risca colorida. */
+      .mundo-card .numero-camada {
+        font-family: var(--font-condensed);
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        display: block;
+        margin-bottom: 0.5rem;
       }
+      .mundo-card.municipe .numero-camada { color: var(--del-texto-suave); }
+      .mundo-card.intermediario .numero-camada { color: var(--del-acento); }
+      .mundo-card.camara .numero-camada { color: var(--del-espera); }
 
       .mundo-topo {
         display: flex;
-        align-items: center;
+        align-items: baseline;
         justify-content: space-between;
-        margin-bottom: 0.85rem;
-        padding-bottom: 0.65rem;
-        border-bottom: 1px solid var(--del-borda);
+        gap: 0.75rem;
+        margin-bottom: 1rem;
       }
 
       .mundo-titulo {
-        font-size: 13px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        font-size: 13.5px;
+        font-weight: 600;
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
 
       .badge-mundo {
-        font-size: 10px;
-        font-weight: 700;
-        padding: 2px 8px;
-        border-radius: 4px;
-        text-transform: uppercase;
+        font-size: 10.5px;
+        font-weight: 500;
+        color: var(--del-texto-suave);
       }
-
-      .badge-municipe { background: rgba(112, 187, 134, 0.16); color: #8ccfa0; border: 1px solid rgba(112, 187, 134, 0.32); }
-      .badge-del { background: rgba(112, 187, 134, 0.20); color: #8ccfa0; border: 1px solid rgba(112, 187, 134, 0.42); }
-      .badge-camara { background: rgba(201, 162, 39, 0.16); color: #d9b344; border: 1px solid rgba(201, 162, 39, 0.34); }
 
       .lista-itens {
         display: flex;
         flex-direction: column;
-        gap: 0.65rem;
       }
 
       .item-camada {
-        background: rgba(255, 255, 255, 0.025);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 8px;
-        padding: 0.65rem 0.85rem;
+        padding: 0.7rem 0;
+        border-bottom: 1px solid var(--del-borda);
         display: flex;
         flex-direction: column;
         gap: 0.25rem;
       }
+      .item-camada:last-child { border-bottom: none; padding-bottom: 0; }
 
       .item-cabecalho {
         display: flex;
@@ -434,14 +430,18 @@
         gap: 0.45rem;
       }
 
+      /* D0 a D4 é uma escada, não cinco cápsulas iguais: o que está activo
+         tem presença, o resto é texto. */
       .mandato-pill {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
-        padding: 0.45rem 0.25rem;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        padding: 0.4rem 0.25rem 0.35rem;
         text-align: center;
-        transition: all 0.25s ease;
+        transition: border-color 0.25s ease;
       }
+      .mandato-pill.ativo { border-bottom-color: var(--del-acento); }
 
       .mandato-pill .sigla {
         font-size: 13px;
@@ -458,17 +458,12 @@
         margin-top: 1px;
       }
 
-      .mandato-pill.ativo {
-        background: var(--del-acento-veu);
-        border: 1px solid rgba(112, 187, 134, 0.7);
-      }
-
       .mandato-pill.ativo .sigla {
-        color: #fde047;
+        color: var(--del-acento-forte);
       }
 
       .mandato-pill.ativo .nome {
-        color: #fef08a;
+        color: var(--del-acento-forte);
         font-weight: 700;
       }
 
@@ -516,11 +511,13 @@
       }
 
       .ferramenta-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--del-borda);
-        border-radius: 10px;
-        padding: 0.9rem 1.1rem;
-        transition: all 0.2s ease;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--del-borda);
+        border-left: 2px solid transparent;
+        border-radius: 0;
+        padding: 0.8rem 0.9rem;
+        transition: background 0.2s ease, border-color 0.2s ease;
         cursor: pointer;
         display: flex;
         flex-direction: column;
@@ -533,8 +530,8 @@
       }
 
       .ferramenta-card.selecionada {
-        background: var(--del-acento-veu);
-        border-color: rgba(112, 187, 134, 0.6);
+        background: rgba(112, 187, 134, 0.07);
+        border-left-color: var(--del-acento);
       }
 
       .ferramenta-header-row {
@@ -555,18 +552,17 @@
         color: var(--del-texto-secundario);
       }
 
+      /* O nível de requisito é uma palavra, não uma cápsula. A caixa
+         acrescentava um nível de contentor sem acrescentar informação. */
       .badge-requisito {
         font-size: 10px;
         font-weight: 700;
-        font-family: var(--font-mono);
-        padding: 2px 7px;
-        border-radius: 4px;
-        text-transform: uppercase;
+        letter-spacing: 0.04em;
       }
 
-      .badge-publico { background: rgba(112, 187, 134, 0.15); color: #8ccfa0; border: 1px solid rgba(112, 187, 134, 0.32); }
-      .badge-mandato-d2 { background: rgba(56, 189, 248, 0.15); color: #8ccfa0; border: 1px solid rgba(56, 189, 248, 0.3); }
-      .badge-mandato-d3 { background: rgba(201, 162, 39, 0.16); color: #d9b344; border: 1px solid rgba(201, 162, 39, 0.34); }
+      .badge-publico { color: var(--del-acento-forte); }
+      .badge-mandato-d2 { color: var(--del-acento-forte); }
+      .badge-mandato-d3 { color: var(--del-espera); }
 
       /* Playground MCP */
       .playground-corpo {
@@ -1084,7 +1080,7 @@
             <div class="separacao-conteudo">
               <div class="pill-distincao-sistema">
                 ${ico('engrenagem')}
-                <span>ARQUITETURA DO SISTEMA</span>
+                <span>Arquitetura do sistema</span>
               </div>
               <div class="separacao-texto">
                 <strong>Plataforma de Integração Delegate:</strong> Monitorização em tempo real das chamadas MCP, decisões TypeSafe (Jev), inferência tipada de mandatos (D0 a D4) e fluxo de eventos.
@@ -1098,12 +1094,13 @@
             <section class="triptico-container">
               <!-- CAMADA 1: O CIDADÃO -->
               <div class="mundo-card municipe">
+                <span class="numero-camada">01</span>
                 <div class="mundo-topo">
-                  <div class="mundo-titulo" style=${{ color: '#8ccfa0' }}>
+                  <div class="mundo-titulo">
                     ${ico('pessoa')}
-                    <span>1. Camada do Cidadão</span>
+                    <span>Camada do Cidadão</span>
                   </div>
-                  <span class="badge-mundo badge-municipe">Telemóvel & Atendimento</span>
+                  <span class="badge-mundo">Telemóvel e atendimento</span>
                 </div>
                 <div class="lista-itens">
                   <div class="item-camada">
@@ -1123,7 +1120,7 @@
                   <div class="item-camada">
                     <div class="item-cabecalho">
                       <span class="item-nome ico-lista">${ico('mandato')} Mandato Autorizado do Cidadão</span>
-                      <span style=${{ color: '#f59e0b', fontSize: '11px', fontWeight: '800', fontFamily: 'var(--font-mono)' }}>${mandatoAtivo.nivel}</span>
+                      <span style=${{ color: '#d9b344', fontSize: '11px', fontWeight: '800' }}>${mandatoAtivo.nivel}</span>
                     </div>
                     <span class="item-sub">${mandatoAtivo.id}: ${mandatoAtivo.objeto}. Pode ser revogado a qualquer instante.</span>
                   </div>
@@ -1132,18 +1129,19 @@
 
               <!-- CAMADA 2: PLATAFORMA DE INTEGRAÇÃO DELEGATE (PORTA AGÊNTICA & JEV) -->
               <div class="mundo-card intermediario">
+                <span class="numero-camada">02</span>
                 <div class="mundo-topo">
-                  <div class="mundo-titulo" style=${{ color: '#8ccfa0' }}>
+                  <div class="mundo-titulo">
                     ${ico('raio')}
-                    <span>2. Camada de Integração (Delegate)</span>
+                    <span>Camada de Integração (Delegate)</span>
                   </div>
-                  <span class="badge-mundo badge-del">Middleware & MCP</span>
+                  <span class="badge-mundo">Middleware e MCP</span>
                 </div>
                 <div class="lista-itens">
                   <div class="item-camada" style=${{ border: '1px solid rgba(112, 187, 134, 0.38)', background: 'rgba(112, 187, 134, 0.07)' }}>
                     <div class="item-cabecalho">
                       <span class="item-nome ico-lista">${ico('raio')} TypeSafe System One (Jev)</span>
-                      <span style=${{ background: '#7c3aed', color: '#ffffff', fontSize: '9px', fontWeight: '800', padding: '1px 6px', borderRadius: '4px' }}>DECISÃO</span>
+                      <span style=${{ background: '#70bb86', color: '#ffffff', fontSize: '9px', fontWeight: '800', padding: '1px 6px', borderRadius: '4px' }}>DECISÃO</span>
                     </div>
                     <span class="item-sub">Classificação instantânea (&lt;300ms) de intenções, inferência de mandatos (D0–D4) e seleção de ferramentas MCP.</span>
                   </div>
@@ -1166,12 +1164,13 @@
 
               <!-- CAMADA 3: SERVIÇOS MUNICIPAIS -->
               <div class="mundo-card camara">
+                <span class="numero-camada">03</span>
                 <div class="mundo-topo">
-                  <div class="mundo-titulo" style=${{ color: '#d9b344' }}>
+                  <div class="mundo-titulo">
                     ${ico('camara')}
-                    <span>3. Camada Municipal (Câmara de Guimarães)</span>
+                    <span>Camada Municipal (Câmara de Guimarães)</span>
                   </div>
-                  <span class="badge-mundo badge-camara">Sistemas Autárquicos</span>
+                  <span class="badge-mundo">Sistemas autárquicos</span>
                 </div>
                 <div class="lista-itens">
                   <div class="item-camada">
@@ -1191,7 +1190,7 @@
                   <div class="item-camada">
                     <div class="item-cabecalho">
                       <span class="item-nome ico-lista">${ico('carteira')} Tesouraria Municipal</span>
-                      <span style=${{ color: '#94a3b8', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>RTTL 2025</span>
+                      <span style=${{ color: '#9aa8b8', fontSize: '10px' }}>RTTL 2025</span>
                     </div>
                     <span class="item-sub">Emissão de guias e referências de pagamento das taxas devidas pelo munícipe.</span>
                   </div>

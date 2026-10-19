@@ -146,14 +146,14 @@
       }
 
       .nav-item.destaque-delegate {
-        background: rgba(139, 92, 246, 0.22);
-        border: 1px solid rgba(168, 85, 247, 0.45);
-        color: #e9d5ff;
+        background: rgba(112, 187, 134, 0.16);
+        border: 1px solid rgba(112, 187, 134, 0.40);
+        color: #2f7d4c;
         font-weight: 600;
       }
       .nav-item.destaque-delegate:hover {
-        background: rgba(139, 92, 246, 0.4);
-        color: #ffffff;
+        background: rgba(112, 187, 134, 0.28);
+        color: #1f5c37;
       }
 
       .divisor-menu {
@@ -982,22 +982,36 @@
 
         useEffect(() => {
           if (!processoAtivo) return;
+          const isPip = processoAtivo.numero.startsWith('PIP') || processoAtivo.servico?.includes('urbanismo');
           if (processoAtivo.estado === 'pedido_elementos') {
-            setFundamento('Processo a aguardar resposta à notificação de aperfeiçoamento nos termos do artigo 117.º do CPA.');
+            setFundamento(
+              isPip
+                ? 'Notifica-se o requerente para junção de levantamento topográfico georreferenciado e corte altimétrico nos termos do artigo 117.º do CPA.'
+                : 'Processo a aguardar resposta à notificação de aperfeiçoamento nos termos do artigo 117.º do CPA.'
+            );
           } else if (processoAtivo.estado === 'aceite') {
             setFundamento(
-              `Mera Comunicação Prévia deferida nos termos do RJACSR. Taxa liquidada: ${processoAtivo.taxa_calculada?.valor ?? 75.75} € ao abrigo do Art. 42.º do RTTL 2025. Emitido título digital.`
+              isPip
+                ? `Pedido de Informação Prévia favorável vinculativo pelo período de 1 ano (Art. 16.º RJUE). Taxa liquidada: ${processoAtivo.taxa_calculada?.valor ?? 52.50} €.`
+                : `Mera Comunicação Prévia deferida nos termos do RJACSR. Taxa liquidada: ${processoAtivo.taxa_calculada?.valor ?? 75.75} € ao abrigo do Art. 42.º do RTTL 2025. Emitido título digital.`
+            );
+          } else {
+            setFundamento(
+              isPip
+                ? 'Verificada a conformidade com os parâmetros do PDM (Solo Urbano · Espaço Residencial Nível 2), propõe-se a emissão de informação prévia favorável vinculativa ao abrigo do Art. 16.º do RJUE.'
+                : 'Nos termos do artigo 117.º do Código do Procedimento Administrativo, notifica-se o requerente para apresentar a confirmação cadastral da largura da fachada contígua à esplanada requerida.'
             );
           }
         }, [processoAtivo?.estado, processoAtivo?.numero]);
 
         const executarDespacho = async (acao, elemento) => {
           if (!processoAtivo) return;
+          const isPip = processoAtivo.numero.startsWith('PIP') || processoAtivo.servico?.includes('urbanismo');
           try {
             const res = await fetch(`${PORTA_API}/processos/${encodeURIComponent(processoAtivo.numero)}/decisao`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ acao, elemento, fundamento }),
+              body: JSON.stringify({ acao, elemento: isPip ? 'levantamento_topografico' : elemento, fundamento }),
             });
             if (!res.ok) throw new Error('Falha ao registar ato administrativo');
             const atualizado = await res.json();
@@ -1005,7 +1019,11 @@
             if (acao === 'pedir_elementos') {
               setMensagemSucesso('Ato registado: Notificação de aperfeiçoamento expedida para o requerente via mandatário digital.');
             } else if (acao === 'aceitar') {
-              setMensagemSucesso(`Ato registado: Mera Comunicação Prévia deferida. Guia de taxa emitida no valor de ${atualizado.taxa_calculada?.valor ?? 75.75} €.`);
+              setMensagemSucesso(
+                isPip
+                  ? `Ato registado: Pedido de Informação Prévia deferido favoravelmente. Guia emitida: ${atualizado.taxa_calculada?.valor ?? 52.50} €.`
+                  : `Ato registado: Mera Comunicação Prévia deferida. Guia de taxa emitida no valor de ${atualizado.taxa_calculada?.valor ?? 75.75} €.`
+              );
             } else {
               setMensagemSucesso('Ato registado: Projeto de indeferimento fundamentado registado na tramitação.');
             }
@@ -1026,6 +1044,8 @@
           rascunho: 'Rascunho',
         };
 
+        const isPipAtivo = processoAtivo?.numero?.startsWith('PIP') || processoAtivo?.servico?.includes('urbanismo');
+
         return html`
           <div style=${{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <!-- 1. Cabeçalho Oficial Autárquico -->
@@ -1036,7 +1056,7 @@
                   <div class="divisor-vertical"></div>
                   <div class="titulos-autarquia">
                     <h1>MUNICÍPIO DE GUIMARÃES</h1>
-                    <p>Consola Técnica · Divisão de Gestão do Espaço Público</p>
+                    <p>Consola Técnica · ${isPipAtivo ? 'Divisão de Gestão Urbanística' : 'Divisão de Gestão do Espaço Público'}</p>
                   </div>
                 </div>
 
@@ -1052,7 +1072,7 @@
                   <span class="badge-simulacao">Ambiente de Simulação</span>
                   <div class="utilizador-perfil">
                     <div class="utilizador-nome">Eng.ª Sónia Martins</div>
-                    <div class="utilizador-cargo">Técnica Superior · Divisão de Espaço Público</div>
+                    <div class="utilizador-cargo">Técnica Superior · ${isPipAtivo ? 'Divisão de Gestão Urbanística' : 'Divisão de Espaço Público'}</div>
                   </div>
                   <div class="indicador-conexao">
                     <span class="ponto-pulse" style=${{ background: conectadoSSE ? '#27ae60' : '#e67e22' }}></span>
@@ -1068,9 +1088,9 @@
                 <ul class="breadcrumb-lista">
                   <li><a href="/">Início</a></li>
                   <li class="breadcrumb-separador">/</li>
-                  <li><a href="/consola">Serviços Urbanos e Mobilidade</a></li>
+                  <li><a href="/consola">${isPipAtivo ? 'Urbanismo e Ordenamento' : 'Serviços Urbanos e Mobilidade'}</a></li>
                   <li class="breadcrumb-separador">/</li>
-                  <li>Ocupação do Espaço Público</li>
+                  <li>${isPipAtivo ? 'Informação Prévia (PDM)' : 'Ocupação do Espaço Público'}</li>
                   <li class="breadcrumb-separador">/</li>
                   <li class="breadcrumb-atual">Processo ${processoAtivo?.numero || 'OEP/2026/0001'}</li>
                 </ul>
@@ -1155,7 +1175,7 @@
                       <!-- Cabeçalho Oficial do Auto -->
                       <div class="dossie-cabecalho-oficial">
                         <div class="dossie-entidade">
-                          <span class="dossie-entidade-texto">Município de Guimarães · Balcão do Empreendedor</span>
+                          <span class="dossie-entidade-texto">Município de Guimarães · ${isPipAtivo ? 'Divisão de Gestão Urbanística' : 'Balcão do Empreendedor'}</span>
                           <span class=${`item-status-tag item-status-${processoAtivo.estado}`}>
                             ${nomesEstados[processoAtivo.estado] || 'Em Apreciação'}
                           </span>
@@ -1164,7 +1184,7 @@
                         <div class="dossie-meta-barra">
                           <div class="dossie-meta-item">N.º de Registo: <code>${processoAtivo.numero}</code></div>
                           <div class="dossie-meta-item">Requerente: <strong>Maria Lurdes Gonçalves</strong></div>
-                          <div class="dossie-meta-item">Estabelecimento: <strong>Casa Joaquim</strong></div>
+                          <div class="dossie-meta-item">Imóvel: <strong>${processoAtivo.dados?.localizacao || 'Guimarães'}</strong></div>
                           <div class="dossie-meta-item">Data de Entrada: <strong>${processoAtivo.criadoEm?.split('T')[0] || '2026-10-19'}</strong></div>
                         </div>
                       </div>
@@ -1173,16 +1193,27 @@
                         <!-- Seção 1: Informação Técnica Preliminar de Admissibilidade -->
                         <div class="bloco-informacao-tecnica">
                           <div class="bloco-informacao-header">
-                            <h3>1. Informação Técnica de Admissibilidade (Art. 12.º do RJACSR)</h3>
-                            <span style=${{ fontSize: '11px', color: 'var(--cmg-texto-suave)', fontFamily: 'var(--font-mono)' }}>Inf. 142/2026/DGEP</span>
+                            <h3>1. Informação Técnica de Admissibilidade (${isPipAtivo ? 'Art. 14.º do RJUE' : 'Art. 12.º do RJACSR'})</h3>
+                            <span style=${{ fontSize: '11px', color: 'var(--cmg-texto-suave)', fontFamily: 'var(--font-mono)' }}>${isPipAtivo ? 'Inf. 89/2026/DGU' : 'Inf. 142/2026/DGEP'}</span>
                           </div>
                           <div class="bloco-informacao-corpo">
-                            <p>
-                              Trata-se de Mera Comunicação Prévia para instalação de esplanada aberta contígua à fachada da <b>Casa Joaquim</b>, sita no <b>${processoAtivo.dados?.localizacao}</b>. A instrução foi promovida sob mandato eletrónico qualificado, reunindo o pacote mínimo instrutório obrigatório.
-                            </p>
-                            <p>
-                              A verificação técnica preliminar dos elementos fotográficos com escala métrica afere um corredor pedonal livre de circulação de <b>${processoAtivo.dados?.largura_corredor_m ?? 2.10} metros</b>, salvaguardando a circulação pedonal acessível no Largo da Oliveira em conformidade com o limite mínimo regulamentar de 2,00 metros (art. 8.º, n.º 2 do Regulamento Municipal n.º 123/2020).
-                            </p>
+                            ${isPipAtivo
+                              ? html`
+                                  <p>
+                                    Trata-se de Pedido de Informação Prévia (PIP) para apreciação da viabilidade de construção de moradia unifamiliar no terreno sito em <b>${processoAtivo.dados?.localizacao}</b> (${processoAtivo.dados?.coordenadas || 'Silvares'}). A instrução foi promovida sob Mandato Digital qualificado D3 com assinatura eletrónica Chave Móvel Digital.
+                                  </p>
+                                  <p>
+                                    A consulta cadastral ao Plano Diretor Municipal (PDM de Guimarães) enquadra o prédio em <b>Solo Urbano — Espaço Residencial Nível 2</b>, não constando servidões administrativas impeditivas (RAN ou REN). A caderneta predial anexa encontra-se auditada com hash SHA-256 no Cofre Digital.
+                                  </p>
+                                `
+                              : html`
+                                  <p>
+                                    Trata-se de Mera Comunicação Prévia para instalação de esplanada aberta contígua à fachada da <b>Casa Joaquim</b>, sita no <b>${processoAtivo.dados?.localizacao}</b>. A instrução foi promovida sob mandato eletrónico qualificado, reunindo o pacote mínimo instrutório obrigatório.
+                                  </p>
+                                  <p>
+                                    A verificação técnica preliminar dos elementos fotográficos com escala métrica afere um corredor pedonal livre de circulação de <b>${processoAtivo.dados?.largura_corredor_m ?? 2.10} metros</b>, salvaguardando a circulação pedonal acessível no Largo da Oliveira em conformidade com o limite mínimo regulamentar de 2,00 metros (art. 8.º, n.º 2 do Regulamento Municipal n.º 123/2020).
+                                  </p>
+                                `}
                           </div>
                         </div>
 
@@ -1202,52 +1233,87 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td class="tabela-col-parametro">Localização da Instalação</td>
-                                <td class="tabela-col-valor">${processoAtivo.dados?.localizacao || 'Largo da Oliveira, n.º 12'}</td>
-                                <td class="tabela-col-criterio">Centro Histórico · Área Classificada</td>
-                                <td class="tabela-col-estado"><span class="tag-conforme">Regular</span></td>
-                              </tr>
-                              <tr>
-                                <td class="tabela-col-parametro">Área Total de Ocupação</td>
-                                <td class="tabela-col-valor">${processoAtivo.dados?.area_m2} m²</td>
-                                <td class="tabela-col-criterio">Art. 6.º do Reg. Municipal (dimensão máxima admissível)</td>
-                                <td class="tabela-col-estado"><span class="tag-conforme">Conforme</span></td>
-                              </tr>
-                              <tr>
-                                <td class="tabela-col-parametro">Lotação e Mobiliário Exterior</td>
-                                <td class="tabela-col-valor">${processoAtivo.dados?.numero_mesas} mesas (16 lugares amovíveis)</td>
-                                <td class="tabela-col-criterio">Art. 7.º (Sem fixação ao pavimento)</td>
-                                <td class="tabela-col-estado"><span class="tag-conforme">Conforme</span></td>
-                              </tr>
-                              <tr>
-                                <td class="tabela-col-parametro">Canal de Circulação Pedonal</td>
-                                <td class="tabela-col-valor" style=${{ color: 'var(--cmg-verde)', fontWeight: '700' }}>
-                                  ${processoAtivo.dados?.largura_corredor_m ?? 2.10} metros
-                                </td>
-                                <td class="tabela-col-criterio">Art. 8.º, n.º 2 do Reg. n.º 123/2020 (Exigência ≥ 2,00 m)</td>
-                                <td class="tabela-col-estado"><span class="tag-conforme">Aprovado</span></td>
-                              </tr>
-                              ${processoAtivo.dados?.largura_fachada_m
+                              ${isPipAtivo
                                 ? html`
                                     <tr>
-                                      <td class="tabela-col-parametro">Largura da Fachada Cadastrada</td>
-                                      <td class="tabela-col-valor" style=${{ color: 'var(--cmg-azul-medio)', fontWeight: '700' }}>
-                                        ${processoAtivo.dados.largura_fachada_m} metros
-                                      </td>
-                                      <td class="tabela-col-criterio">Elemento complementar prestado nos termos do CPA</td>
+                                      <td class="tabela-col-parametro">Localização do Prédio</td>
+                                      <td class="tabela-col-valor">${processoAtivo.dados?.localizacao} (${processoAtivo.dados?.coordenadas || '41.4425, -8.2918'})</td>
+                                      <td class="tabela-col-criterio">Solo Urbano · Espaço Residencial Nível 2</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Regular</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="tabela-col-parametro">Pretensão Edificatória</td>
+                                      <td class="tabela-col-valor">${processoAtivo.dados?.pretensao || 'Construção de Moradia Unifamiliar'}</td>
+                                      <td class="tabela-col-criterio">Art. 45.º do Regulamento do PDM</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Conforme</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="tabela-col-parametro">Índice de Utilização do Solo</td>
+                                      <td class="tabela-col-valor">Declarado ~0.34 (Área bruta ~220 m²)</td>
+                                      <td class="tabela-col-criterio">Máximo regulamentar: 0.60 (Art. 45.º PDM)</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Aprovado</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="tabela-col-parametro">Cércea Máxima Admissível</td>
+                                      <td class="tabela-col-valor" style=${{ color: 'var(--cmg-verde)', fontWeight: '700' }}>2 pisos</td>
+                                      <td class="tabela-col-criterio">Art. 47.º do PDM (Limite: até 3 pisos)</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Aprovado</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="tabela-col-parametro">Caderneta Predial (Cofre Digital)</td>
+                                      <td class="tabela-col-valor" style=${{ color: 'var(--cmg-azul-medio)', fontWeight: '700' }}>Ficheiro PDF verificado (SHA-256)</td>
+                                      <td class="tabela-col-criterio">Art. 14.º do RJUE (Legitimidade do requerente)</td>
                                       <td class="tabela-col-estado"><span class="tag-conforme">Verificado</span></td>
                                     </tr>
                                   `
                                 : html`
                                     <tr>
-                                      <td class="tabela-col-parametro">Largura da Fachada Cadastrada</td>
-                                      <td class="tabela-col-valor" style=${{ color: 'var(--cmg-texto-suave)' }}>
-                                        Pendente de confirmação do requerente
-                                      </td>
-                                      <td class="tabela-col-criterio">Notificação nos termos do art. 117.º do CPA</td>
-                                      <td class="tabela-col-estado"><span class="tag-pendente">Aguardado</span></td>
+                                      <td class="tabela-col-parametro">Localização da Instalação</td>
+                                      <td class="tabela-col-valor">${processoAtivo.dados?.localizacao || 'Largo da Oliveira, n.º 12'}</td>
+                                      <td class="tabela-col-criterio">Centro Histórico · Área Classificada</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Regular</span></td>
                                     </tr>
+                                    <tr>
+                                      <td class="tabela-col-parametro">Área Total de Ocupação</td>
+                                      <td class="tabela-col-valor">${processoAtivo.dados?.area_m2} m²</td>
+                                      <td class="tabela-col-criterio">Art. 6.º do Reg. Municipal (dimensão máxima admissível)</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Conforme</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="tabela-col-parametro">Lotação e Mobiliário Exterior</td>
+                                      <td class="tabela-col-valor">${processoAtivo.dados?.numero_mesas} mesas (16 lugares amovíveis)</td>
+                                      <td class="tabela-col-criterio">Art. 7.º (Sem fixação ao pavimento)</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Conforme</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="tabela-col-parametro">Canal de Circulação Pedonal</td>
+                                      <td class="tabela-col-valor" style=${{ color: 'var(--cmg-verde)', fontWeight: '700' }}>
+                                        ${processoAtivo.dados?.largura_corredor_m ?? 2.10} metros
+                                      </td>
+                                      <td class="tabela-col-criterio">Art. 8.º, n.º 2 do Reg. n.º 123/2020 (Exigência ≥ 2,00 m)</td>
+                                      <td class="tabela-col-estado"><span class="tag-conforme">Aprovado</span></td>
+                                    </tr>
+                                    ${processoAtivo.dados?.largura_fachada_m
+                                      ? html`
+                                          <tr>
+                                            <td class="tabela-col-parametro">Largura da Fachada Cadastrada</td>
+                                            <td class="tabela-col-valor" style=${{ color: 'var(--cmg-azul-medio)', fontWeight: '700' }}>
+                                              ${processoAtivo.dados.largura_fachada_m} metros
+                                            </td>
+                                            <td class="tabela-col-criterio">Elemento complementar prestado nos termos do CPA</td>
+                                            <td class="tabela-col-estado"><span class="tag-conforme">Verificado</span></td>
+                                          </tr>
+                                        `
+                                      : html`
+                                          <tr>
+                                            <td class="tabela-col-parametro">Largura da Fachada Cadastrada</td>
+                                            <td class="tabela-col-valor" style=${{ color: 'var(--cmg-texto-suave)' }}>
+                                              Pendente de confirmação do requerente
+                                            </td>
+                                            <td class="tabela-col-criterio">Notificação nos termos do art. 117.º do CPA</td>
+                                            <td class="tabela-col-estado"><span class="tag-pendente">Aguardado</span></td>
+                                          </tr>
+                                        `}
                                   `}
                             </tbody>
                           </table>
@@ -1269,26 +1335,51 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td class="norma-codigo">Reg. n.º 123/2020</td>
-                                <td>Regulamento Municipal de Ocupação do Espaço Público e Publicidade de Guimarães (Art. 8.º)</td>
-                                <td class="norma-versao">2026-10-18.1</td>
-                                <td style=${{ textAlign: 'right', fontWeight: '600' }}>—</td>
-                              </tr>
-                              <tr>
-                                <td class="norma-codigo">RTTL 2025 · Art. 42.º</td>
-                                <td>Tabela de Taxas e Licenças do Município de Guimarães (Esplanadas abertas: 7,50 €/m²/ano)</td>
-                                <td class="norma-versao">2025.1</td>
-                                <td style=${{ textAlign: 'right', fontWeight: '700', color: 'var(--cmg-azul-escuro)' }}>
-                                  ${processoAtivo.taxa_calculada?.valor ?? 75.75} €
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="norma-codigo">D.L. n.º 10/2015</td>
-                                <td>Regime Jurídico de Acesso e Exercício de Atividades de Comércio, Serviços e Restauração (RJACSR)</td>
-                                <td class="norma-versao">Consolidado</td>
-                                <td style=${{ textAlign: 'right', fontWeight: '600' }}>—</td>
-                              </tr>
+                              ${isPipAtivo
+                                ? html`
+                                    <tr>
+                                      <td class="norma-codigo">Aviso n.º 23214/2020</td>
+                                      <td>Regulamento do Plano Diretor Municipal de Guimarães (Espaço Residencial Nível 2)</td>
+                                      <td class="norma-versao">2020.1</td>
+                                      <td style=${{ textAlign: 'right', fontWeight: '600' }}>—</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="norma-codigo">RTTL 2025 · Art. 28.º</td>
+                                      <td>Emissão de Certidão de Informação Prévia Vinculativa (Urbanismo)</td>
+                                      <td class="norma-versao">2025.1</td>
+                                      <td style=${{ textAlign: 'right', fontWeight: '700', color: 'var(--cmg-azul-escuro)' }}>
+                                        ${processoAtivo.taxa_calculada?.valor ?? 52.50} €
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td class="norma-codigo">D.L. n.º 555/99</td>
+                                      <td>Regime Jurídico da Urbanização e Edificação (RJUE · Art. 14.º)</td>
+                                      <td class="norma-versao">D.L. 10/2024</td>
+                                      <td style=${{ textAlign: 'right', fontWeight: '600' }}>—</td>
+                                    </tr>
+                                  `
+                                : html`
+                                    <tr>
+                                      <td class="norma-codigo">Reg. n.º 123/2020</td>
+                                      <td>Regulamento Municipal de Ocupação do Espaço Público e Publicidade de Guimarães (Art. 8.º)</td>
+                                      <td class="norma-versao">2026-10-18.1</td>
+                                      <td style=${{ textAlign: 'right', fontWeight: '600' }}>—</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="norma-codigo">RTTL 2025 · Art. 42.º</td>
+                                      <td>Tabela de Taxas e Licenças do Município de Guimarães (Esplanadas abertas: 7,50 €/m²/ano)</td>
+                                      <td class="norma-versao">2025.1</td>
+                                      <td style=${{ textAlign: 'right', fontWeight: '700', color: 'var(--cmg-azul-escuro)' }}>
+                                        ${processoAtivo.taxa_calculada?.valor ?? 75.75} €
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td class="norma-codigo">D.L. n.º 10/2015</td>
+                                      <td>Regime Jurídico de Acesso e Exercício de Atividades de Comércio, Serviços e Restauração (RJACSR)</td>
+                                      <td class="norma-versao">Consolidado</td>
+                                      <td style=${{ textAlign: 'right', fontWeight: '600' }}>—</td>
+                                    </tr>
+                                  `}
                             </tbody>
                           </table>
                         </div>
@@ -1300,7 +1391,9 @@
                           </div>
                           <div class="bloco-informacao-corpo">
                             <p style=${{ fontSize: '12.5px', color: 'var(--cmg-texto)' }}>
-                              ${processoAtivo.proposta_ia || 'Verificados os elementos instrutórios, constata-se a salvaguarda do canal pedonal de 2,10 metros, propondo-se o deferimento da comunicação prévia mediante a liquidação da taxa regulamentar aplicável ou notificação para confirmação da largura da fachada cadastrada.'}
+                              ${processoAtivo.proposta_ia || (isPipAtivo
+                                ? 'Verificada a viabilidade urbanística prévia no Solo Urbano, propõe-se deferimento com parecer vinculativo.'
+                                : 'Verificados os elementos instrutórios, constata-se a salvaguarda do canal pedonal de 2,10 metros, propondo-se o deferimento da comunicação prévia mediante a liquidação da taxa regulamentar aplicável ou notificação para confirmação da largura da fachada cadastrada.')}
                             </p>
                           </div>
                         </div>
@@ -1333,18 +1426,18 @@
                   <div class="botoes-atos-administrativos">
                     <button
                       class="btn-ato-autarquico btn-ato-notificar"
-                      onClick=${() => executarDespacho('pedir_elementos', 'largura_fachada')}
+                      onClick=${() => executarDespacho('pedir_elementos', isPipAtivo ? 'levantamento_topografico' : 'largura_fachada')}
                     >
-                      <span class="btn-ato-titulo">Notificar Munícipe para Aperfeiçoamento</span>
-                      <span class="btn-ato-sub">Solicitar confirmação formal da largura da fachada cadastrada (Art. 117.º CPA)</span>
+                      <span class="btn-ato-titulo">${isPipAtivo ? 'Notificar Requerente para Aperfeiçoamento' : 'Notificar Munícipe para Aperfeiçoamento'}</span>
+                      <span class="btn-ato-sub">${isPipAtivo ? 'Solicitar levantamento topográfico georreferenciado (Art. 117.º CPA)' : 'Solicitar confirmação formal da largura da fachada cadastrada (Art. 117.º CPA)'}</span>
                     </button>
 
                     <button
                       class="btn-ato-autarquico btn-ato-deferir"
                       onClick=${() => executarDespacho('aceitar')}
                     >
-                      <span class="btn-ato-titulo">Deferir Mera Comunicação Prévia e Emitir Título</span>
-                      <span class="btn-ato-sub">Aprovar ocupação e liquidar taxa regulamentar de ${processoAtivo?.taxa_calculada?.valor ?? 75.75} €</span>
+                      <span class="btn-ato-titulo">${isPipAtivo ? 'Deferir Pedido de Informação Prévia' : 'Deferir Mera Comunicação Prévia e Emitir Título'}</span>
+                      <span class="btn-ato-sub">${isPipAtivo ? `Emitir certidão vinculativa e liquidar taxa regulamentar de ${processoAtivo?.taxa_calculada?.valor ?? 52.50} €` : `Aprovar ocupação e liquidar taxa regulamentar de ${processoAtivo?.taxa_calculada?.valor ?? 75.75} €`}</span>
                     </button>
 
                     <button
