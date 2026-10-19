@@ -17,10 +17,17 @@ import { RedatorOpenRouter } from './redator-openrouter.ts';
 import { VerificadorRegra } from './verificador.ts';
 import type { Botoes } from '../canal.ts';
 
+export interface MemoriaConversa {
+  ultimoServicoId?: string;
+  ultimoServicoTitulo?: string;
+  historico?: Array<{ autor: 'pessoa' | 'afonso'; texto: string }>;
+}
+
 export interface RespostaAfonso {
   texto: string;
   botoes?: Botoes;
   servicoId?: string;
+  servicoTitulo?: string;
   focoServico?: string;
   mudancaServico?: boolean;
   comportamento?: 'responder' | 'abster' | 'encaminhar' | 'recusar';
@@ -40,7 +47,7 @@ export class Afonso {
   readonly #sessao: string;
   readonly #motorDecisao: MotorDecisaoTypeSafe;
   readonly #redator: RedatorOpenRouter;
-  readonly #contextoConversa = new Map<string, { ultimoServicoId?: string; ultimoServicoTitulo?: string }>();
+  readonly #contextoConversa = new Map<string, MemoriaConversa>();
 
   constructor(
     registo: Registo,
@@ -60,6 +67,8 @@ export class Afonso {
   async responder(pessoa: string, texto: string, contextoExterno: ContextoDecisao = {}): Promise<RespostaAfonso> {
     const limpo = texto.trim();
     const anterior = this.#contextoConversa.get(pessoa);
+    const historicoRecente: Array<{ autor: 'pessoa' | 'afonso'; texto: string }> =
+      contextoExterno.historicoRecente ?? (anterior?.historico ? anterior.historico.slice(-6) : []);
 
     const contextoDecisao: ContextoDecisao = {
       pessoa,
@@ -69,8 +78,29 @@ export class Afonso {
       missaoId: contextoExterno.missaoId,
       estadoMissao: contextoExterno.estadoMissao,
       mandatoAtivoNivel: contextoExterno.mandatoAtivoNivel,
+      historicoRecente,
+      itensCofre: contextoExterno.itensCofre ?? [],
     };
 
+    const resposta = await this.#tratarMensagem(pessoa, limpo, contextoDecisao);
+
+    // Gravar histórico conversacional e persistir contexto do cidadão
+    const novoHistorico = [
+      ...historicoRecente,
+      { autor: 'pessoa' as const, texto: limpo },
+      { autor: 'afonso' as const, texto: resposta.texto },
+    ].slice(-10);
+
+    this.#contextoConversa.set(pessoa, {
+      ultimoServicoId: resposta.servicoId ?? anterior?.ultimoServicoId,
+      ultimoServicoTitulo: resposta.servicoTitulo ?? anterior?.ultimoServicoTitulo,
+      historico: novoHistorico,
+    });
+
+    return resposta;
+  }
+
+  async #tratarMensagem(pessoa: string, limpo: string, contextoDecisao: ContextoDecisao): Promise<RespostaAfonso> {
     const decisaoJev = await this.#motorDecisao.decidir(limpo, contextoDecisao);
     const classificacao = ClassificadorAfonso.classificar(limpo);
 

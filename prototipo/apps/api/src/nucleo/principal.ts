@@ -696,6 +696,7 @@ canal._aoReceber(async (m) => {
       );
     } else if (m.texto === 'pergunta_taxa') {
       const missaoAtiva = orquestrador.obterAtiva(m.pessoa);
+      const metadadosCofre = await cofre.listarMetadados(m.pessoa).catch(() => []);
       const resp = await afonso.responder(m.pessoa, 'quanto vou pagar', {
         pessoa: m.pessoa,
         servicoAtivo: missaoAtiva?.servico ?? 'ocupacao-espaco-publico-esplanada',
@@ -704,6 +705,7 @@ canal._aoReceber(async (m) => {
         missaoId: missaoAtiva?.id,
         estadoMissao: missaoAtiva?.estado,
         mandatoAtivoNivel: missaoAtiva ? 'D2' : 'D0',
+        itensCofre: metadadosCofre.map(it => ({ tipo: it.tipo, titulo: it.titulo })),
       });
       await canal.enviar(m.conversa, resp.texto, resp.botoes);
     } else if (m.texto === 'iniciar_esplanada' || m.texto === 'voltar_esplanada') {
@@ -951,6 +953,8 @@ canal._aoReceber(async (m) => {
 
     // 4. Pergunta em linguagem natural: responde com o Afonso e a Porta
     await canal.aEscrever(m.conversa);
+    const metadadosCofre = await cofre.listarMetadados(m.pessoa).catch(() => []);
+    const itensCofre = metadadosCofre.map(it => ({ tipo: it.tipo, titulo: it.titulo }));
     const resp = await afonso.responder(m.pessoa, m.texto, {
       pessoa: m.pessoa,
       servicoAtivo: missaoAtiva?.servico,
@@ -959,6 +963,7 @@ canal._aoReceber(async (m) => {
       missaoId: missaoAtiva?.id,
       estadoMissao: missaoAtiva?.estado,
       mandatoAtivoNivel: missaoAtiva ? 'D2' : 'D0',
+      itensCofre,
     });
     await canal.enviar(m.conversa, resp.texto, resp.botoes);
   } else {
