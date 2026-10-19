@@ -248,7 +248,7 @@ export class BuscadorConhecimento {
           },
         });
 
-        const qChoice = resposta.answers.melhor_excerto as ChoiceResponse<string>;
+        const qChoice = resposta.answers.melhor_excerto as ChoiceResponse<any>;
         const qNoul = resposta.answers.sustenta_afirmacao as NoulResponse;
 
         if (qChoice?.choice === 'nenhum_dos_candidatos' || (qNoul && qNoul.noul < 0.35)) {

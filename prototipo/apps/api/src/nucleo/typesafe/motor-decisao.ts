@@ -96,15 +96,20 @@ export class MotorDecisaoTypeSafe {
           },
         });
 
-        const qFoco = resposta.answers.foco_servico as ChoiceResponse<string>;
-        const qServico = resposta.answers.servico as ChoiceResponse<string>;
-        const qComp = resposta.answers.comportamento as ChoiceResponse<string>;
-        const qMandato = resposta.answers.nivel_mandato as ChoiceResponse<string>;
-        const qMcp = resposta.answers.ferramenta_mcp as ChoiceResponse<string>;
+        const qFoco = resposta.answers.foco_servico as ChoiceResponse<any>;
+        const qServico = resposta.answers.servico as ChoiceResponse<any>;
+        const qComp = resposta.answers.comportamento as ChoiceResponse<any>;
+        const qMandato = resposta.answers.nivel_mandato as ChoiceResponse<any>;
+        const qMcp = resposta.answers.ferramenta_mcp as ChoiceResponse<any>;
         const qConsent = resposta.answers.exige_consentimento as NoulResponse;
 
         const servicoAtivoPrevio = contexto.servicoAtivo;
-        let focoServico: FocoServico = (qFoco?.choice as FocoServico) ?? (servicoAtivoPrevio ? 'mesmo_servico' : 'primeiro_contacto');
+        let focoServico: FocoServico =
+          qFoco?.choice === 'mudar_outro_servico'
+            ? 'novo_servico'
+            : servicoAtivoPrevio
+              ? 'mesmo_servico'
+              : 'primeiro_contacto';
         if (!servicoAtivoPrevio) {
           focoServico = 'primeiro_contacto';
         }
@@ -118,7 +123,7 @@ export class MotorDecisaoTypeSafe {
         if (focoServico === 'mesmo_servico' && servicoAtivoPrevio) {
           servicoId = servicoAtivoPrevio;
           mudancaServico = false;
-        } else if (focoServico === 'mudar_outro_servico' && servicoAtivoPrevio) {
+        } else if (focoServico === 'novo_servico' && servicoAtivoPrevio) {
           mudancaServico = true;
           servicoId = categoria === 'catalogo' ? servicoEscolhido : (servicoEscolhido.startsWith('ocupacao-') || servicoEscolhido.startsWith('pedido-') ? servicoEscolhido : undefined);
         } else {
@@ -138,7 +143,7 @@ export class MotorDecisaoTypeSafe {
           nivelMandato: (qMandato.choice as NivelMandato) || 'D0',
           ferramentaMcp: qMcp.choice || 'consultar_catalogo',
           confianca: qServico.confidence ?? 0.95,
-          probabilidades: qServico.probabilities,
+          probabilidades: qServico.probabilities as Record<string, number>,
           exigeConsentimento: qConsent.noul > 0.5,
           tempoRespostaMs: Date.now() - inicio,
         };
