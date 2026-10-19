@@ -17,6 +17,10 @@
 | [010](#adr-010) | Porta Agêntica em MCP e REST | Proposta |
 | [011](#adr-011) | Complementar o atendedor virtual existente | Proposta |
 | [012](#adr-012) | Avaliação como funcionalidade do produto | Proposta |
+| [013–019](strategy/10-riscos-decisoes-e-impacto.md#adr-013) | Decisões da estratégia de implementação (Telegram, Observatório, eventos…) | Proposta |
+| [020](#adr-020) | Integração invertida: processos canónicos e contratos de capacidades | Proposta (mentoria) |
+| [021](#adr-021) | Base de conhecimento ampla para D0 | Proposta (mentoria) |
+| [022](#adr-022) | Modelo de impacto com custeio por atividades e preço indexado ao valor | Proposta (mentoria) |
 
 ---
 
@@ -103,3 +107,24 @@
 - **Contexto:** o critério de viabilidade técnica pede «algo real»; o atendedor existente não publica métricas.
 - **Decisão (proposta):** o conjunto de avaliação e o painel são parte do produto e aparecem no pitch.
 - **Consequências:** esforço de curadoria de perguntas desde o dia 20.
+
+<a id="adr-020"></a>
+## ADR-020 · Integração invertida: processos canónicos e contratos de capacidades
+
+- **Contexto:** construir conectores para os sistemas internos de cada Câmara é lento, exige acesso privilegiado e não se replica. Recomendação da mentoria (19/10/2026).
+- **Decisão (proposta):** o Delegate modela processos canónicos a partir das fontes públicas e publica contratos de API (OpenAPI) por capacidade; a Câmara, ou o seu fornecedor de software, implementa-os; o Delegate orquestra. Níveis de integração I0 a I3 por serviço ([24](24-processos-canonicos-e-integracao.md)).
+- **Consequências:** implantação serviço a serviço; o Delegate não acede a sistemas internos; os sistemas simulados do hackathon passam a implementação de referência com testes de conformidade; a receita de implementação diminui e os fornecedores de software tornam-se canal ([16](16-modelo-de-negocio.md#revisao-mentoria)).
+
+<a id="adr-021"></a>
+## ADR-021 · Base de conhecimento ampla para D0
+
+- **Contexto:** o Registo Canónico curado cobre 10–15 serviços; o atendedor atual e as outras equipas respondem a perguntas gerais. Recomendação da mentoria.
+- **Decisão (proposta):** ingerir o site da Câmara, o Diretório, os formulários, os regulamentos municipais e diplomas nacionais numa base de conhecimento com citações, para respostas D0; os processos canónicos continuam a servir as missões ([25](25-base-de-conhecimento.md)).
+- **Consequências:** política de resposta em camadas; nova categoria no conjunto de avaliação (MET-Q8, MET-Q9); meio dia a dia e meio de trabalho de ingestão.
+
+<a id="adr-022"></a>
+## ADR-022 · Modelo de impacto com custeio por atividades e preço indexado ao valor
+
+- **Contexto:** o critério de impacto vale 30%; a Câmara precisa de ver custo atual × custo com o Delegate. Recomendação da mentoria.
+- **Decisão (proposta):** modelo de custeio por atividades com pressupostos visíveis, calculadora na Consola e plano de medição no piloto ([26](26-modelo-de-impacto-e-custos.md)). O preço passa a ser indexado à poupança medida.
+- **Consequências:** a hipótese de subscrição de 116 mil €/ano não se paga só com poupança interna no cenário central; rever preços e contar o valor para munícipes e economia em separado.

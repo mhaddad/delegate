@@ -129,7 +129,38 @@ Especificação da Porta e núcleo em EUPL. Monetiza-se a operação alojada com
 4. O Afonso funciona igual para todos, independentemente de quem paga.
 5. Agentes terceiros só com Mandato Digital válido e no mesmo trilho de auditoria.
 
-## 10. Pressupostos a validar
+<a id="revisao-mentoria"></a>
+## 10. Revisão após a mentoria (19/10/2026)
+
+Duas recomendações da mentoria mudam o modelo: a **integração invertida** ([24](24-processos-canonicos-e-integracao.md)) e o **modelo de impacto** ([26](26-modelo-de-impacto-e-custos.md)).
+
+### 10.1 O que muda nas fontes de receita
+
+| Fonte | Antes | Depois |
+|---|---|---|
+| Implementação de capacidades | Delegate constrói conectores, cobra por jornada | A Câmara implementa o contrato. O Delegate cobra a **modelação e parametrização** do processo canónico e, opcionalmente, **integração assistida** |
+| Subscrição | Plataforma + capacidades ativas | Plataforma + **processos canónicos ativos**, com preço indexado à poupança medida |
+| Kit de integração | — | Contratos, implementação de referência e testes de conformidade **abertos e gratuitos**, para acelerar a adoção |
+| Fornecedores de software autárquico | Parceiros possíveis | **Canal:** implementam o contrato uma vez e servem vários municípios. Selo «implementação conforme» |
+| Agentes terceiros | Sem alteração | Sem alteração |
+
+### 10.2 O que muda no preço
+
+O cenário central do modelo de impacto estima uma poupança interna de **64 a 76 mil € em 10 meses** (a 20 €/h, hipótese). A subscrição recorrente de 116 mil €/ano não se paga só com poupança interna nesse cenário.
+
+| Hipótese de preço revista 🧪 | Valor |
+|---|---|
+| Regra | Preço ≤ 40–50% da poupança interna demonstrada |
+| Alternativa | Preço por missão concluída abaixo da poupança por processo (≈ 14 € no exemplo da esplanada): por exemplo 2–4 € por missão |
+| Piloto | Mantém-se (65 mil €), com o objetivo explícito de medir a poupança e fixar o preço do ano 2 |
+
+A simulação da secção 6 deve ser refeita depois de a equipa escolher a regra de preço.
+
+### 10.3 Margem
+
+A integração invertida reduz o custo de entrada em cada município: os processos canónicos nacionais são reutilizados e a parametrização local é leve. Um preço mais baixo por município pode manter a margem se a adoção for mais rápida.
+
+## 11. Pressupostos a validar
 
 | Pressuposto | Como validar | Quando |
 |---|---|---|

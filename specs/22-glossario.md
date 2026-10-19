@@ -29,6 +29,13 @@
 | **Carta de Lealdade** | Compromisso público do representante para com a pessoa | — |
 | **Linha de superfície** | Metáfora visual: por cima, o que a pessoa vê; por baixo, o que acontece | — |
 | **Simulação** | Funcionalidade demonstrada sem integração real, marcada no ecrã | — |
+| **Processo Canónico** | Modelo executável de um procedimento, derivado de leis e regulamentos públicos, com parametrização municipal | — |
+| **Contrato de Capacidades** | Especificação de API (OpenAPI) que a Câmara implementa para o Delegate orquestrar | — |
+| **Níveis de integração** | I0 orientação · I1 assistido pela Consola · I2 leitura · I3 ação | — |
+| **Implementação de referência** | Sistema simulado que cumpre o contrato; serve de exemplo à Câmara e aos fornecedores | — |
+| **Testes de conformidade** | Bateria automática que verifica se uma implementação cumpre o contrato | — |
+| **Base de conhecimento** | Conteúdo público ingerido (site, regulamentos, leis) com citações, para respostas D0 | — |
+| **Capacidade libertada** | Horas de trabalho poupadas e disponíveis para tarefas de maior valor (não significa cortes) | «poupança de pessoal» |
 
 ## Termos do contexto
 

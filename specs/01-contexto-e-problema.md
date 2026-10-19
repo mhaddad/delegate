@@ -56,6 +56,7 @@ Tempo médio de atendimento presencial: entre **20min31s e 28min24s** conforme o
 
 Outros sinais (setembro a novembro de 2025): **1.029 consultas de processos de urbanismo** no Arquivo Municipal (82,4% dos documentos consultados) e **77 denúncias** de vegetação não limpa em solo urbano.
 
+<a id="regras-numeros"></a>
 ### 3.3 Regras de uso destes números
 
 Estas regras são obrigatórias no pitch, no protótipo e em qualquer material:

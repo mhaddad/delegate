@@ -60,6 +60,14 @@ Esta pasta é a fonte de verdade do projeto. Os vídeos, o deck e o blueprint HT
 | 22 | [Glossário](22-glossario.md) | Termos oficiais do projeto | Todos |
 | 23 | [Referências](23-referencias.md) | Fontes e referências internacionais | Todos |
 
+### Parte F — Após a mentoria (19/10/2026)
+
+| # | Documento | Conteúdo | Leitura essencial para |
+|---|---|---|---|
+| 24 | [Processos canónicos e integração invertida](24-processos-canonicos-e-integracao.md) | Contratos de capacidades que a Câmara implementa; níveis de integração I0–I3 | Desenvolvimento, negócio |
+| 25 | [Base de conhecimento](25-base-de-conhecimento.md) | Site, regulamentos e leis para respostas D0 | Conteúdo, desenvolvimento |
+| 26 | [Modelo de impacto e custos](26-modelo-de-impacto-e-custos.md) | Custo atual × custo com o Delegate; calculadora; plano de medição | Negócio, pitch |
+
 ### Estratégia de implementação
 
 | Pasta | Conteúdo |
@@ -131,3 +139,4 @@ As decisões ainda por fechar estão no [registo de decisões](21-registo-de-dec
 | Versão | Data | Alteração |
 |---|---|---|
 | 0.1 | 18/10/2026 | Primeira versão consolidada a partir do blueprint, do dossiê da Câmara e das regras do hackathon |
+| 0.2 | 19/10/2026 | Recomendações da mentoria: integração invertida (24), base de conhecimento (25), modelo de impacto (26); ADR-020 a ADR-022 |
