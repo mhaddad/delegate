@@ -1,0 +1,241 @@
+{
+  "_meta": {
+    "descricao": "Gold set manual. Cada pergunta é uma situação real de cidadão, não uma pergunta de portal. 'custo' null significa que a resposta correcta é ABSTER-SE.",
+    "fonte_procedimentos": "data/procedures.json (98 blocos, 28 áreas)",
+    "fonte_taxas": "data/fees/rttl_2025.txt — Tabela de Taxas aprovada em Câmara de 2025-02-10, Assembleia de 2025-03-06",
+    "anotado_em": "2026-10-12",
+    "regra": "Um campo 'custo': null que o sistema preenche é uma alucinação. Pesa tanto como um valor errado.",
+    "nota_metodologica": "Só entram valores que li directamente na RTTL. Onde a RTTL é ambígua, custo é null."
+  },
+
+  "perguntas": [
+    {
+      "id": "q01",
+      "situacao": "vou fazer uma festa na rua",
+      "procedimento": 5,
+      "bloco": "shl101",
+      "custo": 11.35,
+      "nota": "Cap. VII Art. 40 — licença especial de ruído para lançamento de fogo, por evento."
+    },
+    {
+      "id": "q02",
+      "situacao": "o barulho da festa vai acabar tarde, preciso de licença?",
+      "procedimento": 5,
+      "bloco": "shl151",
+      "custo": null,
+      "nota": "shl151 é a área de aplicação da licença de ruído mas não enuncia o valor. Abster-se."
+    },
+    {
+      "id": "q03",
+      "situacao": "o camião do lixo não passou e o lixo ficou na rua",
+      "procedimento": 3,
+      "bloco": "shl136",
+      "custo": null,
+      "nota": "Reclamação de recolha. A fonte não diz custo nem prazo. Abster-se."
+    },
+    {
+      "id": "q04",
+      "situacao": "a árvore da rua está a cair e quero que a cortem",
+      "procedimento": 3,
+      "bloco": "shl133",
+      "custo": null
+    },
+    {
+      "id": "q05",
+      "situacao": "quero por um contentor para lixo grosso",
+      "procedimento": 3,
+      "bloco": "shl135",
+      "custo": null
+    },
+    {
+      "id": "q06",
+      "situacao": "vou fazer uma queimada no terreno",
+      "procedimento": 3,
+      "bloco": "shl138",
+      "custo": null
+    },
+    {
+      "id": "q07",
+      "situacao": "quero comprar um jazigo no cemitério municipal",
+      "procedimento": 20,
+      "bloco": "shl11",
+      "custo": 207.94,
+      "nota": "Via #20 — valores até 207.94 € para jazigos. Confirma em join --alta."
+    },
+    {
+      "id": "q08",
+      "situacao": "preciso de certidão de uma obra de casa",
+      "procedimento": 14,
+      "bloco": "shl5",
+      "custo": 15.87,
+      "nota": "Cap. I Art. 1 — Certidão de execução de obras particulares."
+    },
+    {
+      "id": "q09",
+      "situacao": "preciso de uma fotocópia simples A4 autenticada",
+      "procedimento": 14,
+      "bloco": "shl90",
+      "custo": 0.06,
+      "nota": "Cap. I Art. 1 — Fotocópias simples A4. Atenção: 'autenticada' tem outro valor; a resposta correcta é dizer qual dos dois."
+    },
+    {
+      "id": "q10",
+      "situacao": "o elevador do prédio precisa de inspeção",
+      "procedimento": 17,
+      "bloco": "shl37",
+      "custo": 73.00,
+      "nota": "Cap. I Art. 7 — Inspeções periódicas e reinspecções."
+    },
+    {
+      "id": "q11",
+      "situacao": "com que frequência tenho de inspeccionar o elevador",
+      "procedimento": 17,
+      "bloco": "shl6",
+      "custo": 73.00,
+      "nota": "Periodicidade + valor de cada inspeção."
+    },
+    {
+      "id": "q12",
+      "situacao": "quero Licença de Táxi",
+      "procedimento": 4,
+      "bloco": "shl175",
+      "custo": null,
+      "nota": "A RTTL não tem item de confiança alta para licença de táxi. Abster-se — este é o teste de disciplina."
+    },
+    {
+      "id": "q13",
+      "situacao": "preciso do dístico para entrar de carro no centro histórico",
+      "procedimento": 4,
+      "bloco": "shl139",
+      "custo": null,
+      "nota": "Sem valor de alta confiança na RTTL. Abster-se."
+    },
+    {
+      "id": "q14",
+      "situacao": "quero o cartão de residente",
+      "procedimento": 4,
+      "bloco": "shl163",
+      "custo": null
+    },
+    {
+      "id": "q15",
+      "situacao": "quero uma banca num dos mercados",
+      "procedimento": 40,
+      "bloco": "shl25",
+      "custo": null,
+      "nota": "A RTTL tem 'Vendedores ambulantes com banca e estrado' a 1.36 €, mas é outro acto. Abster-se em vez de adivinhar."
+    },
+    {
+      "id": "q16",
+      "situacao": "quero explorar um quiosque que está devoluto",
+      "procedimento": 46,
+      "bloco": "shl157",
+      "custo": 5.51,
+      "nota": "Cap. III Art. 24 — Pavilhões, quiosques ou outras construções, por m2."
+    },
+    {
+      "id": "q17",
+      "situacao": "quero acampar uns dias com a carrinha",
+      "procedimento": 32,
+      "bloco": "shl158",
+      "custo": 17.00,
+      "nota": "Cap. VII Art. 40 — acampamentos ocasionais (Decreto-lei 51/2015)."
+    },
+    {
+      "id": "q18",
+      "situacao": "vou abrir uma tenda numa feira",
+      "procedimento": 5,
+      "bloco": "shl101",
+      "custo": 14.31,
+      "nota": "Cap. VI Art. 38 — licença de instalação e funcionamento de recintos improvisados."
+    },
+    {
+      "id": "q19",
+      "situacao": "o que é o licenciamento zero",
+      "procedimento": 29,
+      "bloco": "shl17",
+      "custo": null,
+      "nota": "Pergunta conceptual. A fonte explica, não cobra."
+    },
+    {
+      "id": "q20",
+      "situacao": "abro um café, tenho de comunicar o horário",
+      "procedimento": 29,
+      "bloco": "shl179",
+      "custo": 17.00,
+      "nota": "Mera comunicação prévia, 17.00 €. Se for só horário, abster."
+    },
+    {
+      "id": "q21",
+      "situacao": "vou organizar uma corrida de rua",
+      "procedimento": 6,
+      "bloco": "shl132",
+      "custo": 17.88,
+      "nota": "Cap. VII Art. 40 — licenciamento de provas desportivas."
+    },
+    {
+      "id": "q22",
+      "situacao": "quero organizar uma caminhada",
+      "procedimento": 6,
+      "bloco": "shl177",
+      "custo": 17.88,
+      "nota": "Manifestações desportivas — mesmo artigo, mesmo valor."
+    },
+    {
+      "id": "q23",
+      "situacao": "quero ser sócio da biblioteca municipal",
+      "procedimento": 22,
+      "bloco": "shl12",
+      "custo": null
+    },
+    {
+      "id": "q24",
+      "situacao": "quero levar um livro emprestado para casa",
+      "procedimento": 22,
+      "bloco": "shl28",
+      "custo": null
+    },
+    {
+      "id": "q25",
+      "situacao": "quero fazer uma reclamação formal",
+      "procedimento": 23,
+      "bloco": "shl13",
+      "custo": null
+    },
+    {
+      "id": "q26",
+      "situacao": "quero pedir estágio na câmara",
+      "procedimento": 10,
+      "bloco": "shl39",
+      "custo": null
+    },
+    {
+      "id": "q27",
+      "situacao": "quero obter o certificado de residência de cidadão comunitário",
+      "procedimento": 13,
+      "bloco": "shl4",
+      "custo": null
+    },
+    {
+      "id": "q28",
+      "situacao": "quero que me deem um número de porta",
+      "procedimento": 13,
+      "bloco": "shl114",
+      "custo": null
+    },
+    {
+      "id": "q29",
+      "situacao": "quero comprar parcela de terreno do município",
+      "procedimento": 13,
+      "bloco": "shl38",
+      "custo": null
+    },
+    {
+      "id": "q30",
+      "situacao": "como pago as taxas à câmara",
+      "procedimento": 7,
+      "bloco": "shl2",
+      "custo": null
+    }
+  ]
+}

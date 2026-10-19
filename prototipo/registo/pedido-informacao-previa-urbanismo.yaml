@@ -1,0 +1,51 @@
+# A ficha mais honesta das cinco: existe no plano, mas o corpus municipal não
+# tem bloco de PDM nem de Urbanismo. Fica em rascunho até alguém ir buscar a
+# fonte, e o Afonso tem de abster-se neste serviço.
+id: pedido-informacao-previa-urbanismo
+versao: 2026-10-18.1
+estado: rascunho
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Gabinete de Urbanismo
+titulo_oficial: Pedido de Informação Prévia
+titulo_simples: Saber o que o PDM permite no meu terreno
+sinonimos: [PDM, edificação, construir, licenciamento, pedido de informação prévia, urbanismo]
+publico: [empresas, particulares]
+eventos_de_vida: [comprar-casa, construir, herdar]
+tipo_procedimento: pedido de informação prévia
+condicoes: []
+documentos: []
+taxas:
+  descricao: >-
+    Sem fonte. O corpus municipal não tem bloco de PDM nem de Urbanismo, e a
+    tabela de taxas de 2025 não tem linha para este pedido.
+  valor: null
+  fonte: null
+  unidade: null
+prazos: []
+canais: []
+dados_minimos: [localizacao, area_do_terreno, uso pretendido]
+nivel_risco: alto
+escalonamento: >-
+  Qualquer pergunta sobre o que é possível num terreno real passa para um
+  técnico habilitado. O Afonso nunca afirma que pode ou não pode construir.
+limites: >-
+  O Afonso não emite juízo de viabilidade urbanística. Explica o PDM em vigor e
+  a revisão em curso, com fonte, e diz quando é preciso um técnico.
+fontes:
+  - id: cm-pdm-por-curar
+    titulo: >-
+      A trazer na curadoria. O plano do PDM e a página de Urbanismo do portal do
+      munícipe ainda não foram consultados.
+    url: null
+    consultado_em: 2026-10-18
+    hash: null
+    natureza: oficial
+curadoria:
+  por: por curar
+  em: 2026-10-18
+  notas: >-
+    FICA EM RASCUNHO DE PROPÓSITO. Enquanto não houver fonte, o Afonso
+    abste-se neste serviço e diz onde confirmar. Preencher com um número ou uma
+    condição aqui seria inventar, e é o que esta arquitectura existe para
+    impedir.

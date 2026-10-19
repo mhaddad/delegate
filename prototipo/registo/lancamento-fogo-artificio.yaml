@@ -1,0 +1,51 @@
+id: lancamento-fogo-artificio
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Serviço Municipal de Proteção Civil
+titulo_oficial: Autorização Prévia para Lançamento de Fogo de Artifício
+titulo_simples: Lançar fogo de artifício ou pirotecnia
+sinonimos: [fogo de artificio, foguetes, pirotecnia, lancamento de fogo, festa da freguesia com fogo]
+publico: [particulares, associacoes, comissoes-de-festas, empresas]
+eventos_de_vida: [organizar-evento]
+tipo_procedimento: autorização prévia
+condicoes:
+  - texto: >-
+      O lançamento de fogo de artifício carece de autorização prévia municipal nos termos do Mod. 466/SQ, acompanhado de seguro de responsabilidade civil da empresa pirotécnica e parecer favorável dos Bombeiros.
+    fonte: corpus-proc-eventos
+documentos:
+  - texto: Requerimento Mod. 466/SQ, declaração da empresa pirotécnica com plano de queima e apólice de seguro válida.
+    fonte: corpus-proc-eventos
+taxas:
+  descricao: Taxa fixada no Regulamento e Tabela de Taxas Municipal em vigor, liquidada no momento da apresentação do pedido.
+  valor: null
+  fonte: null
+  unidade: por evento
+prazos:
+  - texto: Entrada na Câmara com a antecedência mínima regulamentar antes da data prevista para o espetáculo pirotécnico.
+    fonte: corpus-proc-eventos
+canais:
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA)
+    url: null
+    fonte: corpus-proc-eventos
+  - tipo: online
+    descricao: Serviços Online do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-eventos
+dados_minimos: [local_lancamento, data_hora, operador_pirotecnico, seguro_apolice]
+nivel_risco: alto
+escalonamento: Em períodos de perigo de incêndio rural elevado ou muito elevado, carece de parecer vinculativo da Comissão Municipal de Gestão Integrada de Fogos Rurais.
+limites: Proibido o lançamento sem o perímetro de segurança devidamente sinalizado e policiamento.
+fontes:
+  - id: corpus-proc-eventos
+    titulo: Procedimentos de Licenciamento de Eventos e Espetáculos de Guimarães (Mod. 466/SQ)
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios
+    consultado_em: 2026-10-18
+    hash: sha256:89389913c2398b59b0d0e247d0ffc05e3f29ace7fc45e6e517e763a5e9f259cc
+    natureza: oficial
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 8 do Catálogo Anexo A.

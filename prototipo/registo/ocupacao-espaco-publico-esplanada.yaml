@@ -1,0 +1,61 @@
+# Âncora da demonstração. Não tem bloco próprio no corpus municipal: o que
+# se sabe vem da página da Câmara sobre comunicação prévia e da tabela de taxas.
+id: ocupacao-espaco-publico-esplanada
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Gabinete de Serviços Urbanos
+titulo_oficial: Ocupação do Espaço Público
+titulo_simples: Pôr uma esplanada à porta do estabelecimento
+sinonimos: [esplanada, mesas na rua, ocupar o passeio, guarda-ventos]
+publico: [empresas]
+eventos_de_vida: [abrir-negocio]
+tipo_procedimento: mera comunicação prévia
+condicoes:
+  - texto: Ocupar o espaço público contíguo à fachada do estabelecimento.
+    fonte: cm-licenciamento-zero
+  - texto: Assegurar um corredor para peões com pelo menos 2,00 metros na calçada.
+    fonte: cm-licenciamento-zero
+documentos: []
+taxas:
+  descricao: >-
+    A tabela de taxas de 2025 refere Esplanadas (por m2 e por ano), mas a
+    extracção automática marcou este valor como de confiança baixa e não foi
+    confirmado na fonte oficial. O valor depende da área e do tempo.
+  valor: null
+  fonte: null
+  unidade: por m2 e por ano
+prazos: []
+canais:
+  - tipo: online
+    descricao: Balcão Único Eletrónico
+    url: https://eportugal.gov.pt/inicio/espaco-empresa/balcao-do-empreendedor
+    fonte: cm-licenciamento-zero
+dados_minimos: [localizacao, atividade, numero_mesas, area, periodo]
+nivel_risco: baixo
+escalonamento: Dúvidas sobre localização ou dimensões passam para o Gabinete de Serviços Urbanos
+limites: A avaliação técnica local é da Câmara.
+fontes:
+  - id: cm-licenciamento-zero
+    titulo: Portal do munícipe da Câmara de Guimarães, Licenciamento Zero, o que é a mera comunicação prévia
+    url: https://www.cm-guimaraes.pt/pages/97?site_help_link_category_id=29
+    consultado_em: 2026-10-18
+    hash: null
+    natureza: oficial
+  - id: rttl-2025-esplanadas
+    titulo: >-
+      Tabela de Taxas de 2025, Esplanadas (por m2 e por ano). Corroboração
+      secundária, não citável, por a extracção ser de confiança baixa.
+    url: null
+    consultado_em: 2026-10-18
+    hash: sha256:c513b2011c7ddbbaf49ffa14308a3a018fe4fd2020167d745dd0eda6f3d0f117
+    natureza: tabela_taxas
+curadoria:
+  por: por curar
+  em: 2026-10-18
+  notas: >-
+    DECISÃO A TOMBAR. A resposta a quanto vou pagar é abster-se: a tabela traz
+    15,15 por m2 e por ano mas com confiança de extracção baixa e sem
+    confirmação na fonte oficial. Falta trazer o Regulamento de Ocupação do
+    Espaço Público, art. 8.º e Anexo I, com endereço e hash.

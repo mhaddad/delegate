@@ -1,0 +1,51 @@
+id: cartao-municipal-senior
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Ação Social
+titulo_oficial: Cartão Municipal Sénior
+titulo_simples: Cartão Municipal Sénior com descontos em serviços municipais
+sinonimos: [cartao municipal senior, cartao idoso, descontos idosos, beneficios 65 anos, apoio senior]
+publico: [particulares]
+eventos_de_vida: [reforma-senior]
+tipo_procedimento: requerimento
+condicoes:
+  - texto: >-
+      Podem requerer o Cartão Municipal Sénior os munícipes recenseados no Concelho de Guimarães com idade igual ou superior a 65 anos, beneficiando de descontos em transportes, eventos culturais, piscinas e taxas municipais.
+    fonte: corpus-proc-senior
+documentos:
+  - texto: Requerimento próprio acompanhado de Cartão de Cidadão e comprovativo de morada ou atestado de residência emitido pela Junta de Freguesia.
+    fonte: corpus-proc-senior
+taxas:
+  descricao: Gratuito. A emissão do Cartão Municipal Sénior não tem qualquer custo associado.
+  valor: 0.0
+  fonte: corpus-proc-senior
+  unidade: emissão gratuita
+prazos:
+  - texto: Emissão no prazo de 10 dias úteis após verificação dos requisitos de idade e residência.
+    fonte: corpus-proc-senior
+canais:
+  - tipo: presencial
+    descricao: Divisão de Ação Social ou Juntas de Freguesia aderentes
+    url: null
+    fonte: corpus-proc-senior
+  - tipo: online
+    descricao: Balcão Virtual da Câmara Municipal de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-senior
+dados_minimos: [nome, nif, data_nascimento, freguesia_residencia]
+nivel_risco: baixo
+escalonamento: Situações de carência socioeconómica são encaminhadas para a linha de apoio social do município.
+limites: O cartão é pessoal e intransmissível.
+fontes:
+  - id: corpus-proc-senior
+    titulo: Regulamento do Cartão Municipal Sénior da Câmara Municipal de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    consultado_em: 2026-10-18
+    hash: sha256:0b2aa3295ba1e787b9bc0de16c2396596dd197c9356f307a01c29881e8f01f86
+    natureza: oficial
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 13 do Catálogo Anexo A.

@@ -1,0 +1,52 @@
+id: licenca-especial-ruido
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Ambiente e Saúde
+titulo_oficial: Licença Especial de Ruído
+titulo_simples: Fazer barulho autorizado numa festa, evento ou obra
+sinonimos: [licenca de ruido, barulho na rua, festa com musica, musica ao vivo, obras a noite]
+publico: [empresas, particulares, associacoes]
+eventos_de_vida: [organizar-evento, fazer-obras]
+tipo_procedimento: licença administrativa
+condicoes:
+  - texto: >-
+      O exercício de atividades ruidosas temporárias na proximidade de edifícios de habitação (sábados, domingos, feriados e dias úteis entre as 20h e as 8h), escolas ou hospitais carece de Licença Especial de Ruído emitida pelo município.
+    fonte: corpus-proc-ruido
+documentos:
+  - texto: Requerimento Mod. 512/SQ devidamente instruído com indicação das medidas de mitigação acústica.
+    fonte: corpus-proc-ruido
+taxas:
+  descricao: Taxa fixada na Tabela de Taxas Municipal em vigor, liquidada aquando do pedido ou levantamento da licença.
+  valor: null
+  fonte: null
+  unidade: por dia de atividade
+prazos:
+  - texto: >-
+      O pedido deve dar entrada na Câmara Municipal com a antecedência mínima de 15 dias relativamente à data de realização da atividade ruidosa.
+    fonte: corpus-proc-ruido
+canais:
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA)
+    url: null
+    fonte: corpus-proc-ruido
+  - tipo: online
+    descricao: Serviços Online do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-ruido
+dados_minimos: [localizacao, data_inicio, data_fim, horario_pretendido, fonte_ruido]
+nivel_risco: medio
+escalonamento: Situações de obras noturnas urgentes ou festas em zonas sensíveis carecem de parecer dos serviços técnicos de ambiente.
+limites: O levantamento da licença deve ocorrer até às 17h00 do dia útil de realização da atividade.
+fontes:
+  - id: corpus-proc-ruido
+    titulo: Regulamento Geral do Ruído (DL 9/2007) e Procedimentos do Município de Guimarães (Mod. 512/SQ)
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios
+    consultado_em: 2026-10-18
+    hash: sha256:48591baf093e5cd5564122921e346b076159a183ce6daa524bcf610b1a36b67f
+    natureza: oficial
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 7 do Catálogo Anexo A.

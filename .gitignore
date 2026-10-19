@@ -9,6 +9,12 @@
 # Dependências
 node_modules/
 
+# Protótipo: PostgreSQL embutido e artefactos locais do protótipo
+.pgdata*/
+*.db
+*.db-journal
+.zcode/
+
 # Vídeos: binários pesados e gerados (renders, áudio, frames, caches)
 videos/**/renders/
 videos/**/audio/

@@ -1,0 +1,51 @@
+id: autorizacao-prolongamento-horario
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Desenvolvimento Económico e Polícia Municipal
+titulo_oficial: Autorização Especial de Prolongamento de Horário de Funcionamento
+titulo_simples: Prolongar o horário do estabelecimento comercial ou restauração
+sinonimos: [prolongamento de horario, horario especial, fechar mais tarde, horario restaurante, alargar horario]
+publico: [empresas]
+eventos_de_vida: [abrir-negocio]
+tipo_procedimento: autorização prévia
+condicoes:
+  - texto: >-
+      Os estabelecimentos de restauração, bebidas e diversão podem requerer a fixação de horário especial de funcionamento nos termos do Regulamento Municipal de Horários de Funcionamento.
+    fonte: corpus-proc-horarios
+documentos:
+  - texto: Requerimento Mod. 466/SQ instruído com cópia da certidão comercial e justificação do pedido de alargamento de horário.
+    fonte: corpus-proc-horarios
+taxas:
+  descricao: Taxa prevista na Tabela de Taxas Municipal para emissão de autorização especial de horário.
+  valor: null
+  fonte: null
+  unidade: por período autorizado
+prazos:
+  - texto: Entrada na Câmara com antecedência mínima de 15 dias relativamente ao período pretendido.
+    fonte: corpus-proc-horarios
+canais:
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA)
+    url: null
+    fonte: corpus-proc-horarios
+  - tipo: online
+    descricao: Serviços Online do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-horarios
+dados_minimos: [nome_estabelecimento, localizacao, horario_pretendido, periodo_dias]
+nivel_risco: medio
+escalonamento: Estabelecimentos localizados em edifícios de habitação ou com histórico de reclamações de ruído carecem de parecer prévio da Polícia Municipal.
+limites: O prolongamento não pode violar os limites do Regulamento Geral do Ruído nem perturbar o descanso dos moradores.
+fontes:
+  - id: corpus-proc-horarios
+    titulo: Regulamento dos Períodos de Abertura e Funcionamento dos Estabelecimentos de Venda ao Público e de Prestação de Serviços do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    consultado_em: 2026-10-18
+    hash: sha256:5ae2521b843c40dfed4221edfbd6093d9921a1a1ee86c069f535ef512480f90d
+    natureza: regulamento
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 16 do Catálogo Anexo A.

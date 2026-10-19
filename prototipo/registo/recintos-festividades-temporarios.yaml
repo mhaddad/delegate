@@ -1,0 +1,51 @@
+id: recintos-festividades-temporarios
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Cultura e Turismo
+titulo_oficial: Licenciamento de Recinto Improvisado ou Itinerante e Festividades
+titulo_simples: Organizar uma festa ou montar um palco no espaço público
+sinonimos: [montar palco, palco no largo, tenda para festa, recinto improvisado, arraial, festa popular]
+publico: [associacoes, comissoes-de-festas, empresas, particulares]
+eventos_de_vida: [organizar-evento]
+tipo_procedimento: licença administrativa
+condicoes:
+  - texto: >-
+      Instalações provisórias com palcos, estrados, palanques, tendas ou bancadas em lugares públicos ou privados carecem de licença de recinto improvisado mediante requerimento Mod. 466/SQ.
+    fonte: corpus-proc-eventos-recintos
+documentos:
+  - texto: Requerimento Mod. 466/SQ, termo de responsabilidade de solidez e estabilidade das estruturas assinado por técnico habilitado, seguro de acidentes e plano de segurança.
+    fonte: corpus-proc-eventos-recintos
+taxas:
+  descricao: Taxa fixada no Regulamento e Tabela de Taxas Municipal em função da tipologia do recinto e duração do evento.
+  valor: null
+  fonte: null
+  unidade: por evento
+prazos:
+  - texto: Apresentação com antecedência mínima de 15 dias relativamente à data do início da montagem das estruturas.
+    fonte: corpus-proc-eventos-recintos
+canais:
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA)
+    url: null
+    fonte: corpus-proc-eventos-recintos
+  - tipo: online
+    descricao: Serviços Online do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-eventos-recintos
+dados_minimos: [local_recinto, area_ocupada, capacidade_pessoas, data_montagem, data_desmontagem]
+nivel_risco: medio
+escalonamento: Recintos com lotação superior a 500 pessoas carecem de vistoria prévia dos Bombeiros e Proteção Civil.
+limites: O recinto não pode bloquear passagens de emergência nem corredores pedonais essenciais.
+fontes:
+  - id: corpus-proc-eventos-recintos
+    titulo: Procedimentos de Licenciamento de Eventos, Espetáculos e Recintos de Guimarães (Mod. 466/SQ)
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios
+    consultado_em: 2026-10-18
+    hash: sha256:f059ef5b202afeef63c3bdda0cbdeae2cd31211409a77d35c795c060a8b0015f
+    natureza: oficial
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 9 do Catálogo Anexo A.
