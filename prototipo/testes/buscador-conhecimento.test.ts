@@ -13,7 +13,7 @@ describe('Base de Conhecimento Municipal (RAG D0 via Cloudflare /markdown)', () 
     const resultado = buscador.buscar('Como peço isenção de licença de utilização de um prédio antigo?');
 
     expect(resultado).not.toBeNull();
-    expect(resultado?.titulo).toContain('Diretório de Serviços');
+    expect(resultado?.titulo).toMatch(/Isenção de Licença de Utilização|Diretório de Serviços/i);
     expect(resultado?.url).toContain('isencao-de-licenca-de-utilizacao');
     expect(resultado?.excerto).toMatch(/isento de licença de utilização|isenção de licença de utilização|RGEU/i);
     expect(resultado?.hashSha256).toBeDefined();

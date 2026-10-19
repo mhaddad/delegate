@@ -108,38 +108,62 @@ export class BuscadorConhecimento {
     let maiorPontuacao = 0;
 
     for (const doc of this.#documentos) {
-      // 1. Pontuação do Documento
       let pontosDoc = 0;
+      const tokensTitulo = normalizar(doc.titulo);
+      const urlLower = doc.url.toLowerCase();
+
+      // Identificar páginas agregadoras ou de listagem geral
+      const ehAgregador =
+        urlLower.endsWith('/directorio_de_servicos') ||
+        urlLower.endsWith('/directorio_de_servicos/') ||
+        urlLower.endsWith('/regulamentos') ||
+        urlLower.endsWith('/regulamentos/') ||
+        urlLower.endsWith('/formularios') ||
+        urlLower.endsWith('/formularios/') ||
+        urlLower === 'https://diretorio.cm-guimaraes.pt/' ||
+        urlLower === 'https://diretorio.cm-guimaraes.pt' ||
+        urlLower === 'https://www.cm-guimaraes.pt/' ||
+        urlLower === 'https://www.cm-guimaraes.pt';
+
       for (const token of tokensPergunta) {
-        if (doc.palavrasChave.has(token)) {
-          pontosDoc += 3;
+        if (tokensTitulo.includes(token)) {
+          pontosDoc += 15; // Título substantivo do serviço
         }
-        if (doc.url.toLowerCase().includes(token)) {
-          pontosDoc += 5;
+        if (urlLower.includes(token)) {
+          pontosDoc += 10; // URL específica
+        }
+        if (doc.palavrasChave.has(token)) {
+          pontosDoc += 2;
         }
       }
 
       if (pontosDoc === 0) continue;
 
-      // Penalizar ligeiramente páginas raiz agregadoras para favorecer fichas específicas
-      if (doc.url === 'https://diretorio.cm-guimaraes.pt/' || doc.url === 'https://www.cm-guimaraes.pt/como-podemos-ajudar/servicos') {
-        pontosDoc = Math.max(1, pontosDoc - 3);
+      if (ehAgregador) {
+        pontosDoc = Math.max(1, Math.floor(pontosDoc * 0.25));
       }
 
-      // 2. Pontuação nas Secções Específicas
-      for (const secao of doc.secoes) {
-        let pontosSecao = pontosDoc;
-        const tokensSecao = normalizar(`${secao.tituloSecao} ${secao.texto}`);
+      if (doc.secoes.length > 0) {
+        for (const secao of doc.secoes) {
+          let pontosSecao = pontosDoc;
+          const tokensSecao = normalizar(`${secao.tituloSecao} ${secao.texto}`);
 
-        for (const token of tokensPergunta) {
-          const ocorrencias = tokensSecao.filter((t) => t === token).length;
-          pontosSecao += ocorrencias * 2;
+          for (const token of tokensPergunta) {
+            const ocorrencias = tokensSecao.filter((t) => t === token).length;
+            pontosSecao += Math.min(ocorrencias * 3, 15);
+          }
+
+          if (pontosSecao > maiorPontuacao) {
+            maiorPontuacao = pontosSecao;
+            melhorDoc = doc;
+            melhorSecao = secao;
+          }
         }
-
-        if (pontosSecao > maiorPontuacao) {
-          maiorPontuacao = pontosSecao;
+      } else {
+        if (pontosDoc > maiorPontuacao) {
+          maiorPontuacao = pontosDoc;
           melhorDoc = doc;
-          melhorSecao = secao;
+          melhorSecao = null;
         }
       }
     }

@@ -2,71 +2,1201 @@
   {
     "id": "DOC-DIRETORIO-diretorio-principal",
     "url": "https://diretorio.cm-guimaraes.pt/",
-    "titulo": "Diretório de Serviços - Guimarães",
+    "titulo": "Novidades",
     "categoria": "diretorio",
-    "consultadoEm": "2026-10-19T20:48:01.759Z",
-    "hashSha256": "9d03ab0b9ef3082930f8b0e7458e70a6c0251a0194e8fadef57ac481eb26bc6a",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "4300a467fb3b455f0f1648bfd2ea9149c71fec2084ceda194645c12e4800ce5f",
     "ficheiroLocal": "diretorio/diretorio-principal.md",
-    "tamanhoBytes": 6854
+    "tamanhoBytes": 7209
   },
   {
     "id": "DOC-DIRETORIO-isencao-licenca-utilizacao",
     "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/isencao-de-licenca-de-utilizacao",
-    "titulo": "Diretório de Serviços",
+    "titulo": "Isenção de Licença de Utilização",
     "categoria": "diretorio",
-    "consultadoEm": "2026-10-19T20:48:02.655Z",
-    "hashSha256": "82de9cb12512141f1071b95719f86453c03c59b5cc91e10c0388f27d63392252",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "1ca3fd16d6aaca7232eb6c3c50291e270d888bb9bd4c2bcb8588fe68911d3041",
     "ficheiroLocal": "diretorio/isencao-licenca-utilizacao.md",
-    "tamanhoBytes": 7163
+    "tamanhoBytes": 7599
   },
   {
     "id": "DOC-DIRETORIO-bolsas-de-estudo",
     "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/acao-social/bolsas-de-estudo",
-    "titulo": "Diretório de Serviços",
+    "titulo": "Bolsas de Estudo",
     "categoria": "diretorio",
-    "consultadoEm": "2026-10-19T20:48:03.475Z",
-    "hashSha256": "10cb47b09e7100a2cc5f42762f2e110fb646ad1e501d75711c96d2738570a901",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e85fa85b3d71b4e256f7b719e7b422c323b6cc25f594dfd45aac8b2fdacae330",
     "ficheiroLocal": "diretorio/bolsas-de-estudo.md",
-    "tamanhoBytes": 2544
+    "tamanhoBytes": 2956
   },
   {
     "id": "DOC-FORMULARIOS-formularios-municipais",
     "url": "https://www.cm-guimaraes.pt/servicos-online/formularios",
     "titulo": "Formulários",
     "categoria": "formularios",
-    "consultadoEm": "2026-10-19T20:48:04.696Z",
-    "hashSha256": "9daf05f2e5e17294dc7bf32270c7485848e8cf9efb92a7194faae4bffd3e0af8",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "7a4f691de0f70c4366750ffc29e9143bbf4c7a972505fd804df05939c0bdc9e5",
     "ficheiroLocal": "formularios/formularios-municipais.md",
-    "tamanhoBytes": 10645
+    "tamanhoBytes": 11005
+  },
+  {
+    "id": "DOC-PORTAL-portal-principal",
+    "url": "https://www.cm-guimaraes.pt/",
+    "titulo": "Portais do Município",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "24379d04c18b32fd65e83aa822e72bdeef9698f83a70fa0d1ef7f30f0f672b14",
+    "ficheiroLocal": "portal/portal-principal.md",
+    "tamanhoBytes": 12037
   },
   {
     "id": "DOC-URBANISMO-urbanismo-digital",
     "url": "https://www.cm-guimaraes.pt/municipio/camara-municipal/servicos/urbanismo/urbanismo-digital",
     "titulo": "Urbanismo Digital",
     "categoria": "urbanismo",
-    "consultadoEm": "2026-10-19T20:48:05.551Z",
-    "hashSha256": "5e131243aa5231973beb551a6716fa1ecd3730eb4ed19354babcb90c1d940c2f",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e76572caccda15bf84ed9f63af2934874dd016f64f3fce57d86b1877783e6f6b",
     "ficheiroLocal": "urbanismo/urbanismo-digital.md",
-    "tamanhoBytes": 7563
+    "tamanhoBytes": 7954
   },
   {
     "id": "DOC-URBANISMO-pdm-guimaraes",
     "url": "https://pdm.guimaraes.pt/",
     "titulo": "Converted Content",
     "categoria": "urbanismo",
-    "consultadoEm": "2026-10-19T20:48:06.618Z",
-    "hashSha256": "7990ac010df843f0cab1e585ebd101ee2359637e9e11a251550da9886409788f",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5174d78c7b187fa23e456b4c93962acde9dd21e4d1d1f5e09569978268ba6858",
     "ficheiroLocal": "urbanismo/pdm-guimaraes.md",
-    "tamanhoBytes": 2527
+    "tamanhoBytes": 2848
   },
   {
     "id": "DOC-PORTAL-catalogo-como-podemos-ajudar",
     "url": "https://www.cm-guimaraes.pt/como-podemos-ajudar/servicos",
     "titulo": "Serviços",
     "categoria": "portal",
-    "consultadoEm": "2026-10-19T20:48:07.594Z",
-    "hashSha256": "66e54db276e1eaf106bf8216dbcb1f6e0da3a6a3fe4052b31c4286506ec60648",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5cf21f8b5a9b5383ac8e2d889d5c92e7fd43a5484c2d5f4b0f0474e8132d8079",
     "ficheiroLocal": "portal/catalogo-como-podemos-ajudar.md",
-    "tamanhoBytes": 5670
+    "tamanhoBytes": 6023
+  },
+  {
+    "id": "DOC-FORMULARIOS-procedimentos-balcao-virtual",
+    "url": "https://www.cm-guimaraes.pt/viver/balcao-virtual/procedimentos",
+    "titulo": "Procedimentos",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "fd60e188a9f30430d2dcb09c783df900a7ee937b6e08cb07cb038a54410cd1b3",
+    "ficheiroLocal": "formularios/procedimentos-balcao-virtual.md",
+    "tamanhoBytes": 3225
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?tag=Sugerimos",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?service_action_id=2",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-DIRETORIO-catalogo-completo-servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e05289063fa2032f08522e594bc5cb6b11ba64efe24954e81ebe05e8666f6c75",
+    "ficheiroLocal": "diretorio/catalogo-completo-servicos.md",
+    "tamanhoBytes": 17111
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?tag=Novidade",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-REGULAMENTOS-regulamentos-municipais",
+    "url": "https://www.cm-guimaraes.pt/municipio/camara-municipal/publicacoes/regulamentos",
+    "titulo": "Regulamentos",
+    "categoria": "regulamentos",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "743685c5f8d2bc41dbe2b76e5f273b2457d24f8002f0b772ea795a19e00a370e",
+    "ficheiroLocal": "regulamentos/regulamentos-municipais.md",
+    "tamanhoBytes": 3502
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?tag=isenção",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-DIRETORIO-acao-social",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/acao-social",
+    "titulo": "Ação Social",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "b7122cba125e7b12e68f0a29f27b36b01d5d79013942f3321e465c3887d57669",
+    "ficheiroLocal": "diretorio/acao-social.md",
+    "tamanhoBytes": 2539
+  },
+  {
+    "id": "DOC-PORTAL-horarios-de-atendimento",
+    "url": "https://www.cm-guimaraes.pt/viver/balcao-virtual/horarios-de-atendimento",
+    "titulo": "Horários de Atendimento",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5ea89b547535325220b02af1da796c950155c8ba8ee845773178f7feadd251aa",
+    "ficheiroLocal": "portal/horarios-de-atendimento.md",
+    "tamanhoBytes": 5379
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?tag=agendamento",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?tag=marcação",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-DIRETORIO-atendimento-presencial-balcao-unico-de-atendimento-agendar-atendimento",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/atendimento-presencial-balcao-unico-de-atendimento/agendar-atendimento",
+    "titulo": "Agendar Atendimento",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "895d669d7a7145da0a61206196ae5af728de40c12a0a68ece24a99f4c97d4654",
+    "ficheiroLocal": "diretorio/atendimento-presencial-balcao-unico-de-atendimento-agendar-atendimento.md",
+    "tamanhoBytes": 3594
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?service_action_id=3",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-DIRETORIO-certidoes",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes",
+    "titulo": "Certidões",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "25f0bb2ea3ec5b23e9b0105c97da7d22f370da8c7d6073cf675f24fbd80efa8b",
+    "ficheiroLocal": "diretorio/certidoes.md",
+    "tamanhoBytes": 6930
+  },
+  {
+    "id": "DOC-DIRETORIO-diversos-atribuicao-de-numero-de-porta",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/diversos/atribuicao-de-numero-de-porta",
+    "titulo": "Atribuição de número de porta",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "1449c110fb7cfdb7ee550b178d4edf47e6796fa588b67cd93b6cb036cd0b703b",
+    "ficheiroLocal": "diretorio/diversos-atribuicao-de-numero-de-porta.md",
+    "tamanhoBytes": 2780
+  },
+  {
+    "id": "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos?tag=iva",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e11753c1dbaab342264d3ce2e7749258e26c5ddaa7d1d6a8817e42dedcce30a3",
+    "ficheiroLocal": "diretorio/diretorio-de-servicos-directorio_de_servicos.md",
+    "tamanhoBytes": 17509
+  },
+  {
+    "id": "DOC-DIRETORIO-atendimento-presencial-balcao-unico-de-atendimento",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/atendimento-presencial-balcao-unico-de-atendimento",
+    "titulo": "Atendimento presencial Balcão Único de Atendimento",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e637a72430e5c52a531f0f6313d37e2b8252c67fdeb326d16071d8c040317e16",
+    "ficheiroLocal": "diretorio/atendimento-presencial-balcao-unico-de-atendimento.md",
+    "tamanhoBytes": 1316
+  },
+  {
+    "id": "DOC-DIRETORIO-diversos",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/diversos",
+    "titulo": "Diversos",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "faf5206cbe2c6b5c1f3b3c9d9b77db053df6931abcdc95ebf3e7a9c21acbd2c0",
+    "ficheiroLocal": "diretorio/diversos.md",
+    "tamanhoBytes": 1104
+  },
+  {
+    "id": "DOC-DIRETORIO-certidoes-reducao-do-iva",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/reducao-do-iva",
+    "titulo": "Redução do IVA",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "f47a924d28d8acecce422bf3c25d9c4026da039db9ad62ffff839214e008b6e9",
+    "ficheiroLocal": "diretorio/certidoes-reducao-do-iva.md",
+    "tamanhoBytes": 2561
+  },
+  {
+    "id": "DOC-DIRETORIO-certidoes-ciclomotores",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/ciclomotores",
+    "titulo": "Ciclomotores",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "d2bf179ca5cbea8c4b85c7b1d91f53c09c4ed9ae0cbb93559e8ffd4a9633d845",
+    "ficheiroLocal": "diretorio/certidoes-ciclomotores.md",
+    "tamanhoBytes": 2606
+  },
+  {
+    "id": "DOC-DIRETORIO-certidoes-cedencia-ao-dominio-publico-ou-privado",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/cedencia-ao-dominio-publico-ou-privado",
+    "titulo": "Cedência ao domínio público ou privado",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "04731b78dad31a3bb9501001abebf201d344d54915c2ce5ea915518eea2dd2d8",
+    "ficheiroLocal": "diretorio/certidoes-cedencia-ao-dominio-publico-ou-privado.md",
+    "tamanhoBytes": 2729
+  },
+  {
+    "id": "DOC-DIRETORIO-certidoes-comprovativo-de-numero-de-porta",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/comprovativo-de-numero-de-porta",
+    "titulo": "Comprovativo de número de porta",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "af3e95d7c1a0e347804cdea6aeb4704ddfaecd8cf911678b25d003022cf4870d",
+    "ficheiroLocal": "diretorio/certidoes-comprovativo-de-numero-de-porta.md",
+    "tamanhoBytes": 2858
+  },
+  {
+    "id": "DOC-DIRETORIO-atendimento-presencial-balcao-unico-de-atendimento-agendar-atendimento",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/atendimento-presencial-balcao-unico-de-atendimento/agendar-atendimento?service_action_id=2",
+    "titulo": "Agendar Atendimento",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "6f87ed02806d6bcca6c8493f0b48939eed19e9c391086904c752c3e364f4bf38",
+    "ficheiroLocal": "diretorio/atendimento-presencial-balcao-unico-de-atendimento-agendar-atendimento.md",
+    "tamanhoBytes": 4084
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjE0",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjE0",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjE0.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-DIRETORIO-urbanismo-urbanismo-digital68",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/urbanismo/urbanismo-digital68?service_action_id=1",
+    "titulo": "Urbanismo Digital",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "8f575fcccddc5d367bd623235f5268fb9524b73217070f3566aa7d913c49093b",
+    "ficheiroLocal": "diretorio/urbanismo-urbanismo-digital68.md",
+    "tamanhoBytes": 2920
+  },
+  {
+    "id": "DOC-DIRETORIO-certidoes-aplicabilidade-do-rgeu",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/aplicabilidade-do-rgeu?service_action_id=2",
+    "titulo": "Aplicabilidade do RGEU",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "2ad0117112154fff41c308bc09fa1bd8cb48d1d84a00ee135e649b165e7e4a23",
+    "ficheiroLocal": "diretorio/certidoes-aplicabilidade-do-rgeu.md",
+    "tamanhoBytes": 6403
+  },
+  {
+    "id": "DOC-DIRETORIO-diversos-atribuicao-de-numero-de-porta",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/diversos/atribuicao-de-numero-de-porta?service_action_id=3",
+    "titulo": "Atribuição de número de porta",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "0ee19a25937f6943f1f3edc679ae65d250fc95d4ed972c272066a8ae9d2eeb59",
+    "ficheiroLocal": "diretorio/diversos-atribuicao-de-numero-de-porta.md",
+    "tamanhoBytes": 3219
+  },
+  {
+    "id": "DOC-PORTAL-ajude-nos-a-melhorar",
+    "url": "https://www.cm-guimaraes.pt/ajude-nos-a-melhorar",
+    "titulo": "Ajude-nos a melhorar",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "d415d14794a162bf48e531786437f3b8f4b5da8ea5734f7b99273a2fd80a66f4",
+    "ficheiroLocal": "portal/ajude-nos-a-melhorar.md",
+    "tamanhoBytes": 2977
+  },
+  {
+    "id": "DOC-PORTAL-registar-ocorrencias",
+    "url": "https://www.cm-guimaraes.pt/registar-ocorrencias",
+    "titulo": "Registar Ocorrências",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "23bb0a04271f78edb57ab678b91b1c11664672dbeee094dc08eef366329897b5",
+    "ficheiroLocal": "portal/registar-ocorrencias.md",
+    "tamanhoBytes": 1578
+  },
+  {
+    "id": "DOC-PORTAL-servicos-online",
+    "url": "https://www.cm-guimaraes.pt/servicos-online",
+    "titulo": "Serviços Online",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "fe654705ad24168234bf6f1a6a14ab6ee6556940b2f82130fc3aa01aa8f0e869",
+    "ficheiroLocal": "portal/servicos-online.md",
+    "tamanhoBytes": 2439
+  },
+  {
+    "id": "DOC-DIRETORIO-recrutamento-procedimentos-a-decorrer",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/recrutamento/procedimentos-a-decorrer?service_action_id=1",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "51530cff6c6cfe7d0aafb1cbb570aa341494ede36082d3319370860355f2492e",
+    "ficheiroLocal": "diretorio/recrutamento-procedimentos-a-decorrer.md",
+    "tamanhoBytes": 12800
+  },
+  {
+    "id": "DOC-PORTAL-servicos-online-consultar",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/consultar",
+    "titulo": "Autenticação",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "1621a9ad93636c05490c95e17208ef90b3d45caae3134e7a71f7da35ed15761f",
+    "ficheiroLocal": "portal/servicos-online-consultar.md",
+    "tamanhoBytes": 2385
+  },
+  {
+    "id": "DOC-PORTAL-area-do-municipe",
+    "url": "https://www.cm-guimaraes.pt/area-do-municipe",
+    "titulo": "Autenticação",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "1efb832b051a091c19fb34f8ce1e84ca949e17b46011f057546f0565510d762a",
+    "ficheiroLocal": "portal/area-do-municipe.md",
+    "tamanhoBytes": 2255
+  },
+  {
+    "id": "DOC-PORTAL-ficha-tecnica-declaracao-de-acessibilidade-e-usabilidade-contactos-da-autar",
+    "url": "https://www.cm-guimaraes.pt/ficha-tecnica/declaracao-de-acessibilidade-e-usabilidade/contactos-da-autarquia",
+    "titulo": "Contactos",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "aaff00e5fda20bff574ba11462b6db387cc00e05f7a696ed1f2e838058d9aa7b",
+    "ficheiroLocal": "portal/ficha-tecnica-declaracao-de-acessibilidade-e-usabilidade-contactos-da-autar.md",
+    "tamanhoBytes": 4311
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-acao-social-bolsas-de-estudo",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/acao-social/bolsas-de-estudo",
+    "titulo": "Bolsas de Estudo",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e0a8945a1fd58cff7d1308f2840fe154eef5f5aa0a5e73a8367474153837301",
+    "ficheiroLocal": "portal/areas-de-intervencao-acao-social-bolsas-de-estudo.md",
+    "tamanhoBytes": 2155
+  },
+  {
+    "id": "DOC-URBANISMO-areas-de-intervencao-ambiente-e-sustentabilidade-urbanismo-websig-mapas-onl",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/ambiente-e-sustentabilidade/urbanismo/websig-mapas-online",
+    "titulo": "Websig - mapas online",
+    "categoria": "urbanismo",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "22c8f04ca8e5b0da1b9d7853442737bd8d7073242e88a9cdf6bf360351a916ed",
+    "ficheiroLocal": "urbanismo/areas-de-intervencao-ambiente-e-sustentabilidade-urbanismo-websig-mapas-onl.md",
+    "tamanhoBytes": 3591
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0FTQ0VO",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0FTQ0VOU09SI0FTQ0VO",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0FTQ0VO.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-Q0VOU09S",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0FTQ0VOU09SI0FTQ0VOU09S",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-Q0VOU09S.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-EtREVGMQ",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0NBLURFRjEjQ0EtREVGMQ==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-EtREVGMQ.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-DQS1JRE8",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0NBLUlETyNDQS1JRE8=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-DQS1JRE8.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-NDRU0wMQ",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0NFTSNDRU0wMQ==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-NDRU0wMQ.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-9OLU1FVA",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0NPTi1NRVQjQ09OLU1FVA==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-9OLU1FVA.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-PUktJTkc",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0NPV09SS0lORyNDT1dPUktJTkc=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-PUktJTkc.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-ERUMtUEY",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0RFQy1QRiNERUMtUEY=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-ERUMtUEY.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-AjQUxVRw",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0RFU1AjQUxVRw==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-AjQUxVRw.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-TFRNQVRS",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0VTVEFDSU9OQSNBTFRNQVRS",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-TFRNQVRS.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-VUUklDTw",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0VTVEFDSU9OQSNFTEVUUklDTw==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-VUUklDTw.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-SRVNJQ0g",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0VTVEFDSU9OQSNSRVNJQ0g=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-SRVNJQ0g.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-NJRkNIMg",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0VTVEFDSU9OQSNSRVNJRkNIMg==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-NJRkNIMg.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-NJRkNIMQ",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0VTVEFDSU9OQSNSRVNJRkNIMQ==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-NJRkNIMQ.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-NDSVJDTw",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0ZFU1RJViNDSVJDTw==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-NDSVJDTw.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-GRVNUSVY",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0ZFU1RJViNGRVNUSVY=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-GRVNUSVY.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-QVNTRUlP",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0ZFU1RJViNQQVNTRUlP",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-QVNTRUlP.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-ViNGT0dP",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0ZFU1RJViNGT0dP",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-ViNGT0dP.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-9SLkVYQw",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI0hPUi5FWEMjSE9SLkVYQw==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-9SLkVYQw.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-PVlAtU08",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-PVlAtU08.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-BDI0NFUg",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUg==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-BDI0NFUg.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-DI0NFUjE",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjE=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-DI0NFUjE.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjEw",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjEw",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjEw.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-NFUjExQQ",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjExQQ==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-NFUjExQQ.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjEx",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjEx",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjEx.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjEy",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjEy",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjEy.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjE1",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjE1",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjE1.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjE2",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjE2",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjE2.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjE3",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjE3",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjE3.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjE4",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjE4",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjE4.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjE5",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjE5",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjE5.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjIw",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjIw",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjIw.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjIx",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjIx",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjIx.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjIy",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjIy",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjIy.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjIz",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjIz",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjIz.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-UjI1V1NB",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjI1V1NB",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-UjI1V1NB.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I0NFUjM4",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjM4",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I0NFUjM4.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-DI0NFUjU",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjU=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-DI0NFUjU.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-DI0NFUjY",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjY=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-DI0NFUjY.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-DI0NFUjc",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjc=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-DI0NFUjc.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-DI0NFUjg",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0NFUjg=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-DI0NFUjg.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-BDI0ZUTw",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDI0ZUTw==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-BDI0ZUTw.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-BDT05TMQ",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BDT05TI1BDT05TMQ==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-BDT05TMQ.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-I1BST1ZE",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BST1ZEI1BST1ZE",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-I1BST1ZE.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-VQiNQVUI",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1BVQiNQVUI=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-VQiNQVUI.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-RBT0JPTQ",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JFR0JPTUJFSVJPI0NBUlRBT0JPTQ==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-RBT0JPTQ.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-VUNBQk9N",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JFR0JPTUJFSVJPI0VEVUNBQk9N",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-VUNBQk9N.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-lNSUJPTQ",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JFR0JPTUJFSVJPI0lNSUJPTQ==",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-lNSUJPTQ.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-TkRBQk9N",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JFR0JPTUJFSVJPI1JFTkRBQk9N",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-TkRBQk9N.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-FU0lCT00",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JFR0JPTUJFSVJPI1JFU0lCT00=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-FU0lCT00.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-WEFTQk9N",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JFR0JPTUJFSVJPI1RBWEFTQk9N",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-WEFTQk9N.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-USNQT1Iy",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JFUSNQT1Iy",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-USNQT1Iy.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-FORMULARIOS-servicos-online-formularios-detalhe-de-procedimento-BQ0lERU4",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI1JIX0FDSURFTlRFUyNSSF9BQ0lERU4=",
+    "titulo": "PRIMEIRA INSPEÇÃO DE ASCENSORES",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5e3bb6cf4971975d06d424df6b67818a83971bdb9465a711a2392992aa745332",
+    "ficheiroLocal": "formularios/servicos-online-formularios-detalhe-de-procedimento-BQ0lERU4.md",
+    "tamanhoBytes": 2524
+  },
+  {
+    "id": "DOC-PORTAL-investir",
+    "url": "https://www.cm-guimaraes.pt/investir",
+    "titulo": "Investir",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "dee3c0f05878ee5123c7bb4bce928410b6c29d6058b2b698f21104240fc1b2b5",
+    "ficheiroLocal": "portal/investir.md",
+    "tamanhoBytes": 2591
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-novo-centro-de-diagnostico-e-tratamento-projet",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/novo-centro-de-diagnostico-e-tratamento-projeta-guimaraes-como-territorio-de-ciencia-e-inovacao-na-saude",
+    "titulo": "Novo centro de diagnóstico e tratamento projeta Guimarães como território de ciência e inovação na saúde",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "40820a7fc46a6b97b8f0d5f37acc3b9d8a54c341990a1a2c3a84fac6779f6daa",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-novo-centro-de-diagnostico-e-tratamento-projet.md",
+    "tamanhoBytes": 6920
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-bombeiros-de-guimaraes-reforcam-capacidade-ope",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/bombeiros-de-guimaraes-reforcam-capacidade-operacional-com-nova-ambulancia-e-veiculo-de-combate-a-incendios",
+    "titulo": "Bombeiros de Guimarães reforçam capacidade operacional com nova ambulância e veículo de combate a incêndios",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "b6b1cde1c5757baf8dcec086af2f635b7ee33cf4de60ea3cad11bcc20d0787ab",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-bombeiros-de-guimaraes-reforcam-capacidade-ope.md",
+    "tamanhoBytes": 6097
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-guimaraes-em-destaque-no-dia-bandeiras-verdes-",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/guimaraes-em-destaque-no-dia-bandeiras-verdes-galardao-eco-escolas-2026",
+    "titulo": "Guimarães em destaque no Dia Bandeiras Verdes - Galardão Eco-Escolas 2026",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "2895e5e9559001751f0668022b385fefcec5c6f760fc971e280005d349599b48",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-guimaraes-em-destaque-no-dia-bandeiras-verdes-.md",
+    "tamanhoBytes": 4720
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-guimaraes-acolhe-reflexao-nacional-sobre-os-gr",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/guimaraes-acolhe-reflexao-nacional-sobre-os-grandes-desafios-e-o-futuro-da-agua-urbana",
+    "titulo": "Guimarães acolhe reflexão nacional sobre os grandes desafios e o futuro da água urbana",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "15f50fb289fda9f5e0f2bcfada92d5be65f05ba3d6f699850913a43767d71814",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-guimaraes-acolhe-reflexao-nacional-sobre-os-gr.md",
+    "tamanhoBytes": 7131
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-guimaraes-estreia-se-no-campeonato-da-europa-d",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/guimaraes-estreia-se-no-campeonato-da-europa-de-ralis-com-o-rali-6-cidades-norte-de-portugal",
+    "titulo": "Guimarães estreia-se no Campeonato da Europa de Ralis com o Rali 6 Cidades Norte de Portugal",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "f92c2240690dc8f28310a89738f9b539ee39c0f6ac4bfb52fc97fbd302de2d5c",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-guimaraes-estreia-se-no-campeonato-da-europa-d.md",
+    "tamanhoBytes": 4596
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-camara-de-guimaraes-inaugura-parque-infantil-e",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/camara-de-guimaraes-inaugura-parque-infantil-e-campo-de-jogos-no-bairro-da-emboladoura-promovendo-o-lazer-o-desporto-e-o-convivio-para-toda-a-comunidade",
+    "titulo": "Câmara de Guimarães inaugura parque infantil e campo de jogos no Bairro da Emboladoura, promovendo o lazer, o desporto e o convívio para toda a comunidade",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "7e625bc781fd537bdec8d0c17a2321b677ad54a4c94a01753c6e6511378a5bf2",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-camara-de-guimaraes-inaugura-parque-infantil-e.md",
+    "tamanhoBytes": 6676
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-sentir-tradicao-55-promove-oficinas-de-bordado",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/sentir-tradicao-55-promove-oficinas-de-bordado-musica-e-jogos-tradicionais-em-vila-nova-de-sande",
+    "titulo": "«Sentir Tradição 55+» promove oficinas de bordado, música e jogos tradicionais em Vila Nova de Sande",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "739f11e70c94f42a94b6fcc0be356a377b14eaec8c3d06454dac58658cb4654b",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-sentir-tradicao-55-promove-oficinas-de-bordado.md",
+    "tamanhoBytes": 4019
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-inicio-de-trabalhos-de-requalificacao-do-parqu",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/inicio-de-trabalhos-de-requalificacao-do-parque-infantil-do-parque-da-cidade-da-costa",
+    "titulo": "Início de trabalhos de requalificação do parque infantil do Parque da Cidade da Costa",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "3ad80e487b0879941b859389273f305beaedab3743f54551a311520cd217a7ef",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-inicio-de-trabalhos-de-requalificacao-do-parqu.md",
+    "tamanhoBytes": 2494
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-inscricoes-abertas-para-o-sorteio-de-licencas-",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/inscricoes-abertas-para-o-sorteio-de-licencas-de-venda-ambulante-na-noite-do-pinheiro",
+    "titulo": "Inscrições abertas para o sorteio de licenças de venda ambulante na Noite do Pinheiro",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "f3d5691f23ddb892a72e89c54afc2fb235cfac00e2bb5e3fca82eb48e6e9e7fb",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-inscricoes-abertas-para-o-sorteio-de-licencas-.md",
+    "tamanhoBytes": 2414
+  },
+  {
+    "id": "DOC-PORTAL-index",
+    "url": "https://em.guimaraes.pt/",
+    "titulo": "Portais do Município",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "76d435772a7d118860ecea171782979b2818601722946cdf0dee570e56a5d369",
+    "ficheiroLocal": "portal/index.md",
+    "tamanhoBytes": 12348
+  },
+  {
+    "id": "DOC-PORTAL-index",
+    "url": "https://associativismo.guimaraes.pt/",
+    "titulo": "Portais do Município",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "76d435772a7d118860ecea171782979b2818601722946cdf0dee570e56a5d369",
+    "ficheiroLocal": "portal/index.md",
+    "tamanhoBytes": 12348
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-municipio-de-guimaraes-reforca-a-cooperacao-re",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/municipio-de-guimaraes-reforca-a-cooperacao-regional-em-torno-dos-desafios-e-oportunidades-da-industria",
+    "titulo": "Município de Guimarães reforça a cooperação regional em torno dos desafios e oportunidades da indústria",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "eb4f90ab3f6caa3a64efa641b0e9e7c292acc9c2bef57e77414c5c3aa43d2a2b",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-municipio-de-guimaraes-reforca-a-cooperacao-re.md",
+    "tamanhoBytes": 3329
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-asmav-encerra-comemoracoes-dos-160-anos-com-ho",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/asmav-encerra-comemoracoes-dos-160-anos-com-homenagem-ao-associativismo-e-projeto-de-opera-para-os-900-anos-da-batalha-de-s-mamede",
+    "titulo": "ASMAV encerra comemorações dos 160 anos com homenagem ao Associativismo e projeto de ópera para os 900 anos da Batalha de S. Mamede",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "a0de3a0225a75ce6493f4f4b82d4d0966d8dc1894baf5b7f184c825d46bd9617",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-asmav-encerra-comemoracoes-dos-160-anos-com-ho.md",
+    "tamanhoBytes": 6448
+  },
+  {
+    "id": "DOC-PORTAL-areas-de-intervencao-noticia-ricardo-araujo-anuncia-classificacao-da-festa-",
+    "url": "https://www.cm-guimaraes.pt/areas-de-intervencao/noticia/ricardo-araujo-anuncia-classificacao-da-festa-das-colheitas-de-sao-torcato-como-festa-de-interesse-concelhio",
+    "titulo": "Ricardo Araújo anuncia classificação da Festa das Colheitas de São Torcato como festa de interesse concelhio",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "4c33f04e68f39e0d43b7e0f3133dde73b7303c63a07eacab7ee8e550d8382aae",
+    "ficheiroLocal": "portal/areas-de-intervencao-noticia-ricardo-araujo-anuncia-classificacao-da-festa-.md",
+    "tamanhoBytes": 4370
+  },
+  {
+    "id": "DOC-PORTAL-atendimento-presencial-por-marcacao-previa-no-balcao-unico",
+    "url": "https://www.cm-guimaraes.pt/atendimento-presencial-por-marcacao-previa-no-balcao-unico",
+    "titulo": "ATENDIMENTO PRESENCIAL POR MARCAÇÃO PRÉVIA NO BALCÃO ÚNICO",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "e8d9dc86af0b05862168dfd71ccc912443694f3e7202cac9a29781fa47c9e560",
+    "ficheiroLocal": "portal/atendimento-presencial-por-marcacao-previa-no-balcao-unico.md",
+    "tamanhoBytes": 1795
+  },
+  {
+    "id": "DOC-PORTAL-pages-2123",
+    "url": "https://www.cm-guimaraes.pt/pages/2123",
+    "titulo": "Formulários",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "26b661bf4b5cd388d1faf6f75dd70ebb37a3b30699e94ab0f9201d3ebfd8c364",
+    "ficheiroLocal": "portal/pages-2123.md",
+    "tamanhoBytes": 2114
+  },
+  {
+    "id": "DOC-FORMULARIOS-viver-balcao-virtual-documentos-online",
+    "url": "https://www.cm-guimaraes.pt/viver/balcao-virtual/documentos-online",
+    "titulo": "Documentos Online",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "b79ae64aee87c47a75859dd2873a6ea2ab451c11d568984e3f1048cf387b4d2a",
+    "ficheiroLocal": "formularios/viver-balcao-virtual-documentos-online.md",
+    "tamanhoBytes": 1084
+  },
+  {
+    "id": "DOC-PORTAL-index",
+    "url": "http://marca.guimaraes.pt/",
+    "titulo": "Portais do Município",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "76d435772a7d118860ecea171782979b2818601722946cdf0dee570e56a5d369",
+    "ficheiroLocal": "portal/index.md",
+    "tamanhoBytes": 12348
+  },
+  {
+    "id": "DOC-PORTAL-index",
+    "url": "https://atlas.cm-guimaraes.pt/",
+    "titulo": "Portais do Município",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "76d435772a7d118860ecea171782979b2818601722946cdf0dee570e56a5d369",
+    "ficheiroLocal": "portal/index.md",
+    "tamanhoBytes": 12348
+  },
+  {
+    "id": "DOC-PORTAL-pages-279",
+    "url": "https://www.cm-guimaraes.pt/pages/279",
+    "titulo": "Formulários",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "4953f3238fd78676ea8dcb5c6d49804007b5a37f527d08617e9506168ff05b64",
+    "ficheiroLocal": "portal/pages-279.md",
+    "tamanhoBytes": 3108
+  },
+  {
+    "id": "DOC-PORTAL-conhecer-mobilidade",
+    "url": "https://www.cm-guimaraes.pt/conhecer/mobilidade",
+    "titulo": "Mobilidade e Transportes",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "cc8420b512fe3837637450a42cd9df7696f7591d5437f5b85f9bfcd6fd492fac",
+    "ficheiroLocal": "portal/conhecer-mobilidade.md",
+    "tamanhoBytes": 3307
+  },
+  {
+    "id": "DOC-PORTAL-p-cityfy",
+    "url": "https://www.cm-guimaraes.pt/p/cityfy",
+    "titulo": "A nossa app",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19",
+    "hashSha256": "5b63040ee07516545677443f65db191e34ed4365246d4a35e7981ef0d5f10c1a",
+    "ficheiroLocal": "portal/p-cityfy.md",
+    "tamanhoBytes": 2146
   }
 ]
