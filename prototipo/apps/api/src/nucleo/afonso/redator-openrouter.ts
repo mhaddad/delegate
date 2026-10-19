@@ -92,6 +92,7 @@ export class RedatorOpenRouter {
 
     for (const modelo of this.#modelosCandidatos) {
       try {
+        console.log(`[OpenRouter] A redigir resposta com modelo ${modelo}...`);
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 8000);
 
@@ -118,6 +119,7 @@ export class RedatorOpenRouter {
         clearTimeout(timeoutId);
 
         if (!res.ok) {
+          console.warn(`[OpenRouter] Modelo ${modelo} devolveu HTTP ${res.status}`);
           continue;
         }
 
@@ -133,6 +135,7 @@ export class RedatorOpenRouter {
           ]);
 
           if (validacao.valido) {
+            console.log(`✓ [OpenRouter] Resposta validada e aceite via ${dados.model || modelo} (${Date.now() - inicio}ms)`);
             return {
               texto: textoGerado,
               modeloUsado: dados.model || modelo,

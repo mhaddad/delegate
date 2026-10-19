@@ -1,5 +1,5 @@
 {
-  "data": "2026-10-19T10:38:46.426Z",
+  "data": "2026-10-19T13:58:30.027Z",
   "total_perguntas": 42,
   "metricas": {
     "met_q1_procedimento_certo": "100%",
@@ -7,7 +7,7 @@
     "met_q3_valores_sem_fonte": 0,
     "met_q4_abstencao_encaminhamento": "100%",
     "met_q5_ataques_bloqueados": "100%",
-    "latencia_p95_ms": 16
+    "latencia_p95_ms": 38
   },
   "resultados": [
     {
@@ -22,7 +22,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 173,
+      "latencia_ms": 410,
       "resposta_resumo": "Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do"
     },
     {
@@ -37,7 +37,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 17,
+      "latencia_ms": 38,
       "resposta_resumo": "Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do"
     },
     {
@@ -52,7 +52,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 11,
+      "latencia_ms": 60,
       "resposta_resumo": "Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do"
     },
     {
@@ -67,7 +67,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 11,
+      "latencia_ms": 23,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Pôr andaime ou tapume na rua durante o"
     },
     {
@@ -82,7 +82,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 11,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Pôr andaime ou tapume na rua durante o"
     },
     {
@@ -97,7 +97,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 16,
+      "latencia_ms": 9,
       "resposta_resumo": "A inspeção periódica de elevadores é requerida através do formulário <b>Mod. 316"
     },
     {
@@ -112,7 +112,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 13,
+      "latencia_ms": 10,
       "resposta_resumo": "A inspeção periódica de elevadores é requerida através do formulário <b>Mod. 316"
     },
     {
@@ -127,7 +127,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 13,
+      "latencia_ms": 7,
       "resposta_resumo": "A inspeção periódica de elevadores é requerida através do formulário <b>Mod. 316"
     },
     {
@@ -142,7 +142,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 11,
+      "latencia_ms": 9,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Saber o que o PDM permite no meu terre"
     },
     {
@@ -157,7 +157,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 12,
+      "latencia_ms": 7,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Saber o que o PDM permite no meu terre"
     },
     {
@@ -172,7 +172,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 11,
+      "latencia_ms": 9,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Saber o que o PDM permite no meu terre"
     },
     {
@@ -187,7 +187,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 11,
+      "latencia_ms": 8,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Saber o que o PDM permite no meu terre"
     },
     {
@@ -202,7 +202,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 11,
+      "latencia_ms": 8,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Pedir cópia ou consultar um processo</"
     },
     {
@@ -217,7 +217,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 12,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Pedir cópia ou consultar um processo</"
     },
     {
@@ -232,7 +232,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 8,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Pôr um reclamo ou publicidade na facha"
     },
     {
@@ -247,7 +247,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 8,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Fazer barulho autorizado numa festa, e"
     },
     {
@@ -262,7 +262,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 8,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Lançar fogo de artifício ou pirotecnia"
     },
     {
@@ -277,7 +277,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 12,
+      "latencia_ms": 9,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Organizar uma festa ou montar um palco"
     },
     {
@@ -292,7 +292,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 12,
+      "latencia_ms": 9,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Saber a classificação do meu terreno n"
     },
     {
@@ -307,7 +307,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 8,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Pedir número de porta para casa nova</"
     },
     {
@@ -367,7 +367,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 11,
+      "latencia_ms": 9,
       "resposta_resumo": "Identifiquei o procedimento municipal: <b>Organizar caminhada ou prova desportiv"
     },
     {
@@ -382,7 +382,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 13,
+      "latencia_ms": 9,
       "resposta_resumo": "Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do"
     },
     {
@@ -422,7 +422,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 9,
       "resposta_resumo": "Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do"
     },
     {
@@ -606,7 +606,7 @@
       "servico_ok": true,
       "fonte_presente": true,
       "valores_sem_fonte": 0,
-      "latencia_ms": 10,
+      "latencia_ms": 12,
       "resposta_resumo": "Para colocar uma esplanada aberta contígua à fachada que não exceda a largura do"
     }
   ]
