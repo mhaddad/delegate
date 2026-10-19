@@ -1,0 +1,27 @@
+# Sistema
+.DS_Store
+
+# Segredos
+.env
+.env.*
+!.env.example
+
+# Dependências
+node_modules/
+
+# Vídeos: binários pesados e gerados (renders, áudio, frames, caches)
+videos/**/renders/
+videos/**/audio/
+videos/**/frames/
+videos/**/.media/
+videos/**/.thumbnails/
+videos/**/.hyperframes/
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.m4a
+
+# Python
+__pycache__/
+*.pyc

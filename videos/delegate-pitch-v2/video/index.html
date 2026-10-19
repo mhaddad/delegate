@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>Delegate — pitch v2</title>
+<style>
+@font-face { font-family: "Fraunces"; src: url(fonts/fraunces.woff2) format("woff2"); font-weight: 100 900; font-style: normal; }
+@font-face { font-family: "Fraunces"; src: url(fonts/fraunces-italic.woff2) format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: "Inter"; src: url(fonts/inter.woff2) format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Mono"; src: url(fonts/mono.woff2) format("woff2"); font-weight: 100 800; }
+
+:root {
+  --granito: #F2EEE6;
+  --granito-2: #E8E1D4;
+  --tinta: #0F1B33;
+  --tinta-2: #16264A;
+  --tinta-3: #22355F;
+  --terracota: #D9623B;
+  --terracota-esc: #B94E2C;
+  --ciano: #3FD0C9;
+  --ouro: #E8B44A;
+  --verde: #5BBF7A;
+  --cinza: #9AA3B2;
+  --vermelho: #E5484D;
+  --pele: #E2A47E;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+body { display: flex; align-items: center; justify-content: center; }
+#stage {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden;
+  background: var(--granito); color: var(--tinta);
+  font-family: "Inter", sans-serif; transform-origin: center center;
+}
+.scene { position: absolute; inset: 0; overflow: hidden; display: none; }
+.abs { position: absolute; left: 0; top: 0; }
+svg { overflow: visible; }
+svg * { transform-box: fill-box; transform-origin: center; }
+.serif { font-family: "Fraunces", serif; font-optical-sizing: auto; }
+.mono { font-family: "Mono", monospace; }
+.will { will-change: transform, opacity; }
+
+/* ---------- chat (telemóvel) ---------- */
+.phone {
+  position: absolute; width: 440px; height: 880px; border-radius: 60px;
+  background: #101524; padding: 14px; box-shadow: 0 40px 80px rgba(15,27,51,.25);
+}
+.phone .screen { position: relative; width: 100%; height: 100%; border-radius: 47px; overflow: hidden; background: #EFE7DA; }
+.phone .head {
+  position: absolute; left: 0; right: 0; top: 0; height: 132px; background: #FBF8F2; z-index: 3;
+  display: flex; align-items: flex-end; gap: 16px; padding: 0 24px 18px; border-bottom: 1px solid #E3DACB;
+}
+.phone .head .name { font-weight: 650; font-size: 25px; }
+.phone .head .status { font-size: 17px; color: #6B7488; margin-top: 2px; }
+.phone .feed { position: absolute; left: 0; right: 0; top: 132px; bottom: 96px; overflow: hidden; }
+.phone .feed-in { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 18px 8px; display: flex; flex-direction: column; gap: 14px; }
+.phone .input {
+  position: absolute; left: 14px; right: 14px; bottom: 18px; height: 64px; border-radius: 32px; background: #fff;
+  display: flex; align-items: center; padding: 0 22px; font-size: 20px; color: var(--tinta); z-index: 3; line-height: 1.25;
+}
+.phone .input .ph { color: #A0A6B3; }
+.phone .send { position: absolute; right: 8px; top: 8px; width: 48px; height: 48px; border-radius: 50%; background: var(--terracota); }
+.bubble {
+  max-width: 82%; padding: 14px 18px 12px; border-radius: 22px; font-size: 20.5px; line-height: 1.36;
+  box-shadow: 0 1px 1px rgba(0,0,0,.06); position: relative;
+}
+.bubble.me { align-self: flex-end; background: #D7F0C2; border-bottom-right-radius: 6px; }
+.bubble.af { align-self: flex-start; background: #fff; border-bottom-left-radius: 6px; }
+.bubble .meta { font-size: 14px; color: #7C8597; text-align: right; margin-top: 4px; }
+.bubble .meta .ticks { color: #3FA6E0; letter-spacing: -3px; margin-left: 6px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; margin: 8px 6px 0 0; padding: 7px 12px; border-radius: 12px;
+  background: #F2F4F7; font-size: 16.5px; color: var(--tinta); font-weight: 550;
+}
+.chip i { display: inline-block; width: 18px; height: 18px; border-radius: 5px; }
+.btn-chat { margin-top: 12px; padding: 12px; border-radius: 14px; text-align: center; font-weight: 650; color: #0E7C77; background: #E3F7F6; font-size: 19px; }
+.typing { align-self: flex-start; background: #fff; border-radius: 22px; padding: 16px 20px; display: flex; gap: 7px; }
+.typing b { width: 10px; height: 10px; border-radius: 50%; background: #9AA3B2; display: block; }
+
+/* ---------- cartões genéricos ---------- */
+.card {
+  position: absolute; background: #fff; border-radius: 22px; box-shadow: 0 18px 50px rgba(15,27,51,.14);
+}
+.dark-card {
+  position: absolute; background: rgba(22,38,74,.92); border: 1.5px solid rgba(63,208,201,.35); border-radius: 18px; color: #E7EEF8;
+}
+.label-sm { font-size: 18px; letter-spacing: .14em; text-transform: uppercase; font-weight: 650; }
+.badge-demo {
+  position: absolute; right: 36px; top: 22px; padding: 8px 16px; border-radius: 999px;
+  font-family: "Mono", monospace; font-size: 16px; letter-spacing: .06em; color: #5C6578; background: rgba(255,255,255,.75);
+  border: 1px solid rgba(15,27,51,.12); z-index: 50; display: none;
+}
+#scrub { position: fixed; left: 12px; bottom: 10px; color: #fff; font: 14px monospace; z-index: 99; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="badge-demo" id="badge">CENÁRIO DEMONSTRATIVO</div>
+</div>
+<div id="scrub"></div>
+<script src="timeline.js"></script>
+<script src="core.js"></script>
+<script src="act1.js"></script>
+<script src="demo.js"></script>
+<script src="act4.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
