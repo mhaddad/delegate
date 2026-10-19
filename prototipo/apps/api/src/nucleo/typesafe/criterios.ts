@@ -67,6 +67,8 @@ export const CRITERIOS_SERVICO = {
     'Licença e autorização prévia municipal para queima de fogo de artifício e artefactos pirotécnicos (Mod. 466/SQ).',
   'licenca-especial-ruido':
     'Licença especial de ruído para espetáculos, festividades, concertos de música ao vivo ou obras em período noturno/fim de semana (Mod. 512/SQ).',
+  'conhecimento_d0':
+    'Dúvidas informativas ou consultas regulamentares gerais sobre a Câmara Municipal de Guimarães documentadas no portal e diretório (isenção de licença de utilização de prédios antigos antes do RGEU, bolsas de estudo da ação social, horários de atendimento do Balcão Único, formulários municipais, regulamentos em vigor).',
   'fora_competencia':
     'Assuntos da competência da Administração Central ou empresas públicas externas: Cartão de Cidadão, Passaporte, Registo Criminal (Espaço Cidadão/IRN), fatura da água (Vimágua).',
   'juizo_tecnico':

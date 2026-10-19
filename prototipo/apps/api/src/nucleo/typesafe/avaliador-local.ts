@@ -14,6 +14,7 @@ export class AvaliadorLocal {
     if (servico === 'sem_fonte') return 'sem_fonte';
     if (servico === 'adversarial') return 'adversarial';
     if (servico === 'geral') return 'geral';
+    if (servico === 'conhecimento_d0') return 'conhecimento_d0';
     return 'catalogo';
   }
 
@@ -230,6 +231,20 @@ export class AvaliadorLocal {
       t.includes('festa noturna')
     ) {
       novoServicoDetetado = 'licenca-especial-ruido';
+    } else if (
+      t.includes('isenção de licença') ||
+      t.includes('isencao de licenca') ||
+      t.includes('licença de utilização') ||
+      t.includes('licenca de utilizacao') ||
+      t.includes('bolsa de estudo') ||
+      t.includes('bolsas de estudo') ||
+      t.includes('horário de atendimento') ||
+      t.includes('horario de atendimento') ||
+      t.includes('balcão único') ||
+      t.includes('balcao unico') ||
+      t.includes('atendimento presencial')
+    ) {
+      novoServicoDetetado = 'conhecimento_d0';
     }
 
     if (servicoAtivoPrevio) {
@@ -301,7 +316,7 @@ export class AvaliadorLocal {
       focoServico,
       mudancaServico,
       servicoAnterior: mudancaServico ? servicoAtivoPrevio : undefined,
-      categoria: 'catalogo',
+      categoria: AvaliadorLocal.mapearCategoria(servicoId ?? 'catalogo'),
       comportamento: 'responder',
       nivelMandato,
       ferramentaMcp,

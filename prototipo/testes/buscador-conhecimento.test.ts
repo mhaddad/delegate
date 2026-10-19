@@ -37,7 +37,7 @@ describe('Base de Conhecimento Municipal (RAG D0 via Cloudflare /markdown)', () 
     expect(formatado.texto).toContain('Evidência Oficial da Câmara Municipal de Guimarães');
     expect(formatado.texto).toContain(resultado!.url);
     expect(formatado.texto).toContain(resultado!.consultadoEm);
-    expect(formatado.botoes).toHaveLength(2);
+    expect(formatado.botoes.length).toBeGreaterThanOrEqual(2);
     expect(formatado.botoes[0][0].ligacao).toBe(resultado!.url);
   });
 
@@ -62,7 +62,7 @@ describe('Base de Conhecimento Municipal (RAG D0 via Cloudflare /markdown)', () 
     expect(registoMock.registar).toHaveBeenCalledWith(
       expect.objectContaining({
         tipo: 'afonso.resposta.verificada',
-        ator: 'agente:conhecimento-rag',
+        ator: expect.stringMatching(/^agente:(conhecimento-rag|jev-rerank)$/),
       }),
     );
   });

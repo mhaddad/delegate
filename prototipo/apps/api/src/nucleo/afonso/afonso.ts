@@ -159,8 +159,8 @@ export class Afonso {
     const temServicoExplicito =
       (decisaoJev.servicoId && (decisaoJev.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente)) ||
       (classificacao.servicoId && (classificacao.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente));
-    if (!temServicoExplicito) {
-      const matchRAG = this.#buscador.buscar(limpo);
+    if (!temServicoExplicito || decisaoJev.categoria === 'conhecimento_d0') {
+      const matchRAG = await this.#buscador.buscarComJev(limpo);
       if (matchRAG && matchRAG.pontuacao >= 7) {
         await this.#registo.registar({
           tipo: 'afonso.resposta.verificada',
@@ -168,7 +168,7 @@ export class Afonso {
           sessao: this.#sessao,
           pessoa,
           missao: contextoDecisao.missaoId ?? null,
-          ator: 'agente:conhecimento-rag',
+          ator: matchRAG.motorDecisao === 'typesafe-jev' ? 'agente:jev-rerank' : 'agente:conhecimento-rag',
           simulacao: false,
           dados: {
             fonte: matchRAG.url,
@@ -177,6 +177,8 @@ export class Afonso {
             hash_sha256: matchRAG.hashSha256,
             consultado_em: matchRAG.consultadoEm,
             pontuacao: matchRAG.pontuacao,
+            confianca_jev: matchRAG.confiancaJev ?? null,
+            motor_rag: matchRAG.motorDecisao ?? 'calibrado-local',
           },
         });
 

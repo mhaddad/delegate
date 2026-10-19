@@ -7,7 +7,7 @@
 import type { NivelMandato } from '../mandatos/mandatos.ts';
 
 export type TipoComportamento = 'responder' | 'abster' | 'encaminhar' | 'recusar';
-export type CategoriaIntencao = 'catalogo' | 'sem_fonte' | 'fora_competencia' | 'juizo_tecnico' | 'adversarial' | 'geral';
+export type CategoriaIntencao = 'catalogo' | 'conhecimento_d0' | 'sem_fonte' | 'fora_competencia' | 'juizo_tecnico' | 'adversarial' | 'geral';
 export type FocoServico = 'mesmo_servico' | 'novo_servico' | 'primeiro_contacto';
 
 export interface ContextoDecisao {
