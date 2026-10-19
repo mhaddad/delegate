@@ -12,7 +12,7 @@ eventos_de_vida: [reforma-senior]
 tipo_procedimento: requerimento
 condicoes:
   - texto: >-
-      Podem requerer o Cartão Municipal Sénior os munícipes recenseados no Concelho de Guimarães com idade igual ou superior a 65 anos, beneficiando de descontos em transportes, eventos culturais, piscinas e taxas municipais.
+      Podem requerer o Cartão Municipal Sénior os cidadãos recenseados no Concelho de Guimarães com idade igual ou superior a 65 anos, beneficiando de descontos em transportes, eventos culturais, piscinas e taxas municipais.
     fonte: corpus-proc-senior
 documentos:
   - texto: Requerimento próprio acompanhado de Cartão de Cidadão e comprovativo de morada ou atestado de residência emitido pela Junta de Freguesia.

@@ -130,4 +130,47 @@ describe('Afonso · Memória de Conversa e Preservação de Contexto', () => {
     expect(evIntencao[2]?.dados.mudanca_servico).toBe(true);
     expect(evIntencao[2]?.dados.servico_anterior).toBe('pedido-informacao-previa-urbanismo');
   });
+
+  it('Afonso cita documento oficial com referência e data de consulta, sem usar munícipe nem códigos internos', async () => {
+    const { registo } = criarRegistoMock();
+    const porta = new ClientePortaMcp('http://localhost:4001/mcp');
+    const redator = new RedatorOpenRouter();
+    const afonso = new Afonso(registo, porta, 'demo', undefined, redator);
+
+    const rPdm = await afonso.responder('cidadao_1', 'Quero saber as regras do PDM para construir uma casa em Silvares');
+    expect(rPdm.texto).toContain('Regulamento do Plano Diretor Municipal de Guimarães');
+    expect(rPdm.texto).toContain('Artigos 45.º');
+    expect(rPdm.texto).toContain('consultado a 18/10/2026');
+    expect(rPdm.texto).not.toMatch(/\bmunícipe\b/i);
+    expect(rPdm.texto).not.toContain('submeter_pdm_chat');
+    expect(rPdm.botoes?.some((linha) => linha.some((b) => b.dados === 'submeter_pdm_chat'))).toBe(false);
+
+    const rEsplanada = await afonso.responder('cidadao_2', 'Posso por uma esplanada no Largo da Oliveira?');
+    expect(rEsplanada.texto).toContain('Regulamento de Ocupação do Espaço Público');
+    expect(rEsplanada.texto).toContain('Artigo 8.º');
+    expect(rEsplanada.texto).toContain('consultado a 18/10/2026');
+    expect(rEsplanada.texto).not.toMatch(/\bmunícipe\b/i);
+  });
+
+  it('Motor TypeSafe infere submissão D3 a partir de intenção expressa em linguagem natural', async () => {
+    const motor = new MotorDecisaoTypeSafe();
+
+    const frasesSubmissao = [
+      'Quero assinar com Chave Móvel Digital',
+      'Pode submeter o processo à Câmara',
+      'Autorizo a submissão formal',
+      'Assinar com CMD e enviar',
+    ];
+
+    for (const frase of frasesSubmissao) {
+      const res = await motor.decidir(frase, {
+        servicoAtivo: 'pedido-informacao-previa-urbanismo',
+        missaoAtiva: true,
+        mandatoAtivoNivel: 'D2',
+      });
+      expect(res.nivelMandato).toBe('D3');
+      expect(res.exigeConsentimento).toBe(true);
+    }
+  });
 });
+

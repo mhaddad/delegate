@@ -321,7 +321,7 @@ export async function criarServidorPorta(opcoes: OpcoesPorta = {}): Promise<{
               type: 'text',
               text: JSON.stringify({
                 erro: 'CONFIRMACAO_EM_FALTA',
-                mensagem: 'A submissão formal de uma comunicação prévia exige a confirmação expressa da munícipe com Chave Móvel Digital.',
+                mensagem: 'A submissão formal de uma comunicação prévia exige a confirmação expressa do cidadão com Chave Móvel Digital.',
               }),
             },
           ],

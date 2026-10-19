@@ -359,14 +359,10 @@ export class MotorDecisaoTypeSafe {
     let nivelMandato: NivelMandato = 'D0';
     let ferramentaMcp = 'consultar_catalogo';
 
-    if (
-      t.includes('autorizo a submeter') ||
-      t.includes('assinar com chave') ||
-      t.includes('confirmar submissao') ||
-      t.includes('submeter com cmd') ||
-      t.includes('submeter formalmente') ||
-      t.includes('pode submeter')
-    ) {
+    const querSubmeterD3 =
+      /assinar.*(chave|cmd|digital)|submet|autorizo.*(submi|avan|envio)|pode.*(submet|avan|enviar)|confirm.*submi/i.test(t);
+
+    if (querSubmeterD3) {
       nivelMandato = 'D3';
       ferramentaMcp = 'submeter_comunicacao_previa';
     } else if (

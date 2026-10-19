@@ -51,8 +51,11 @@ export class RedatorOpenRouter {
     const inicio = Date.now();
 
     if (!this.#token || this.#token.trim().length === 0) {
+      const textoCalibrado = params.textoReferencia
+        .replace(/\bmunícipes\b/gi, 'cidadãos')
+        .replace(/\bmunícipe\b/gi, 'cidadão');
       return {
-        texto: params.textoReferencia,
+        texto: textoCalibrado,
         modeloUsado: 'modelo-estatico-calibrado',
         tempoMs: 0,
         geradoPorLlm: false,
@@ -67,16 +70,18 @@ export class RedatorOpenRouter {
       '1. Comunica SEMPRE em português de Portugal (pt-PT).',
       '2. Sê conciso, educado, empático e conversacional. Responde em D0 (esclarecer e questionar) sem assumir mandatos ou ações vinculativas precipitadas.',
       '3. Baseia-te EXCLUSIVAMENTE nos factos e condições fornecidos. NUNCA inventes taxas, custos, prazos ou regras.',
-      '4. Quando relevante, convida o cidadão a clarificar ou fornecer elementos para preparar o pedido (ex.: localização/Google Maps, morada, medidas ou plantas em PDF).',
-      '5. Se o comportamento for "abster", assume a abstenção formal: explica claramente que não inventas valores sem fonte única comprovada.',
-      '6. Se o comportamento for "recusar", explica a recusa de forma educada por imperativo legal (ex.: privacidade RGPD ou juízo discricionário dos técnicos).',
-      '7. Se o comportamento for "encaminhar", indica com precisão o serviço competente externo.',
+      '4. NUNCA uses a palavra "munícipe" nem "munícipes". Usa SEMPRE "cidadão", "cidadãos", "pessoa" ou "Município de Guimarães" / "Câmara Municipal".',
+      '5. NUNCA exponhas nomes de código, callbacks ou termos internos (ex.: submeter_pdm_chat, simular_anexo_pdf, slugs). Comunica sempre em linguagem humana natural.',
+      '6. Quando relevante, convida o cidadão a clarificar ou fornecer elementos para preparar o pedido (ex.: localização/Google Maps, morada, caderneta predial em PDF).',
+      '7. Se o comportamento for "abster", assume a abstenção formal: explica claramente que não inventas valores sem fonte única comprovada.',
+      '8. Se o comportamento for "recusar", explica a recusa de forma educada por imperativo legal (ex.: privacidade RGPD ou juízo discricionário dos técnicos).',
+      '9. Se o comportamento for "encaminhar", indica com precisão o serviço competente externo.',
       '',
       'Estrutura da resposta:',
       '- Resposta direta e acolhedora em 1-2 frases;',
       '- Secção "<b>O que fazer agora:</b>" com passos numerados práticos e esclarecedores;',
       '- Se houver algo que não é possível confirmar, secção "<b>O que não consigo confirmar:</b>";',
-      `- Termina obrigatoriamente com a linha de fonte: "📄 Fonte: <i>${params.fonteOficial}</i>"`,
+      `- Termina obrigatoriamente com a linha de fonte oficial completa: "📄 Fonte: <i>${params.fonteOficial}</i>"`,
       '',
       'Usa apenas formatação HTML aceite pelo Telegram (<b>, <i>, <code>).',
     ].join('\n');
@@ -128,8 +133,20 @@ export class RedatorOpenRouter {
         const textoGerado = dados.choices?.[0]?.message?.content?.trim();
 
         if (textoGerado && textoGerado.length > 20) {
+          // Sanitização rigorosa: garantir ausência de "munícipe", códigos técnicos e presença da fonte
+          let textoLimpo = textoGerado
+            .replace(/\bmunícipes\b/gi, 'cidadãos')
+            .replace(/\bmunícipe\b/gi, 'cidadão')
+            .replace(/\bsubmeter_pdm_chat\b/g, '')
+            .replace(/\bsimular_[a-z0-9_]+\b/g, '')
+            .trim();
+
+          if (!textoLimpo.includes('📄 Fonte:')) {
+            textoLimpo = `${textoLimpo}\n\n📄 Fonte: <i>${params.fonteOficial}</i>`;
+          }
+
           // Validação por Regra: garantir que nenhum número ou grandeza foi inventado
-          const validacao = VerificadorRegra.verificar(textoGerado, [
+          const validacao = VerificadorRegra.verificar(textoLimpo, [
             params.contextoFactos,
             params.textoReferencia,
             params.fonteOficial,
@@ -138,7 +155,7 @@ export class RedatorOpenRouter {
           if (validacao.valido) {
             console.log(`✓ [OpenRouter] Resposta validada e aceite via ${dados.model || modelo} (${Date.now() - inicio}ms)`);
             return {
-              texto: textoGerado,
+              texto: textoLimpo,
               modeloUsado: dados.model || modelo,
               tempoMs: Date.now() - inicio,
               geradoPorLlm: true,

@@ -33,11 +33,24 @@ limites: >-
   O Afonso não emite juízo de viabilidade urbanística. Explica o PDM em vigor e
   a revisão em curso, com fonte, e diz quando é preciso um técnico.
 fontes:
-  - id: cm-pdm-por-curar
+  - id: pdm-guimaraes-aviso-23214-2020
     titulo: >-
-      A trazer na curadoria. O plano do PDM e a página de Urbanismo do portal do
-      munícipe ainda não foram consultados.
-    url: null
+      Regulamento do Plano Diretor Municipal de Guimarães (Aviso n.º 23214/2020, Diário da República, 2.ª série, n.º 247, de 22 de dezembro)
+    url: https://diariodarepublica.pt/dr/detalhe/aviso/23214-2020-151833189
+    consultado_em: 2026-10-18
+    hash: null
+    natureza: regulamento
+  - id: rjue-dl-555-99-art14
+    titulo: >-
+      Regime Jurídico da Urbanização e Edificação (RJUE · Artigo 14.º — Pedido de Informação Prévia, Decreto-Lei n.º 555/99 alterado pelo Decreto-Lei n.º 10/2024)
+    url: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1999-34449975
+    consultado_em: 2026-10-18
+    hash: null
+    natureza: oficial
+  - id: cm-portal-municipio-urbanismo
+    titulo: >-
+      Portal do Município de Guimarães — Divisão de Gestão Urbanística (Procedimento PIP)
+    url: https://www.cm-guimaraes.pt
     consultado_em: 2026-10-18
     hash: null
     natureza: oficial

@@ -60,7 +60,7 @@ const conversasPorPessoa = new Map<string, string>();
 let ultimaConversa: string | null = null;
 let aguardaFachada = false;
 
-// Ciclo fechado: escutar eventos da Consola/SU para notificar munícipe no Telegram
+// Ciclo fechado: escutar eventos da Consola/SU para notificar cidadão no Telegram
 const escutaNucleo = await base.escutar();
 escutaNucleo.on('error', (err: Error) => {
   console.warn('⚠ aviso na escuta pg do núcleo:', err.message);
@@ -206,7 +206,7 @@ async function processarConfirmacaoCmd(dadosCmd: DadosConfirmacaoCmd): Promise<v
     },
   });
 
-  // 8. Notificar munícipe no Telegram
+  // 8. Notificar cidadão no Telegram
   if (chat) {
     if (isPip) {
       await canal.enviar(
@@ -244,6 +244,19 @@ async function processarConfirmacaoCmd(dadosCmd: DadosConfirmacaoCmd): Promise<v
       );
     }
   }
+}
+
+async function executarSubmissaoAtiva(pessoa: string): Promise<void> {
+  const missaoAtiva = orquestrador.obterAtiva(pessoa);
+  const isPip = missaoAtiva?.servico?.includes('urbanismo');
+  await processarConfirmacaoCmd({
+    pessoa,
+    servico: isPip ? 'pedido-informacao-previa-urbanismo' : 'ocupacao-espaco-publico-esplanada',
+    processo: isPip ? 'PIP/2026/0002' : 'OEP/2026/0001',
+    token_cmd: 'CMD-TOKEN-' + Math.floor(100000 + Math.random() * 900000),
+    nif: '234567890',
+    nome: 'Maria Lurdes Gonçalves',
+  });
 }
 
 async function processarLocalizacaoTerreno(m: any): Promise<void> {
@@ -319,10 +332,11 @@ async function processarLocalizacaoTerreno(m: any): Promise<void> {
       '<b>Próximo passo:</b> Anexe a Caderneta Predial (PDF) para concluir o pacote instrutório ou avance para a assinatura digital com Chave Móvel Digital.',
       '',
       `Para assinar no ecrã oficial da CMD, aceda a: <code>http://localhost:4000/cmd?processo=PIP/2026/0002&amp;servico=pdm&amp;pessoa=${m.pessoa}</code>`,
+      'Ou diga simplesmente aqui no chat: <i>«Autorizo a submissão com Chave Móvel Digital»</i>.',
     ].join('\n'),
     [
-      [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'simular_anexo_pdf' }],
-      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'submeter_pdm_chat' }],
+      [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'anexar_caderneta_predial' }],
+      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'assinar_com_chave_movel_digital' }],
       [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
     ],
   );
@@ -380,9 +394,10 @@ async function processarDocumentoPdf(m: any): Promise<void> {
       'Para avançar, assine o pedido através da <b>Chave Móvel Digital</b>:',
       '',
       `Para assinar no ecrã oficial da CMD, aceda a: <code>http://localhost:4000/cmd?processo=PIP/2026/0002&amp;servico=pdm&amp;pessoa=${m.pessoa}</code>`,
+      'Ou diga simplesmente aqui no chat: <i>«Autorizo a submissão com Chave Móvel Digital»</i>.',
     ].join('\n'),
     [
-      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'submeter_pdm_chat' }],
+      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'assinar_com_chave_movel_digital' }],
       [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
     ],
   );
@@ -420,9 +435,10 @@ async function processarValidacaoCalcada(m: any): Promise<void> {
       'O pedido está <b>pronto para submissão formal</b> com a sua confirmação via Chave Móvel Digital.',
       '',
       `Para assinar no ecrã oficial da CMD, aceda a: <code>http://localhost:4000/cmd?processo=OEP/2026/0001&amp;servico=esplanada&amp;pessoa=${m.pessoa}</code>`,
+      'Ou diga simplesmente aqui no chat: <i>«Autorizo a submissão com Chave Móvel Digital»</i>.',
     ].join('\n'),
     [
-      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'submeter_esplanada' }],
+      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'assinar_com_chave_movel_digital' }],
       [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
     ],
   );
@@ -780,8 +796,8 @@ canal._aoReceber(async (m) => {
           'Pode enviar estes dados em qualquer ordem:',
         ].join('\n'),
         [
-          [{ texto: '📍 Simular Envio: Terreno em Silvares (Maps)', dados: 'simular_maps_silvares' }],
-          [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'simular_anexo_pdf' }],
+          [{ texto: '📍 Simular Envio: Terreno em Silvares (Maps)', dados: 'enviar_localizacao_terreno' }],
+          [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'anexar_caderneta_predial' }],
           [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
         ],
       );
@@ -798,7 +814,7 @@ canal._aoReceber(async (m) => {
           'Ou teste de imediato com a simulação:',
         ].join('\n'),
         [
-          [{ texto: '📍 Simular Envio: Terreno em Silvares (Maps)', dados: 'simular_maps_silvares' }],
+          [{ texto: '📍 Simular Envio: Terreno em Silvares (Maps)', dados: 'enviar_localizacao_terreno' }],
           [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
         ],
       );
@@ -815,32 +831,21 @@ canal._aoReceber(async (m) => {
           'Ou teste de imediato com a simulação:',
         ].join('\n'),
         [
-          [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'simular_anexo_pdf' }],
+          [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'anexar_caderneta_predial' }],
           [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
         ],
       );
-    } else if (m.texto === 'simular_maps_silvares') {
+    } else if (m.texto === 'enviar_localizacao_terreno' || m.texto === 'simular_maps_silvares') {
       await processarLocalizacaoTerreno(m);
-    } else if (m.texto === 'simular_anexo_pdf') {
+    } else if (m.texto === 'anexar_caderneta_predial' || m.texto === 'simular_anexo_pdf') {
       await processarDocumentoPdf(m);
-    } else if (m.texto === 'submeter_pdm_chat') {
-      await processarConfirmacaoCmd({
-        pessoa: m.pessoa,
-        servico: 'pedido-informacao-previa-urbanismo',
-        processo: 'PIP/2026/0002',
-        token_cmd: 'CMD-TOKEN-CHAT-' + Math.floor(100000 + Math.random() * 900000),
-        nif: '234567890',
-        nome: 'Maria Lurdes Gonçalves',
-      });
-    } else if (m.texto === 'submeter_esplanada') {
-      await processarConfirmacaoCmd({
-        pessoa: m.pessoa,
-        servico: 'ocupacao-espaco-publico-esplanada',
-        processo: 'OEP/2026/0001',
-        token_cmd: 'CMD-TOKEN-ESPLANADA-' + Math.floor(100000 + Math.random() * 900000),
-        nif: '234567890',
-        nome: 'Maria Lurdes Gonçalves',
-      });
+    } else if (
+      m.texto === 'assinar_com_chave_movel_digital' ||
+      m.texto === 'submeter_pdm_chat' ||
+      m.texto === 'submeter_esplanada' ||
+      m.texto === 'submeter_pedido'
+    ) {
+      await executarSubmissaoAtiva(m.pessoa);
     } else if (m.texto === 'responder_8m') {
       aguardaFachada = false;
       await clientePorta.chamarFerramenta('responder_pedido_elementos', {
@@ -878,7 +883,11 @@ canal._aoReceber(async (m) => {
           : `Mandato <code>${mandId}</code> não encontrado.`,
       );
     } else {
-      await canal.enviar(m.conversa, `Carregaste <b>${escapar(m.texto ?? '')}</b>`);
+      await canal.enviar(
+        m.conversa,
+        'Recebi a sua indicação. Se pretender avançar com um pedido ou colocar alguma dúvida sobre os regulamentos municipais, estou ao seu dispor.',
+        [[{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]],
+      );
     }
   } else if (m.tipo === 'foto') {
     await processarValidacaoCalcada(m);
@@ -909,6 +918,14 @@ canal._aoReceber(async (m) => {
       return;
     }
 
+    // Se a pessoa pede para assinar ou submeter em linguagem natural
+    const querSubmeter = /assinar|submet|autorizo.*(submi|avan|envio)|pode.*(submet|avan|enviar)|confirm.*submi/i.test(m.texto);
+    if (querSubmeter && (missaoAtiva || m.texto.toLowerCase().includes('cmd') || m.texto.toLowerCase().includes('chave'))) {
+      await executarSubmissaoAtiva(m.pessoa);
+      await regista('canal.mensagem.enviada', m, { tipo: 'submissao_cmd_inferida' });
+      return;
+    }
+
     if (
       missaoAtiva &&
       (missaoAtiva.estado === 'entendido' || missaoAtiva.estado === 'a_verificar' || missaoAtiva.estado === 'em_curso') &&
@@ -918,14 +935,14 @@ canal._aoReceber(async (m) => {
       return;
     }
 
-    // Se o munícipe enviou link de Google Maps ou coordenadas GPS de terreno
+    // Se o cidadão enviou link de Google Maps ou coordenadas GPS de terreno
     if (/maps\.google\.|maps\.app\.goo\.gl|goo\.gl\/maps|\b\d{2}\.\d{3,}\s*,\s*-\d{1,2}\.\d{3,}\b/i.test(m.texto)) {
       await processarLocalizacaoTerreno(m);
       await regista('canal.mensagem.enviada', m, { tipo: 'localizacao_terreno' });
       return;
     }
 
-    // Se o munícipe referiu envio de caderneta predial
+    // Se o cidadão referiu envio de caderneta predial
     if (/caderneta|predial|\.pdf\b/i.test(m.texto) && missaoAtiva?.servico.includes('urbanismo')) {
       await processarDocumentoPdf(m);
       await regista('canal.mensagem.enviada', m, { tipo: 'caderneta_predial' });

@@ -47,7 +47,7 @@ escalonamento: Pedidos com dados protegidos seguem o regime do Arquivo Municipal
 limites: O acesso a documentos com restrições de comunicabilidade depende da finalidade declarada.
 fontes:
   - id: cm-certidoes
-    titulo: Portal do munícipe da Câmara de Guimarães, Certidões e Fotocópias
+    titulo: Portal do Município de Guimarães — Certidões e Arquivo Municipal
     url: https://www.cm-guimaraes.pt/pages/97?site_help_link_category_id=14
     consultado_em: 2026-10-18
     hash: null

@@ -837,7 +837,7 @@
           tipo: 'AÇÃO VINCULATIVA',
           requisito: 'Mandato D3 + Assinatura CMD',
           badgeCls: 'badge-mandato-d3',
-          descricao: 'Submete formalmente a comunicação prévia à Câmara. Exige mandato D3 e token de autorização do munícipe.',
+          descricao: 'Submete formalmente a comunicação prévia à Câmara. Exige mandato D3 e token de autorização do cidadão.',
           payloadExemplo: {
             mandato: 'MAN-2026-0001',
             token_confirmacao: 'cmd-token-valido-123',
@@ -904,22 +904,22 @@
           if (!ultimoEvento) {
             return {
               titulo: 'Intermediário em Escuta Contínua',
-              descricao: 'A monitorizar a fronteira de comunicação entre munícipes (Afonso/Telegram) e os serviços municipais da autarquia.',
+              descricao: 'A monitorizar a fronteira de comunicação entre cidadãos (Afonso/Telegram) e os serviços municipais da autarquia.',
               origem: 'delegate:idle'
             };
           }
           const t = ultimoEvento.tipo;
           if (t === 'canal.mensagem.recebida') {
             return {
-              titulo: 'Munícipe contactou o Afonso no Telegram',
+              titulo: 'Cidadão contactou o Afonso no Telegram',
               descricao: `Mensagem: «${ultimoEvento.dados?.texto || '...'}». Afonso ativa o motor de inferência TypeSafe Jev.`,
-              origem: 'telegram:municipe'
+              origem: 'telegram:cidadao'
             };
           }
           if (t === 'afonso.intencao.classificada') {
             const isJev = ultimoEvento.dados?.motor === 'typesafe-jev';
             return {
-              titulo: isJev ? 'TypeSafe Jev inferiu Intenção e Mandato em Tempo Real' : 'Afonso classificou a intenção do munícipe',
+              titulo: isJev ? 'TypeSafe Jev inferiu Intenção e Mandato em Tempo Real' : 'Afonso classificou a intenção do cidadão',
               descricao: `Procedimento: ${ultimoEvento.dados?.intencao} · Mandato: ${ultimoEvento.dados?.mandato_inferido || 'D0'} · Confiança: ${Math.round((ultimoEvento.dados?.confianca || 1)*100)}% (${ultimoEvento.dados?.tempo_ms || 250}ms).`,
               origem: 'typesafe:jev'
             };
@@ -933,16 +933,16 @@
           }
           if (t === 'cofre.item.guardado') {
             return {
-              titulo: 'Armazenamento cifrado no dispositivo do munícipe',
+              titulo: 'Armazenamento cifrado no dispositivo do cidadão',
               descricao: `Intenção cifrada localmente (AES-256-GCM). O operador municipal e a câmara não têm acesso à chave nem aos dados privados.`,
-              origem: 'municipe:cofre'
+              origem: 'cidadao:cofre'
             };
           }
           if (t === 'mandato.concedido') {
             return {
               titulo: `Mandato ${ultimoEvento.dados?.nivel} emitido pela Pessoa`,
-              descricao: `O munícipe autorizou o Afonso a preparar e agir com confirmação expressa para ${ultimoEvento.dados?.objeto}.`,
-              origem: 'municipe:mandato'
+              descricao: `O cidadão autorizou o Afonso a preparar e agir com confirmação expressa para ${ultimoEvento.dados?.objeto}.`,
+              origem: 'cidadao:mandato'
             };
           }
           if (t === 'cofre.pacote.preparado') {
@@ -1108,14 +1108,14 @@
                       <span class="item-nome ico-lista">${ico('telemovel')} Assistente no Telegram</span>
                       <span style=${{ color: '#8ccfa0', fontSize: '11px', fontWeight: '700' }}>● Ligado</span>
                     </div>
-                    <span class="item-sub">Assistente digital do cidadão (@afonso_cm_bot). Atua em nome do munícipe.</span>
+                    <span class="item-sub">Assistente digital do cidadão (@afonso_cm_bot). Atua em nome da pessoa.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
                       <span class="item-nome ico-lista">${ico('cadeado')} Armazenamento Local Cifrado</span>
                       <span style=${{ color: '#8ccfa0', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>AES-256-GCM</span>
                     </div>
-                    <span class="item-sub">Dados e chaves privadas cifrados localmente com controlo exclusivo do munícipe.</span>
+                    <span class="item-sub">Dados e chaves privadas cifrados localmente com controlo exclusivo do cidadão.</span>
                   </div>
                   <div class="item-camada">
                     <div class="item-cabecalho">
@@ -1192,7 +1192,7 @@
                       <span class="item-nome ico-lista">${ico('carteira')} Tesouraria Municipal</span>
                       <span style=${{ color: '#9aa8b8', fontSize: '10px' }}>RTTL 2025</span>
                     </div>
-                    <span class="item-sub">Emissão de guias e referências de pagamento das taxas devidas pelo munícipe.</span>
+                    <span class="item-sub">Emissão de guias e referências de pagamento das taxas devidas pelo cidadão.</span>
                   </div>
                 </div>
               </div>

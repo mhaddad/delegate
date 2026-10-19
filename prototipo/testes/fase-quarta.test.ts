@@ -109,7 +109,7 @@ describe('Fase Quarta · Cofre, Chaves e Guardião de Contexto', () => {
     expect(pacote.naoPartilha).toContain('terreno_ponte');
     expect(eventos.some((e) => e.tipo === 'cofre.pacote.preparado')).toBe(true);
 
-    // 3. Munícipe aprova pacote
+    // 3. Cidadão aprova pacote
     await cofre.aprovarPacoteMinimo('ines', 'MIS-0001', pacote.id);
     expect(eventos.some((e) => e.tipo === 'cofre.pacote.aprovado')).toBe(true);
   });

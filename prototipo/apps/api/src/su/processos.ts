@@ -252,7 +252,7 @@ export class ArmazenamentoSU {
       de: p.estado,
       para: 'submetido',
       ator,
-      fundamento: 'Submissão formal autorizada pela munícipe',
+      fundamento: 'Submissão formal autorizada pelo requerente',
     });
     p.estado = 'submetido';
     p.atualizadoEm = agora;
@@ -305,7 +305,7 @@ export class ArmazenamentoSU {
       de: p.estado,
       para: 'em_apreciacao',
       ator,
-      fundamento: 'Elementos adicionais submetidos pela munícipe através do Afonso',
+      fundamento: 'Elementos adicionais submetidos pelo requerente através do Afonso',
     });
     p.estado = 'em_apreciacao';
     p.proposta_ia = p.numero.startsWith('PIP')

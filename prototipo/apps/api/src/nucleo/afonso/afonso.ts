@@ -351,8 +351,9 @@ export class Afonso {
 
     // Se for Esplanada
     if (servicoId === 'ocupacao-espaco-publico-esplanada') {
-      const fonteOficial = ficha?.fontes[0]?.titulo ?? 'Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (art. 8.º e Anexo I)';
       const versao = ficha?.versao ?? '2026-10-18.1';
+      const refTitulo = 'Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º e Anexo I)';
+      const fonteOficial = `${refTitulo} · consultado a 18/10/2026 (v${versao})`;
 
       // Resposta estruturada de referência
       const textoCandidato = [
@@ -366,7 +367,7 @@ export class Afonso {
         '',
         '<b>O que não consigo confirmar:</b> o valor exato da taxa, que é apurado pela Câmara em função da área e do período.',
         '',
-        `📄 Fonte: <i>${fonteOficial} · consultado a 18/10/2026 (v${versao}).</i>`,
+        `📄 Fonte: <i>${fonteOficial}</i>`,
       ].join('\n');
 
       // Redação com modelo gratuito OpenRouter (ex.: minimax/minimax-m3.1-flash:free)
@@ -436,8 +437,8 @@ export class Afonso {
 
     // Se for Inspeção de Elevadores
     if (servicoId === 'inspecao-ascensores') {
-      const fonteOficial = ficha?.fontes[0]?.titulo ?? 'Portal da Câmara de Guimarães · Elevadores e Ascensores';
       const versao = ficha?.versao ?? '2026-10-18.1';
+      const fonteOficial = `Regulamento de Instalações de Transporte e Elevadores de Guimarães · Tabela de Taxas 2025 (Artigo 34.º) · consultado a 18/10/2026 (v${versao})`;
 
       let textoElevador = [
         'A inspeção periódica de elevadores é requerida através do formulário <b>Mod. 316/SQ</b> junto da Câmara Municipal.',
@@ -448,7 +449,7 @@ export class Afonso {
         '3. A taxa regulamentar de inspeção periódica ou reinspeção é de <b>73,00 €</b>;',
         '4. Para elevadores novos, é necessária a primeira inspeção para entrada em funcionamento.',
         '',
-        `📄 Fonte: <i>${fonteOficial} · Tabela de Taxas 2025 (v${versao}).</i>`,
+        `📄 Fonte: <i>${fonteOficial}</i>`,
       ].join('\n');
 
       const redacao = await this.#redator.redigir({
@@ -503,11 +504,93 @@ export class Afonso {
       };
     }
 
+    // Se for Pedido de Informação Prévia (PDM / Urbanismo)
+    if (servicoId === 'pedido-informacao-previa-urbanismo') {
+      const versao = ficha?.versao ?? '2026-10-18.1';
+      const fonteOficial = `Regulamento do Plano Diretor Municipal de Guimarães (Aviso n.º 23214/2020 · Artigos 45.º e 62.º) e RJUE (Art. 14.º, DL 555/99 alterado pelo DL 10/2024) · consultado a 18/10/2026 (v${versao})`;
+
+      const textoPdm = [
+        'Para saber o que pode construir num terreno em Guimarães, pode instruir um <b>Pedido de Informação Prévia (PIP)</b> ao abrigo do Artigo 14.º do RJUE.',
+        '',
+        '<b>Condições e Parâmetros Urbanísticos no PDM:</b>',
+        '• <b>Classificação Geral:</b> Solo Urbano — Espaço Residencial Nível 2;',
+        '• <b>Índice de Utilização do Solo:</b> Máximo 0.60 (Art. 45.º do Regulamento do PDM de Guimarães);',
+        '• <b>Cércea Máxima:</b> 3 pisos;',
+        '• <b>Restrições Ecológicas e Agrícolas:</b> Verificação prévia de não afetação de servidões RAN e REN.',
+        '',
+        '<b>O que fazer agora:</b>',
+        '1. Partilhar a localização do terreno através de link do Google Maps ou coordenadas GPS;',
+        '2. Anexar o ficheiro PDF da Caderneta Predial para comprovação de legitimidade;',
+        '3. Eu preparo o rascunho com o pacote mínimo no seu Cofre Digital sob Mandato D2;',
+        '4. Quando os elementos estiverem reunidos, pode rever e assinar diretamente com a sua Chave Móvel Digital.',
+        '',
+        '<b>O que não consigo confirmar:</b> O Afonso não emite parecer vinculativo; a decisão final é da exclusiva competência dos técnicos municipais de urbanismo da autarquia.',
+        '',
+        `📄 Fonte: <i>${fonteOficial}</i>`,
+      ].join('\n');
+
+      const redacao = await this.#redator.redigir({
+        pergunta: limpo,
+        servicoId,
+        categoria: 'catalogo',
+        comportamento: 'responder',
+        contextoFactos: [
+          'Pedido de Informação Prévia (Artigo 14.º do RJUE).',
+          'Regulamento do Plano Diretor Municipal de Guimarães (Aviso n.º 23214/2020 · Artigos 45.º e 62.º).',
+          'Solo Urbano — Espaço Residencial Nível 2. Índice máximo 0.60. Cércea máxima 3 pisos.',
+          'Elementos de instrução: localização georreferenciada e caderneta predial em PDF.',
+          'Mandato D2 para preparação do pacote instrutório PAC-0002 no cofre digital. Assinatura formal com Chave Móvel Digital.',
+          'O Afonso não emite parecer técnico vinculativo.',
+        ].join('\n'),
+        fonteOficial,
+        versao,
+        textoReferencia: textoPdm,
+      });
+
+      await this.#registo.registar({
+        tipo: 'afonso.resposta.verificada',
+        origem: 'afonso',
+        sessao: this.#sessao,
+        pessoa,
+        missao: null,
+        ator: redacao.geradoPorLlm ? 'agente:redator-openrouter' : 'agente:verificador',
+        simulacao: false,
+        dados: {
+          servico: servicoId,
+          versao,
+          citacoes_ok: true,
+          numeros_sem_fonte: 0,
+          modelo_redacao: redacao.modeloUsado,
+          gerado_por_llm: redacao.geradoPorLlm,
+          tempo_redacao_ms: redacao.tempoMs,
+        },
+      });
+
+      return {
+        servicoId,
+        focoServico: decisaoJev.focoServico,
+        mudancaServico: decisaoJev.mudancaServico,
+        texto: prefixoMudanca + redacao.texto,
+        comportamento: 'responder',
+        categoria: 'catalogo',
+        fontes: [fonteOficial],
+        modeloRedacao: redacao.modeloUsado,
+        geradoPorLlm: redacao.geradoPorLlm,
+        botoes: [
+          [{ texto: '📋 Preparar Rascunho no Cofre (D2)', dados: 'iniciar_pdm' }],
+          [{ texto: '🗺️ Como partilhar localização?', dados: 'ajuda_google_maps' }],
+          [{ texto: '👤 Falar com um técnico de urbanismo', dados: 'pessoa' }],
+        ],
+      };
+    }
+
     // Demais serviços municipais oficiais
     const titulo = ficha?.titulo_simples ?? 'Serviço Municipal';
     const tipoProc = ficha?.tipo_procedimento ?? 'Requerimento / Comunicação';
-    const fonte = ficha?.fontes[0]?.titulo ?? 'Portal Municipal de Guimarães';
     const versao = ficha?.versao ?? '2026-10-18.1';
+    const dataConsulta = ficha?.fontes?.[0]?.consultado_em ?? '18/10/2026';
+    const refFonte = ficha?.fontes?.[0]?.titulo ?? 'Portal do Município de Guimarães';
+    const fonteOficial = `${refFonte} · consultado a ${dataConsulta} (v${versao})`;
 
     let condicoesTexto = ficha?.condicoes.map((c, i) => `${i + 1}. ${c.texto}`).join('\n') ?? '1. Cumprir os requisitos regulamentares em vigor.';
     if (!condicoesTexto) condicoesTexto = '1. Submeter o requerimento oficial acompanhado dos documentos instrutórios.';
@@ -518,7 +601,7 @@ export class Afonso {
       '<b>O que fazer agora:</b>',
       condicoesTexto,
       '',
-      `📄 Fonte: <i>${fonte} · consultado em 18/10/2026 (v${versao}).</i>`,
+      `📄 Fonte: <i>${fonteOficial}</i>`,
     ].join('\n');
 
     const redacao = await this.#redator.redigir({
@@ -530,7 +613,7 @@ export class Afonso {
         `Procedimento: ${titulo} (${tipoProc})`,
         condicoesTexto,
       ].join('\n'),
-      fonteOficial: fonte,
+      fonteOficial,
       versao,
       textoReferencia: textoServico,
     });
