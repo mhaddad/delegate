@@ -1,0 +1,72 @@
+[
+  {
+    "id": "DOC-DIRETORIO-diretorio-principal",
+    "url": "https://diretorio.cm-guimaraes.pt/",
+    "titulo": "Diretório de Serviços - Guimarães",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19T20:23:14.562Z",
+    "hashSha256": "9d03ab0b9ef3082930f8b0e7458e70a6c0251a0194e8fadef57ac481eb26bc6a",
+    "ficheiroLocal": "diretorio/diretorio-principal.md",
+    "tamanhoBytes": 6854
+  },
+  {
+    "id": "DOC-DIRETORIO-isencao-licenca-utilizacao",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/isencao-de-licenca-de-utilizacao",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19T20:23:15.467Z",
+    "hashSha256": "82de9cb12512141f1071b95719f86453c03c59b5cc91e10c0388f27d63392252",
+    "ficheiroLocal": "diretorio/isencao-licenca-utilizacao.md",
+    "tamanhoBytes": 7163
+  },
+  {
+    "id": "DOC-DIRETORIO-bolsas-de-estudo",
+    "url": "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/acao-social/bolsas-de-estudo",
+    "titulo": "Diretório de Serviços",
+    "categoria": "diretorio",
+    "consultadoEm": "2026-10-19T20:23:16.069Z",
+    "hashSha256": "10cb47b09e7100a2cc5f42762f2e110fb646ad1e501d75711c96d2738570a901",
+    "ficheiroLocal": "diretorio/bolsas-de-estudo.md",
+    "tamanhoBytes": 2544
+  },
+  {
+    "id": "DOC-FORMULARIOS-formularios-municipais",
+    "url": "https://www.cm-guimaraes.pt/servicos-online/formularios",
+    "titulo": "Formulários",
+    "categoria": "formularios",
+    "consultadoEm": "2026-10-19T20:23:16.257Z",
+    "hashSha256": "9daf05f2e5e17294dc7bf32270c7485848e8cf9efb92a7194faae4bffd3e0af8",
+    "ficheiroLocal": "formularios/formularios-municipais.md",
+    "tamanhoBytes": 10645
+  },
+  {
+    "id": "DOC-URBANISMO-urbanismo-digital",
+    "url": "https://www.cm-guimaraes.pt/municipio/camara-municipal/servicos/urbanismo/urbanismo-digital",
+    "titulo": "Urbanismo Digital",
+    "categoria": "urbanismo",
+    "consultadoEm": "2026-10-19T20:23:16.920Z",
+    "hashSha256": "5e131243aa5231973beb551a6716fa1ecd3730eb4ed19354babcb90c1d940c2f",
+    "ficheiroLocal": "urbanismo/urbanismo-digital.md",
+    "tamanhoBytes": 7563
+  },
+  {
+    "id": "DOC-URBANISMO-pdm-guimaraes",
+    "url": "https://pdm.guimaraes.pt/",
+    "titulo": "Converted Content",
+    "categoria": "urbanismo",
+    "consultadoEm": "2026-10-19T20:23:18.884Z",
+    "hashSha256": "7990ac010df843f0cab1e585ebd101ee2359637e9e11a251550da9886409788f",
+    "ficheiroLocal": "urbanismo/pdm-guimaraes.md",
+    "tamanhoBytes": 2527
+  },
+  {
+    "id": "DOC-PORTAL-catalogo-como-podemos-ajudar",
+    "url": "https://www.cm-guimaraes.pt/como-podemos-ajudar/servicos",
+    "titulo": "Serviços",
+    "categoria": "portal",
+    "consultadoEm": "2026-10-19T20:23:20.032Z",
+    "hashSha256": "66e54db276e1eaf106bf8216dbcb1f6e0da3a6a3fe4052b31c4286506ec60648",
+    "ficheiroLocal": "portal/catalogo-como-podemos-ajudar.md",
+    "tamanhoBytes": 5670
+  }
+]
