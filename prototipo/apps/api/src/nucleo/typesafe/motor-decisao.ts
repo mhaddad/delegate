@@ -61,11 +61,11 @@ const CRITERIOS_COMPORTAMENTO = {
 } as const;
 
 const CRITERIOS_MANDATO = {
-  'D0': 'D0: Apenas consulta de informação pública ou catálogo (sem dados pessoais nem submissão)',
-  'D1': 'D1: Acompanhamento e vigilância passiva do estado de processo público existente',
-  'D2': 'D2: Preparação de rascunho e armazenamento seguro no Cofre Digital pessoal (sem submissão formal)',
-  'D3': 'D3: Submissão formal vinculativa à Câmara Municipal com mandato expresso e assinatura digital',
-  'D4': 'D4: Liquidação de taxas ou movimentação financeira direta por débito autorizado',
+  'D0': 'D0: O cidadão está a fazer perguntas, tirar dúvidas ou pedir esclarecimentos informativos (sem compromisso nem submissão)',
+  'D1': 'D1: O cidadão pede apenas para acompanhar ou vigiar um processo já existente na autarquia',
+  'D2': 'D2: O cidadão deu ordem expressa para preparar um rascunho, guardar no cofre ou recolher dados e documentos',
+  'D3': 'D3: O cidadão deu instrução expressa para submeter, assinar formalmente com Chave Móvel Digital e enviar à Câmara',
+  'D4': 'D4: O cidadão autorizou expressamente a liquidação imediata de taxas ou débito financeiro',
 } as const;
 
 const CRITERIOS_FERRAMENTA_MCP = {
@@ -250,15 +250,15 @@ export class MotorDecisaoTypeSafe {
       };
     }
 
-    // 5. Catálogo
-    let servicoId = 'ocupacao-espaco-publico-esplanada';
+    // O estado por omissão é sempre D0 (Informar, Questionar e Clarificar)
     let nivelMandato: NivelMandato = 'D0';
     let ferramentaMcp = 'consultar_catalogo';
 
-    if (t.includes('submeter') || t.includes('comunicar') || t.includes('enviar pedido')) {
+    // Apenas ordens expressas de submissão formal com CMD elevam para D3
+    if (t.includes('autorizo a submeter') || t.includes('assinar com chave') || t.includes('confirmar submissao') || t.includes('submeter com cmd')) {
       nivelMandato = 'D3';
       ferramentaMcp = 'submeter_comunicacao_previa';
-    } else if (t.includes('rascunho') || t.includes('preparar') || t.includes('iniciar')) {
+    } else if (t.includes('preparar rascunho') || t.includes('guardar no cofre') || t.includes('iniciar rascunho') || t.includes('analisar terreno')) {
       nivelMandato = 'D2';
       ferramentaMcp = 'criar_rascunho_ocupacao';
     } else if (t.includes('taxa') || t.includes('custo') || t.includes('valor')) {

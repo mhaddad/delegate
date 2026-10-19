@@ -187,6 +187,62 @@ export class ArmazenamentoSU {
     return novo;
   }
 
+  criarRascunhoPip(dados: {
+    pessoa: string;
+    sessao: string;
+    missao: string;
+    localizacao: string;
+    coordenadas?: string;
+    pretensao?: string;
+    documentos?: string[];
+  }): ProcessoSU {
+    const numero = 'PIP/2026/0002';
+    const caso = 'CASO-0002';
+    const agora = new Date().toISOString();
+
+    const novo: ProcessoSU = {
+      numero,
+      caso,
+      servico: 'pedido-informacao-previa-urbanismo',
+      servicoTitulo: 'Pedido de Informação Prévia (PIP) — Viabilidade PDM',
+      estado: 'rascunho',
+      pessoa: dados.pessoa,
+      sessao: dados.sessao,
+      missao: dados.missao,
+      dados: {
+        localizacao: dados.localizacao,
+        coordenadas: dados.coordenadas ?? '41.4425, -8.2918 (Silvares)',
+        pretensao: dados.pretensao ?? 'Construção de Moradia Unifamiliar',
+        documentos: dados.documentos ?? ['caderneta_predial_silvares.pdf'],
+        area_m2: 650,
+        numero_mesas: 0,
+        periodo: 'Permanente',
+      },
+      elementos_pedidos: [],
+      proposta_ia:
+        'Localização em Silvares: Solo Urbano (Espaço Residencial Nível 2). Índice de Utilização máximo de 0.60 e cércea máxima de 3 pisos. Documentação anexada com hash SHA-256 verificado. Rascunho pronto para apreciação técnica.',
+      fontes: [
+        {
+          id: 'pdm-guimaraes-aviso-23214-2020',
+          titulo: 'Regulamento do Plano Diretor Municipal de Guimarães (Aviso n.º 23214/2020)',
+          versao: '2020.1',
+        },
+        {
+          id: 'rjue-dl-555-99-art14',
+          titulo: 'RJUE — Regime Jurídico da Urbanização e Edificação (Artigo 14.º)',
+          versao: 'DL 10/2024',
+        },
+      ],
+      historico: [],
+      criadoEm: agora,
+      atualizadoEm: agora,
+      simulacao: true,
+    };
+
+    this.#processos.set(numero, novo);
+    return novo;
+  }
+
   submeter(numero: string, ator = 'pessoa'): ProcessoSU | null {
     const p = this.#processos.get(numero);
     if (!p) return null;
@@ -252,8 +308,9 @@ export class ArmazenamentoSU {
       fundamento: 'Elementos adicionais submetidos pela munícipe através do Afonso',
     });
     p.estado = 'em_apreciacao';
-    p.proposta_ia =
-      'Elementos recebidos com sucesso (largura da fachada: 8 m). Corredor livre validado. O processo está em condições regulamentares para ser deferido.';
+    p.proposta_ia = p.numero.startsWith('PIP')
+      ? 'Elementos adicionais de urbanismo recebidos com sucesso. O processo está em condições regulamentares para emissão de informação prévia.'
+      : 'Elementos recebidos com sucesso (largura da fachada: 8 m). Corredor livre validado. O processo está em condições regulamentares para ser deferido.';
     p.atualizadoEm = agora;
     return p;
   }
@@ -263,19 +320,21 @@ export class ArmazenamentoSU {
     if (!p) return null;
     const agora = new Date().toISOString();
 
-    // Cálculo da taxa simulada (10 m2 x 7.575 EUR/m2 = 75.75 EUR)
+    const isPip = p.numero.startsWith('PIP') || p.servico.includes('urbanismo');
     const area = Number(p.dados.area_m2 ?? 10);
-    const taxaTotal = Number((area * 7.575).toFixed(2));
+    const taxaTotal = isPip ? 52.50 : Number((area * 7.575).toFixed(2));
     p.taxa_calculada = {
       valor: taxaTotal,
       moeda: 'EUR',
       valor_ficticio: true,
-      discriminacao: `${area} m² ocupação anual (simulação RTTL 2025)`,
+      discriminacao: isPip
+        ? 'Taxa de Emissão de Informação Prévia (Simulação RTTL 2025)'
+        : `${area} m² ocupação anual (simulação RTTL 2025)`,
     };
 
     p.referencia_pagamento = {
       entidade: '12345',
-      referencia: '987 654 321',
+      referencia: isPip ? '123 456 789' : '987 654 321',
       montante: `${taxaTotal.toFixed(2).replace('.', ',')} €`,
       valor_ficticio: true,
     };
@@ -285,7 +344,9 @@ export class ArmazenamentoSU {
       de: p.estado,
       para: 'aceite',
       ator,
-      fundamento: fundamento ?? 'Comunicação prévia aceite com emissão de guia de pagamento (simulação)',
+      fundamento: fundamento ?? (isPip
+        ? 'Pedido de Informação Prévia deferido favoravelmente com emissão de certidão vinculativa (simulação)'
+        : 'Comunicação prévia aceite com emissão de guia de pagamento (simulação)'),
     });
     p.estado = 'aceite';
     p.atualizadoEm = agora;

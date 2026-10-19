@@ -44,22 +44,56 @@ const ESTATICOS: Record<string, { ficheiro: string; tipo: string }> = {
   '/delegate.html': { ficheiro: 'delegate.html', tipo: 'text/html; charset=utf-8' },
   '/intermediario': { ficheiro: 'delegate.html', tipo: 'text/html; charset=utf-8' },
   '/intermediario.html': { ficheiro: 'delegate.html', tipo: 'text/html; charset=utf-8' },
+  '/cmd': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
+  '/cmd.html': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
+  '/autenticacao': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
   '/legendas.json': { ficheiro: 'legendas.json', tipo: 'application/json; charset=utf-8' },
   '/favicon.ico': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
   '/favicon.png': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
 };
 
+export interface DadosConfirmacaoCmd {
+  pessoa: string;
+  servico?: string;
+  processo?: string;
+  token_cmd: string;
+  nif?: string;
+  nome?: string;
+}
+
 /**
- * Serve o Observatório e o fluxo de eventos. Um processo, uma porta: é a
- * condição para que a demonstração arranque com um comando só e sem-configuration
- * de servidor de ficheiros.
+ * Serve o Observatório, a Consola, a Chave Móvel Digital e o fluxo de eventos.
  */
-export function criarServidorEventos(registro: Registo, abrirEscuta: () => Promise<pg.Client>) {
+export function criarServidorEventos(
+  registro: Registo,
+  abrirEscuta: () => Promise<pg.Client>,
+  aoConfirmarCmd?: (dados: DadosConfirmacaoCmd) => Promise<void>,
+) {
   return createServer((req, res) => {
     void (async () => {
       const caminho = req.url?.split('?')[0] ?? '/';
 
-      // 1. Ficheiros estáticos mapeados
+      // 1. Confirmação de Chave Móvel Digital (POST)
+      if (caminho === '/cmd/confirmar' && req.method === 'POST') {
+        let corpo = '';
+        for await (const pedaco of req) corpo += pedaco;
+        let dados: DadosConfirmacaoCmd = { pessoa: 'ines_guimaraes', token_cmd: 'CMD-TOKEN-VAL' };
+        try {
+          dados = JSON.parse(corpo);
+        } catch (_) {}
+        if (aoConfirmarCmd) {
+          try {
+            await aoConfirmarCmd(dados);
+          } catch (err) {
+            console.warn('[CMD] Erro ao processar confirmação:', err);
+          }
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ ok: true, token: dados.token_cmd }));
+        return;
+      }
+
+      // 2. Ficheiros estáticos mapeados
       const estatico = ESTATICOS[caminho];
       if (estatico) {
         try {
@@ -74,7 +108,7 @@ export function criarServidorEventos(registro: Registo, abrirEscuta: () => Promi
         }
       }
 
-      // 2. Ficheiros sob /assets/
+      // 3. Ficheiros sob /assets/
       if (caminho.startsWith('/assets/')) {
         const subcaminho = caminho.replace(/^\/assets\//, '');
         const ext = subcaminho.slice(subcaminho.lastIndexOf('.')).toLowerCase();

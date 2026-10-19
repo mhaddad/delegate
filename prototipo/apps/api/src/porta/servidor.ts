@@ -200,15 +200,88 @@ export async function criarServidorPorta(opcoes: OpcoesPorta = {}): Promise<{
     },
   );
 
+  // Ferramenta 3b: criar_rascunho_pip (ação — exige mandato mínimo D2)
+  mcp.registerTool(
+    'criar_rascunho_pip',
+    {
+      description: 'Cria um rascunho de Pedido de Informação Prévia (PIP / PDM) na Gestão Urbanística. Exige mandato D2+.',
+      inputSchema: {
+        mandato: z.string().optional().describe('Identificador do mandato concedido pela pessoa'),
+        localizacao: z.string().describe('Localização do terreno ou imóvel em Guimarães'),
+        coordenadas: z.string().optional().describe('Coordenadas GPS ou link do mapa'),
+        pretensao: z.string().optional().describe('Pretensão construtiva declarada'),
+        documentos: z.array(z.string()).optional().describe('Ficheiros e provas anexados'),
+        cliente: z.string().optional().describe('Identificador do agente ou cliente'),
+      },
+    },
+    async (args) => {
+      const cliente = args.cliente ?? 'agente-mcp';
+
+      if (!args.mandato) {
+        await emitir('porta.acesso.recusado', {
+          cliente,
+          codigo: 'MANDATO_EM_FALTA',
+          capacidade: 'criar_rascunho_pip',
+        });
+        return {
+          isError: true,
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify({
+                erro: 'MANDATO_EM_FALTA',
+                mensagem: 'Esta capacidade exige um Mandato Digital válido com nível D2 ou superior.',
+              }),
+            },
+          ],
+        };
+      }
+
+      const ficha = catalogo.obter('pedido-informacao-previa-urbanismo');
+      const versaoRegulamento = ficha?.fontes[0]?.id ?? 'pdm-guimaraes-aviso-23214-2020';
+
+      const proc = servicosUrbanos.criarRascunhoPip({
+        pessoa: 'ines_guimaraes',
+        sessao,
+        missao: 'MIS-0002',
+        localizacao: args.localizacao,
+        coordenadas: args.coordenadas,
+        pretensao: args.pretensao,
+        documentos: args.documentos,
+      });
+
+      const resultado = {
+        rascunho: 'RASC-0002',
+        processo: proc.numero,
+        servico: proc.servico,
+        versao_regulamento: `${versaoRegulamento}@${ficha?.versao ?? '2020.1'}`,
+        simulacao: true,
+        proximo_passo: 'Rever pacote instrutório e assinar digitalmente com Chave Móvel Digital',
+      };
+
+      await emitir('porta.capacidade.chamada', {
+        cliente,
+        capacidade: 'criar_rascunho_pip',
+        mandato: args.mandato,
+        resultado: 'rascunho_criado',
+        simulacao: true,
+      });
+
+      return {
+        content: [{ type: 'text', text: JSON.stringify(resultado, null, 2) }],
+      };
+    },
+  );
+
   // Ferramenta 4: submeter_comunicacao_previa (ação — exige mandato D3 e confirmação expressa)
   mcp.registerTool(
     'submeter_comunicacao_previa',
     {
-      description: 'Submete formalmente a comunicação prévia aos Serviços Urbanos. Exige mandato D3 e token de confirmação da pessoa.',
+      description: 'Submete formalmente a comunicação prévia ou pedido de informação aos Serviços Urbanos / Urbanismo. Exige mandato D3 e token de confirmação da pessoa.',
       inputSchema: {
         mandato: z.string().optional().describe('Identificador do mandato concedido'),
         token_confirmacao: z.string().optional().describe('Token de confirmação com Chave Móvel Digital'),
-        processo: z.string().describe('Número do processo a submeter (ex.: OEP/2026/0001)'),
+        processo: z.string().describe('Número do processo a submeter (ex.: OEP/2026/0001 ou PIP/2026/0002)'),
         cliente: z.string().optional().describe('Identificador do agente ou cliente'),
       },
     },
@@ -255,7 +328,20 @@ export async function criarServidorPorta(opcoes: OpcoesPorta = {}): Promise<{
         };
       }
 
-      const p = servicosUrbanos.submeter(args.processo);
+      let p = servicosUrbanos.obter(args.processo);
+      if (!p && args.processo.startsWith('PIP')) {
+        p = servicosUrbanos.criarRascunhoPip({
+          pessoa: 'ines_guimaraes',
+          sessao,
+          missao: 'MIS-0002',
+          localizacao: 'Rua de Silvares, Silvares, Guimarães',
+          coordenadas: '41.4425, -8.2918',
+          pretensao: 'Construção de Moradia Unifamiliar',
+          documentos: ['caderneta_predial_silvares.pdf'],
+        });
+      }
+
+      p = servicosUrbanos.submeter(args.processo);
       if (!p) {
         return {
           isError: true,
@@ -270,6 +356,25 @@ export async function criarServidorPorta(opcoes: OpcoesPorta = {}): Promise<{
         resultado: 'processo_submetido',
         simulacao: true,
       });
+
+      if (registo) {
+        await registo.registar({
+          tipo: 'su.processo.criado',
+          origem: 'su',
+          sessao,
+          missao: p.missao,
+          pessoa: p.pessoa,
+          ator: 'sistema',
+          simulacao: true,
+          dados: {
+            processo: p.numero,
+            caso: p.caso,
+            servico: p.servico,
+            servicoTitulo: p.servicoTitulo,
+            estado: p.estado,
+          },
+        });
+      }
 
       return {
         content: [{ type: 'text', text: JSON.stringify(p, null, 2) }],

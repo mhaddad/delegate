@@ -309,7 +309,7 @@ export class Afonso {
     }
 
     // 5. Catálogo de Serviços Oficiais
-    const servicoId = classificacao.servicoId ?? 'ocupacao-espaco-publico-esplanada';
+    const servicoId = classificacao.servicoId ?? decisaoJev.servicoId ?? 'ocupacao-espaco-publico-esplanada';
 
     // Obter ficha do catálogo da Porta
     let ficha;
@@ -521,6 +521,17 @@ export class Afonso {
       },
     });
 
+    const botoes = servicoId === 'pedido-informacao-previa-urbanismo'
+      ? [
+          [{ texto: '📋 Preparar Rascunho no Cofre (D2)', dados: 'iniciar_pdm' }],
+          [{ texto: '🗺️ Como enviar Google Maps?', dados: 'ajuda_google_maps' }],
+          [{ texto: '👤 Falar com um técnico de urbanismo', dados: 'pessoa' }],
+        ]
+      : [
+          [{ texto: '🔘 Preparar no Cofre com o Afonso (D2)', dados: `iniciar_${servicoId}` }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+        ];
+
     return {
       servicoId,
       texto: redacao.texto,
@@ -529,10 +540,7 @@ export class Afonso {
       fontes: [fonte],
       modeloRedacao: redacao.modeloUsado,
       geradoPorLlm: redacao.geradoPorLlm,
-      botoes: [
-        [{ texto: '🔘 Iniciar missão com o Afonso', dados: `iniciar_${servicoId}` }],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ],
+      botoes,
     };
   }
 }

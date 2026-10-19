@@ -223,7 +223,14 @@ export class ClassificadorAfonso {
       };
     }
 
-    if (texto.includes('construir no meu terreno') || texto.includes('informação prévia') || texto.includes('pdm novo')) {
+    if (
+      texto.includes('pdm') ||
+      texto.includes('informação prévia') ||
+      texto.includes('informacao previa') ||
+      texto.includes('pip') ||
+      texto.includes('construir no meu terreno') ||
+      (texto.includes('terreno') && (texto.includes('construir') || texto.includes('moradia') || texto.includes('casa') || texto.includes('viabilidade')))
+    ) {
       return {
         comportamento: 'responder',
         categoria: 'catalogo',

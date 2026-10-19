@@ -16,7 +16,7 @@
 import { criarCanalGrammy, escapar, type CanalGrammy } from './canal.ts';
 import { abrirBase, SESSAO } from './bd.ts';
 import { Registo } from './eventos/registo.ts';
-import { criarServidorEventos } from './eventos/servidor.ts';
+import { criarServidorEventos, type DadosConfirmacaoCmd } from './eventos/servidor.ts';
 import { Afonso } from './afonso/afonso.ts';
 import { ClientePortaMcp } from './afonso/cliente-porta.ts';
 import { CofreDigital } from './cofre/cofre.ts';
@@ -38,7 +38,9 @@ const base = await abrirBase();
 const registro = new Registo(base.escrita);
 console.log('✓ base aberta');
 
-const servidor = criarServidorEventos(registro, () => base.escutar());
+const servidor = criarServidorEventos(registro, () => base.escutar(), async (dados) => {
+  await processarConfirmacaoCmd(dados);
+});
 servidor.listen(PORTA_EVENTOS, () => {
   console.log(`✓ fluxo de eventos em http://localhost:${PORTA_EVENTOS}/eventos/stream`);
 });
@@ -126,6 +128,266 @@ escutaNucleo.on('notification', async (aviso: any) => {
   }
 });
 
+async function processarConfirmacaoCmd(dadosCmd: DadosConfirmacaoCmd): Promise<void> {
+  const pessoa = dadosCmd.pessoa || 'ines_guimaraes';
+  const processo = dadosCmd.processo || 'OEP/2026/0001';
+  const servico = dadosCmd.servico || (processo.startsWith('PIP') ? 'pedido-informacao-previa-urbanismo' : 'ocupacao-espaco-publico-esplanada');
+  const tokenCmd = dadosCmd.token_cmd;
+  const chat = conversasPorPessoa.get(pessoa) ?? ultimaConversa;
+
+  const isPip = processo.startsWith('PIP') || servico.includes('pdm') || servico.includes('urbanismo');
+  const missaoId = isPip ? 'MIS-0002' : 'MIS-0001';
+  const pacoteId = isPip ? 'PAC-0002' : 'PAC-0001';
+
+  // 1. Conceder Mandato D3 formal com base na assinatura CMD
+  const mandato = await mandatos.concederMandato(pessoa, missaoId, {
+    ambito: isPip ? 'urbanismo-informacao-previa' : 'ocupacao-espaco-publico',
+    objeto: isPip ? 'Terreno em Silvares (Guimarães)' : 'Casa Joaquim (Largo da Oliveira)',
+    nivel: 'D3',
+    validadeDias: 180,
+  });
+
+  // 2. Aprovar pacote mínimo no cofre
+  await cofre.aprovarPacoteMinimo(pessoa, missaoId, pacoteId).catch(() => {});
+
+  // 3. Avaliar política de autorização
+  const decisaoPol = await politica.avaliarAcao({
+    pessoa,
+    missao: missaoId,
+    acao: 'submeter_comunicacao_previa',
+    ambito: isPip ? 'urbanismo-informacao-previa' : 'ocupacao-espaco-publico',
+    nivelRequerido: 'D3',
+    temConfirmacao: true,
+  });
+
+  if (decisaoPol.resultado === 'bloquear') {
+    if (chat) await canal.enviar(chat, `Submissão bloqueada pelas regras de política: ${decisaoPol.motivo}`);
+    return;
+  }
+
+  // 4. Libertar chave criptográfica pelo tempo da submissão
+  await servicoChaves.libertarChave(pessoa, missaoId, mandato.id, 10 * 60 * 1000);
+
+  // 5. Submeter via Porta Agêntica (MCP)
+  await clientePorta.chamarFerramenta('submeter_comunicacao_previa', {
+    processo,
+    mandato: mandato.id,
+    token_confirmacao: tokenCmd,
+  }).catch((e) => console.warn('Aviso submeter MCP:', e));
+
+  // 6. Atualizar máquina de estados da missão
+  if (!orquestrador.obter(missaoId)) {
+    await orquestrador.criarMissao({
+      pessoa,
+      servico,
+      servicoTitulo: isPip ? 'Pedido de Informação Prévia (PIP) — Viabilidade PDM' : 'Ocupação do Espaço Público — Esplanada Aberta',
+      objetivo: isPip ? 'Obter parecer prévio vinculativo de viabilidade urbanística ao abrigo do Art. 14.º do RJUE' : 'Submeter Mera Comunicação Prévia',
+      mandato: mandato.id,
+      passosIniciais: ['Instrução do pedido', 'Submissão formal com CMD'],
+    });
+  }
+  await orquestrador.mudarEstado(missaoId, 'submetido', `Submetido com mandato D3 e Chave Móvel Digital (${tokenCmd})`);
+
+  // 7. Criar caso na Consola Municipal
+  await registro.registar({
+    tipo: 'consola.caso.criado',
+    origem: 'consola',
+    sessao: SESSAO,
+    pessoa,
+    missao: missaoId,
+    ator: 'sistema',
+    simulacao: true,
+    dados: {
+      caso: isPip ? 'CASO-0002' : 'CASO-0001',
+      processo,
+      servico,
+      risco: isPip ? 'medio' : 'baixo',
+      token_cmd: tokenCmd,
+    },
+  });
+
+  // 8. Notificar munícipe no Telegram
+  if (chat) {
+    if (isPip) {
+      await canal.enviar(
+        chat,
+        [
+          '✅ <b>Pedido de Informação Prévia (PIP) Submetido!</b>',
+          '',
+          'A sua assinatura digital com <b>Chave Móvel Digital</b> foi validada com sucesso.',
+          `Token de Assinatura: <code>${tokenCmd}</code>`,
+          `Nível de Representação: <b>Mandato D3</b> (${mandato.id})`,
+          '',
+          '<b>Processo Municipal:</b> <code>PIP/2026/0002</code> (Simulação)',
+          '<b>Serviço:</b> Divisão de Gestão Urbanística · Câmara Municipal de Guimarães',
+          '<b>Pretensão:</b> Viabilidade construtiva de moradia unifamiliar em Silvares',
+          '',
+          'O processo foi distribuído na <b>Consola Técnica Municipal</b> e aguarda apreciação.',
+          'Avisarei assim que o técnico de urbanismo emitir o despacho.',
+        ].join('\n'),
+      );
+    } else {
+      await canal.enviar(
+        chat,
+        [
+          '✅ <b>Comunicação Prévia Submetida com Sucesso!</b>',
+          '',
+          'A sua assinatura com <b>Chave Móvel Digital</b> foi confirmada.',
+          `Token de Assinatura: <code>${tokenCmd}</code>`,
+          `Nível de Representação: <b>Mandato D3</b> (${mandato.id})`,
+          '',
+          '<b>Processo:</b> <code>OEP/2026/0001</code> (Simulação)',
+          '<b>Estado:</b> Em apreciação técnica pelo Gabinete de Serviços Urbanos.',
+          '',
+          'Avisarei assim que a técnica validar o processo na Consola Municipal.',
+        ].join('\n'),
+      );
+    }
+  }
+}
+
+async function processarLocalizacaoTerreno(m: any): Promise<void> {
+  const missaoAtiva = orquestrador.obterAtiva(m.pessoa);
+  const missaoId = missaoAtiva?.servico.includes('urbanismo') ? missaoAtiva.id : 'MIS-0002';
+
+  if (!missaoAtiva || !missaoAtiva.servico.includes('urbanismo')) {
+    const mandato = await mandatos.concederMandato(m.pessoa, missaoId, {
+      ambito: 'urbanismo-informacao-previa',
+      objeto: 'Viabilidade Construtiva PDM (Silvares, Guimarães)',
+      nivel: 'D2',
+      validadeDias: 180,
+    });
+    await orquestrador.criarMissao({
+      pessoa: m.pessoa,
+      servico: 'pedido-informacao-previa-urbanismo',
+      servicoTitulo: 'Pedido de Informação Prévia (PIP) — Viabilidade PDM',
+      objetivo: 'Obter parecer prévio vinculativo de viabilidade urbanística ao abrigo do Art. 14.º do RJUE',
+      mandato: mandato.id,
+      passosIniciais: [
+        'Identificar enquadramento no PDM de Guimarães',
+        'Georreferenciar localização do terreno (Google Maps / GPS)',
+        'Anexar Caderneta Predial em PDF no Cofre Digital',
+        'Submeter formalmente à Câmara com Chave Móvel Digital',
+      ],
+    });
+  }
+
+  await cofre.guardarItem(m.pessoa, missaoId, {
+    camada: 'provas',
+    tipo: 'geolocalizacao_terreno',
+    titulo: 'Localização Georreferenciada do Terreno',
+    origem: 'google_maps',
+    finalidade: 'Instrução do Pedido de Informação Prévia (Art. 14.º RJUE)',
+    dados: {
+      freguesia: 'Silvares',
+      concelho: 'Guimarães',
+      coordenadas: '41.4425, -8.2918',
+      link_maps: 'https://maps.google.com/?q=41.4425,-8.2918',
+      classificacao_solo_pdm: 'Solo Urbano · Espaço Residencial Nível 2',
+      indice_ocupacao: 0.60,
+      cercea_maxima: 3,
+    },
+  });
+
+  await clientePorta.criarRascunhoPip({
+    mandato: 'MAN-D2-002',
+    localizacao: 'Rua de Silvares, Silvares, Guimarães',
+    coordenadas: '41.4425, -8.2918',
+    pretensao: 'Construção de Moradia Unifamiliar',
+    documentos: ['localizacao_georreferenciada.json'],
+  }).catch((e) => console.warn('Aviso rascunho pip:', e));
+
+  orquestrador.atualizarPassoChecklist(missaoId, 'chk-2', true, 'Silvares (41.4425, -8.2918)');
+
+  await canal.enviar(
+    m.conversa,
+    [
+      '📍 <b>Localização do terreno registada com sucesso!</b>',
+      '',
+      '• <b>Freguesia:</b> Silvares, Guimarães',
+      '• <b>Coordenadas:</b> <code>41.4425, -8.2918</code>',
+      '• <b>Cofre Digital:</b> Cifrado AES-256-GCM na camada <i>provas</i>.',
+      '',
+      '🏛️ <b>Enquadramento Preliminar no PDM de Guimarães:</b>',
+      '• Classificação: <b>Solo Urbano — Espaço Residencial Nível 2</b>',
+      '• Índice de Utilização: Máximo 0.60 (Art. 45.º do Regulamento do PDM)',
+      '• Cércea Máxima: 3 pisos',
+      '• Reserva Agrícola (RAN): Não abrangido · Reserva Ecológica (REN): Não abrangido',
+      '',
+      '<i>Nota de Transparência: O Afonso não emite parecer técnico vinculativo; este resumo provém do cruzamento do geoportal com o regulamento oficial (Aviso n.º 23214/2020).</i>',
+      '',
+      '<b>Próximo passo:</b> Anexe a Caderneta Predial (PDF) para concluir o pacote instrutório ou avance para a assinatura digital com Chave Móvel Digital.',
+      '',
+      `Para assinar no ecrã oficial da CMD, aceda a: <code>http://localhost:4000/cmd?processo=PIP/2026/0002&amp;servico=pdm&amp;pessoa=${m.pessoa}</code>`,
+    ].join('\n'),
+    [
+      [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'simular_anexo_pdf' }],
+      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'submeter_pdm_chat' }],
+      [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+    ],
+  );
+}
+
+async function processarDocumentoPdf(m: any): Promise<void> {
+  const missaoAtiva = orquestrador.obterAtiva(m.pessoa);
+  const missaoId = missaoAtiva?.servico.includes('urbanismo') ? missaoAtiva.id : 'MIS-0002';
+  const nomeDoc = m.documento?.nome ?? 'caderneta_predial_silvares.pdf';
+
+  await cofre.guardarItem(m.pessoa, missaoId, {
+    camada: 'provas',
+    tipo: 'caderneta_predial',
+    titulo: 'Caderneta Predial Rústica / Urbana',
+    origem: 'upload_telegram',
+    finalidade: 'Comprovação da legitimidade e titularidade para PIP (Art. 14.º RJUE)',
+    dados: {
+      ficheiro: nomeDoc,
+      artigo_matricial: 'Artigo 1420 - Silvares',
+      hash_sha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    },
+  });
+
+  await cofre.prepararPacoteMinimo(
+    m.pessoa,
+    missaoId,
+    'Câmara Municipal de Guimarães — Divisão de Gestão Urbanística',
+    'Pedido de Informação Prévia (Art. 14.º RJUE)',
+    {
+      localizacao: 'Rua de Silvares, Silvares, Guimarães',
+      coordenadas: '41.4425, -8.2918',
+      artigo_matricial: 'Artigo 1420',
+      area_pretendida_m2: 220,
+      uso: 'Habitação Unifamiliar',
+      documentos_validados: [nomeDoc],
+    },
+    ['declaracoes_irs', 'outros_imoveis', 'dados_bancarios', 'conversas_privadas'],
+  );
+
+  orquestrador.atualizarPassoChecklist(missaoId, 'chk-3', true, nomeDoc);
+  await orquestrador.mudarEstado(missaoId, 'preparado', 'Localização e caderneta predial reunidas no pacote mínimo');
+
+  await canal.enviar(
+    m.conversa,
+    [
+      '📑 <b>Caderneta Predial recebida e auditada!</b>',
+      '',
+      `• Ficheiro: <code>${escapar(nomeDoc)}</code>`,
+      '• Resumo criptográfico SHA-256 verificado e apenso ao seu Cofre Digital.',
+      '',
+      '🔒 <b>Princípio da Minimização de Dados (RGPD):</b>',
+      'Pacote instrutório <code>PAC-0002</code> preparado sob <b>Mandato D2</b>. Apenas saem a localização e a titularidade estritamente necessárias. A sua situação fiscal e dados bancários <b>permanecem inacessíveis</b>.',
+      '',
+      'O rascunho está <b>completo e pronto para submissão formal</b> à Divisão de Gestão Urbanística.',
+      'Para avançar, assine o pedido através da <b>Chave Móvel Digital</b>:',
+      '',
+      `Para assinar no ecrã oficial da CMD, aceda a: <code>http://localhost:4000/cmd?processo=PIP/2026/0002&amp;servico=pdm&amp;pessoa=${m.pessoa}</code>`,
+    ].join('\n'),
+    [
+      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'submeter_pdm_chat' }],
+      [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+    ],
+  );
+}
+
 async function processarValidacaoCalcada(m: any): Promise<void> {
   await orquestrador.mudarEstado('MIS-0001', 'preparado', 'Medição validada com corredor pedonal livre (2,10 m >= 2,00 m)');
 
@@ -153,12 +415,14 @@ async function processarValidacaoCalcada(m: any): Promise<void> {
       'Corredor pedonal livre aferido: <b>2,10 metros</b> (cumpre a exigência regulamentar do Art. 8.º de pelo menos 2,00 m).',
       '',
       '<b>Proteção de Dados e Minimização (RGPD):</b>',
-      'Pacote mínimo <code>PAC-0001</code> preparado sob <b>Mandato D3</b>. Apenas saem as dimensões estritamente necessárias. <b>Não são partilhados</b> património, dados bancários ou preferências.',
+      'Pacote mínimo <code>PAC-0001</code> preparado sob <b>Mandato D2</b>. Apenas saem as dimensões estritamente necessárias. <b>Não são partilhados</b> património, dados bancários ou preferências.',
       '',
-      'O pedido está <b>pronto para submissão formal</b> com a sua confirmação.',
+      'O pedido está <b>pronto para submissão formal</b> com a sua confirmação via Chave Móvel Digital.',
+      '',
+      `Para assinar no ecrã oficial da CMD, aceda a: <code>http://localhost:4000/cmd?processo=OEP/2026/0001&amp;servico=esplanada&amp;pessoa=${m.pessoa}</code>`,
     ].join('\n'),
     [
-      [{ texto: '✍️ Rever e Submeter com CMD (Simulação)', dados: 'submeter_esplanada' }],
+      [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'submeter_esplanada' }],
       [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
     ],
   );
@@ -428,11 +692,11 @@ canal._aoReceber(async (m) => {
         dados: { localizacao: 'Largo da Oliveira, 12', mesas: 4, area_m2: 10 },
       });
 
-      // 2. Conceder Mandato D3
+      // 2. Conceder Mandato D2 (Nível de Preparação — sem autorização para submissão direta)
       const mandato = await mandatos.concederMandato(m.pessoa, 'MIS-0001', {
         ambito: 'ocupacao-espaco-publico',
         objeto: 'Casa Joaquim (Largo da Oliveira)',
-        nivel: 'D3',
+        nivel: 'D2',
         validadeDias: 365,
       });
 
@@ -450,7 +714,7 @@ canal._aoReceber(async (m) => {
         [
           'Guardei a intenção da esplanada no seu <b>Cofre Digital Pessoal</b> (cifrado AES-256-GCM) e abri a missão <b>MIS-0001</b>.',
           '',
-          `Concedeu ao Afonso o <b>Mandato ${mandato.nivel}</b> (${mandato.id}): preparar e submeter com a sua confirmação explícita.`,
+          `Concedeu ao Afonso o <b>Mandato D2</b> (${mandato.id}): preparar rascunho e reunir provas, <b>sem autorização para submeter</b> sem a sua assinatura expressa.`,
           '',
           '<b>Próximo passo da checklist:</b>',
           'Envie uma <b>fotografia do passeio</b> à porta da Casa Joaquim ou confirme que tem pelo menos 2,00 metros livres de calçada.',
@@ -462,61 +726,112 @@ canal._aoReceber(async (m) => {
       );
     } else if (m.texto === 'enviar_foto_calcada') {
       await processarValidacaoCalcada(m);
-    } else if (m.texto === 'submeter_esplanada') {
-      // 1. Aprovar pacote mínimo
-      await cofre.aprovarPacoteMinimo(m.pessoa, 'MIS-0001', 'PAC-0001');
-
-      // 2. Avaliar política de autorização
-      const decisaoPol = await politica.avaliarAcao({
-        pessoa: m.pessoa,
-        missao: 'MIS-0001',
-        acao: 'submeter_comunicacao_previa',
-        ambito: 'ocupacao-espaco-publico',
-        nivelRequerido: 'D3',
-        temConfirmacao: true,
+    } else if (m.texto === 'iniciar_pdm') {
+      await cofre.guardarItem(m.pessoa, 'MIS-0002', {
+        camada: 'intencoes',
+        tipo: 'intencao_urbanismo',
+        titulo: 'Pedido de Informação Prévia (PDM)',
+        origem: 'conversa_telegram',
+        finalidade: 'Consulta de viabilidade urbanística para construção de moradia',
+        dados: { servico: 'pedido-informacao-previa-urbanismo' },
       });
 
-      if (decisaoPol.resultado === 'bloquear') {
-        await canal.enviar(m.conversa, `Submissão bloqueada: ${decisaoPol.motivo}`);
-        return;
-      }
+      const mandato = await mandatos.concederMandato(m.pessoa, 'MIS-0002', {
+        ambito: 'urbanismo-informacao-previa',
+        objeto: 'Viabilidade Construtiva PDM (Guimarães)',
+        nivel: 'D2',
+        validadeDias: 180,
+      });
 
-      // 3. Libertar chave criptográfica pelo tempo da submissão
-      await servicoChaves.libertarChave(m.pessoa, 'MIS-0001', 'MAN-D3-001', 10 * 60 * 1000);
-
-      // 4. Submeter via Porta Agêntica (MCP)
-      await clientePorta.chamarFerramenta('submeter_comunicacao_previa', {
-        processo: 'OEP/2026/0001',
-        mandato: 'MAN-D3-001',
-        token_confirmacao: 'token_cmd_simulado_ines',
-      }).catch(() => null);
-
-      // 5. Atualizar máquina de estados da missão
-      await orquestrador.mudarEstado('MIS-0001', 'submetido', 'Submetido com mandato D3 e CMD');
-
-      // 6. Criar caso na Consola Municipal
-      await registro.registar({
-        tipo: 'consola.caso.criado',
-        origem: 'consola',
-        sessao: SESSAO,
+      await orquestrador.criarMissao({
         pessoa: m.pessoa,
-        missao: 'MIS-0001',
-        ator: 'sistema',
-        simulacao: true,
-        dados: { caso: 'CASO-0001', processo: 'OEP/2026/0001', risco: 'baixo' },
+        servico: 'pedido-informacao-previa-urbanismo',
+        servicoTitulo: 'Pedido de Informação Prévia (PIP) — Viabilidade PDM',
+        objetivo: 'Obter parecer prévio vinculativo de viabilidade urbanística ao abrigo do Art. 14.º do RJUE',
+        mandato: mandato.id,
+        passosIniciais: [
+          'Identificar enquadramento no PDM de Guimarães',
+          'Georreferenciar localização do terreno (Google Maps / GPS)',
+          'Anexar Caderneta Predial em PDF no Cofre Digital',
+          'Submeter formalmente à Câmara com Chave Móvel Digital',
+        ],
       });
 
       await canal.enviar(
         m.conversa,
         [
-          'Comunicação Prévia submetida com sucesso! ✅',
+          'Guardei a intenção no seu <b>Cofre Digital Pessoal</b> (cifrado AES-256-GCM) e abri a missão <b>MIS-0002</b>.',
           '',
-          '<b>Processo:</b> <code>OEP/2026/0001</code> (Simulação)',
-          '<b>Estado:</b> Em apreciação técnica pelo Gabinete de Serviços Urbanos.',
+          `Concedeu ao Afonso o <b>Mandato D2</b> (${mandato.id}): preparar o rascunho instrutório e organizar as provas, <b>sem autorização para submeter</b> sem a sua assinatura.`,
           '',
-          'Avisarei assim que a técnica validar o processo na Consola Municipal.',
+          '<b>Elementos necessários (Art. 14.º do RJUE):</b>',
+          '1. 📍 <b>Localização do terreno:</b> envie um link do Google Maps ou coordenadas (ex.: <code>41.4425, -8.2918</code>).',
+          '2. 📑 <b>Caderneta Predial:</b> envie o ficheiro PDF da caderneta predial.',
+          '',
+          'Pode enviar estes dados em qualquer ordem:',
         ].join('\n'),
+        [
+          [{ texto: '📍 Simular Envio: Terreno em Silvares (Maps)', dados: 'simular_maps_silvares' }],
+          [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'simular_anexo_pdf' }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+        ],
       );
+    } else if (m.texto === 'ajuda_google_maps') {
+      await canal.enviar(
+        m.conversa,
+        [
+          '📍 <b>Como partilhar a localização do terreno:</b>',
+          '',
+          '1. Abra a aplicação Google Maps ou o navegador.',
+          '2. Toque no terreno pretendido e escolha «Partilhar».',
+          '3. Cole o link aqui no chat (ex.: <code>https://maps.google.com/?q=41.4425,-8.2918</code>) ou escreva as coordenadas diretamente.',
+          '',
+          'Ou teste de imediato com a simulação:',
+        ].join('\n'),
+        [
+          [{ texto: '📍 Simular Envio: Terreno em Silvares (Maps)', dados: 'simular_maps_silvares' }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+        ],
+      );
+    } else if (m.texto === 'ajuda_pdf') {
+      await canal.enviar(
+        m.conversa,
+        [
+          '📑 <b>Como anexar a Caderneta Predial:</b>',
+          '',
+          '1. Carregue no ícone do clipe / anexo 📎 no Telegram.',
+          '2. Selecione o ficheiro PDF da Caderneta Predial do Portal das Finanças.',
+          '3. O Afonso cifra o ficheiro com AES-256-GCM no seu Cofre Digital Pessoal.',
+          '',
+          'Ou teste de imediato com a simulação:',
+        ].join('\n'),
+        [
+          [{ texto: '📑 Simular Envio: Caderneta Predial (PDF)', dados: 'simular_anexo_pdf' }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+        ],
+      );
+    } else if (m.texto === 'simular_maps_silvares') {
+      await processarLocalizacaoTerreno(m);
+    } else if (m.texto === 'simular_anexo_pdf') {
+      await processarDocumentoPdf(m);
+    } else if (m.texto === 'submeter_pdm_chat') {
+      await processarConfirmacaoCmd({
+        pessoa: m.pessoa,
+        servico: 'pedido-informacao-previa-urbanismo',
+        processo: 'PIP/2026/0002',
+        token_cmd: 'CMD-TOKEN-CHAT-' + Math.floor(100000 + Math.random() * 900000),
+        nif: '234567890',
+        nome: 'Maria Lurdes Gonçalves',
+      });
+    } else if (m.texto === 'submeter_esplanada') {
+      await processarConfirmacaoCmd({
+        pessoa: m.pessoa,
+        servico: 'ocupacao-espaco-publico-esplanada',
+        processo: 'OEP/2026/0001',
+        token_cmd: 'CMD-TOKEN-ESPLANADA-' + Math.floor(100000 + Math.random() * 900000),
+        nif: '234567890',
+        nome: 'Maria Lurdes Gonçalves',
+      });
     } else if (m.texto === 'responder_8m') {
       aguardaFachada = false;
       await clientePorta.chamarFerramenta('responder_pedido_elementos', {
@@ -558,6 +873,8 @@ canal._aoReceber(async (m) => {
     }
   } else if (m.tipo === 'foto') {
     await processarValidacaoCalcada(m);
+  } else if (m.tipo === 'documento') {
+    await processarDocumentoPdf(m);
   } else if (m.texto && !m.texto.startsWith('/')) {
     const missaoAtiva = orquestrador.obterAtiva(m.pessoa);
 
@@ -589,6 +906,20 @@ canal._aoReceber(async (m) => {
       (/2[,.]10|metro|calcada|calçada|passeio|fita|largura|livre/i.test(m.texto))
     ) {
       await processarValidacaoCalcada(m);
+      return;
+    }
+
+    // Se o munícipe enviou link de Google Maps ou coordenadas GPS de terreno
+    if (/maps\.google\.|maps\.app\.goo\.gl|goo\.gl\/maps|\b\d{2}\.\d{3,}\s*,\s*-\d{1,2}\.\d{3,}\b/i.test(m.texto)) {
+      await processarLocalizacaoTerreno(m);
+      await regista('canal.mensagem.enviada', m, { tipo: 'localizacao_terreno' });
+      return;
+    }
+
+    // Se o munícipe referiu envio de caderneta predial
+    if (/caderneta|predial|\.pdf\b/i.test(m.texto) && missaoAtiva?.servico.includes('urbanismo')) {
+      await processarDocumentoPdf(m);
+      await regista('canal.mensagem.enviada', m, { tipo: 'caderneta_predial' });
       return;
     }
 

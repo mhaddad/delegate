@@ -14,7 +14,7 @@ import { createHmac } from 'node:crypto';
 const SEGREDO_DA_SESSAO = process.env.SESSAO ?? 'demo';
 
 /** De onde veio a mensagem. Nunca se adivinha pelo conteúdo. */
-export type TipoEntrada = 'texto' | 'comando' | 'foto' | 'botao';
+export type TipoEntrada = 'texto' | 'comando' | 'foto' | 'documento' | 'botao';
 
 /** Uma actualização recebida do canal, já normalizada. */
 export interface MensagemRecebida {
@@ -25,6 +25,8 @@ export interface MensagemRecebida {
   texto: string | null;
   /** Identificador da foto, se houver. Nunca descarregamos bytes. */
   foto: string | null;
+  /** Metadados do documento/PDF se houver. */
+  documento?: { nome: string; mime?: string; id: string } | null;
   /** Fila onde veio, para onde vai a resposta. */
   conversa: string;
   /** Data em ISO, do próprio Telegram. */
@@ -66,7 +68,7 @@ function paraBotoes(botoes?: Botoes) {
   return {
     inline_keyboard: botoes.map((linha) =>
       linha.map((b) =>
-        b.ligacao
+        b.ligacao && !b.ligacao.includes('localhost') && !b.ligacao.includes('127.0.0.1')
           ? { text: b.texto, url: b.ligacao }
           : { text: b.texto, callback_data: b.dados ?? b.texto },
       ),
@@ -123,6 +125,19 @@ export function criarCanalGrammy(token: string): CanalGrammy {
         tipo: 'foto',
         texto: ctx.msg.caption ?? null,
         foto: maior?.file_id ?? null,
+        conversa: String(ctx.chat.id),
+        quando: new Date(ctx.msg.date * 1000).toISOString(),
+      });
+    });
+
+    bot.on('message:document', async (ctx) => {
+      const doc = ctx.msg.document;
+      await aoReceber({
+        pessoa: pseudonimo(ctx.from?.id),
+        tipo: 'documento',
+        texto: ctx.msg.caption ?? doc?.file_name ?? null,
+        foto: null,
+        documento: doc ? { nome: doc.file_name ?? 'documento.pdf', mime: doc.mime_type, id: doc.file_id } : null,
         conversa: String(ctx.chat.id),
         quando: new Date(ctx.msg.date * 1000).toISOString(),
       });

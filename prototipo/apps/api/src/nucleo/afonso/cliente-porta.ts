@@ -94,6 +94,22 @@ export class ClientePortaMcp {
     return JSON.parse(texto);
   }
 
+  /** Cria rascunho de PIP através da Porta (exige mandato D2+). */
+  async criarRascunhoPip(dados: {
+    mandato?: string;
+    localizacao: string;
+    coordenadas?: string;
+    pretensao?: string;
+    documentos?: string[];
+  }): Promise<{
+    rascunho: string;
+    processo: string;
+    versao_regulamento: string;
+    simulacao: boolean;
+  }> {
+    return this.chamarFerramenta('criar_rascunho_pip', dados);
+  }
+
   /** Invoca qualquer ferramenta MCP na Porta genericamente. */
   async chamarFerramenta(nome: string, argumentos: Record<string, unknown> = {}): Promise<any> {
     await this.conectar();
