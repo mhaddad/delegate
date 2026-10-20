@@ -143,7 +143,7 @@ describe('Afonso · Memória de Conversa e Preservação de Contexto', () => {
     expect(rPdm.texto).toContain('consultado a 18/10/2026');
     expect(rPdm.texto).not.toMatch(/\bmunícipe\b/i);
     expect(rPdm.texto).not.toContain('submeter_pdm_chat');
-    expect(rPdm.botoes?.some((linha) => linha.some((b) => b.dados === 'submeter_pdm_chat'))).toBe(false);
+    expect(rPdm.botoes?.some((linha) => linha.some((b) => b.dados === 'submeter_pdm_chat')) ?? false).toBe(false);
 
     const rEsplanada = await afonso.responder('cidadao_2', 'Posso por uma esplanada no Largo da Oliveira?');
     expect(rEsplanada.texto).toContain('Regulamento de Ocupação do Espaço Público');

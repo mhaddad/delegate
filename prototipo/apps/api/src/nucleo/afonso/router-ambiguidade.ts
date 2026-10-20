@@ -111,19 +111,19 @@ export async function tratarAmbiguidade(
         },
       });
 
+      const listaOpcoes = caso.opcoes.map((op) => `• <b>${op.texto}</b>`).join('\n');
       const texto = [
         `🤔 <b>${caso.titulo}</b>`,
         '',
         caso.explicacao,
         '',
-        '<i>Selecione uma das opções mais frequentes ou escreva com mais detalhe o que precisa:</i>',
+        listaOpcoes,
+        '',
+        'Pode indicar por mensagem qual destas opções se refere, ou descrever em detalhe.',
       ].join('\n');
-
-      const botoes = caso.opcoes.map((op) => [{ texto: op.texto, dados: op.dados }]);
 
       return {
         texto,
-        botoes,
         comportamento: 'responder',
         categoria: 'conhecimento_d0',
       };

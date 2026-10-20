@@ -111,11 +111,6 @@ export async function gerarRespostaCatalogo(params: {
       numerosSemFonte: validacao.numerosSemFonte,
       modeloRedacao: redacao.modeloUsado,
       geradoPorLlm: redacao.geradoPorLlm,
-      botoes: [
-        [{ texto: '📋 Ajudar a tratar (preparar no Cofre D2)', dados: 'iniciar_esplanada' }],
-        [{ texto: '💶 Quanto vou pagar de taxa?', dados: 'pergunta_taxa' }],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ],
     };
   }
 
@@ -202,11 +197,6 @@ export async function gerarRespostaCatalogo(params: {
       numerosSemFonte: validacao.numerosSemFonte,
       modeloRedacao: redacao.modeloUsado,
       geradoPorLlm: redacao.geradoPorLlm,
-      botoes: [
-        [{ texto: '📋 Ajudar a tratar (preparar no Cofre D2)', dados: 'iniciar_pdm' }],
-        [{ texto: '🗺️ Como enviar localização?', dados: 'ajuda_google_maps' }],
-        [{ texto: '👤 Falar com um técnico de urbanismo', dados: 'pessoa' }],
-      ],
     };
   }
 
@@ -231,7 +221,7 @@ export async function gerarRespostaCatalogo(params: {
       '<b>Taxa Municipal Fixa:</b>',
       '• 73,00 € nos termos da Tabela de Taxas 2025 da Câmara Municipal de Guimarães.',
       '',
-      '<b>Apoio do Afonso:</b> Se pretender que eu instrua o formulário de pedido de vistoria ou emita a referência para pagamento, basta pedir expressamente ou carregar no botão abaixo.',
+      '<b>Apoio do Afonso:</b> Se pretender que eu instrua o formulário de pedido de vistoria ou emita a referência para pagamento, basta dizer.',
       '',
       `📄 Fonte: <i>${fonteOficial}</i>`,
     ].join('\n');
@@ -261,10 +251,6 @@ export async function gerarRespostaCatalogo(params: {
       fontes: [fonteOficial],
       modeloRedacao: redacao.modeloUsado,
       geradoPorLlm: redacao.geradoPorLlm,
-      botoes: [
-        [{ texto: '📋 Ajudar a tratar (preparar no Cofre D2)', dados: `iniciar_${servicoId}` }],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ],
     };
   }
 
@@ -290,7 +276,7 @@ export async function gerarRespostaCatalogo(params: {
       '• <b>Custo:</b> Gratuito;',
       '• <b>Vantagens:</b> Descontos em transportes públicos concelhios, ingressos em eventos culturais municipais, piscinas e taxas autárquicas.',
       '',
-      '<b>Apoio do Afonso:</b> Se pretender que eu guarde o pedido no seu Cofre Digital Pessoal para validação e emissão pela Câmara, basta pedir expressamente ou carregar no botão abaixo.',
+      '<b>Apoio do Afonso:</b> Se pretender que eu guarde o pedido no seu Cofre Digital Pessoal para validação e emissão pela Câmara, basta dizer.',
       '',
       `📄 Fonte: <i>${fonteOficial}</i>`,
     ].join('\n');
@@ -319,10 +305,6 @@ export async function gerarRespostaCatalogo(params: {
       fontes: [fonteOficial],
       modeloRedacao: redacao.modeloUsado,
       geradoPorLlm: redacao.geradoPorLlm,
-      botoes: [
-        [{ texto: '📋 Ajudar a tratar (preparar no Cofre D2)', dados: `iniciar_${servicoId}` }],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ],
     };
   }
 
@@ -358,7 +340,7 @@ export async function gerarRespostaCatalogo(params: {
     `• <b>Prazo:</b> ${prazosTexto.replace(/^• /, '')}`,
     `• <b>Taxas:</b> ${ficha?.taxas?.descricao ?? 'Consulte a Tabela de Taxas em vigor'}.`,
     '',
-    '<b>Apoio do Afonso:</b> Se pretender que eu organize os elementos instrutórios no seu Cofre Digital Pessoal, basta pedir expressamente ou carregar no botão abaixo.',
+    '<b>Apoio do Afonso:</b> Se pretender que eu organize os elementos instrutórios no seu Cofre Digital Pessoal, basta dizer.',
     '',
     `📄 Fonte: <i>${fonte}</i>`,
   ].join('\n');
@@ -405,9 +387,5 @@ export async function gerarRespostaCatalogo(params: {
     fontes: [fonte],
     modeloRedacao: redacao.modeloUsado,
     geradoPorLlm: redacao.geradoPorLlm,
-    botoes: [
-      [{ texto: '📋 Ajudar a tratar (preparar no Cofre D2)', dados: `iniciar_${servicoId}` }],
-      [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-    ],
   };
 }

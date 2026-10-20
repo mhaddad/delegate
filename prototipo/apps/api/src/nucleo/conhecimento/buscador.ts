@@ -411,7 +411,7 @@ export class BuscadorConhecimento {
     return candidatos[0];
   }
 
-  formatarResposta(resultado: ResultadoConhecimento): { texto: string; botoes: Botao[][] } {
+  formatarResposta(resultado: ResultadoConhecimento): { texto: string; botoes?: Botao[][] } {
     const dataFormatada = resultado.consultadoEm;
     const motorTag =
       resultado.motorDecisao === 'typesafe-jev'
@@ -443,24 +443,7 @@ export class BuscadorConhecimento {
     }
 
     const texto = linhas.join('\n');
-
-    const botoes: Botao[][] = [
-      [{ texto: '🌐 Abrir página oficial', ligacao: resultado.url }],
-    ];
-
-    if (
-      resultado.url.includes('service_action_id=2') ||
-      resultado.url.includes('/formularios/') ||
-      resultado.url.includes('isencao-de-licenca-de-utilizacao') ||
-      resultado.url.includes('bolsas-de-estudo') ||
-      resultado.url.includes('procedimento?id=')
-    ) {
-      botoes.push([{ texto: '📋 Preparar pedido no Cofre Digital (D2)', dados: `preparar:${resultado.id}` }]);
-    }
-
-    botoes.push([{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]);
-
-    return { texto, botoes };
+    return { texto };
   }
 
   async #obterVetorPergunta(pergunta: string): Promise<number[] | null> {

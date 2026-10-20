@@ -56,7 +56,6 @@ export async function tratarAdversarial(
       ].join('\n'),
       comportamento: 'recusar',
       categoria: 'adversarial',
-      botoes: [[{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]],
     };
   }
 
@@ -88,7 +87,6 @@ export async function tratarAdversarial(
       ].join('\n'),
       comportamento: 'abster',
       categoria: 'adversarial',
-      botoes: [[{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]],
     };
   }
 
@@ -141,10 +139,6 @@ export async function tratarJuizoTecnico(
     ].join('\n'),
     comportamento: 'recusar',
     categoria: 'juizo_tecnico',
-    botoes: [
-      [{ texto: '📋 Saber o que é um PIP', dados: 'saber_pip' }],
-      [{ texto: '👤 Falar com um técnico de urbanismo', dados: 'pessoa' }],
-    ],
   };
 }
 
@@ -192,7 +186,6 @@ export async function tratarForaCompetencia(
     comportamento: 'encaminhar',
     categoria: 'fora_competencia',
     entidade,
-    botoes: [[{ texto: `Abrir ${entidade.split(' ')[0]}`, ligacao }]],
   };
 }
 
@@ -231,16 +224,10 @@ export async function tratarSemFonte(
           '',
           'Cada procedimento tem um cálculo próprio na Tabela de Taxas e Licenças Municipal (RTTL 2025).',
           '',
-          'Por favor, selecione ou indique a licença pretendida:',
+          'Por favor indique a licença pretendida (por exemplo: esplanada, andaimes, ruído ou publicidade).',
         ].join('\n'),
         comportamento: 'responder',
         categoria: 'conhecimento_d0',
-        botoes: [
-          [{ texto: '☕ Esplanada (Mesas e Cadeiras)', dados: 'Quanto custa a licença de esplanada?' }],
-          [{ texto: '🏗️ Andaimes e Ocupação da Via', dados: 'Quanto custa a licença de andaimes?' }],
-          [{ texto: '🔊 Licença Especial de Ruído', dados: 'Quanto custa a licença especial de ruído?' }],
-          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-        ],
       };
     }
 
@@ -265,17 +252,12 @@ export async function tratarSemFonte(
         '',
         '<b>O que fazer agora:</b>',
         '1. Pode indicar mais pormenores (como dimensões ou tipo de ocupação);',
-        '2. Pode confirmar diretamente junto dos serviços municipais competentes;',
-        '3. Se pretender, posso passar a sua questão a um funcionário do município.',
+        '2. Pode confirmar diretamente junto dos serviços municipais competentes.',
         '',
         '📄 Fonte: <i>Regulamento e Tabela de Taxas de Guimarães (RTTL 2025).</i>',
       ].join('\n'),
       comportamento: 'abster',
       categoria: 'sem_fonte',
-      botoes: [
-        [{ texto: '☕ Indicar dados da esplanada', dados: 'Quanto custa a licença de esplanada?' }],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ],
     };
   }
 

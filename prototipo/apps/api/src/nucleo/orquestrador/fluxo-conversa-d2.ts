@@ -109,10 +109,7 @@ export class GestorFluxoD2 {
       'Para começarmos: qual é o <b>nome</b> e a <b>morada</b> do estabelecimento aqui em Guimarães?',
     ].join('\n');
 
-    await this.#canal.enviar(conversa, texto, [
-      [{ texto: '📍 Usar: Casa Joaquim (Largo da Oliveira, 12)', dados: 'd2_morada_joaquim' }],
-      [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-    ]);
+    await this.#canal.enviar(conversa, texto);
   }
 
   /**
@@ -134,7 +131,6 @@ export class GestorFluxoD2 {
         await this.#canal.enviar(
           conversa,
           `A morada indicada não parece pertencer ao <b>Concelho de Guimarães</b> (${valGeo.motivo ?? 'freguesia desconhecida'}). Como sou o representante digital de Guimarães, apenas posso instruir pedidos para este concelho.\n\nPoderia indicar a freguesia ou morada correta em Guimarães?`,
-          [[{ texto: '📍 Usar: Largo da Oliveira, 12 (Guimarães)', dados: 'd2_morada_joaquim' }]],
         );
         return true;
       }
@@ -161,16 +157,7 @@ export class GestorFluxoD2 {
         'Quantas <b>mesas</b> e <b>cadeiras</b> planeia colocar no exterior?',
       ].join('\n');
 
-      const botoes: Botao[][] = [
-        [
-          { texto: '2 Mesas (~5m²)', dados: 'd2_mesas_2' },
-          { texto: '4 Mesas (~10m²)', dados: 'd2_mesas_4' },
-          { texto: '6 Mesas (~15m²)', dados: 'd2_mesas_6' },
-        ],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ];
-
-      await this.#canal.enviar(conversa, textoResp, botoes);
+      await this.#canal.enviar(conversa, textoResp);
       return true;
     }
 
@@ -190,12 +177,6 @@ export class GestorFluxoD2 {
         await this.#canal.enviar(
           conversa,
           'O número de mesas indicado (' + numMesas + ') não parece plausível para uma esplanada contígua. Por favor indique um número entre 1 e 30 mesas.',
-          [
-            [
-              { texto: '2 Mesas', dados: 'd2_mesas_2' },
-              { texto: '4 Mesas', dados: 'd2_mesas_4' },
-            ],
-          ],
         );
         return true;
       }
@@ -224,13 +205,7 @@ export class GestorFluxoD2 {
         'O passeio em frente garante esta largura livre de 2,00 metros?',
       ].join('\n');
 
-      const botoes: Botao[][] = [
-        [{ texto: '📐 Sim, confirmo: 2,10m livres', dados: 'd2_passeio_ok' }],
-        [{ texto: '📸 Enviar fotografia do passeio', dados: 'd2_enviar_foto' }],
-        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-      ];
-
-      await this.#canal.enviar(conversa, textoResp, botoes);
+      await this.#canal.enviar(conversa, textoResp);
       return true;
     }
 
@@ -300,9 +275,7 @@ export class GestorFluxoD2 {
         ].join('\n');
 
         const botoesFinais: Botao[][] = [
-          [{ texto: '✍️ Assinar e Submeter com Chave Móvel Digital', dados: 'assinar_com_chave_movel_digital' }],
-          [{ texto: '✏️ Corrigir algum dado', dados: 'iniciar_esplanada' }],
-          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+          [{ texto: '✍️ Assinar com Chave Móvel Digital', dados: 'assinar_com_chave_movel_digital' }],
         ];
 
         await this.#canal.enviar(conversa, textoConclusao, botoesFinais);

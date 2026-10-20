@@ -37,8 +37,6 @@ describe('Base de Conhecimento Municipal (RAG D0 via Cloudflare /markdown)', () 
     expect(formatado.texto).toContain('Evidência Oficial da Câmara Municipal de Guimarães');
     expect(formatado.texto).toContain(resultado!.url);
     expect(formatado.texto).toContain(resultado!.consultadoEm);
-    expect(formatado.botoes.length).toBeGreaterThanOrEqual(2);
-    expect(formatado.botoes[0][0].ligacao).toBe(resultado!.url);
   });
 
   it('integração Afonso: responde a dúvidas informativas D0 fora dos 16 serviços canónicos com RAG verificado', async () => {
