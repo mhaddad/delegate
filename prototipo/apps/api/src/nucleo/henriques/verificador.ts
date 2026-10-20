@@ -15,13 +15,14 @@ export interface ResultadoVerificacao {
   motivo?: string;
 }
 
-/** Expressão regular para detetar valores numéricos associados a grandezas regulamentares. */
-const REGEX_NUMEROS = /\b\d+(?:[.,]\d+)?\s*(?:€|euros?|m2|m²|metros?|dias?|semanas?|meses|anos?|fogos|pisos)\b/gi;
+/** Expressão regular para detetar valores numéricos associados a grandezas regulamentares.
+ * Nota: € é um símbolo não alfanumérico, pelo que não pode ter \b a fechar. */
+const REGEX_NUMEROS = /\b\d+(?:[.,]\d+)?\s*(?:€|euros?|m2|m²|metros?|dias?|semanas?|meses|anos?|fogos|pisos)(?!\w)/gi;
 
 export class VerificadorRegra {
   /**
    * Valida se todos os valores numéricos com grandeza presentes no texto
-   * constam literalmente nas fontes fornecidas.
+   * constam rigorosamente nas fontes oficiais fornecidas.
    */
   static verificar(textoResposta: string, textosFontes: string[]): ResultadoVerificacao {
     const correspondencias = textoResposta.match(REGEX_NUMEROS) ?? [];
@@ -31,18 +32,22 @@ export class VerificadorRegra {
     const numerosSemFonte: string[] = [];
 
     for (const item of numerosDetetados) {
-      const normalizado = item.toLowerCase().replace(/\s+/g, ' ').trim();
-      const virgulaParaPonto = normalizado.replace(',', '.');
-      const pontoParaVirgula = normalizado.replace('.', ',');
-      const compacto = normalizado.replace(/\s+/, '');
+      // Extrair o número e a grandeza separadamente
+      const matchParte = item.match(/^(\d+(?:[.,]\d+)?)\s*(.*)$/);
+      if (!matchParte) continue;
 
-      const encontrado =
-        fontesUnificadas.includes(normalizado) ||
-        fontesUnificadas.includes(virgulaParaPonto) ||
-        fontesUnificadas.includes(pontoParaVirgula) ||
-        fontesUnificadas.includes(compacto);
+      const valorNum = matchParte[1].replace(',', '.');
+      const grandeza = matchParte[2].toLowerCase().replace('€', 'euro').replace(/s$/, '');
 
-      if (!encontrado) {
+      // Procurar nas fontes se existe o número com fronteira de palavra / número completo
+      // Para evitar que "3" ou "3,00" seja considerado presente dentro de "73" ou "73,00"
+      const numComVirgula = matchParte[1].replace('.', ',');
+      const numComPonto = matchParte[1].replace(',', '.');
+
+      const padraoExato = new RegExp(`(?<!\\d)(${numComPonto.replace('.', '\\.')}|${numComVirgula.replace(',', ',')})(?!\\d)`, 'i');
+      const numeroExiste = padraoExato.test(fontesUnificadas);
+
+      if (!numeroExiste) {
         numerosSemFonte.push(item);
       }
     }

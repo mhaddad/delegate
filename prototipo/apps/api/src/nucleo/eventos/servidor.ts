@@ -255,10 +255,17 @@ export function criarServidorEventos(
       if (caminho === '/cmd/confirmar' && req.method === 'POST') {
         let corpo = '';
         for await (const pedaco of req) corpo += pedaco;
-        let dados: DadosConfirmacaoCmd = { pessoa: 'ines_guimaraes', token_cmd: 'CMD-TOKEN-VAL' };
+        let dados: DadosConfirmacaoCmd | null = null;
         try {
           dados = JSON.parse(corpo);
         } catch (_) {}
+
+        if (!dados || !dados.token_cmd || typeof dados.token_cmd !== 'string' || dados.token_cmd.trim().length === 0) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: false, erro: 'Token CMD inválido ou ausente' }));
+          return;
+        }
+
         if (aoConfirmarCmd) {
           try {
             await aoConfirmarCmd(dados);
@@ -266,7 +273,7 @@ export function criarServidorEventos(
             console.warn('[CMD] Erro ao processar confirmação:', err);
           }
         }
-        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ ok: true, token: dados.token_cmd }));
         return;
       }
@@ -304,6 +311,17 @@ export function criarServidorEventos(
       }
 
       if (req.method === 'OPTIONS') {
+        if (caminho === '/cmd/confirmar') {
+          // Bloquear preflight de origens externas no endpoint crítico da CMD
+          res.writeHead(204, {
+            'Access-Control-Allow-Origin': 'null',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          });
+          res.end();
+          return;
+        }
+
         res.writeHead(204, {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',

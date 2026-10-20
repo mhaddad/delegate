@@ -219,7 +219,7 @@ export class Henriques {
       decisaoJev.servicoId && (decisaoJev.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente);
     if (!temServicoExplicito || decisaoJev.categoria === 'conhecimento_d0') {
       const matchRAG = await this.#buscador.buscarComJev(limpo);
-      if (matchRAG && matchRAG.pontuacao >= 7) {
+      if (matchRAG && matchRAG.pontuacao >= 5) {
         await this.#registo.registar({
           tipo: 'henriques.resposta.verificada',
           origem: 'henriques',
@@ -254,7 +254,43 @@ export class Henriques {
     }
 
     // 6. Catálogo de Serviços Oficiais
-    const servicoId = decisaoJev.servicoId ?? 'ocupacao-espaco-publico-esplanada';
+    let servicoId = decisaoJev.servicoId;
+
+    // Se a pergunta menciona restaurante, associar a esplanada / restauração
+    if (!servicoId && /restaurante|caf[eé]|tasca|snack|pastelaria/i.test(limpo)) {
+      servicoId = 'ocupacao-espaco-publico-esplanada';
+    }
+
+    if (!servicoId) {
+      // Se o Jev classificou explicitamente como sem_fonte ou se realmente não há catálogo nem RAG
+      await this.#registo.registar({
+        tipo: 'afonso.resposta.abstencao',
+        origem: 'afonso',
+        sessao: this.#sessao,
+        pessoa,
+        missao: contextoDecisao.missaoId ?? null,
+        ator: 'agente:verificador',
+        simulacao: false,
+        dados: {
+          motivo: 'sem_enquadramento_canónico',
+          pergunta: limpo,
+        },
+      });
+
+      return {
+        texto: [
+          'Não encontrei um procedimento autárquico ou norma regulamentar oficial que corresponda diretamente a esta pergunta.',
+          '',
+          'Por princípio de lealdade e transparência com o cidadão, o Afonso não fornece respostas estimadas nem inventa requisitos.',
+          '',
+          '<b>O que pode fazer:</b>',
+          '• Indicar especificamente o serviço que pretende (por exemplo: <i>esplanada</i>, <i>viabilidade urbanística PIP</i>, <i>isenção de licença de utilização</i> ou <i>cartão sénior</i>);',
+          '• Ou solicitar atendimento com um técnico do Balcão Único da Câmara.',
+        ].join('\n'),
+        comportamento: 'abster',
+        categoria: 'sem_fonte',
+      };
+    }
 
     // Obter ficha do catálogo da Porta Agêntica
     let ficha;

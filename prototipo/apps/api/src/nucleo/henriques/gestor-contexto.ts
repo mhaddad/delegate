@@ -108,18 +108,27 @@ export class GestorContextoConversa {
     const sessao = this.obterContexto(params.pessoa);
     sessao.ultimoContactoEm = agora;
 
-    const ehGeralOuCurtoCircuito =
-      params.categoria === 'geral' ||
+    const ehAdversarialOuReset =
       params.categoria === 'adversarial' ||
       params.categoria === 'fora_competencia';
 
-    if (ehGeralOuCurtoCircuito) {
+    if (ehAdversarialOuReset) {
+      // Perguntas adversariais ou fora de competência limpam o serviço activo
       sessao.servicoAtivoId = undefined;
       sessao.servicoAtivoTitulo = undefined;
       sessao.historicoRecente = [];
       return;
     }
 
+    if (params.categoria === 'geral') {
+      // Saudações isoladas não alteram o serviço activo se já existir uma missão/serviço em curso,
+      // mas se não houver serviço prévio, garantem que não fica lixo.
+      if (!sessao.servicoAtivoId && !sessao.missaoAtivaId) {
+        sessao.servicoAtivoId = undefined;
+        sessao.servicoAtivoTitulo = undefined;
+      }
+      return;
+    }
     if (params.mudancaServico && params.servicoId && params.servicoId !== sessao.servicoAtivoId) {
       sessao.factosValidados.clear();
     }

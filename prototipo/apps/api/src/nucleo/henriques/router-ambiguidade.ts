@@ -64,7 +64,7 @@ const CASOS_AMBIGUIDADE: CasoAmbiguidade[] = [
   },
   {
     padrao: /\b(quanto.*tempo.*demora|qual.*[eé].*o.*prazo)\b/i,
-    exclusao: /esplanada|pip|urbanismo|processo|certid[aã]o|ru[ií]do|oep/i,
+    exclusao: /esplanada|pip|urbanismo|processo|certid[aã]o|ru[ií]do|oep|pr[eé]via/i,
     motivo: 'prazo_sem_servico_especificado',
     titulo: 'Sobre qual procedimento ou processo gostaria de saber o prazo?',
     explicacao: 'Os prazos legais de deferimento e apreciação variam por procedimento.',

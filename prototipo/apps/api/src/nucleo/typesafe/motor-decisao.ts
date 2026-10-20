@@ -150,7 +150,10 @@ export class MotorDecisaoTypeSafe {
           { nivel: 0, noId: 'no-triagem', nome: 'Triagem Rápida', estado: 'concluido' as const, detalhe: 'Avaliação de integridade concluída' },
         ];
 
-        if (categoria === 'geral') {
+        const nivelMandatoEscolhido = (qMandato?.choice as NivelMandato) || 'D0';
+        const temAcaoMandato = nivelMandatoEscolhido === 'D2' || nivelMandatoEscolhido === 'D3' || nivelMandatoEscolhido === 'D4';
+
+        if (categoria === 'geral' && !temAcaoMandato) {
           percursoJev.push({ nivel: 0, noId: 'no-geral', nome: 'Saudação / Acolhimento Geral', estado: 'ativo' as const, detalhe: 'Curto-circuito: sem MCP nem RAG' });
         } else if (categoria === 'adversarial') {
           percursoJev.push({ nivel: 0, noId: 'no-adv', nome: 'Salvaguarda de Segurança', estado: 'ativo' as const, detalhe: 'Recusa formal de segurança' });
@@ -158,11 +161,13 @@ export class MotorDecisaoTypeSafe {
           percursoJev.push({ nivel: 0, noId: 'no-fora', nome: 'Fora de Competência', estado: 'ativo' as const, detalhe: 'Encaminhamento para entidade externa' });
         } else if (categoria === 'juizo_tecnico') {
           percursoJev.push({ nivel: 0, noId: 'no-juizo', nome: 'Reserva Discricionária', estado: 'ativo' as const, detalhe: 'Parecer compete aos técnicos municipais' });
+        } else if (categoria === 'sem_fonte') {
+          percursoJev.push({ nivel: 0, noId: 'no-abstencao', nome: 'Abstenção Formal', estado: 'ativo' as const, detalhe: 'Sem fonte municipal unívoca' });
         } else {
-          percursoJev.push({ nivel: 1, noId: categoria === 'conhecimento_d0' ? 'no-rag-encaminha' : 'no-canonico', nome: categoria === 'conhecimento_d0' ? 'Roteamento RAG D0' : 'Procedimento Canónico', estado: 'concluido' as const, detalhe: servicoId ?? categoria });
-          percursoJev.push({ nivel: 2, noId: `no-mandato-${(qMandato?.choice || 'd0').toLowerCase()}`, nome: `Mandato ${qMandato?.choice || 'D0'}`, estado: 'concluido' as const, detalhe: `Ferramenta MCP: ${qMcp?.choice || 'consultar_catalogo'}` });
+          percursoJev.push({ nivel: 1, noId: categoria === 'conhecimento_d0' ? 'no-rag-encaminha' : 'no-canonico', nome: categoria === 'conhecimento_d0' ? 'Roteamento RAG D0' : 'Procedimento Canónico', estado: 'concluido' as const, detalhe: servicoId ?? (categoria === 'geral' ? 'Pedido Geral' : categoria) });
+          percursoJev.push({ nivel: 2, noId: `no-mandato-${nivelMandatoEscolhido.toLowerCase()}`, nome: `Mandato ${nivelMandatoEscolhido}`, estado: 'concluido' as const, detalhe: `Ferramenta MCP: ${qMcp?.choice || 'consultar_catalogo'}` });
 
-          if (qConsent?.noul > 0.5 || qMandato?.choice === 'D3') {
+          if (qConsent?.noul > 0.5 || nivelMandatoEscolhido === 'D3' || nivelMandatoEscolhido === 'D4') {
             percursoJev.push({
               nivel: 3,
               noId: 'no-consentimento-cmd',

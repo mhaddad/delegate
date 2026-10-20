@@ -455,65 +455,82 @@
           <!-- Raiz para Nível 0 -->
           <path id="edge-raiz-triagem" class="tree-edge" d="M 475 40 L 475 80" />
 
-          <!-- Nível 0 para Short-circuits -->
-          <path id="edge-triagem-geral" class="tree-edge" d="M 475 120 L 140 190" />
-          <path id="edge-triagem-adv" class="tree-edge" d="M 475 120 L 360 190" />
-          <path id="edge-triagem-fora" class="tree-edge" d="M 475 120 L 590 190" />
-          <path id="edge-triagem-juizo" class="tree-edge" d="M 475 120 L 810 190" />
+          <!-- Nível 0 para Short-circuits e Saídas -->
+          <path id="edge-triagem-geral" class="tree-edge" d="M 475 120 L 120 190" />
+          <path id="edge-triagem-adv" class="tree-edge" d="M 475 120 L 270 190" />
+          <path id="edge-triagem-fora" class="tree-edge" d="M 475 120 L 420 190" />
+          <path id="edge-triagem-juizo" class="tree-edge" d="M 475 120 L 580 190" />
+          <path id="edge-triagem-abstencao" class="tree-edge" d="M 475 120 L 730 190" />
 
-          <!-- Nível 0 para Ramo Municipal -->
+          <!-- Nível 0 para Ramo Municipal / RAG -->
           <path id="edge-triagem-canonico" class="tree-edge" d="M 475 120 L 475 250" />
+          <path id="edge-triagem-rag" class="tree-edge" d="M 475 120 L 220 250" />
 
           <!-- Nível 1 para Nível 2 -->
-          <path id="edge-canonico-rag" class="tree-edge" d="M 475 290 L 260 360" />
-          <path id="edge-canonico-d0" class="tree-edge" d="M 475 290 L 400 360" />
-          <path id="edge-canonico-d1" class="tree-edge" d="M 475 290 L 510 360" />
-          <path id="edge-canonico-d2" class="tree-edge" d="M 475 290 L 620 360" />
-          <path id="edge-canonico-d3" class="tree-edge" d="M 475 290 L 730 360" />
+          <path id="edge-canonico-rag" class="tree-edge" d="M 475 290 L 160 360" />
+          <path id="edge-rag-d0" class="tree-edge" d="M 220 290 L 280 360" />
+          <path id="edge-canonico-d0" class="tree-edge" d="M 475 290 L 280 360" />
+          <path id="edge-canonico-d1" class="tree-edge" d="M 475 290 L 395 360" />
+          <path id="edge-canonico-d2" class="tree-edge" d="M 475 290 L 510 360" />
+          <path id="edge-canonico-d3" class="tree-edge" d="M 475 290 L 625 360" />
+          <path id="edge-canonico-d4" class="tree-edge" d="M 475 290 L 740 360" />
 
           <!-- Nível 2 para Nível 3 (Consentimento CMD) -->
-          <path id="edge-d3-cmd" class="tree-edge" d="M 730 400 L 730 460" />
+          <path id="edge-d3-cmd" class="tree-edge" d="M 625 400 L 685 460" />
+          <path id="edge-d4-cmd" class="tree-edge" d="M 740 400 L 685 460" />
 
           <!-- NODES / NÓS HIERÁRQUICOS -->
           <!-- Nível Raiz: Mensagem -->
           <g id="no-raiz" class="node-group" transform="translate(395, 10)">
             <rect class="node-rect" width="160" height="34" />
-            <text class="node-text-title" x="80" y="21">📩 Mensagem Cidadão</text>
+            <text class="node-text-title" x="80" y="21">📩 Mensagem Recebida</text>
           </g>
 
           <!-- Nível 0: Triagem Rápida (Gate) -->
           <g id="no-triagem" class="node-group" transform="translate(385, 80)">
-            <rect class="node-rect" width="180" height="42" stroke="#818cf8" stroke-dasharray="3,3" />
+            <rect class="node-rect" width="180" height="42" stroke="#818cf8" />
             <text class="node-text-title" x="90" y="22">Nível 0: Triagem Rápida</text>
             <text class="node-text-sub" x="90" y="34">Jev Gateway Inicial</text>
           </g>
 
-          <!-- Nível 0 Ramos de Saída (Curto-Circuito) -->
-          <g id="no-geral" class="node-group" transform="translate(50, 190)">
-            <rect class="node-rect" width="180" height="42" />
-            <text class="node-text-title" x="90" y="21">👋 Saudação / Acolhimento</text>
-            <text class="node-text-sub" x="90" y="34">⚡ 4 Perguntas Poupadas</text>
+          <!-- Nível 0 Ramos de Saída (Curto-Circuito / Decisão Especial) -->
+          <g id="no-geral" class="node-group" transform="translate(40, 190)">
+            <rect class="node-rect" width="160" height="42" />
+            <text class="node-text-title" x="80" y="21">👋 Saudação / Acolhimento Geral</text>
+            <text class="node-text-sub" x="80" y="34">⚡ Perguntas Poupadas</text>
           </g>
 
-          <g id="no-adv" class="node-group" transform="translate(270, 190)">
-            <rect class="node-rect" width="180" height="42" />
-            <text class="node-text-title" x="90" y="21">🛡️ Salvaguarda Segurança</text>
-            <text class="node-text-sub" x="90" y="34">Recusar · Sem MCP</text>
+          <g id="no-adv" class="node-group" transform="translate(210, 190)">
+            <rect class="node-rect" width="160" height="42" />
+            <text class="node-text-title" x="80" y="21">🛡️ Salvaguarda Segurança</text>
+            <text class="node-text-sub" x="80" y="34">Recusar · Sem MCP</text>
           </g>
 
-          <g id="no-fora" class="node-group" transform="translate(500, 190)">
-            <rect class="node-rect" width="180" height="42" />
-            <text class="node-text-title" x="90" y="21">↗️ Fora de Competência</text>
-            <text class="node-text-sub" x="90" y="34">Vimágua / IRN / DGAJ</text>
+          <g id="no-fora" class="node-group" transform="translate(380, 190)">
+            <rect class="node-rect" width="160" height="42" />
+            <text class="node-text-title" x="80" y="21">↗️ Fora de Competência</text>
+            <text class="node-text-sub" x="80" y="34">Vimágua / IRN / DGAJ</text>
           </g>
 
-          <g id="no-juizo" class="node-group" transform="translate(720, 190)">
-            <rect class="node-rect" width="180" height="42" />
-            <text class="node-text-title" x="90" y="21">⚖️ Reserva Técnica</text>
-            <text class="node-text-sub" x="90" y="34">Juízo Discricionário</text>
+          <g id="no-juizo" class="node-group" transform="translate(550, 190)">
+            <rect class="node-rect" width="160" height="42" />
+            <text class="node-text-title" x="80" y="21">⚖️ Reserva Discricionária</text>
+            <text class="node-text-sub" x="80" y="34">Parecer dos Técnicos</text>
           </g>
 
-          <!-- Nível 1: Enquadramento Municipal -->
+          <g id="no-abstencao" class="node-group" transform="translate(720, 190)">
+            <rect class="node-rect" width="160" height="42" />
+            <text class="node-text-title" x="80" y="21">🛑 Abstenção Formal</text>
+            <text class="node-text-sub" x="80" y="34">Sem Fonte Unívoca</text>
+          </g>
+
+          <!-- Nível 1: Enquadramento Municipal & RAG D0 -->
+          <g id="no-rag-encaminha" class="node-group" transform="translate(130, 250)">
+            <rect class="node-rect" width="180" height="44" />
+            <text class="node-text-title" x="90" y="22">📖 Roteamento RAG D0</text>
+            <text class="node-text-sub" x="90" y="35">Base Conhecimento</text>
+          </g>
+
           <g id="no-canonico" class="node-group" transform="translate(365, 250)">
             <rect class="node-rect" width="220" height="44" />
             <text class="node-text-title" x="110" y="22">Nível 1: Procedimento Canónico</text>
@@ -521,41 +538,41 @@
           </g>
 
           <!-- Nível 2: Ação e Mandatos -->
-          <g id="no-rag-encaminha" class="node-group" transform="translate(170, 360)">
-            <rect class="node-rect" width="160" height="42" />
-            <text class="node-text-title" x="80" y="21">📖 RAG D0 Re-ranking</text>
-            <text class="node-text-sub" x="80" y="34">Busca Documental</text>
-          </g>
-
-          <g id="no-mandato-d0" class="node-group" transform="translate(345, 360)">
+          <g id="no-mandato-d0" class="node-group" transform="translate(230, 360)">
             <rect class="node-rect" width="105" height="42" />
             <text class="node-text-title" x="52" y="21">ℹ️ Mandato D0</text>
             <text class="node-text-sub" x="52" y="34">Informativo</text>
           </g>
 
-          <g id="no-mandato-d1" class="node-group" transform="translate(460, 360)">
+          <g id="no-mandato-d1" class="node-group" transform="translate(345, 360)">
             <rect class="node-rect" width="100" height="42" />
             <text class="node-text-title" x="50" y="21">🔍 Mandato D1</text>
             <text class="node-text-sub" x="50" y="34">Consulta</text>
           </g>
 
-          <g id="no-mandato-d2" class="node-group" transform="translate(570, 360)">
+          <g id="no-mandato-d2" class="node-group" transform="translate(455, 360)">
             <rect class="node-rect" width="105" height="42" />
             <text class="node-text-title" x="52" y="21">📦 Mandato D2</text>
             <text class="node-text-sub" x="52" y="34">Cofre Digital</text>
           </g>
 
-          <g id="no-mandato-d3" class="node-group" transform="translate(685, 360)">
+          <g id="no-mandato-d3" class="node-group" transform="translate(570, 360)">
             <rect class="node-rect" width="105" height="42" />
             <text class="node-text-title" x="52" y="21">🏛️ Mandato D3</text>
             <text class="node-text-sub" x="52" y="34">Submissão</text>
           </g>
 
+          <g id="no-mandato-d4" class="node-group" transform="translate(685, 360)">
+            <rect class="node-rect" width="110" height="42" />
+            <text class="node-text-title" x="55" y="21">💳 Mandato D4</text>
+            <text class="node-text-sub" x="55" y="34">Liquidação</text>
+          </g>
+
           <!-- Nível 3: Consentimento & CMD -->
-          <g id="no-consentimento-cmd" class="node-group" transform="translate(635, 460)">
-            <rect class="node-rect" width="200" height="44" stroke="#10b981" />
-            <text class="node-text-title" x="100" y="22">🔑 Chave Móvel Digital (CMD)</text>
-            <text class="node-text-sub" x="100" y="35">Porta Agêntica MCP · Noul > 0.8</text>
+          <g id="no-consentimento-cmd" class="node-group" transform="translate(585, 460)">
+            <rect class="node-rect" width="220" height="44" stroke="#10b981" />
+            <text class="node-text-title" x="110" y="22">🔑 Chave Móvel Digital (CMD)</text>
+            <text class="node-text-sub" x="110" y="35">Porta Agêntica MCP · Noul > 0.5</text>
           </g>
         </svg>
       </div>
@@ -677,13 +694,18 @@
         'no-triagem->no-adv': 'edge-triagem-adv',
         'no-triagem->no-fora': 'edge-triagem-fora',
         'no-triagem->no-juizo': 'edge-triagem-juizo',
+        'no-triagem->no-abstencao': 'edge-triagem-abstencao',
         'no-triagem->no-canonico': 'edge-triagem-canonico',
+        'no-triagem->no-rag-encaminha': 'edge-triagem-rag',
         'no-canonico->no-rag-encaminha': 'edge-canonico-rag',
+        'no-rag-encaminha->no-mandato-d0': 'edge-rag-d0',
         'no-canonico->no-mandato-d0': 'edge-canonico-d0',
         'no-canonico->no-mandato-d1': 'edge-canonico-d1',
         'no-canonico->no-mandato-d2': 'edge-canonico-d2',
         'no-canonico->no-mandato-d3': 'edge-canonico-d3',
+        'no-canonico->no-mandato-d4': 'edge-canonico-d4',
         'no-mandato-d3->no-consentimento-cmd': 'edge-d3-cmd',
+        'no-mandato-d4->no-consentimento-cmd': 'edge-d4-cmd',
       };
 
       const chave = `${origemId}->${destinoId}`;
@@ -751,8 +773,11 @@
         { nivel: 0, noId: 'no-triagem', nome: 'Triagem Rápida', estado: 'concluido', detalhe: 'Avaliação semântica' },
       ];
 
-      if (data.categoria === 'geral') {
-        p.push({ nivel: 0, noId: 'no-geral', nome: 'Saudação / Acolhimento Geral', estado: 'ativo', detalhe: 'Curto-circuito sem MCP nem RAG' });
+      const mandato = (data.nivelMandato || 'D0').toLowerCase();
+      const temAcaoMandato = mandato === 'd2' || mandato === 'd3' || mandato === 'd4';
+
+      if (data.categoria === 'geral' && !temAcaoMandato) {
+        p.push({ nivel: 0, noId: 'no-geral', nome: 'Acolhimento Geral', estado: 'ativo', detalhe: 'Curto-circuito sem MCP nem RAG' });
         return p;
       }
       if (data.categoria === 'adversarial') {
@@ -768,14 +793,24 @@
         return p;
       }
 
-      // Procedimento Canónico
-      p.push({ nivel: 1, noId: 'no-canonico', nome: 'Procedimento Canónico', estado: 'concluido', detalhe: data.servicoId || 'Esplanada' });
+      if (data.categoria === 'sem_fonte' || data.categoria === 'abstencao') {
+        p.push({ nivel: 0, noId: 'no-abstencao', nome: 'Abstenção Formal', estado: 'ativo', detalhe: 'Sem fonte municipal unívoca' });
+        return p;
+      }
 
-      const mandato = (data.nivelMandato || 'D0').toLowerCase();
+      if (data.categoria === 'conhecimento_d0') {
+        p.push({ nivel: 1, noId: 'no-rag-encaminha', nome: 'Roteamento RAG D0', estado: 'concluido', detalhe: data.servicoId || 'Base Conhecimento' });
+        p.push({ nivel: 2, noId: 'no-mandato-d0', nome: 'Mandato D0', estado: 'concluido', detalhe: 'Consulta Documental' });
+        return p;
+      }
+
+      // Procedimento Canónico
+      p.push({ nivel: 1, noId: 'no-canonico', nome: 'Procedimento Canónico', estado: 'concluido', detalhe: data.servicoId || (data.categoria === 'geral' ? 'Pedido Geral' : data.categoria) || 'Consulta Registo' });
+
       p.push({ nivel: 2, noId: `no-mandato-${mandato}`, nome: `Mandato ${data.nivelMandato || 'D0'}`, estado: 'concluido', detalhe: `Ferramenta: ${data.ferramentaMcp || 'consultar_catalogo'}` });
 
-      if (data.exigeConsentimento || mandato === 'd3') {
-        p.push({ nivel: 3, noId: 'no-consentimento-cmd', nome: 'Chave Móvel Digital', estado: 'ativo', detalhe: 'Submissão com mandato formal' });
+      if (data.exigeConsentimento || mandato === 'd3' || mandato === 'd4') {
+        p.push({ nivel: 3, noId: 'no-consentimento-cmd', nome: 'Chave Móvel Digital', estado: 'ativo', detalhe: mandato === 'd4' ? 'Autorização de liquidação' : 'Submissão com mandato formal' });
       }
 
       return p;

@@ -423,7 +423,7 @@ export class AvaliadorLocal {
     } else {
       focoServico = 'primeiro_contacto';
       mudancaServico = false;
-      servicoId = novoServicoDetetado ?? 'ocupacao-espaco-publico-esplanada';
+      servicoId = novoServicoDetetado;
     }
 
     // 6. Avaliação da Intencionalidade e Nível de Mandato

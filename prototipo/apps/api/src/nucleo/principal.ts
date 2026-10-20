@@ -767,8 +767,10 @@ canal._aoReceber(async (m) => {
       }
     }
 
-    // Se a pessoa pede para assinar ou submeter em linguagem natural
-    const querSubmeter = /assinar|submet|autorizo.*(submi|avan|envio)|pode.*(submet|avan|enviar)|confirm.*submi/i.test(m.texto);
+    // Se a pessoa pede para assinar ou submeter em linguagem natural (excluindo dúvidas, perguntas ou negações)
+    const eNegacao = /\b(n[aã]o\s+(autorizo|quero|submeta|envie|posso)|cancelar?|recus[ao]|nem\s+pensar)\b/i.test(m.texto);
+    const eDuvidaOuPergunta = /\?|posso\s+submeter|como\s+(posso|consigo|faço)\s+submeter/i.test(m.texto);
+    const querSubmeter = !eNegacao && !eDuvidaOuPergunta && /\b(assinar|submeta|submeter\s+agora|autorizo\s+(o\s+)?(submi|avan|envio)|pode\s+(submet|avan|enviar)|confirm[ao]\s+(a\s+)?submi|quero\s+submeter)\b/i.test(m.texto);
     if (querSubmeter && (missaoAtiva || m.texto.toLowerCase().includes('cmd') || m.texto.toLowerCase().includes('chave'))) {
       await cenarios.executarSubmissaoAtiva(m.pessoa);
       await regista('canal.mensagem.enviada', m, { tipo: 'submissao_cmd_inferida' });

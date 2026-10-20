@@ -194,6 +194,19 @@ export class GestorMandatos {
   }
 
   /**
+   * Revoga todos os mandatos concedidos por uma determinada pessoa (ex.: ao reiniciar com /start).
+   */
+  async revogarTodosPorPessoa(mandante: string): Promise<number> {
+    const ativos = Array.from(this.#mandatos.values()).filter(
+      (m) => m.mandante === mandante && m.estado === 'ativo',
+    );
+    for (const m of ativos) {
+      await this.revogarMandato(mandante, m.id);
+    }
+    return ativos.length;
+  }
+
+  /**
    * Verifica se existe um mandato ativo que satisfaça o âmbito e o nível mínimo requerido.
    */
   verificar(

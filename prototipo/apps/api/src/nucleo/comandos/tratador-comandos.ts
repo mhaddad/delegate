@@ -66,6 +66,8 @@ export class TratadorComandos {
         this.#fluxoD2.cancelarRascunho(m.pessoa);
       }
       await this.#orquestrador.cancelarTodasPorPessoa(m.pessoa, 'reinicio_comando_start');
+      await this.#mandatos.revogarTodosPorPessoa(m.pessoa);
+      await this.#cofre.removerTodosPorPessoa(m.pessoa);
 
       const persona = textoLimpo.replace('/start', '').trim() || 'ines-demo';
       await this.#canal.enviar(

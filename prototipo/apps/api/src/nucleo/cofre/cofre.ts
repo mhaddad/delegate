@@ -202,6 +202,17 @@ export class CofreDigital {
   }
 
   /**
+   * Remove e invalida todos os itens do cofre associados a uma pessoa (ex.: ao reiniciar com /start).
+   */
+  async removerTodosPorPessoa(pessoa: string): Promise<number> {
+    const itens = Array.from(this.#itens.values()).filter((it) => it.pessoa === pessoa);
+    for (const it of itens) {
+      await this.apagarItem(pessoa, it.id);
+    }
+    return itens.length;
+  }
+
+  /**
    * Lista os metadados dos itens do cofre da pessoa (sem decifrar os conteúdos).
    */
   listarMetadados(pessoa: string): Array<Omit<ItemCofre, 'conteudoCifrado'>> {
