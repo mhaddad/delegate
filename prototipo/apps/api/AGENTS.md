@@ -8,12 +8,12 @@ Processos do núcleo e da Porta. Parte de [`../../AGENTS.md`](../../AGENTS.md) e
 
 ## Dois processos
 
-| Processo | Serve |
-|---|---|
-| **núcleo** | o canal, o Afonso, o Cofre, os mandatos, e o fluxo de eventos |
-| **porta** | a Porta Agêntica, o Registo Canónico, os Serviços Urbanos, a Tesouraria |
+| Processo | Porta | Serve |
+|---|---|---|
+| **núcleo** | `4000` | O bot Telegram (`grammY`), Afonso, motor de decisão TypeSafe Jev System One, buscador e base de conhecimento RAG D0, Cofre Digital (AES-256-GCM), mandatos, e o servidor Fastify com fluxo SSE e ecrãs web |
+| **porta** | `4001` | A Porta Agêntica (MCP v2 + REST), Registo Canónico, adaptadores contratuais e sistemas simulados (Serviços Urbanos e Tesouraria) como implementação de referência para autarquias |
 
-São dois executáveis no mesmo pacote. A separação é de processo, não de instalação: o núcleo fala com a Porta pela rede como cliente MCP, e o Observatório mostra esse salto como um salto de rede, porque é.
+São dois executáveis independentes no mesmo repositório (`npm run nucleo` e `npm run porta`). A separação é de processo e de rede: o núcleo fala com a Porta via protocolo MCP pela rede (`http://127.0.0.1:4001/mcp`), e o Observatório audita esse salto em direto.
 
 ## Congelado
 

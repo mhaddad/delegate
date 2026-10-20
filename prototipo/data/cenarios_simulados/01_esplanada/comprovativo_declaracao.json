@@ -1,0 +1,28 @@
+{
+  "versao": "2026-10-18.1",
+  "pacote_id": "PAC-0001",
+  "mandato_id": "MAN-2026-0001",
+  "servico": "ocupacao-espaco-publico-esplanada",
+  "requerente": "ines_guimaraes",
+  "finalidade": "Mera Comunicação Prévia de Esplanada Aberta",
+  "destinatario": "Câmara Municipal de Guimarães — Gabinete de Serviços Urbanos",
+  "dados_submetidos": {
+    "estabelecimento": "Casa Joaquim",
+    "morada": "Largo da Oliveira, 12, Guimarães",
+    "freguesia": "União das Freguesias de Oliveira, São Paio e São Sebastião",
+    "concelho": "Guimarães",
+    "numero_mesas": 4,
+    "area_m2": 10.0,
+    "corredor_pedonal_livre": "2,10 metros",
+    "conformidade_art8": true,
+    "periodo": "Anual (2026)"
+  },
+  "dados_omitidos_por_minimizacao_rgpd": [
+    "declaracoes_fiscais_irs_irc",
+    "iban_e_saldos_bancarios",
+    "conversas_privadas_e_historico_chat",
+    "outros_imoveis_da_pessoa"
+  ],
+  "cifra": "AES-256-GCM",
+  "selo_temporal": "2026-10-20T17:40:00Z"
+}

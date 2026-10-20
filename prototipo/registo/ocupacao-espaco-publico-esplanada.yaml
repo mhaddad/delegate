@@ -17,26 +17,41 @@ condicoes:
     fonte: cm-licenciamento-zero
   - texto: Assegurar um corredor para peões com pelo menos 2,00 metros na calçada.
     fonte: cm-licenciamento-zero
-documentos: []
+documentos:
+  - texto: Requerimento de Ocupação de Espaço Público (Modelo OVP-SO) ou Mera Comunicação Prévia
+    fonte: cmg-formulario-ovp-so
+  - texto: Planta de localização ou fotografia do local cotada com delimitação da área e garantia de corredor de 2,00 m
+    fonte: cm-licenciamento-zero
+  - texto: Certidão permanente da empresa ou comprovativo de início de atividade do estabelecimento comercial
+    fonte: cmg-formulario-ovp-so
+  - texto: Apólice de seguro de responsabilidade civil
+    fonte: cmg-formulario-ovp-so
 taxas:
   descricao: >-
-    A tabela de taxas de 2025 refere Esplanadas (por m2 e por ano), mas a
-    extracção automática marcou este valor como de confiança baixa e não foi
-    confirmado na fonte oficial. O valor depende da área e do tempo.
+    Taxa apurada em função da área (m²) e do período de ocupação (mensal ou anual),
+    calculada nos termos do Regulamento e Tabela de Taxas e Outras Receitas do Município de Guimarães (RTTL).
   valor: null
   fonte: null
   unidade: por m2 e por ano
-prazos: []
+prazos:
+  - texto: Mera comunicação prévia — o início da ocupação é imediato após a submissão e o pagamento da taxa devida
+    fonte: cm-licenciamento-zero
 canais:
   - tipo: online
-    descricao: Balcão Único Eletrónico
-    url: https://eportugal.gov.pt/inicio/espaco-empresa/balcao-do-empreendedor
-    fonte: cm-licenciamento-zero
+    descricao: Serviços Online da Câmara Municipal de Guimarães (Formulário OVP-SO) e Balcão do Empreendedor
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=
+    fonte: cmg-formulario-ovp-so
 dados_minimos: [localizacao, atividade, numero_mesas, area, periodo]
 nivel_risco: baixo
 escalonamento: Dúvidas sobre localização ou dimensões passam para o Gabinete de Serviços Urbanos
 limites: A avaliação técnica local é da Câmara.
 fontes:
+  - id: cmg-formulario-ovp-so
+    titulo: Portal da Câmara Municipal de Guimarães — Detalhe do Procedimento e Formulário OVP-SO (Ocupação de Espaço Público)
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=
+    consultado_em: 2026-10-19
+    hash: null
+    natureza: oficial
   - id: cm-licenciamento-zero
     titulo: Portal do Município de Guimarães — Balcão do Empreendedor e Licenciamento Zero (Mera Comunicação Prévia)
     url: https://www.cm-guimaraes.pt/pages/97?site_help_link_category_id=29

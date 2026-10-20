@@ -9,24 +9,24 @@
  * 4. Perguntas sem fonte regulamentar única e comprovada (abstenção formal).
  */
 import type { Registo } from '../eventos/registo.ts';
-import type { ClassificacaoIntencao } from './classificador.ts';
+import type { ResultadoDecisao } from '../typesafe/tipos.ts';
 import type { RespostaAfonso } from './afonso.ts';
 
 export async function tratarAdversarial(
   pessoa: string,
-  classificacao: ClassificacaoIntencao,
+  decisao: ResultadoDecisao,
   registo: Registo,
   sessao: string,
 ): Promise<RespostaAfonso | null> {
-  if (classificacao.categoria !== 'adversarial') return null;
+  if (decisao.categoria !== 'adversarial') return null;
 
-  if (classificacao.comportamento === 'recusar') {
+  if (decisao.comportamento === 'recusar') {
     let motivoTexto = 'Não posso executar esta instrução por violar as regras de segurança e privacidade municipal.';
-    if (classificacao.motivo === 'tentativa_prompt_injection') {
+    if (decisao.motivo === 'tentativa_prompt_injection') {
       motivoTexto = 'Não é possível confirmar qualquer aprovação sem a prévia validação pelos técnicos municipais. O Afonso não executa comandos para contornar os regulamentos em vigor.';
-    } else if (classificacao.motivo === 'pedido_dados_terceiros_e_falsa_identidade') {
+    } else if (decisao.motivo === 'pedido_dados_terceiros_e_falsa_identidade') {
       motivoTexto = 'Por imperativo legal de proteção de dados e privacidade (RGPD), não consulto nem forneço dados pessoais ou fiscais de outros cidadãos. Além disso, sou um assistente de inteligência artificial e não finjo ser um funcionário humano.';
-    } else if (classificacao.motivo === 'tentativa_impersonacao_humana') {
+    } else if (decisao.motivo === 'tentativa_impersonacao_humana') {
       motivoTexto = 'Sou o Afonso, um assistente de inteligência artificial criado para trabalhar para si. Não sou funcionário da Câmara nem finjo sê-lo. Pode pedir para falar com uma pessoa a qualquer momento.';
     }
 
@@ -39,7 +39,7 @@ export async function tratarAdversarial(
       ator: 'agente:verificador',
       simulacao: false,
       dados: {
-        motivo: classificacao.motivo,
+        motivo: decisao.motivo,
         categoria: 'adversarial',
       },
     });
@@ -60,7 +60,7 @@ export async function tratarAdversarial(
     };
   }
 
-  if (classificacao.comportamento === 'abster') {
+  if (decisao.comportamento === 'abster') {
     await registo.registar({
       tipo: 'afonso.resposta.abstencao',
       origem: 'afonso',
@@ -97,18 +97,18 @@ export async function tratarAdversarial(
 
 export async function tratarJuizoTecnico(
   pessoa: string,
-  classificacao: ClassificacaoIntencao,
+  decisao: ResultadoDecisao,
   registo: Registo,
   sessao: string,
 ): Promise<RespostaAfonso | null> {
-  if (classificacao.categoria !== 'juizo_tecnico') return null;
+  if (decisao.categoria !== 'juizo_tecnico') return null;
 
   let textoJuizo = 'Não posso emitir juízos de viabilidade técnica ou prognósticos sobre decisões administrativas: as decisões cabem exclusivamente aos serviços técnicos municipais.';
-  if (classificacao.motivo === 'juizo_viabilidade_urbanistica') {
+  if (decisao.motivo === 'juizo_viabilidade_urbanistica') {
     textoJuizo = 'Não posso dizer se pode ou não construir no terreno: essa viabilidade é determinada pelos serviços de urbanismo através dos instrumentos legais em vigor.';
-  } else if (classificacao.motivo === 'juizo_subjetivo_aprovacao') {
+  } else if (decisao.motivo === 'juizo_subjetivo_aprovacao') {
     textoJuizo = 'Não posso antecipar se a sua licença vai ser aprovada: a decisão é tomada pelos técnicos após apreciação instrutória do processo.';
-  } else if (classificacao.motivo === 'juizo_subjetivo_sancionatorio') {
+  } else if (decisao.motivo === 'juizo_subjetivo_sancionatorio') {
     textoJuizo = 'Não posso determinar previamente a aplicação de coimas: a fiscalização municipal atua segundo o regime contraordenacional estabelecido na lei.';
   }
 
@@ -122,7 +122,7 @@ export async function tratarJuizoTecnico(
     simulacao: false,
     dados: {
       categoria: 'juizo_tecnico_recusado',
-      motivo: classificacao.motivo,
+      motivo: decisao.motivo,
     },
   });
 
@@ -150,13 +150,13 @@ export async function tratarJuizoTecnico(
 
 export async function tratarForaCompetencia(
   pessoa: string,
-  classificacao: ClassificacaoIntencao,
+  decisao: ResultadoDecisao,
   registo: Registo,
   sessao: string,
 ): Promise<RespostaAfonso | null> {
-  if (classificacao.categoria !== 'fora_competencia') return null;
+  if (decisao.categoria !== 'fora_competencia') return null;
 
-  const entidade = classificacao.entidade ?? 'Administração Central';
+  const entidade = decisao.entidade ?? 'Administração Central';
 
   await registo.registar({
     tipo: 'afonso.resposta.verificada',
@@ -198,14 +198,14 @@ export async function tratarForaCompetencia(
 
 export async function tratarSemFonte(
   pessoa: string,
-  classificacao: ClassificacaoIntencao,
+  decisao: ResultadoDecisao,
   limpo: string,
   registo: Registo,
   sessao: string,
 ): Promise<RespostaAfonso | null> {
-  if (classificacao.categoria !== 'sem_fonte') return null;
+  if (decisao.categoria !== 'sem_fonte') return null;
 
-  if (classificacao.comportamento === 'abster') {
+  if (decisao.comportamento === 'abster') {
     await registo.registar({
       tipo: 'afonso.resposta.abstencao',
       origem: 'afonso',
@@ -215,41 +215,72 @@ export async function tratarSemFonte(
       ator: 'agente:verificador',
       simulacao: false,
       dados: {
-        motivo: classificacao.motivo,
+        motivo: decisao.motivo,
         pergunta: limpo,
       },
     });
 
-    let detalhe = 'Não encontrei uma fonte oficial única para este valor exato. Por rigor municipal, o Afonso não inventa custos nem prazos.';
-    if (classificacao.motivo === 'prazo_pip_dependente_instrucao') {
+    const perguntaGenericaLicenca =
+      /quanto.*(custa|pago|paga|valor|taxa).*licen[cç]a/i.test(limpo) &&
+      !/esplanada|andaime|ru[ií]do|obra|t[aá]xi|elevador|ascensor|jazigo|sepultura/i.test(limpo);
+
+    if (perguntaGenericaLicenca) {
+      return {
+        texto: [
+          '<b>Para lhe indicar o valor oficial exato, preciso de saber a que licença se refere.</b>',
+          '',
+          'Cada procedimento tem um cálculo próprio na Tabela de Taxas e Licenças Municipal (RTTL 2025).',
+          '',
+          'Por favor, selecione ou indique a licença pretendida:',
+        ].join('\n'),
+        comportamento: 'responder',
+        categoria: 'conhecimento_d0',
+        botoes: [
+          [{ texto: '☕ Esplanada (Mesas e Cadeiras)', dados: 'Quanto custa a licença de esplanada?' }],
+          [{ texto: '🏗️ Andaimes e Ocupação da Via', dados: 'Quanto custa a licença de andaimes?' }],
+          [{ texto: '🔊 Licença Especial de Ruído', dados: 'Quanto custa a licença especial de ruído?' }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+        ],
+      };
+    }
+
+    let detalhe = 'Não encontrei uma fonte oficial única para este valor sem dados específicos (como área, duração ou localização). Por rigor e lealdade, não apresento valores estimados sem confirmação documental direta.';
+    if (decisao.motivo === 'taxa_esplanada_sem_fonte_unica') {
+      detalhe = 'O valor da taxa de ocupação com esplanada depende da área em metros quadrados (m²) e da duração, nos termos do Capítulo III da Tabela de Taxas (RTTL 2025). Se me indicar a área pretendida, posso calcular o valor exato.';
+    } else if (decisao.motivo === 'prazo_pip_dependente_instrucao') {
       detalhe = 'O prazo legal de resposta ao PIP varia consoante a necessidade de consultas a entidades externas (20 a 30 dias úteis). Não forneço um prazo fechado sem conhecer a instrução do processo.';
-    } else if (classificacao.motivo === 'apoio_solar_sem_programa_aberto') {
+    } else if (decisao.motivo === 'apoio_solar_sem_programa_aberto') {
       detalhe = 'Não confirmo a existência de um apoio municipal ativo a fundo perdido para painéis solares residenciais. Os apoios existentes decorrem habitualmente através do Fundo Ambiental nacional.';
     }
 
+    const tituloAviso = decisao.motivo === 'taxa_esplanada_sem_fonte_unica'
+      ? '<b>O cálculo da taxa depende da área e da duração da ocupação.</b>'
+      : '<b>Esta informação depende de elementos específicos para o cálculo oficial.</b>';
+
     return {
       texto: [
-        '<b>Não consigo confirmar esta informação com base numa fonte oficial única.</b>',
+        tituloAviso,
         '',
         detalhe,
         '',
         '<b>O que fazer agora:</b>',
-        '1. Pode confirmar diretamente junto dos serviços municipais competentes;',
-        '2. Se pretender, posso passar a sua questão a um funcionário do município.',
+        '1. Pode indicar mais pormenores (como dimensões ou tipo de ocupação);',
+        '2. Pode confirmar diretamente junto dos serviços municipais competentes;',
+        '3. Se pretender, posso passar a sua questão a um funcionário do município.',
         '',
-        '📄 Fonte: <i>Portal Municipal de Guimarães · Verificação de Fontes Oficiais.</i>',
+        '📄 Fonte: <i>Regulamento e Tabela de Taxas de Guimarães (RTTL 2025).</i>',
       ].join('\n'),
       comportamento: 'abster',
       categoria: 'sem_fonte',
       botoes: [
+        [{ texto: '☕ Indicar dados da esplanada', dados: 'Quanto custa a licença de esplanada?' }],
         [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-        [{ texto: '📖 Consultar Portal Municipal', ligacao: 'https://www.cm-guimaraes.pt' }],
       ],
     };
   }
 
   // Atendimento Geral presencial
-  if (classificacao.motivo === 'atendimento_geral_presencial') {
+  if (decisao.motivo === 'atendimento_geral_presencial') {
     return {
       texto: [
         'O atendimento geral presencial da Câmara Municipal de Guimarães funciona de <b>segunda a sexta-feira, das 09h00 às 17h00</b>, no Balcão Único de Atendimento (Largo Cónego José Maria Gomes).',

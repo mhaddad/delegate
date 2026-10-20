@@ -311,4 +311,9 @@ export class CofreDigital {
   obterPacote(pacoteId: string): PacoteMinimo | undefined {
     return this.#pacotes.get(pacoteId);
   }
+
+  listarPacotes(pessoa: string): PacoteMinimo[] {
+    return Array.from(this.#pacotes.values()).filter((p) => p.pessoa === pessoa);
+  }
 }
+

@@ -11,7 +11,6 @@
   "scripts": {
     "nucleo": "tsx --env-file=.env apps/api/src/nucleo/principal.ts",
     "porta": "tsx apps/api/src/porta/principal.ts",
-    "ouvir": "tsx --env-file=.env apps/api/src/nucleo/ouvir.ts",
     "provar:postgres": "tsx scripts/provar-postgres.ts",
     "legendas": "cp packages/eventos/src/legendas.json apps/web/legendas.json",
     "test": "vitest run && npm run t:texto",

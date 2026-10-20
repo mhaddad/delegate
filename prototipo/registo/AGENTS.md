@@ -34,17 +34,15 @@ Uma ficha por serviço, no esquema do [modelo de dados §2](../../specs/11-model
 
 Use-os para **confirmar** o que curou e para cruzamento quando a fonte oficial não trouxer o número. Nunca para preencher por inferência.
 
-## Ordem
+## Serviços canónicos curados
 
-Cinco serviços, nesta ordem:
-
-1. **Esplanada à porta** — âncora da demonstração. Não existe no corpus: tem de vir da fonte oficial.
-2. **Andaime ou tapume** — também ausente do corpus; taxa citável.
-3. **Inspeção de elevador** — taxa limpa e citável.
-4. **Terreno e PDM** — sem taxa; o valor está em explicar.
-5. **Consultar um processo** — procedimento simples, sem custo.
-
-Os cinco primeiros dias de registo até às 12h30 de segunda, com revisão de A e B. Este caminho é crítico: a classificação, as fontes das respostas e a avaliação dependem dele.
+16 serviços curados e validados por esquema Zod v4 em `prototipo/registo/*.yaml`, incluindo:
+1. **Esplanada à porta** (`ocupacao-espaco-publico-esplanada.yaml`) — âncora da demonstração e Licenciamento Zero.
+2. **Andaime ou tapume** (`ocupacao-espaco-publico-andaimes.yaml`) — ocupação de espaço público com taxa citável.
+3. **Inspeção de ascensores** (`inspecao-ascensores.yaml`) — inspeção e manutenção periódica com taxa RTTL.
+4. **Terreno e PDM** (`pedido-informacao-previa-urbanismo.yaml`, `certidao-classificacao-terrenos.yaml`) — consulta e certificação urbanística.
+5. **Consulta de processo** (`consulta-processo-certidao.yaml`) — estado e certidões sem custo.
+6. Mais 11 serviços municipais (ruído, desporto, fogo de artifício, publicidade, cartão sénior, residente, etc.).
 
 ## Como se prova que está feito
 

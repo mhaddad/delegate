@@ -16,6 +16,7 @@ export interface ParametrosRedacao {
   fonteOficial: string;
   versao?: string;
   textoReferencia: string;
+  historicoConversa?: Array<{ autor: 'pessoa' | 'afonso'; texto: string }>;
 }
 
 export interface ResultadoRedacao {
@@ -35,11 +36,7 @@ export class RedatorOpenRouter {
     this.#modelo = modelo;
     this.#modelosCandidatos = [
       modelo,
-      'google/gemma-4-31b-it:free',
-      'google/gemma-4-26b-a4b-it:free',
       'minimax/minimax-m3.1-flash:free',
-      'minimax/minimax-m3.1-flash',
-      'openrouter/free',
     ];
   }
 
@@ -62,45 +59,48 @@ export class RedatorOpenRouter {
       };
     }
 
+    const historicoFormatado = params.historicoConversa && params.historicoConversa.length > 0
+      ? params.historicoConversa
+          .slice(-6)
+          .map((h) => `${h.autor === 'pessoa' ? 'Cidadão' : 'Afonso'}: ${h.texto.replace(/<[^>]+>/g, '').trim()}`)
+          .join('\n')
+      : '';
+
     const promptSistema = [
-      'És o Afonso, o representante digital leal da pessoa e dos negócios em Guimarães.',
-      'Missão: Diga o que precisa. O Afonso trata do resto.',
+      'És o Afonso, o representante digital pessoal do cidadão em Guimarães.',
+      'Missão: O cidadão diz o que precisa, e tu ajudas e tratas da burocracia por ele.',
       '',
-      'Regras inegociáveis:',
-      '1. Comunica SEMPRE em português de Portugal (pt-PT).',
-      '2. Sê conciso, educado, empático e conversacional. Responde em D0 (esclarecer e questionar) sem assumir mandatos ou ações vinculativas precipitadas.',
-      '3. Baseia-te EXCLUSIVAMENTE nos factos e condições fornecidos. NUNCA inventes taxas, custos, prazos ou regras.',
-      '4. NUNCA uses a palavra "munícipe" nem "munícipes". Usa SEMPRE "cidadão", "cidadãos", "pessoa" ou "Município de Guimarães" / "Câmara Municipal".',
-      '5. NUNCA exponhas nomes de código, callbacks ou termos internos (ex.: submeter_pdm_chat, simular_anexo_pdf, slugs). Comunica sempre em linguagem humana natural.',
-      '6. Quando relevante, convida o cidadão a clarificar ou fornecer elementos para preparar o pedido (ex.: localização/Google Maps, morada, caderneta predial em PDF).',
-      '7. Se o comportamento for "abster", assume a abstenção formal: explica claramente que não inventas valores sem fonte única comprovada.',
-      '8. Se o comportamento for "recusar", explica a recusa de forma educada por imperativo legal (ex.: privacidade RGPD ou juízo discricionário dos técnicos).',
-      '9. Se o comportamento for "encaminhar", indica com precisão o serviço competente externo.',
+      'Diretrizes essenciais de conversação:',
+      '1. Comunica em português de Portugal (pt-PT) como numa conversa natural no Telegram (WhatsApp/chat).',
+      '2. MANTÉM AS RESPOSTAS CURTAS E DIRETAS (máximo 2 a 4 frases por mensagem).',
+      '   - NUNCA despejes manuais, listas gigantescas nem requerimentos formais logo à partida.',
+      '   - Fala como uma pessoa prestável: "Entendido!", "Perfeito!", "Combinado.", "Para essa corrida em Azurém..."',
+      '3. CONTINUIDADE REAL:',
+      '   - Se acabaste de perguntar um detalhe (ex.: desporto ou zona) e a pessoa respondeu, USA esse detalhe de imediato!',
+      '   - Faz apenas UMA pergunta de cada vez para avançar no processo (ex.: "Qual é a data prevista para a corrida?" ou "Tens já o traçado do percurso definido?").',
+      '4. RIGOR: NUNCA inventes custos, taxas ou prazos que não constem dos factos.',
+      '5. PRIVACIDADE E LINGUAGEM: NUNCA uses a palavra "munícipe". Usa "cidadão" ou "você/consigo". NUNCA menciones códigos ou nomes técnicos de sistema.',
+      '6. NUNCA escrevas a linha de fonte ("📄 Fonte:") no teu texto, o sistema anexa-a automaticamente no final.',
       '',
-      'Estrutura da resposta:',
-      '- Resposta direta e acolhedora em 1-2 frases;',
-      '- Secção "<b>O que fazer agora:</b>" com passos numerados práticos e esclarecedores;',
-      '- Se houver algo que não é possível confirmar, secção "<b>O que não consigo confirmar:</b>";',
-      `- Termina obrigatoriamente com a linha de fonte oficial completa: "📄 Fonte: <i>${params.fonteOficial}</i>"`,
-      '',
-      'Usa apenas formatação HTML aceite pelo Telegram (<b>, <i>, <code>).',
+      'Formatação: usa apenas <b> e <i> quando estritamente útil.',
     ].join('\n');
 
     const promptUtilizador = [
+      historicoFormatado ? `Histórico recente da conversa com este cidadão:\n${historicoFormatado}\n` : '',
       `Factos e Requisitos Oficiais Comprovados:`,
       params.contextoFactos,
       '',
       `Fonte Oficial: ${params.fonteOficial}${params.versao ? ` (v${params.versao})` : ''}`,
       `Comportamento Obrigatório: ${params.comportamento ?? 'responder'}`,
       '',
-      `Pergunta da pessoa: "${params.pergunta}"`,
-    ].join('\n');
+      `Nova mensagem do cidadão: "${params.pergunta}"`,
+    ].filter(Boolean).join('\n');
 
     for (const modelo of this.#modelosCandidatos) {
       try {
         console.log(`[OpenRouter] A redigir resposta com modelo ${modelo}...`);
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
 
         const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
@@ -139,11 +139,9 @@ export class RedatorOpenRouter {
             .replace(/\bmunícipe\b/gi, 'cidadão')
             .replace(/\bsubmeter_pdm_chat\b/g, '')
             .replace(/\bsimular_[a-z0-9_]+\b/g, '')
-            .trim();
-
-          if (!textoLimpo.includes('📄 Fonte:')) {
-            textoLimpo = `${textoLimpo}\n\n📄 Fonte: <i>${params.fonteOficial}</i>`;
-          }
+          // Remover qualquer linha de fonte que o LLM tenha tentado colocar para evitar duplicações
+          textoLimpo = textoLimpo.replace(/📄\s*Fonte:?[^\n]*/gi, '').trim();
+          textoLimpo = `${textoLimpo}\n\n📄 Fonte: <i>${params.fonteOficial}</i>`;
 
           // Validação por Regra: garantir que nenhum número ou grandeza foi inventado
           const validacao = VerificadorRegra.verificar(textoLimpo, [

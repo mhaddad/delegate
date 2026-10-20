@@ -1,6 +1,6 @@
 # AGENTS.md — o protótipo
 
-O código do R0. Parte de [`../AGENTS.md`](../AGENTS.md) e de [o plano do protótipo](../specs/strategy/11-plano-do-prototipo.md).
+O código do R0. Parte de [`../AGENTS.md`](../AGENTS.md) e de [ajustes pós-mentoria](../specs/strategy/11-ajustes-pos-mentoria.md).
 
 ---
 
@@ -22,7 +22,9 @@ Decidida a 18/10/2026 depois de pesquisa. Registada em [ADR-008](../specs/21-reg
 | Interface | Vite + React, `@xyflow/react`, `motion` | 8.3 / 19 / 12.12 / 14.3 |
 | Esquemas | Zod | 4.x |
 | Testes | Vitest | 2.x |
-| Modelo de IA | **por decidir** — [ADR-023](../specs/21-registo-de-decisoes.md#adr-023) | — |
+| Decisão e Julgamento IA | TypeSafe Jev System One (`@typesafe-ai/sdk`) + Contingência Calibrada Local (0ms) | 0.7.x |
+| Redação Conversacional | OpenRouter (`minimax/minimax-m3.1-flash:free`, `google/gemma-4-31b-it`) com validação por regra | — |
+| RAG D0 e Ingestão | Cloudflare `/markdown` + BM25 léxico (`data/conhecimento/`) | — |
 
 ### As quatro armadilhas
 
@@ -91,13 +93,12 @@ Uma funcionalidade está pronta quando:
 
 | Pasta | Dono | O que lá mora |
 |---|---|---|
-| `packages/eventos/` | B | envelope, esquema, catálogo, legendas |
-| `packages/dominio/` | A | missão, mandato, item do Cofre, serviço |
-| `apps/api/src/nucleo/` | A | bot, Afonso, orquestrador, política, Cofre, mandatos, eventos |
-| `apps/api/src/porta/` | B | Porta Agêntica, Registo Canónico, adaptadores |
-| `apps/api/src/su/` | B | Serviços Urbanos (simulado) |
-| `apps/api/src/tesouraria/` | B | Tesouraria (simulado) |
-| `apps/web/` | C | Observatório e Consola |
-| `registo/` | C, revisto por A e B | uma ficha por serviço |
-| `avaliacao/` | C | o conjunto de perguntas, o executor, os resultados |
-| `demo/` | B | dados semente |
+| `packages/eventos/` | B | envelope, esquema, catálogo, legendas e selos criptográficos |
+| `apps/api/src/nucleo/` | A | bot Telegram, Afonso, `typesafe/` (Jev System One), `conhecimento/` (RAG D0), `cofre/`, `mandatos/`, `orquestrador/`, `politica/`, `simuladores/`, `comandos/` |
+| `apps/api/src/porta/` | B | Porta Agêntica (MCP + REST), Registo Canónico, adaptadores e contratos municipais |
+| `apps/api/src/su/` | B | Gabinete de Serviços Urbanos (simulado) |
+| `apps/web/` | C | Observatório e Consola Municipal |
+| `data/conhecimento/` | A / C | 120+ páginas municipais ingeridas via Cloudflare `/markdown` e indexadas com SHA-256 |
+| `registo/` | C, revisto por A e B | 16 fichas canónicas de serviços em YAML |
+| `avaliacao/` | C | o conjunto de 42 perguntas, o executor, os resultados consolidados |
+| `legacy/` | A / B / C | arquivo de código e artefactos de fases anteriores |

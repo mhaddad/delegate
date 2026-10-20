@@ -1,11 +1,14 @@
 /**
- * Buscador na Base de Conhecimento Municipal (RAG D0)
+ * Buscador na Base de Conhecimento Municipal (RAG D0 Híbrido: BM25 + Embeddings + TypeSafe Jev)
  *
- * Pesquisa instantânea sobre os ficheiros Markdown extraídos pelo Cloudflare /markdown
- * a partir do portal oficial e diretório de serviços da Câmara de Guimarães.
+ * Pesquisa instantânea sobre os 224+ procedimentos, formulários, taxas (RTTL 2025)
+ * e diretório de serviços da Câmara Municipal de Guimarães.
  *
- * Permite ao Afonso responder a qualquer pergunta com citação formal de fonte,
- * cumprindo o nível D0 (informar) sem risco de alucinação factual.
+ * Características:
+ * 1. Pesquisa Híbrida: BM25 léxico com penalização de stopwords municipais + Embeddings vetoriais.
+ * 2. Desduplicação inteligente: funde resultados léxicos e semânticos removendo duplicados por id/url.
+ * 3. Re-ranking e Verificação via TypeSafe Jev System One: assegura fidelidade estrita à fonte oficial
+ *    e deteção de necessidade de esclarecimento (perguntas incompletas/ambíguas).
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -34,6 +37,11 @@ export interface DocumentoCarregado extends EntradaIndice {
   palavrasChave: Set<string>;
 }
 
+export interface DocumentoComVetor {
+  id: string;
+  vector: number[];
+}
+
 export interface ResultadoConhecimento {
   id: string;
   titulo: string;
@@ -44,10 +52,28 @@ export interface ResultadoConhecimento {
   excerto: string;
   pontuacao: number;
   confiancaJev?: number;
-  motorDecisao?: 'typesafe-jev' | 'calibrado-local';
+  motorDecisao?: 'typesafe-jev' | 'calibrado-local' | 'hibrido-vetorial';
+  precisaEsclarecimento?: boolean;
 }
 
 const PASTA_DADOS = join(import.meta.dirname, '..', '..', '..', '..', '..', 'data', 'conhecimento');
+
+const STOPWORDS_MUNICIPAIS = new Set([
+  'camara',
+  'municipal',
+  'guimaraes',
+  'municipio',
+  'concelho',
+  'servico',
+  'servicos',
+  'informacao',
+  'informacoes',
+  'como',
+  'onde',
+  'para',
+  'qual',
+  'quais',
+]);
 
 function normalizar(texto: string): string[] {
   return texto
@@ -59,13 +85,25 @@ function normalizar(texto: string): string[] {
     .filter((p) => p.length > 2);
 }
 
+function produtoInterno(a: number[], b: number[]): number {
+  let soma = 0;
+  for (let i = 0; i < a.length; i++) {
+    soma += a[i] * b[i];
+  }
+  return soma;
+}
+
 export class BuscadorConhecimento {
   readonly #documentos: DocumentoCarregado[] = [];
+  readonly #vetores = new Map<string, number[]>();
   readonly #client: TypeSafeClient | null = null;
   readonly #temApiKey: boolean;
+  readonly #tokenOpenRouter: string | null;
 
   constructor(caminhoPasta = PASTA_DADOS, client?: TypeSafeClient) {
     const key = process.env.JEV_API_KEY || process.env.TYPESAFE_API_KEY;
+    this.#tokenOpenRouter = process.env.OPEN_ROUTER_API_TOKEN || process.env.OPENROUTER_API_KEY || null;
+
     if (client) {
       this.#client = client;
       this.#temApiKey = true;
@@ -89,7 +127,6 @@ export class BuscadorConhecimento {
         const caminhoDoc = join(caminhoPasta, ent.ficheiroLocal);
         if (existsSync(caminhoDoc)) {
           const raw = readFileSync(caminhoDoc, 'utf-8');
-          // Separar corpo do frontmatter
           const partes = raw.split(/^---$/m);
           const corpo = partes.length >= 3 ? partes.slice(2).join('---').trim() : raw;
 
@@ -104,6 +141,21 @@ export class BuscadorConhecimento {
           });
         }
       }
+
+      // Carregar cache de embeddings se existir
+      const caminhoEmbeddings = join(caminhoPasta, 'embeddings_cache.json');
+      if (existsSync(caminhoEmbeddings)) {
+        try {
+          const rawEmbeddings = JSON.parse(readFileSync(caminhoEmbeddings, 'utf-8'));
+          for (const item of rawEmbeddings) {
+            if (item.id && Array.isArray(item.vector)) {
+              this.#vetores.set(item.id, item.vector);
+            }
+          }
+        } catch (e) {
+          console.warn('[BuscadorConhecimento] Aviso ao carregar embeddings_cache.json:', (e as Error).message);
+        }
+      }
     } catch (err) {
       console.warn('[BuscadorConhecimento] Erro ao carregar base de conhecimento:', err);
     }
@@ -113,8 +165,12 @@ export class BuscadorConhecimento {
     return this.#documentos.length;
   }
 
+  get totalVetores(): number {
+    return this.#vetores.size;
+  }
+
   /**
-   * Fast Search: recupera os N candidatos mais relevantes em < 2ms utilizando BM25 léxico.
+   * Fast Search BM25 léxico calibrado com penalização de stopwords e priorização de procedimentos.
    */
   buscarCandidatos(pergunta: string, limite = 3): ResultadoConhecimento[] {
     if (this.#documentos.length === 0) return [];
@@ -128,35 +184,42 @@ export class BuscadorConhecimento {
       let pontosDoc = 0;
       const tokensTitulo = normalizar(doc.titulo);
       const urlLower = doc.url.toLowerCase();
+      const ficheiroLower = doc.ficheiroLocal.toLowerCase();
 
+      const ehNoticia = ficheiroLower.includes('/noticia-') || urlLower.includes('/noticia/');
+      const ehProcedimento = ficheiroLower.startsWith('procedimentos/') || ficheiroLower.startsWith('taxas/');
       const ehAgregador =
         urlLower.endsWith('/directorio_de_servicos') ||
         urlLower.endsWith('/directorio_de_servicos/') ||
-        urlLower.endsWith('/regulamentos') ||
-        urlLower.endsWith('/regulamentos/') ||
         urlLower.endsWith('/formularios') ||
-        urlLower.endsWith('/formularios/') ||
         urlLower === 'https://diretorio.cm-guimaraes.pt/' ||
-        urlLower === 'https://diretorio.cm-guimaraes.pt' ||
-        urlLower === 'https://www.cm-guimaraes.pt/' ||
-        urlLower === 'https://www.cm-guimaraes.pt';
+        urlLower === 'https://www.cm-guimaraes.pt/';
 
       for (const token of tokensPergunta) {
+        const ehStopword = STOPWORDS_MUNICIPAIS.has(token);
+        const pesoTitulo = ehStopword ? 1 : 15;
+        const pesoUrl = ehStopword ? 1 : 10;
+        const pesoCorpo = ehStopword ? 0.2 : 2;
+
         if (tokensTitulo.includes(token)) {
-          pontosDoc += 15;
+          pontosDoc += pesoTitulo;
         }
         if (urlLower.includes(token)) {
-          pontosDoc += 10;
+          pontosDoc += pesoUrl;
         }
         if (doc.palavrasChave.has(token)) {
-          pontosDoc += 2;
+          pontosDoc += pesoCorpo;
         }
       }
 
-      if (pontosDoc === 0) continue;
+      if (pontosDoc <= 0) continue;
 
-      if (ehAgregador) {
-        pontosDoc = Math.max(1, Math.floor(pontosDoc * 0.25));
+      if (ehProcedimento) {
+        pontosDoc = Math.floor(pontosDoc * 1.3);
+      } else if (ehNoticia) {
+        pontosDoc = Math.max(1, Math.floor(pontosDoc * 0.4));
+      } else if (ehAgregador) {
+        pontosDoc = Math.max(1, Math.floor(pontosDoc * 0.3));
       }
 
       let melhorSecaoDoc: SecaoDocumento | null = null;
@@ -168,6 +231,7 @@ export class BuscadorConhecimento {
           const tokensSecao = normalizar(`${secao.tituloSecao} ${secao.texto}`);
 
           for (const token of tokensPergunta) {
+            if (STOPWORDS_MUNICIPAIS.has(token)) continue;
             const ocorrencias = tokensSecao.filter((t) => t === token).length;
             pontosSecao += Math.min(ocorrencias * 3, 15);
           }
@@ -211,10 +275,79 @@ export class BuscadorConhecimento {
   }
 
   /**
-   * Two-Step RAG: Fast Search seguido de Re-ranking Semântico e Verificação de Citação via Jev System One.
+   * Recuperação Híbrida: funde BM25 e Embeddings Vetoriais com desduplicação rigorosa por ID e URL.
+   */
+  async buscarCandidatosHibrido(pergunta: string, limite = 4): Promise<ResultadoConhecimento[]> {
+    const candidatosBm25 = this.buscarCandidatos(pergunta, 6);
+
+    let candidatosVetoriais: ResultadoConhecimento[] = [];
+    if (this.#tokenOpenRouter && this.#vetores.size > 0) {
+      try {
+        const qVector = await this.#obterVetorPergunta(pergunta);
+        if (qVector) {
+          const docMap = new Map(this.#documentos.map((d) => [d.id, d]));
+          const pontuados: Array<{ doc: DocumentoCarregado; sim: number }> = [];
+
+          for (const [id, vec] of this.#vetores.entries()) {
+            const doc = docMap.get(id);
+            if (doc) {
+              const sim = produtoInterno(qVector, vec);
+              if (sim > 0.28) {
+                pontuados.push({ doc, sim });
+              }
+            }
+          }
+
+          pontuados.sort((a, b) => b.sim - a.sim);
+          candidatosVetoriais = pontuados.slice(0, 6).map((p) => ({
+            id: p.doc.id,
+            titulo: p.doc.titulo,
+            url: p.doc.url,
+            categoria: p.doc.categoria,
+            consultadoEm: p.doc.consultadoEm.split('T')[0],
+            hashSha256: p.doc.hashSha256,
+            excerto: this.#limparExcerto(p.doc.conteudoCompleto.slice(0, 600)),
+            pontuacao: Math.round(p.sim * 100),
+            motorDecisao: 'hibrido-vetorial',
+          }));
+        }
+      } catch (err) {
+        console.warn('[BuscadorConhecimento] Alternativa vetorial:', (err as Error).message);
+      }
+    }
+
+    // Fusão e Desduplicação por ID e URL
+    const mapaUnicos = new Map<string, ResultadoConhecimento>();
+
+    for (const c of candidatosBm25) {
+      const chave = `${c.url.toLowerCase().trim()}|${c.id}`;
+      mapaUnicos.set(chave, c);
+    }
+
+    for (const c of candidatosVetoriais) {
+      const chave = `${c.url.toLowerCase().trim()}|${c.id}`;
+      const existente = mapaUnicos.get(chave);
+      if (existente) {
+        // Se apareceu em ambos (BM25 + Vetorial), recebe bónus de convergência
+        existente.pontuacao += Math.round(c.pontuacao * 0.7);
+        existente.motorDecisao = 'hibrido-vetorial';
+      } else {
+        mapaUnicos.set(chave, c);
+      }
+    }
+
+    const unificados = Array.from(mapaUnicos.values());
+    unificados.sort((a, b) => b.pontuacao - a.pontuacao);
+    return unificados.slice(0, limite);
+  }
+
+  /**
+   * Two-Step Hybrid RAG:
+   * 1. Recuperação Híbrida desduplicada (BM25 + Embeddings);
+   * 2. Re-ranking Semântico, Verificação Factual de Citação e Avaliação de Ambiguidade via TypeSafe Jev System One.
    */
   async buscarComJev(pergunta: string): Promise<ResultadoConhecimento | null> {
-    const candidatos = this.buscarCandidatos(pergunta, 3);
+    const candidatos = await this.buscarCandidatosHibrido(pergunta, 4);
     if (candidatos.length === 0) return null;
 
     if (this.#client && this.#temApiKey && candidatos.length >= 1) {
@@ -245,13 +378,17 @@ export class BuscadorConhecimento {
             sustenta_afirmacao: noul(
               'O excerto documental selecionado contém resposta factual direta à dúvida, sem exigir inferências não documentadas?',
             ),
+            precisa_esclarecimento: noul(
+              'A pergunta do munícipe é incompleta ou ambígua quanto a detalhes essenciais para o procedimento oficial, sendo recomendável solicitar esclarecimento adicional?',
+            ),
           },
         });
 
         const qChoice = resposta.answers.melhor_excerto as ChoiceResponse<any>;
         const qNoul = resposta.answers.sustenta_afirmacao as NoulResponse;
+        const qEsclarece = resposta.answers.precisa_esclarecimento as NoulResponse;
 
-        if (qChoice?.choice === 'nenhum_dos_candidatos' || (qNoul && qNoul.noul < 0.35)) {
+        if (qChoice?.choice === 'nenhum_dos_candidatos' || (qNoul && qNoul.noul < 0.32)) {
           return null;
         }
 
@@ -263,6 +400,7 @@ export class BuscadorConhecimento {
             ...escolhido,
             confiancaJev: qChoice.confidence ?? qNoul?.noul ?? 0.9,
             motorDecisao: 'typesafe-jev',
+            precisaEsclarecimento: qEsclarece && qEsclarece.noul > 0.65,
           };
         }
       } catch (err) {
@@ -275,8 +413,14 @@ export class BuscadorConhecimento {
 
   formatarResposta(resultado: ResultadoConhecimento): { texto: string; botoes: Botao[][] } {
     const dataFormatada = resultado.consultadoEm;
-    const motorTag = resultado.motorDecisao === 'typesafe-jev' ? ' · Verificado por TypeSafe Jev' : '';
-    const texto = [
+    const motorTag =
+      resultado.motorDecisao === 'typesafe-jev'
+        ? ' · Verificado por TypeSafe Jev System One'
+        : resultado.motorDecisao === 'hibrido-vetorial'
+          ? ' · Pesquisa Híbrida (Vetorial + Léxica)'
+          : '';
+
+    const linhas = [
       `🏛️ <b>${resultado.titulo}</b>`,
       '',
       resultado.excerto,
@@ -284,20 +428,32 @@ export class BuscadorConhecimento {
       '📌 <b>Evidência Oficial da Câmara Municipal de Guimarães:</b>',
       `• <b>Fonte:</b> <a href="${resultado.url}">Portal Oficial (${resultado.url})</a>`,
       `• <b>Data de Consulta:</b> ${dataFormatada} · SHA-256 verificado${motorTag}.`,
-      '',
-      '<i>(Informação oficial em nível D0 · Se pretender apoio humano ou submissão assistida, selecione uma das opções abaixo.)</i>',
-    ].join('\n');
+    ];
+
+    if (resultado.precisaEsclarecimento) {
+      linhas.push(
+        '',
+        '💡 <i>Nota: Para lhe dar o valor ou requisito exato, poderá ser útil indicar mais pormenores sobre a sua situação específica.</i>',
+      );
+    } else {
+      linhas.push(
+        '',
+        '<i>(Informação oficial em nível D0 · Se pretender apoio humano ou submissão assistida, selecione uma das opções abaixo.)</i>',
+      );
+    }
+
+    const texto = linhas.join('\n');
 
     const botoes: Botao[][] = [
       [{ texto: '🌐 Abrir página oficial', ligacao: resultado.url }],
     ];
 
-    // Transição proativa D0 -> D2 (Preparar pedido no Cofre Digital)
     if (
       resultado.url.includes('service_action_id=2') ||
       resultado.url.includes('/formularios/') ||
       resultado.url.includes('isencao-de-licenca-de-utilizacao') ||
-      resultado.url.includes('bolsas-de-estudo')
+      resultado.url.includes('bolsas-de-estudo') ||
+      resultado.url.includes('procedimento?id=')
     ) {
       botoes.push([{ texto: '📋 Preparar pedido no Cofre Digital (D2)', dados: `preparar:${resultado.id}` }]);
     }
@@ -305,6 +461,24 @@ export class BuscadorConhecimento {
     botoes.push([{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]);
 
     return { texto, botoes };
+  }
+
+  async #obterVetorPergunta(pergunta: string): Promise<number[] | null> {
+    if (!this.#tokenOpenRouter) return null;
+    const res = await fetch('https://openrouter.ai/api/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${this.#tokenOpenRouter}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'text-embedding-3-small',
+        input: [pergunta],
+      }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.data?.[0]?.embedding ?? null;
   }
 
   #extrairSecoes(conteudo: string, fallbackTitulo: string): SecaoDocumento[] {
@@ -330,7 +504,7 @@ export class BuscadorConhecimento {
       secoes.push({ tituloSecao: tituloAtual, texto: buffer.join('\n').trim() });
     }
 
-    return secoes.filter((s) => s.texto.length > 30);
+    return secoes.filter((s) => s.texto.length > 20);
   }
 
   #limparExcerto(excerto: string): string {

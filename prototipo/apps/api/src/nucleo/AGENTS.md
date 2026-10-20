@@ -2,7 +2,7 @@
 
 **Dona: pessoa A (Afonso).** Canal, Afonso, orquestrador, política, Cofre e mandatos. Parte de [`../../../../AGENTS.md`](../../../../AGENTS.md).
 
-> **Stack:** TypeScript; `grammY` em *long polling* para o canal; cifra simétrica com serviço de chaves. O modelo de IA está por decidir ([ADR-023](../../../../../docs/21-registo-de-decisoes.md#adr-023)). O que está abaixo é arquitectura e não muda com isso.
+> **Stack:** TypeScript; `grammY` em *long polling* para o Telegram; cifra simétrica AES-256-GCM com serviço de chaves efémeras; **TypeSafe Jev System One** (`@typesafe-ai/sdk`) para julgamentos tipados e verificação de citações com contingência local calibrada (0ms); **OpenRouter** para redação conversacional em pt-PT; e **BuscadorConhecimento** (RAG D0) sobre o corpus municipal oficial.
 
 ---
 
@@ -10,13 +10,17 @@
 
 | Módulo | Responsabilidade |
 |---|---|
-| `canal/` | Adaptador do canal. Traduz mensagens e botões em eventos, e eventos em mensagens. |
-| `afonso/` | Classificação, redação e verificação. O que responde à pessoa. |
-| `orquestrador/` | Máquina de estados da missão. |
-| `politica/` | Permite, confirmar ou bloquear, por regras declarativas. |
-| `cofre/` | Cifra por pessoa e serviço de chaves. |
-| `mandatos/` | Níveis D0 a D4, concessão e revogação. |
-| `eventos/` | Barramento, registo e fluxo de eventos. |
+| `canal.ts` | Adaptador do Telegram (grammY). Normaliza mensagens, fotos, documentos e botões. |
+| `afonso/` | Afonso (representante digital leal), orquestração de respostas de catálogo e salvaguardas de fronteira. |
+| `typesafe/` | Motor de Decisão System One Jev (`motor-decisao.ts`), critérios Zod/TypeSafe, catálogo de intenções e avaliador local. |
+| `conhecimento/` | Buscador RAG D0 em duas etapas (BM25 léxico + re-ranking semântico Jev) sobre 120+ páginas municipais. |
+| `orquestrador/` | Máquina de estados da missão e checklist oficial de passos instrutórios. |
+| `politica/` | Motor declarativo de autorização: permitir, confirmar com CMD ou bloquear por salvaguarda. |
+| `cofre/` | Cofre Digital Pessoal em 3 camadas (identidade, provas, intenções) com cifra AES-256-GCM. |
+| `mandatos/` | Níveis de mandato D0 a D4, concessão, verificação e revogação imediata. |
+| `simuladores/` | Processador de cenários da demo: validação de calçada, georreferenciação PIP e assinatura Chave Móvel Digital. |
+| `comandos/` | Tratador de comandos estruturados do Telegram (/start, /carta, /cofre, /mandatos, etc.). |
+| `eventos/` | Barramento, registo encadeado por selos SHA-256 e servidor SSE na porta 4000. |
 
 ## Congelado
 

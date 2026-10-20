@@ -67,9 +67,17 @@ export class TratadorComandos {
           '• /dados — Quem consultou os meus dados',
           '• /pessoa — Pedir atendimento humano na Câmara',
           '',
+          '<b>Iniciar Casos de Teste da Demonstração:</b>',
+          '• ☕ <b>Esplanada:</b> Preparar ocupação de espaço público (D2 -> D3)',
+          '• 🏡 <b>PDM Silvares:</b> Pedido de Informação Prévia (Maps + Caderneta)',
+          '',
           'Pode falar com uma pessoa a qualquer momento.',
         ].join('\n'),
         [
+          [
+            { texto: '☕ Iniciar: Esplanada (D2)', dados: 'iniciar_esplanada' },
+            { texto: '🏡 Iniciar: PDM Silvares (D2)', dados: 'iniciar_pdm' },
+          ],
           [
             { texto: '📜 Carta de Lealdade', dados: 'cmd_carta' },
             { texto: '👤 Falar com uma pessoa', dados: 'pessoa' },

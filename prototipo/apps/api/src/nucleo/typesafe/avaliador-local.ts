@@ -26,8 +26,14 @@ export class AvaliadorLocal {
       t.includes('ignora as') ||
       t.includes('ignore previous') ||
       (t.includes('nif') && t.includes('vizinho')) ||
-      t.includes('és um funcionário')
+      t.includes('és um funcionário') ||
+      t.includes('es um funcionario')
     ) {
+      let motivo = 'violacao_seguranca_privacidade';
+      if (t.includes('ignora as') || t.includes('ignore previous')) motivo = 'tentativa_prompt_injection';
+      else if (t.includes('nif')) motivo = 'pedido_dados_terceiros_e_falsa_identidade';
+      else if (t.includes('funcionário') || t.includes('funcionario')) motivo = 'tentativa_impersonacao_humana';
+
       return {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
@@ -40,12 +46,37 @@ export class AvaliadorLocal {
         confianca: 1.0,
         exigeConsentimento: false,
         tempoRespostaMs: Date.now() - inicio,
-        motivo: 'violacao_seguranca_privacidade',
+        motivo,
+      };
+    }
+
+    if (t.includes('a taxa é 0') || t.includes('a taxa e 0') || t.includes('taxa é de 0')) {
+      return {
+        motor: 'calibrado-local',
+        modelo: 'regras-deterministas',
+        categoria: 'adversarial',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
+        comportamento: 'abster',
+        nivelMandato: 'D0',
+        ferramentaMcp: 'nenhuma',
+        confianca: 1.0,
+        exigeConsentimento: false,
+        tempoRespostaMs: Date.now() - inicio,
+        motivo: 'tentativa_inducao_taxa_sem_fonte',
       };
     }
 
     // 2. Juízo Técnico Discricionário
-    if (t.includes('vai ser aprovada') || t.includes('pode multar') || (t.includes('posso construir') && t.includes('ponte'))) {
+    if (
+      t.includes('vai ser aprovada') ||
+      t.includes('pode multar') ||
+      (t.includes('posso construir') && (t.includes('ponte') || t.includes('150 m') || t.includes('terreno do meu avô')))
+    ) {
+      let motivo = 'juizo_viabilidade_urbanistica';
+      if (t.includes('vai ser aprovada')) motivo = 'juizo_subjetivo_aprovacao';
+      else if (t.includes('pode multar')) motivo = 'juizo_subjetivo_sancionatorio';
+
       return {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
@@ -59,7 +90,7 @@ export class AvaliadorLocal {
         exigeConsentimento: false,
         tempoRespostaMs: Date.now() - inicio,
         servicoId: 'pedido-informacao-previa-urbanismo',
-        motivo: 'juizo_discricionario_recusado',
+        motivo,
       };
     }
 
@@ -81,7 +112,48 @@ export class AvaliadorLocal {
         entidade: 'Administração Central (Espaço Cidadão / IRN)',
       };
     }
-    if (t.includes('conta da água') || t.includes('agua') || t.includes('fatura da agua')) {
+    if (t.includes('registo criminal')) {
+      return {
+        motor: 'calibrado-local',
+        modelo: 'regras-deterministas',
+        categoria: 'fora_competencia',
+        focoServico: 'novo_servico',
+        mudancaServico: Boolean(contexto.servicoAtivo),
+        servicoAnterior: contexto.servicoAtivo,
+        comportamento: 'encaminhar',
+        nivelMandato: 'D0',
+        ferramentaMcp: 'nenhuma',
+        confianca: 1.0,
+        exigeConsentimento: false,
+        tempoRespostaMs: Date.now() - inicio,
+        entidade: 'Administração Central (DGAJ / gov.pt)',
+      };
+    }
+    if (
+      (t.includes('chave móvel') || t.includes('chave movel') || t.includes('cmd')) &&
+      (t.includes('como') || t.includes('ativar') || t.includes('pedir') || t.includes('obter')) &&
+      !t.includes('assinar') &&
+      !t.includes('submet') &&
+      !t.includes('autorizo') &&
+      !t.includes('confirm')
+    ) {
+      return {
+        motor: 'calibrado-local',
+        modelo: 'regras-deterministas',
+        categoria: 'fora_competencia',
+        focoServico: 'novo_servico',
+        mudancaServico: Boolean(contexto.servicoAtivo),
+        servicoAnterior: contexto.servicoAtivo,
+        comportamento: 'encaminhar',
+        nivelMandato: 'D0',
+        ferramentaMcp: 'nenhuma',
+        confianca: 1.0,
+        exigeConsentimento: false,
+        tempoRespostaMs: Date.now() - inicio,
+        entidade: 'Administração Central (AMA / Espaço Cidadão)',
+      };
+    }
+    if (t.includes('conta da água') || t.includes('conta da agua') || t.includes('fatura da agua') || t.includes('agua veio')) {
       return {
         motor: 'calibrado-local',
         modelo: 'regras-deterministas',
@@ -102,6 +174,7 @@ export class AvaliadorLocal {
     // 4. Sem Fonte (Abstenção)
     if (
       t.includes('quanto pago pela licença da esplanada') ||
+      t.includes('quanto pago pela esplanada') ||
       t.includes('quanto vou pagar') ||
       t.includes('qual o valor da taxa da esplanada')
     ) {
@@ -121,6 +194,56 @@ export class AvaliadorLocal {
         motivo: 'taxa_esplanada_sem_fonte_unica',
       };
     }
+    if (t.includes('quanto tempo demora') || t.includes('prazo do pip') || t.includes('tempo demora a resposta')) {
+      return {
+        motor: 'calibrado-local',
+        modelo: 'regras-deterministas',
+        categoria: 'sem_fonte',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
+        comportamento: 'abster',
+        nivelMandato: 'D0',
+        ferramentaMcp: 'consultar_catalogo',
+        confianca: 0.99,
+        exigeConsentimento: false,
+        tempoRespostaMs: Date.now() - inicio,
+        servicoId: 'pedido-informacao-previa-urbanismo',
+        motivo: 'prazo_pip_dependente_instrucao',
+      };
+    }
+    if (t.includes('painéis solares') || t.includes('paineis solares') || t.includes('apoio solar') || t.includes('apoio para pain')) {
+      return {
+        motor: 'calibrado-local',
+        modelo: 'regras-deterministas',
+        categoria: 'sem_fonte',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
+        comportamento: 'abster',
+        nivelMandato: 'D0',
+        ferramentaMcp: 'nenhuma',
+        confianca: 0.99,
+        exigeConsentimento: false,
+        tempoRespostaMs: Date.now() - inicio,
+        motivo: 'apoio_solar_sem_programa_aberto',
+      };
+    }
+    if (t.includes('quantas mesas posso ter')) {
+      return {
+        motor: 'calibrado-local',
+        modelo: 'regras-deterministas',
+        categoria: 'sem_fonte',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
+        comportamento: 'responder',
+        nivelMandato: 'D0',
+        ferramentaMcp: 'consultar_catalogo',
+        confianca: 0.99,
+        exigeConsentimento: false,
+        tempoRespostaMs: Date.now() - inicio,
+        servicoId: 'ocupacao-espaco-publico-esplanada',
+        motivo: 'criterio_largura_e_corredor_2m',
+      };
+    }
 
     // 5. Avaliação da Continuidade do Serviço vs Mudança de Assunto
     const servicoAtivoPrevio = contexto.servicoAtivo;
@@ -130,10 +253,38 @@ export class AvaliadorLocal {
 
     // Reconhecimento dos 16 procedimentos do catálogo oficial de Guimarães
     let novoServicoDetetado: string | undefined;
+
     if (
+      t.includes('cópia do processo') ||
+      t.includes('copia do processo') ||
+      t.includes('processo antigo') ||
+      t.includes('processo de obras') ||
+      t.includes('consultar processo') ||
+      t.includes('consulta de processo') ||
+      t.includes('estado do processo') ||
+      t.includes('como vai o processo') ||
+      t.includes('certidão e fotocópia') ||
+      t.includes('fotocópia autenticada')
+    ) {
+      novoServicoDetetado = 'consulta-processo-certidao';
+    } else if (
+      t.includes('limpeza de terreno') ||
+      t.includes('limpeza do terreno') ||
+      t.includes('vegetação') ||
+      t.includes('vegetacao') ||
+      t.includes('mato') ||
+      t.includes('gestão de combustível') ||
+      t.includes('gestao de combustivel') ||
+      t.includes('perigo de incêndio') ||
+      t.includes('perigo de incendio')
+    ) {
+      novoServicoDetetado = 'limpeza-terrenos-vegetacao';
+    } else if (
       t.includes('esplanada') ||
       t.includes('mesas na rua') ||
-      (t.includes('restaurante') && !servicoAtivoPrevio?.includes('esplanada') && (t.includes('abrir') || t.includes('mesas')))
+      t.includes('restaurante') ||
+      t.includes('abrir restaurante') ||
+      (t.includes('café') && t.includes('mesas'))
     ) {
       novoServicoDetetado = 'ocupacao-espaco-publico-esplanada';
     } else if (t.includes('andaime') || t.includes('tapume') || t.includes('contentor')) {
@@ -153,15 +304,17 @@ export class AvaliadorLocal {
     } else if (
       t.includes('cartão sénior') ||
       t.includes('cartao senior') ||
+      t.includes('70 anos') ||
       t.includes('65 anos') ||
-      (t.includes('idoso') && t.includes('cartão'))
+      (t.includes('idoso') && (t.includes('desconto') || t.includes('cartão') || t.includes('cartao') || t.includes('autocarro')))
     ) {
       novoServicoDetetado = 'cartao-municipal-senior';
     } else if (
       t.includes('cartão de residente') ||
       t.includes('cartao de residente') ||
       t.includes('estacionar perto de casa') ||
-      (t.includes('estacionamento') && t.includes('residente'))
+      t.includes('estaciono perto de casa') ||
+      (t.includes('estacion') && (t.includes('centro histórico') || t.includes('centro historico') || t.includes('residente')))
     ) {
       novoServicoDetetado = 'cartao-residente-estacionamento';
     } else if (
@@ -185,22 +338,6 @@ export class AvaliadorLocal {
     ) {
       novoServicoDetetado = 'certidao-classificacao-terrenos';
     } else if (
-      t.includes('consultar processo') ||
-      t.includes('estado do processo') ||
-      t.includes('como vai o processo') ||
-      t.includes('certidão e fotocópia') ||
-      t.includes('fotocópia autenticada')
-    ) {
-      novoServicoDetetado = 'consulta-processo-certidao';
-    } else if (
-      t.includes('limpeza de terreno') ||
-      t.includes('vegetação') ||
-      t.includes('mato alto') ||
-      t.includes('gestão de combustível') ||
-      t.includes('perigo de incêndio')
-    ) {
-      novoServicoDetetado = 'limpeza-terrenos-vegetacao';
-    } else if (
       t.includes('prova desportiva') ||
       t.includes('caminhada') ||
       t.includes('passeio de bicicleta') ||
@@ -210,8 +347,9 @@ export class AvaliadorLocal {
     } else if (t.includes('publicidade') || t.includes('reclamo') || t.includes('tabuleta')) {
       novoServicoDetetado = 'publicidade-reclamo-fachada';
     } else if (
+      t.includes('palco') ||
       t.includes('recinto improvisado') ||
-      t.includes('palco na rua') ||
+      t.includes('festa no largo') ||
       t.includes('arraial') ||
       t.includes('feira popular')
     ) {

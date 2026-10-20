@@ -20,11 +20,13 @@ import { Registo } from './eventos/registo.ts';
 import { criarServidorEventos } from './eventos/servidor.ts';
 import { Afonso } from './afonso/afonso.ts';
 import { ClientePortaMcp } from './afonso/cliente-porta.ts';
+import { BuscadorConhecimento } from './conhecimento/buscador.ts';
 import { CofreDigital } from './cofre/cofre.ts';
 import { ServicoChavesCofre } from './cofre/servico-chaves.ts';
 import { GestorMandatos } from './mandatos/mandatos.ts';
 import { MotorPolitica } from './politica/politica.ts';
 import { OrquestradorMissoes } from './orquestrador/missao.ts';
+import { GestorFluxoD2 } from './orquestrador/fluxo-conversa-d2.ts';
 import { ProcessadorCenarios } from './simuladores/cenarios.ts';
 import { TratadorComandos } from './comandos/tratador-comandos.ts';
 
@@ -43,7 +45,8 @@ console.log('✓ base aberta');
 
 const canal: CanalGrammy = criarCanalGrammy(token);
 const clientePorta = new ClientePortaMcp();
-const afonso = new Afonso(registro, clientePorta, SESSAO);
+const buscador = new BuscadorConhecimento();
+const afonso = new Afonso(registro, clientePorta, SESSAO, undefined, undefined, buscador);
 
 // Módulos de autoridade e privacidade
 const servicoChaves = new ServicoChavesCofre(registro, SESSAO);
@@ -51,6 +54,15 @@ const cofre = new CofreDigital(registro, servicoChaves, SESSAO);
 const mandatos = new GestorMandatos(registro, SESSAO);
 const politica = new MotorPolitica(registro, mandatos, SESSAO);
 const orquestrador = new OrquestradorMissoes(registro, SESSAO);
+
+const fluxoD2 = new GestorFluxoD2({
+  cofre,
+  mandatos,
+  orquestrador,
+  registo: registro,
+  canal,
+  sessao: SESSAO,
+});
 
 const conversasPorPessoa = new Map<string, string>();
 let ultimaConversa: string | null = null;
@@ -80,10 +92,20 @@ const comandos = new TratadorComandos({
   sessao: SESSAO,
 });
 
-// Servidor de Eventos SSE e API HTTP (inclui webhook da CMD)
-const servidor = criarServidorEventos(registro, () => base.escutar(), async (dados) => {
-  await cenarios.processarConfirmacaoCmd(dados);
-});
+// Servidor de Eventos SSE e API HTTP (inclui webhook da CMD e testador do Router)
+const servidor = criarServidorEventos(
+  registro,
+  () => base.escutar(),
+  async (dados) => {
+    await cenarios.processarConfirmacaoCmd(dados);
+  },
+  undefined,
+  async (pergunta: string) => {
+    const candidatos = await buscador.buscarCandidatosHibrido(pergunta, 5);
+    const resultadoJev = await buscador.buscarComJev(pergunta);
+    return { ok: true, pergunta, candidatos, resultadoJev };
+  },
+);
 servidor.listen(PORTA_EVENTOS, () => {
   console.log(`✓ fluxo de eventos em http://localhost:${PORTA_EVENTOS}/eventos/stream`);
 });
@@ -157,14 +179,21 @@ escutaNucleo.on('notification', async (aviso: any) => {
 });
 
 canal._aoReceber(async (m) => {
-  conversasPorPessoa.set(m.pessoa, m.conversa);
-  ultimaConversa = m.conversa;
+  try {
+    const desc = m.tipo === 'botao' ? `[Botão: ${m.texto}]` : m.texto ?? (m.foto ? '[Foto]' : '[Documento]');
+    console.log(`📩 [Canal] Recebido de ${m.pessoa} (${m.tipo}): ${desc}`);
 
-  // 1. Tratamento de Comandos de Barra (/) delegados ao módulo TratadorComandos
-  if (m.tipo === 'comando' && m.texto) {
-    const tratado = await comandos.tratar(m);
-    if (tratado) return;
-  }
+    conversasPorPessoa.set(m.pessoa, m.conversa);
+    ultimaConversa = m.conversa;
+
+    // 1. Tratamento de Comandos de Barra (/) delegados ao módulo TratadorComandos
+    if (m.tipo === 'comando' && m.texto) {
+      const tratado = await comandos.tratar(m);
+      if (tratado) {
+        console.log(`📤 [Canal] Comando processado para ${m.pessoa}: ${m.texto}`);
+        return;
+      }
+    }
 
   const dados: Record<string, unknown> =
     m.tipo === 'foto'
@@ -230,46 +259,15 @@ canal._aoReceber(async (m) => {
         itensCofre: metadadosCofre.map(it => ({ tipo: it.tipo, titulo: it.titulo })),
       });
       await canal.enviar(m.conversa, resp.texto, resp.botoes);
-    } else if (m.texto === 'iniciar_esplanada' || m.texto === 'voltar_esplanada') {
-      await cofre.guardarItem(m.pessoa, 'MIS-0001', {
-        camada: 'intencoes',
-        tipo: 'intencao_negocio',
-        titulo: 'Esplanada Casa Joaquim',
-        origem: 'conversa_telegram',
-        finalidade: 'Licenciamento de ocupação de espaço público com esplanada',
-        dados: { localizacao: 'Largo da Oliveira, 12', mesas: 4, area_m2: 10 },
-      });
-
-      const mandato = await mandatos.concederMandato(m.pessoa, 'MIS-0001', {
-        ambito: 'ocupacao-espaco-publico',
-        objeto: 'Casa Joaquim (Largo da Oliveira)',
-        nivel: 'D2',
-        validadeDias: 365,
-      });
-
-      await orquestrador.criarMissao({
-        pessoa: m.pessoa,
-        servico: 'ocupacao-espaco-publico-esplanada',
-        servicoTitulo: 'Ocupação do Espaço Público — Esplanada Aberta',
-        objetivo: 'Licenciar esplanada aberta contígua à fachada na Casa Joaquim',
-        mandato: mandato.id,
-      });
-
-      await canal.enviar(
-        m.conversa,
-        [
-          'Guardei a intenção da esplanada no seu <b>Cofre Digital Pessoal</b> (cifrado AES-256-GCM) e abri a missão <b>MIS-0001</b>.',
-          '',
-          `Concedeu ao Afonso o <b>Mandato D2</b> (${mandato.id}): preparar rascunho e reunir provas, <b>sem autorização para submeter</b> sem a sua assinatura expressa.`,
-          '',
-          '<b>Próximo passo da checklist:</b>',
-          'Envie uma <b>fotografia do passeio</b> à porta da Casa Joaquim ou confirme que tem pelo menos 2,00 metros livres de calçada.',
-        ].join('\n'),
-        [
-          [{ texto: '📸 Confirmar Medição: 2,10 m livres', dados: 'enviar_foto_calcada' }],
-          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
-        ],
-      );
+    } else if (m.texto === 'iniciar_esplanada' || m.texto === 'voltar_esplanada' || m.texto === 'preparar:ocupacao-espaco-publico-esplanada') {
+      await fluxoD2.iniciarFluxoEsplanada(m.pessoa, m.conversa);
+    } else if (m.texto?.startsWith('d2_')) {
+      const tratado = await fluxoD2.processarPasso(m.pessoa, m.conversa, m.texto);
+      if (!tratado) {
+        if (m.texto === 'd2_enviar_foto') {
+          await cenarios.processarValidacaoCalcada(m);
+        }
+      }
     } else if (m.texto === 'enviar_foto_calcada') {
       await cenarios.processarValidacaoCalcada(m);
     } else if (m.texto === 'iniciar_pdm') {
@@ -403,6 +401,64 @@ canal._aoReceber(async (m) => {
           ? `🚫 O mandato <code>${mandId}</code> foi revogado com efeito imediato.`
           : `Mandato <code>${mandId}</code> não encontrado.`,
       );
+    } else if (m.texto?.startsWith('preparar:')) {
+      const docId = m.texto.replace('preparar:', '');
+      const tituloServico = docId.includes('isencao')
+        ? 'Isenção de Licença de Utilização de Edifício Antigo'
+        : docId.includes('bolsa')
+          ? 'Candidatura a Bolsas de Estudo Municipais'
+          : 'Preparação de Requerimento Municipal';
+
+      const missaoId = `MIS-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      await cofre.guardarItem(m.pessoa, missaoId, {
+        camada: 'intencoes',
+        tipo: 'intencao_procedimento',
+        titulo: tituloServico,
+        origem: 'rag_d0_conhecimento',
+        finalidade: `Instrução sob Mandato D2: ${tituloServico}`,
+        dados: { documento_origem: docId },
+      });
+
+      const mandato = await mandatos.concederMandato(m.pessoa, missaoId, {
+        ambito: docId,
+        objeto: tituloServico,
+        nivel: 'D2',
+        validadeDias: 90,
+      });
+
+      await orquestrador.criarMissao({
+        pessoa: m.pessoa,
+        servico: docId,
+        servicoTitulo: tituloServico,
+        objetivo: `Reunir provas e organizar pacote instrutório para ${tituloServico}`,
+        mandato: mandato.id,
+        passosIniciais: [
+          'Instrução documental no Cofre Digital (D2)',
+          'Anexar caderneta predial / comprovativos (PDF)',
+          'Revisão do pacote instrutório mínimo',
+          'Submissão formal com Chave Móvel Digital (D3)',
+        ],
+      });
+
+      await canal.enviar(
+        m.conversa,
+        [
+          `📋 <b>Missão iniciada no Cofre Digital: ${tituloServico}</b>`,
+          '',
+          `Concedeu ao Afonso o <b>Mandato D2</b> (<code>${mandato.id}</code>): preparar o processo e organizar os documentos necessários, <b>sem autorização para submeter</b> sem a sua assinatura expressa.`,
+          '',
+          '🔒 <b>Cofre Digital Pessoal (AES-256-GCM):</b>',
+          'Os seus ficheiros e intenções estão guardados em segurança. Pode anexar documentos oficiais (ex.: Caderneta Predial em PDF) através do clipe 📎 do Telegram.',
+          '',
+          'Ou simule de imediato os passos seguintes:',
+        ].join('\n'),
+        [
+          [{ texto: '📑 Simular Envio: Documentos em PDF', dados: 'anexar_caderneta_predial' }],
+          [{ texto: '✍️ Assinar com Chave Móvel Digital (Simulação)', dados: 'assinar_com_chave_movel_digital' }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+        ],
+      );
     } else {
       await canal.enviar(
         m.conversa,
@@ -437,6 +493,23 @@ canal._aoReceber(async (m) => {
       );
       await regista('canal.mensagem.enviada', m, {});
       return;
+    }
+
+    // Se o cidadão quer iniciar a preparação da esplanada por texto
+    if (/iniciar.*esplanada|preparar.*esplanada|avan[cç]ar.*esplanada|pedir.*esplanada|quero.*esplanada/i.test(m.texto)) {
+      await fluxoD2.iniciarFluxoEsplanada(m.pessoa, m.conversa);
+      await regista('canal.mensagem.enviada', m, { tipo: 'd2_esplanada_iniciada' });
+      return;
+    }
+
+    // Se existe um rascunho de esplanada D2 ativo em preenchimento conversacional
+    const rascunhoAtivo = fluxoD2.obterRascunhoAtivo(m.pessoa);
+    if (rascunhoAtivo && rascunhoAtivo.estado !== 'concluido') {
+      const processado = await fluxoD2.processarPasso(m.pessoa, m.conversa, m.texto);
+      if (processado) {
+        await regista('canal.mensagem.enviada', m, { tipo: 'd2_passo_processado', estado: rascunhoAtivo.estado });
+        return;
+      }
     }
 
     // Se a pessoa pede para assinar ou submeter em linguagem natural
@@ -491,11 +564,18 @@ canal._aoReceber(async (m) => {
       itensCofre,
     });
     await canal.enviar(m.conversa, resp.texto, resp.botoes);
-  } else {
-    return;
   }
 
   await regista('canal.mensagem.enviada', m, {});
+  console.log(`📤 [Canal] Resposta enviada a ${m.pessoa}`);
+} catch (err) {
+    console.error(`✖ Erro ao processar mensagem no canal para ${m.pessoa}:`, err);
+    await canal.enviar(
+      m.conversa,
+      'Ocorreu um lapso temporário no processamento da sua mensagem. Por favor tente de novo ou selecione o atendimento humano.',
+      [[{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }]],
+    ).catch(() => {});
+  }
 });
 
 /** Regista um evento do canal. O identificador da conversa nunca entra. */

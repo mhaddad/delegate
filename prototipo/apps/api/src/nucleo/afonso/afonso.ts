@@ -10,7 +10,6 @@
  */
 import type { Registo } from '../eventos/registo.ts';
 import { ClientePortaMcp } from './cliente-porta.ts';
-import { ClassificadorAfonso } from './classificador.ts';
 import { MotorDecisaoTypeSafe, type ContextoDecisao } from '../typesafe/motor-decisao.ts';
 import { RedatorOpenRouter } from './redator-openrouter.ts';
 import {
@@ -19,6 +18,7 @@ import {
   tratarForaCompetencia,
   tratarSemFonte,
 } from './respostas-fronteira.ts';
+import { tratarAmbiguidade } from './router-ambiguidade.ts';
 import { gerarRespostaCatalogo } from './respostas-catalogo.ts';
 import { BuscadorConhecimento } from '../conhecimento/buscador.ts';
 import type { Botoes } from '../canal.ts';
@@ -111,7 +111,6 @@ export class Afonso {
 
   async #tratarMensagem(pessoa: string, limpo: string, contextoDecisao: ContextoDecisao): Promise<RespostaAfonso> {
     const decisaoJev = await this.#motorDecisao.decidir(limpo, contextoDecisao);
-    const classificacao = ClassificadorAfonso.classificar(limpo);
 
     // Registar imediatamente o evento de decisão com métricas TypeSafe/Jev
     await this.#registo.registar({
@@ -139,26 +138,29 @@ export class Afonso {
     });
 
     // 1. Deteção Adversarial e Privacidade
-    const respAdversarial = await tratarAdversarial(pessoa, classificacao, this.#registo, this.#sessao);
+    const respAdversarial = await tratarAdversarial(pessoa, decisaoJev, this.#registo, this.#sessao);
     if (respAdversarial) return respAdversarial;
 
     // 2. Juízo Técnico (Recusa Formal de Pareceres Subjetivos)
-    const respJuizo = await tratarJuizoTecnico(pessoa, classificacao, this.#registo, this.#sessao);
+    const respJuizo = await tratarJuizoTecnico(pessoa, decisaoJev, this.#registo, this.#sessao);
     if (respJuizo) return respJuizo;
 
     // 3. Fora de Competência (Encaminhamento para Vimágua, IRN / Espaço Cidadão)
-    const respFora = await tratarForaCompetencia(pessoa, classificacao, this.#registo, this.#sessao);
+    const respFora = await tratarForaCompetencia(pessoa, decisaoJev, this.#registo, this.#sessao);
     if (respFora) return respFora;
 
-    // 4. Sem Fonte (Abstenção Formal e Atendimento Geral)
-    const respSemFonte = await tratarSemFonte(pessoa, classificacao, limpo, this.#registo, this.#sessao);
+    // 4. Detetor de Ambiguidade (Roteamento Pedagógico para Perguntas Vagas)
+    const respAmbigua = await tratarAmbiguidade(pessoa, limpo, contextoDecisao, this.#registo, this.#sessao);
+    if (respAmbigua) return respAmbigua;
+
+    // 5. Sem Fonte (Abstenção Formal e Atendimento Geral)
+    const respSemFonte = await tratarSemFonte(pessoa, decisaoJev, limpo, this.#registo, this.#sessao);
     if (respSemFonte) return respSemFonte;
 
     // 5. Base de Conhecimento RAG D0 (Site e Diretório de Guimarães via Cloudflare /markdown)
-    const pediuEsplanadaExplicitamente = /esplanada|mesas na rua|abrir esplanada|toldo|estrado/i.test(limpo);
+    const pediuEsplanadaExplicitamente = /esplanada|mesas na rua|abrir esplanada|restaurante|toldo|estrado/i.test(limpo);
     const temServicoExplicito =
-      (decisaoJev.servicoId && (decisaoJev.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente)) ||
-      (classificacao.servicoId && (classificacao.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente));
+      decisaoJev.servicoId && (decisaoJev.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente);
     if (!temServicoExplicito || decisaoJev.categoria === 'conhecimento_d0') {
       const matchRAG = await this.#buscador.buscarComJev(limpo);
       if (matchRAG && matchRAG.pontuacao >= 7) {
@@ -196,7 +198,7 @@ export class Afonso {
     }
 
     // 6. Catálogo de Serviços Oficiais
-    const servicoId = decisaoJev.servicoId ?? classificacao.servicoId ?? 'ocupacao-espaco-publico-esplanada';
+    const servicoId = decisaoJev.servicoId ?? 'ocupacao-espaco-publico-esplanada';
 
     // Obter ficha do catálogo da Porta Agêntica
     let ficha;
@@ -221,6 +223,7 @@ export class Afonso {
       registo: this.#registo,
       redator: this.#redator,
       decisaoJev,
+      historico: contextoDecisao.historicoRecente,
     });
   }
 }

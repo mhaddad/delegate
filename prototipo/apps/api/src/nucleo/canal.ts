@@ -180,9 +180,7 @@ export function criarCanalGrammy(token: string): CanalGrammy {
 
   return {
     async ligar() {
-      // Descarta o que ficou na fila. Sem isto, acordar o portátil despeja
-      // mensagens velhas de uma vez e o júri vê cinquenta respostas do dia anterior.
-      await bot.api.deleteWebhook({ drop_pending_updates: true });
+      await bot.api.deleteWebhook({ drop_pending_updates: false });
 
       const eu = await bot.api.getMe();
       console.log(`ligado a @${eu.username} — espera mensagens`);

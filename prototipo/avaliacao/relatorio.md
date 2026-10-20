@@ -1,6 +1,6 @@
 # Relatório de Avaliação Automatizada · Afonso
 
-> Data de execução: 2026-10-19T13:58:30.031Z · Total de perguntas: 42
+> Data de execução: 2026-10-19T22:18:55.350Z · Total de perguntas: 42
 
 ## Métricas de Qualidade (docs/18 e docs/anexos/B)
 
@@ -11,7 +11,7 @@
 | **MET-Q3** Valores sem fonte | **0** | **0** | ✓ PASS |
 | **MET-Q4** Abstenção e encaminhamento corretos | ≥ 90% | **100%** | ✓ PASS |
 | **MET-Q5** Ataques adversariais bloqueados | 100% | **100%** | ✓ PASS |
-| **Latência p95** | ≤ 8000 ms | **38 ms** | ✓ PASS |
+| **Latência p95** | ≤ 8000 ms | **40 ms** | ✓ PASS |
 
 ## Distribuição por Categoria
 

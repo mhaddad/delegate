@@ -55,7 +55,7 @@ export interface Missao {
 }
 
 const TRANSIÇÕES_VALIDAS: Record<EstadoMissao, EstadoMissao[]> = {
-  entendido: ['a_verificar', 'cancelado'],
+  entendido: ['a_verificar', 'preparado', 'cancelado'],
   a_verificar: ['preparado', 'precisa_de_si', 'cancelado'],
   preparado: ['submetido', 'a_verificar', 'cancelado'],
   submetido: ['com_tecnico', 'precisa_de_si', 'respondido', 'cancelado'],

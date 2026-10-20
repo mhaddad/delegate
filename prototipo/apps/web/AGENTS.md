@@ -2,7 +2,7 @@
 
 **Dona: pessoa C (Ecrãs e conteúdo).** As duas faces que o júri vê. Parte de [`../../AGENTS.md`](../../AGENTS.md).
 
-> **Stack:** Vite + React, `@xyflow/react` para o grafo, `motion` para as animações — que traz `reducedMotion="user"` de fábrica, ao contrário das alternativas. Ver a [secção Stack](../../AGENTS.md#stack). A composição dos ecrãs e as regras de honestidade, abaixo, são anteriores à stack.
+> **Stack:** HTML5 + React 18.3.1 (módulos ES nativos), SVG dinâmico para o grafo de nós e impulsos da arquitetura, CSS com suporte a alto contraste e `prefers-reduced-motion`. Servido diretamente pelo processo Fastify do núcleo (`http://localhost:4000/`) e alimentado por Server-Sent Events (SSE) a partir do Postgres `LISTEN/NOTIFY`. Ver a [secção Stack](../../AGENTS.md#stack). A composição dos ecrãs e as regras de honestidade, abaixo, são anteriores à stack.
 
 ---
 
