@@ -125,6 +125,20 @@ export function criarServidorEventos(
         }
       }
 
+      // 0.2 API de Histórico de Decisões Jev e Auditoria (GET)
+      if (caminho === '/api/router/decisoes' && req.method === 'GET') {
+        try {
+          const decisoes = await registro.listarDecisoes(100);
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify(decisoes));
+          return;
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
       // 1. Confirmação de Chave Móvel Digital (POST)
       if (caminho === '/cmd/confirmar' && req.method === 'POST') {
         let corpo = '';
