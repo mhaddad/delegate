@@ -136,6 +136,8 @@ export class Afonso {
         tempo_ms: decisaoJev.tempoRespostaMs,
         probabilidades: decisaoJev.probabilidades ?? null,
         arvore_jev: decisaoJev.arvoreJev ?? null,
+        percurso: decisaoJev.percurso ?? null,
+        perguntas_poupadas: decisaoJev.perguntasPoupadas ?? 0,
       },
     });
 

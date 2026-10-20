@@ -57,4 +57,12 @@ export interface ResultadoDecisao {
     ferramenta: { escolha: string; confianca?: number; probabilidades?: Record<string, number> };
     consentimento: { noul: number };
   };
+  percurso?: Array<{
+    nivel: number;
+    noId: string;
+    nome: string;
+    estado: 'ativo' | 'curto_circuito' | 'concluido';
+    detalhe?: string;
+  }>;
+  perguntasPoupadas?: number;
 }

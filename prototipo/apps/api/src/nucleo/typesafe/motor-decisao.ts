@@ -131,6 +131,23 @@ export class MotorDecisaoTypeSafe {
           mudancaServico = false;
         }
 
+        const percursoJev = [
+          { nivel: 0, noId: 'no-raiz', nome: 'Mensagem Recebida', estado: 'concluido' as const, detalhe: 'Contexto avaliado pelo System One' },
+          { nivel: 0, noId: 'no-triagem', nome: 'Triagem Rápida', estado: 'concluido' as const, detalhe: 'Avaliação de integridade concluída' },
+          { nivel: 1, noId: categoria === 'conhecimento_d0' ? 'no-rag-encaminha' : 'no-canonico', nome: categoria === 'conhecimento_d0' ? 'Roteamento RAG D0' : 'Procedimento Canónico', estado: 'concluido' as const, detalhe: servicoId ?? categoria },
+          { nivel: 2, noId: `no-mandato-${(qMandato?.choice || 'd0').toLowerCase()}`, nome: `Mandato ${qMandato?.choice || 'D0'}`, estado: 'concluido' as const, detalhe: `Ferramenta MCP: ${qMcp?.choice || 'consultar_catalogo'}` },
+        ];
+
+        if (qConsent?.noul > 0.5) {
+          percursoJev.push({
+            nivel: 3,
+            noId: 'no-consentimento-cmd',
+            nome: 'Consentimento & Chave Móvel Digital',
+            estado: 'ativo' as const,
+            detalhe: `Impacto Noul: ${(qConsent.noul * 100).toFixed(0)}%`,
+          });
+        }
+
         return {
           motor: 'typesafe-jev',
           modelo: 'jev',
@@ -146,6 +163,8 @@ export class MotorDecisaoTypeSafe {
           probabilidades: qServico.probabilities as Record<string, number>,
           exigeConsentimento: qConsent.noul > 0.5,
           tempoRespostaMs: Date.now() - inicio,
+          percurso: percursoJev,
+          perguntasPoupadas: 0,
           arvoreJev: {
             foco: {
               escolha: qFoco?.choice,
