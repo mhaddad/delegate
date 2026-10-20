@@ -139,6 +139,35 @@ export class Afonso {
       },
     });
 
+    // 0. Saudações e Acolhimento Geral (sem disparar RAG nem citar regulamentos irrelevantes)
+    if (decisaoJev.categoria === 'geral') {
+      await this.#registo.registar({
+        tipo: 'afonso.resposta.verificada',
+        origem: 'afonso',
+        sessao: this.#sessao,
+        pessoa,
+        missao: contextoDecisao.missaoId ?? null,
+        ator: 'agente:acolhimento',
+        simulacao: false,
+        dados: {
+          motivo: 'saudacao_acolhimento',
+          pergunta: limpo,
+        },
+      });
+
+      return {
+        texto: [
+          'Olá! Sou o <b>Afonso</b>, o seu representante digital.',
+          '',
+          'Estou aqui para o ajudar a tratar de assuntos com a Câmara Municipal de Guimarães sem burocracia.',
+          '',
+          'Diga-me o que precisa de fazer ou qual é a sua dúvida (por exemplo: <i>abrir uma esplanada</i>, <i>consultar viabilidade de um terreno no PDM</i>, <i>isenção de licença de utilização</i>, ou <i>pedir cartão sénior</i>).'
+        ].join('\n'),
+        comportamento: 'responder',
+        categoria: 'geral',
+      };
+    }
+
     // 1. Deteção Adversarial e Privacidade
     const respAdversarial = await tratarAdversarial(pessoa, decisaoJev, this.#registo, this.#sessao);
     if (respAdversarial) return respAdversarial;

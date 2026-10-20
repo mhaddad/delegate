@@ -19,7 +19,26 @@ export class AvaliadorLocal {
   }
 
   static decidir(texto: string, contexto: ContextoDecisao, inicio: number): ResultadoDecisao {
-    const t = texto.toLowerCase();
+    const t = texto.toLowerCase().trim();
+
+    // 0. Saudações e Cumprimentos Gerais (sem intenção de procedimento nem consulta a regulamentos)
+    const ehSaudacao = /^(ol[aá]|bom dia|boa tarde|boa noite|boas|viva|oi|hey|hello|como est[aá]s?|tudo bem)(\s+afonso)?[\s!.?]*$/i.test(t);
+    if (ehSaudacao) {
+      return {
+        motor: 'calibrado-local',
+        modelo: 'regras-deterministas',
+        categoria: 'geral',
+        focoServico: contexto.servicoAtivo ? 'mesmo_servico' : 'primeiro_contacto',
+        mudancaServico: false,
+        comportamento: 'responder',
+        nivelMandato: 'D0',
+        ferramentaMcp: 'nenhuma',
+        confianca: 1.0,
+        exigeConsentimento: false,
+        tempoRespostaMs: Date.now() - inicio,
+        motivo: 'saudacao_inicial',
+      };
+    }
 
     // 1. Deteção Adversarial e Privacidade
     if (
