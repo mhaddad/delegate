@@ -45,6 +45,13 @@ export class MotorDecisaoTypeSafe {
     const inicio = Date.now();
     const texto = pergunta.trim();
 
+    // 0. Triagem Rápida (Nível 0): Saudações e cumprimentos gerais não devem acionar o Jev para inferir procedimentos canónicos
+    const tMinusculo = texto.toLowerCase();
+    const ehSaudacao = /^(ol[aá]|bom dia|boa tarde|boa noite|boas|viva|oi|hey|hello|como est[aá]s?|tudo bem)(\s+afonso)?[\s!.?]*$/i.test(tMinusculo);
+    if (ehSaudacao) {
+      return AvaliadorLocal.decidir(texto, contexto, inicio);
+    }
+
     // Se temos cliente Jev e pergunta com conteúdo semântico, chamamos a API TypeSafe
     if (this.#client && this.#temApiKey && texto.length > 2 && !texto.startsWith('/')) {
       try {
@@ -120,7 +127,11 @@ export class MotorDecisaoTypeSafe {
         let servicoId: string | undefined;
         let mudancaServico = false;
 
-        if (focoServico === 'mesmo_servico' && servicoAtivoPrevio) {
+        if (categoria === 'geral' || categoria === 'adversarial' || categoria === 'fora_competencia' || categoria === 'juizo_tecnico') {
+          servicoId = undefined;
+          mudancaServico = false;
+          focoServico = categoria === 'geral' ? 'primeiro_contacto' : focoServico;
+        } else if (focoServico === 'mesmo_servico' && servicoAtivoPrevio) {
           servicoId = servicoAtivoPrevio;
           mudancaServico = false;
         } else if (focoServico === 'novo_servico' && servicoAtivoPrevio) {
@@ -134,18 +145,29 @@ export class MotorDecisaoTypeSafe {
         const percursoJev = [
           { nivel: 0, noId: 'no-raiz', nome: 'Mensagem Recebida', estado: 'concluido' as const, detalhe: 'Contexto avaliado pelo System One' },
           { nivel: 0, noId: 'no-triagem', nome: 'Triagem Rápida', estado: 'concluido' as const, detalhe: 'Avaliação de integridade concluída' },
-          { nivel: 1, noId: categoria === 'conhecimento_d0' ? 'no-rag-encaminha' : 'no-canonico', nome: categoria === 'conhecimento_d0' ? 'Roteamento RAG D0' : 'Procedimento Canónico', estado: 'concluido' as const, detalhe: servicoId ?? categoria },
-          { nivel: 2, noId: `no-mandato-${(qMandato?.choice || 'd0').toLowerCase()}`, nome: `Mandato ${qMandato?.choice || 'D0'}`, estado: 'concluido' as const, detalhe: `Ferramenta MCP: ${qMcp?.choice || 'consultar_catalogo'}` },
         ];
 
-        if (qConsent?.noul > 0.5) {
-          percursoJev.push({
-            nivel: 3,
-            noId: 'no-consentimento-cmd',
-            nome: 'Consentimento & Chave Móvel Digital',
-            estado: 'ativo' as const,
-            detalhe: `Impacto Noul: ${(qConsent.noul * 100).toFixed(0)}%`,
-          });
+        if (categoria === 'geral') {
+          percursoJev.push({ nivel: 0, noId: 'no-geral', nome: 'Saudação / Acolhimento Geral', estado: 'ativo' as const, detalhe: 'Curto-circuito: sem MCP nem RAG' });
+        } else if (categoria === 'adversarial') {
+          percursoJev.push({ nivel: 0, noId: 'no-adv', nome: 'Salvaguarda de Segurança', estado: 'ativo' as const, detalhe: 'Recusa formal de segurança' });
+        } else if (categoria === 'fora_competencia') {
+          percursoJev.push({ nivel: 0, noId: 'no-fora', nome: 'Fora de Competência', estado: 'ativo' as const, detalhe: 'Encaminhamento para entidade externa' });
+        } else if (categoria === 'juizo_tecnico') {
+          percursoJev.push({ nivel: 0, noId: 'no-juizo', nome: 'Reserva Discricionária', estado: 'ativo' as const, detalhe: 'Parecer compete aos técnicos municipais' });
+        } else {
+          percursoJev.push({ nivel: 1, noId: categoria === 'conhecimento_d0' ? 'no-rag-encaminha' : 'no-canonico', nome: categoria === 'conhecimento_d0' ? 'Roteamento RAG D0' : 'Procedimento Canónico', estado: 'concluido' as const, detalhe: servicoId ?? categoria });
+          percursoJev.push({ nivel: 2, noId: `no-mandato-${(qMandato?.choice || 'd0').toLowerCase()}`, nome: `Mandato ${qMandato?.choice || 'D0'}`, estado: 'concluido' as const, detalhe: `Ferramenta MCP: ${qMcp?.choice || 'consultar_catalogo'}` });
+
+          if (qConsent?.noul > 0.5 || qMandato?.choice === 'D3') {
+            percursoJev.push({
+              nivel: 3,
+              noId: 'no-consentimento-cmd',
+              nome: 'Consentimento & Chave Móvel Digital',
+              estado: 'ativo' as const,
+              detalhe: `Impacto Noul: ${((qConsent?.noul ?? 0.8) * 100).toFixed(0)}%`,
+            });
+          }
         }
 
         return {

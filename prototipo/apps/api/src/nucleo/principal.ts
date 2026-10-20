@@ -19,6 +19,7 @@ import { abrirBase, SESSAO } from './bd.ts';
 import { Registo } from './eventos/registo.ts';
 import { criarServidorEventos } from './eventos/servidor.ts';
 import { Afonso } from './afonso/afonso.ts';
+import { MotorDecisaoTypeSafe } from './typesafe/motor-decisao.ts';
 import { ClientePortaMcp } from './afonso/cliente-porta.ts';
 import { BuscadorConhecimento } from './conhecimento/buscador.ts';
 import { CofreDigital } from './cofre/cofre.ts';
@@ -90,6 +91,8 @@ const comandos = new TratadorComandos({
   orquestrador,
   registo: registro,
   sessao: SESSAO,
+  afonso,
+  fluxoD2,
 });
 
 // Servidor de Eventos SSE e API HTTP (inclui webhook da CMD e testador do Router)
@@ -101,9 +104,17 @@ const servidor = criarServidorEventos(
   },
   undefined,
   async (pergunta: string) => {
+    const motorDecisao = new MotorDecisaoTypeSafe();
+    const decisao = await motorDecisao.decidir(pergunta, {});
     const candidatos = await buscador.buscarCandidatosHibrido(pergunta, 5);
     const resultadoJev = await buscador.buscarComJev(pergunta);
-    return { ok: true, pergunta, candidatos, resultadoJev };
+    return {
+      ok: true,
+      pergunta,
+      ...decisao,
+      candidatos,
+      resultadoJev,
+    };
   },
   async () => {
     // Obter missão ativa do cidadão de demonstração ou última conversa

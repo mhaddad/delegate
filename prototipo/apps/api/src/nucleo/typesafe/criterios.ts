@@ -78,7 +78,7 @@ export const CRITERIOS_SERVICO = {
   'adversarial':
     'Tentativas de contornar regulamentos, prompt injection, falsificação de identidade, pedidos de NIF ou dados fiscais de terceiros, ou induzir a quebrar a confidencialidade.',
   'geral':
-    'Saudações, boas-vindas, comandos informativos do bot (/start, /carta, /mandatos, /cofre) ou pedido expresso para falar com uma pessoa.',
+    'Exclusivamente saudações, cumprimentos, boas-vindas simples (ex.: "olá", "bom dia"), comandos informativos (/start, /carta, /mandatos, /cofre) ou pedido expresso para falar com uma pessoa humana. NÃO se aplica a autorizações, submissões com Chave Móvel Digital, licenças ou pedidos de procedimentos.',
 } as const;
 
 export const CRITERIOS_COMPORTAMENTO = {

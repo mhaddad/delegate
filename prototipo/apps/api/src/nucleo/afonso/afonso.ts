@@ -100,13 +100,19 @@ export class Afonso {
       { autor: 'afonso' as const, texto: resposta.texto },
     ].slice(-10);
 
+    const ehGeral = resposta.categoria === 'geral';
     this.#contextoConversa.set(pessoa, {
-      ultimoServicoId: resposta.servicoId ?? anterior?.ultimoServicoId,
-      ultimoServicoTitulo: resposta.servicoTitulo ?? anterior?.ultimoServicoTitulo,
-      historico: novoHistorico,
+      ultimoServicoId: ehGeral ? undefined : (resposta.servicoId ?? anterior?.ultimoServicoId),
+      ultimoServicoTitulo: ehGeral ? undefined : (resposta.servicoTitulo ?? anterior?.ultimoServicoTitulo),
+      historico: ehGeral ? [] : novoHistorico,
     });
 
     return resposta;
+  }
+
+  /** Reinicia a memória conversacional e o contexto de serviço ativo para uma pessoa. */
+  reiniciarConversa(pessoa: string): void {
+    this.#contextoConversa.delete(pessoa);
   }
 
   async #tratarMensagem(pessoa: string, limpo: string, contextoDecisao: ContextoDecisao): Promise<RespostaAfonso> {

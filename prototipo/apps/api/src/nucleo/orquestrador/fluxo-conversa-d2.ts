@@ -57,6 +57,10 @@ export class GestorFluxoD2 {
     return this.#rascunhos.get(pessoa);
   }
 
+  cancelarRascunho(pessoa: string): void {
+    this.#rascunhos.delete(pessoa);
+  }
+
   /**
    * Inicia o fluxo conversacional de preparação da esplanada sob Mandato D2.
    */

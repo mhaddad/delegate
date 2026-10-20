@@ -15,6 +15,8 @@ import type { CofreDigital } from '../cofre/cofre.ts';
 import type { GestorMandatos } from '../mandatos/mandatos.ts';
 import type { OrquestradorMissoes } from '../orquestrador/missao.ts';
 import type { Registo } from '../eventos/registo.ts';
+import type { Afonso } from '../afonso/afonso.ts';
+import type { GestorFluxoD2 } from '../orquestrador/fluxo-conversa-d2.ts';
 
 export interface DependenciasComandos {
   canal: Canal;
@@ -23,6 +25,8 @@ export interface DependenciasComandos {
   orquestrador: OrquestradorMissoes;
   registo: Registo;
   sessao: string;
+  afonso?: Afonso;
+  fluxoD2?: GestorFluxoD2;
 }
 
 export class TratadorComandos {
@@ -32,6 +36,8 @@ export class TratadorComandos {
   readonly #orquestrador: OrquestradorMissoes;
   readonly #registo: Registo;
   readonly #sessao: string;
+  readonly #afonso?: Afonso;
+  readonly #fluxoD2?: GestorFluxoD2;
 
   constructor(deps: DependenciasComandos) {
     this.#canal = deps.canal;
@@ -40,6 +46,8 @@ export class TratadorComandos {
     this.#orquestrador = deps.orquestrador;
     this.#registo = deps.registo;
     this.#sessao = deps.sessao;
+    this.#afonso = deps.afonso;
+    this.#fluxoD2 = deps.fluxoD2;
   }
 
   async tratar(m: MensagemRecebida): Promise<boolean> {
@@ -50,6 +58,15 @@ export class TratadorComandos {
     const textoLimpo = m.texto.trim();
 
     if (textoLimpo.startsWith('/start')) {
+      // Reiniciar contexto conversacional do Afonso, missões ativas e rascunhos em aberto
+      if (this.#afonso) {
+        this.#afonso.reiniciarConversa(m.pessoa);
+      }
+      if (this.#fluxoD2) {
+        this.#fluxoD2.cancelarRascunho(m.pessoa);
+      }
+      await this.#orquestrador.cancelarTodasPorPessoa(m.pessoa, 'reinicio_comando_start');
+
       const persona = textoLimpo.replace('/start', '').trim() || 'ines-demo';
       await this.#canal.enviar(
         m.conversa,

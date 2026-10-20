@@ -226,4 +226,12 @@ export class OrquestradorMissoes {
       (m) => m.pessoa === pessoa && m.estado !== 'respondido' && m.estado !== 'cancelado',
     );
   }
+
+  async cancelarTodasPorPessoa(pessoa: string, motivo = 'reinicio_conversa'): Promise<void> {
+    for (const m of this.#missoes.values()) {
+      if (m.pessoa === pessoa && m.estado !== 'respondido' && m.estado !== 'cancelado') {
+        await this.mudarEstado(m.id, 'cancelado', motivo);
+      }
+    }
+  }
 }
