@@ -754,6 +754,8 @@
             </div>
           </div>
         </div>
+      </section>
+
       <!-- ABA 5: DECISÕES TYPESAFE JEV & HISTORIAL COMPLETO -->
       <section id="tab-decisoes" class="tab-content">
         <div class="panel" style="max-width: 1100px; margin: 0 auto;">
@@ -810,6 +812,10 @@
 
       const b = Array.from(document.querySelectorAll('.tab-btn')).find(el => el.getAttribute('onclick')?.includes(abaId));
       if (b) b.classList.add('active');
+
+      if (abaId === 'decisoes') {
+        carregarDecisoes();
+      }
     }
 
     async function carregarCatalogo() {
