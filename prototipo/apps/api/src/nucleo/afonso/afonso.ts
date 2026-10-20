@@ -47,6 +47,8 @@ export interface RespostaAfonso {
   geradoPorLlm?: boolean;
 }
 
+import { GestorContextoConversa } from './gestor-contexto.ts';
+
 export class Afonso {
   readonly #registo: Registo;
   readonly #porta: ClientePortaMcp;
@@ -54,7 +56,7 @@ export class Afonso {
   readonly #motorDecisao: MotorDecisaoTypeSafe;
   readonly #redator: RedatorOpenRouter;
   readonly #buscador: BuscadorConhecimento;
-  readonly #contextoConversa = new Map<string, MemoriaConversa>();
+  readonly #gestorContexto: GestorContextoConversa;
 
   constructor(
     registo: Registo,
@@ -63,6 +65,7 @@ export class Afonso {
     motorDecisao?: MotorDecisaoTypeSafe,
     redator?: RedatorOpenRouter,
     buscador?: BuscadorConhecimento,
+    gestorContexto?: GestorContextoConversa,
   ) {
     this.#registo = registo;
     this.#porta = porta ?? new ClientePortaMcp();
@@ -70,41 +73,32 @@ export class Afonso {
     this.#motorDecisao = motorDecisao ?? new MotorDecisaoTypeSafe();
     this.#redator = redator ?? new RedatorOpenRouter();
     this.#buscador = buscador ?? new BuscadorConhecimento();
+    this.#gestorContexto = gestorContexto ?? new GestorContextoConversa();
+  }
+
+  /** Acesso ao gestor de contexto avançado */
+  get contexto(): GestorContextoConversa {
+    return this.#gestorContexto;
   }
 
   /** Trata uma mensagem de texto recebida no canal com acompanhamento de continuidade de serviço. */
   async responder(pessoa: string, texto: string, contextoExterno: ContextoDecisao = {}): Promise<RespostaAfonso> {
     const limpo = texto.trim();
-    const anterior = this.#contextoConversa.get(pessoa);
-    const historicoRecente: Array<{ autor: 'pessoa' | 'afonso'; texto: string }> =
-      contextoExterno.historicoRecente ?? (anterior?.historico ? anterior.historico.slice(-6) : []);
-
-    const contextoDecisao: ContextoDecisao = {
-      pessoa,
-      servicoAtivo: contextoExterno.servicoAtivo ?? anterior?.ultimoServicoId,
-      servicoTituloAtivo: contextoExterno.servicoTituloAtivo ?? anterior?.ultimoServicoTitulo,
-      missaoAtiva: contextoExterno.missaoAtiva,
-      missaoId: contextoExterno.missaoId,
-      estadoMissao: contextoExterno.estadoMissao,
-      mandatoAtivoNivel: contextoExterno.mandatoAtivoNivel,
-      historicoRecente,
-      itensCofre: contextoExterno.itensCofre ?? [],
-    };
+    const contextoDecisao = this.#gestorContexto.prepararContextoDecisao(pessoa, contextoExterno);
 
     const resposta = await this.#tratarMensagem(pessoa, limpo, contextoDecisao);
 
-    // Gravar histórico conversacional e persistir contexto do cidadão
-    const novoHistorico = [
-      ...historicoRecente,
-      { autor: 'pessoa' as const, texto: limpo },
-      { autor: 'afonso' as const, texto: resposta.texto },
-    ].slice(-10);
-
-    const ehGeral = resposta.categoria === 'geral';
-    this.#contextoConversa.set(pessoa, {
-      ultimoServicoId: ehGeral ? undefined : (resposta.servicoId ?? anterior?.ultimoServicoId),
-      ultimoServicoTitulo: ehGeral ? undefined : (resposta.servicoTitulo ?? anterior?.ultimoServicoTitulo),
-      historico: ehGeral ? [] : novoHistorico,
+    // Atualizar o contexto conversacional com ciclo de vida (TTL e descarte de ruído)
+    this.#gestorContexto.atualizarInteracao({
+      pessoa,
+      mensagemCidadao: limpo,
+      respostaTexto: resposta.texto,
+      categoria: resposta.categoria,
+      servicoId: resposta.servicoId,
+      servicoTitulo: resposta.servicoTitulo,
+      mudancaServico: resposta.mudancaServico,
+      missaoId: contextoDecisao.missaoId,
+      estadoProcesso: contextoDecisao.estadoMissao,
     });
 
     return resposta;
@@ -112,7 +106,7 @@ export class Afonso {
 
   /** Reinicia a memória conversacional e o contexto de serviço ativo para uma pessoa. */
   reiniciarConversa(pessoa: string): void {
-    this.#contextoConversa.delete(pessoa);
+    this.#gestorContexto.limparTudo(pessoa);
   }
 
   async #tratarMensagem(pessoa: string, limpo: string, contextoDecisao: ContextoDecisao): Promise<RespostaAfonso> {
