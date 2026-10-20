@@ -110,6 +110,16 @@ export class GestorFluxoD2 {
     ].join('\n');
 
     await this.#canal.enviar(conversa, texto);
+    await this.#registo.registar({
+      tipo: 'canal.mensagem.enviada',
+      origem: 'canal',
+      sessao: this.#sessao,
+      pessoa,
+      missao: missaoId,
+      ator: 'agente:afonso',
+      simulacao: false,
+      dados: { texto },
+    });
   }
 
   /**
@@ -158,6 +168,16 @@ export class GestorFluxoD2 {
       ].join('\n');
 
       await this.#canal.enviar(conversa, textoResp);
+      await this.#registo.registar({
+        tipo: 'canal.mensagem.enviada',
+        origem: 'canal',
+        sessao: this.#sessao,
+        pessoa,
+        missao: rascunho.missaoId,
+        ator: 'agente:afonso',
+        simulacao: false,
+        dados: { texto: textoResp },
+      });
       return true;
     }
 
@@ -174,10 +194,18 @@ export class GestorFluxoD2 {
 
       // Validação de Sanidade de Dimensões
       if (numMesas <= 0 || numMesas > 50) {
-        await this.#canal.enviar(
-          conversa,
-          'O número de mesas indicado (' + numMesas + ') não parece plausível para uma esplanada contígua. Por favor indique um número entre 1 e 30 mesas.',
-        );
+        const aviso = 'O número de mesas indicado (' + numMesas + ') não parece plausível para uma esplanada contígua. Por favor indique um número entre 1 e 30 mesas.';
+        await this.#canal.enviar(conversa, aviso);
+        await this.#registo.registar({
+          tipo: 'canal.mensagem.enviada',
+          origem: 'canal',
+          sessao: this.#sessao,
+          pessoa,
+          missao: rascunho.missaoId,
+          ator: 'agente:afonso',
+          simulacao: false,
+          dados: { texto: aviso },
+        });
         return true;
       }
 
@@ -206,6 +234,16 @@ export class GestorFluxoD2 {
       ].join('\n');
 
       await this.#canal.enviar(conversa, textoResp);
+      await this.#registo.registar({
+        tipo: 'canal.mensagem.enviada',
+        origem: 'canal',
+        sessao: this.#sessao,
+        pessoa,
+        missao: rascunho.missaoId,
+        ator: 'agente:afonso',
+        simulacao: false,
+        dados: { texto: textoResp },
+      });
       return true;
     }
 
@@ -279,6 +317,16 @@ export class GestorFluxoD2 {
         ];
 
         await this.#canal.enviar(conversa, textoConclusao, botoesFinais);
+        await this.#registo.registar({
+          tipo: 'canal.mensagem.enviada',
+          origem: 'canal',
+          sessao: this.#sessao,
+          pessoa,
+          missao: rascunho.missaoId,
+          ator: 'agente:afonso',
+          simulacao: false,
+          dados: { texto: textoConclusao },
+        });
         return true;
       }
     }

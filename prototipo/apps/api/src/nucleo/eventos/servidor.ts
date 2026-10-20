@@ -17,6 +17,8 @@ const CABECALHOS = {
   'Content-Type': 'text/event-stream',
   'Cache-Control': 'no-cache, no-transform',
   Connection: 'keep-alive',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': '*',
   // Impede proxies de guardarem o fluxo em buffer — o evento fica preso lá.
   'X-Accel-Buffering': 'no',
 };
@@ -50,8 +52,6 @@ const ESTATICOS: Record<string, { ficheiro: string; tipo: string }> = {
   '/cmd': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
   '/cmd.html': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
   '/autenticacao': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
-  '/router': { ficheiro: 'router.html', tipo: 'text/html; charset=utf-8' },
-  '/router.html': { ficheiro: 'router.html', tipo: 'text/html; charset=utf-8' },
   '/legendas.json': { ficheiro: 'legendas.json', tipo: 'application/json; charset=utf-8' },
   '/favicon.ico': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
   '/favicon.png': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
@@ -175,6 +175,16 @@ export function criarServidorEventos(
           res.end('recurso não encontrado');
           return;
         }
+      }
+
+      if (req.method === 'OPTIONS') {
+        res.writeHead(204, {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': '*',
+        });
+        res.end();
+        return;
       }
 
       if (!req.url?.startsWith('/eventos/stream')) {

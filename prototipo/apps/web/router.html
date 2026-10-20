@@ -952,12 +952,19 @@
             const autor = ehMunicipe ? '👤 Munícipe (Telegram)' : ehAmbiguidade ? '🤔 Afonso (Router de Desambiguação)' : '🤖 Afonso (Resposta)';
             const autorClass = ehMunicipe ? '' : 'afonso';
 
-            let texto = ev.dados?.texto || ev.dados?.pergunta_original || JSON.stringify(ev.dados);
+            let texto = ev.dados?.texto || ev.dados?.pergunta_original;
+            if (!texto && ev.dados?.comando) texto = `Executou comando: <code>${ev.dados.comando}</code>`;
+            if (!texto && ev.dados?.tipo === 'd2_esplanada_iniciada') texto = 'Iniciou preparação de Esplanada (Mandato D2)';
+            if (!texto && ev.dados?.tipo === 'd2_passo_processado') texto = `Avançou passo no rascunho de Esplanada (${ev.dados.estado ?? 'em curso'})`;
+            if (!texto && ev.dados?.tipo === 'submissao_cmd_inferida') texto = 'Submissão formal autorizada e preparada para assinatura digital com CMD';
+            if (!texto && ev.dados?.tipo === 'localizacao_terreno') texto = 'Localização do terreno recebida e processada';
+            if (!texto && ev.dados?.tipo === 'caderneta_predial') texto = 'Caderneta Predial / Documento PDF anexado ao processo';
+            if (!texto) texto = typeof ev.dados === 'string' ? ev.dados : JSON.stringify(ev.dados);
 
             balao.innerHTML = `
               <div class="msg-meta">
                 <span class="msg-author ${autorClass}">${autor}</span>
-                <span>${new Date().toLocaleTimeString()}</span>
+                <span>${new Date(ev.ts || Date.now()).toLocaleTimeString()}</span>
               </div>
               <div class="msg-text-body">${texto.replace(/\n/g, '<br>')}</div>
               ${ehAmbiguidade ? '<div class="ambiguity-tag">❓ Pergunta Ambígua Detetada · Clarificação Solicitada</div>' : ''}

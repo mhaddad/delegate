@@ -564,9 +564,9 @@ canal._aoReceber(async (m) => {
       itensCofre,
     });
     await canal.enviar(m.conversa, resp.texto, resp.botoes);
+    await regista('canal.mensagem.enviada', m, { texto: resp.texto });
   }
 
-  await regista('canal.mensagem.enviada', m, {});
   console.log(`📤 [Canal] Resposta enviada a ${m.pessoa}`);
 } catch (err) {
     console.error(`✖ Erro ao processar mensagem no canal para ${m.pessoa}:`, err);
