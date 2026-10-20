@@ -49,4 +49,12 @@ export interface ResultadoDecisao {
   tempoRespostaMs: number;
   motivo?: string;
   entidade?: string;
+  arvoreJev?: {
+    foco: { escolha: string; confianca?: number; probabilidades?: Record<string, number> };
+    servico: { escolha: string; confianca?: number; probabilidades?: Record<string, number> };
+    comportamento: { escolha: string; confianca?: number; probabilidades?: Record<string, number> };
+    mandato: { escolha: string; confianca?: number; probabilidades?: Record<string, number> };
+    ferramenta: { escolha: string; confianca?: number; probabilidades?: Record<string, number> };
+    consentimento: { noul: number };
+  };
 }

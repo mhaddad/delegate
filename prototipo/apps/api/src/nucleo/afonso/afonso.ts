@@ -134,6 +134,8 @@ export class Afonso {
         mandato_inferido: decisaoJev.nivelMandato,
         mcp_ferramenta: decisaoJev.ferramentaMcp,
         tempo_ms: decisaoJev.tempoRespostaMs,
+        probabilidades: decisaoJev.probabilidades ?? null,
+        arvore_jev: decisaoJev.arvoreJev ?? null,
       },
     });
 

@@ -105,6 +105,25 @@ const servidor = criarServidorEventos(
     const resultadoJev = await buscador.buscarComJev(pergunta);
     return { ok: true, pergunta, candidatos, resultadoJev };
   },
+  async () => {
+    // Obter missão ativa do cidadão de demonstração ou última conversa
+    const pessoaPadrao = 'pessoa-1bbe89cb4d';
+    const missao = orquestrador.obterAtiva(pessoaPadrao) ?? orquestrador.obterAtiva('ines_guimaraes') ?? null;
+    const rascunhoD2 = fluxoD2.obterRascunhoAtivo(pessoaPadrao) ?? null;
+    return {
+      missao,
+      rascunhoD2,
+      estadosPossiveis: [
+        { id: 'entendido', nome: '1. Entendido', desc: 'Afonso compreendeu a intenção e enquadrou o serviço' },
+        { id: 'a_verificar', nome: '2. A Verificar', desc: 'Instrução de dados e medições regulamentares' },
+        { id: 'preparado', nome: '3. Preparado (D2)', desc: 'Rascunho completo no Cofre Digital aguardando CMD' },
+        { id: 'submetido', nome: '4. Submetido (D3)', desc: 'Requerimento formal com Chave Móvel Digital na Porta' },
+        { id: 'precisa_de_si', nome: '⚠️ Elementos Adicionais', desc: 'Câmara solicitou aperfeiçoamento instrutório' },
+        { id: 'com_tecnico', nome: '5. Com Técnico (SU)', desc: 'Em apreciação técnica e jurídica municipal' },
+        { id: 'respondido', nome: '6. Concluído', desc: 'Decisão final deferida e taxas liquidadas' },
+      ],
+    };
+  },
 );
 servidor.listen(PORTA_EVENTOS, () => {
   console.log(`✓ fluxo de eventos em http://localhost:${PORTA_EVENTOS}/eventos/stream`);

@@ -75,6 +75,7 @@ export function criarServidorEventos(
   aoConfirmarCmd?: (dados: DadosConfirmacaoCmd) => Promise<void>,
   obterConhecimento?: () => Promise<any> | any,
   testarPerguntaRouter?: (pergunta: string) => Promise<any> | any,
+  obterEstadoProcesso?: () => Promise<any> | any,
 ) {
   return createServer((req, res) => {
     void (async () => {
@@ -131,6 +132,23 @@ export function criarServidorEventos(
           const decisoes = await registro.listarDecisoes(100);
           res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
           res.end(JSON.stringify(decisoes));
+          return;
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
+      // 0.3 API de Máquina de Estados e Processo Ativo (GET)
+      if (caminho === '/api/router/processo-estado' && req.method === 'GET') {
+        try {
+          let estado = null;
+          if (obterEstadoProcesso) {
+            estado = await obterEstadoProcesso();
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify(estado ?? {}));
           return;
         } catch (err) {
           res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });

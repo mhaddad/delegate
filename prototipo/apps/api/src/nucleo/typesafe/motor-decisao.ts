@@ -146,6 +146,36 @@ export class MotorDecisaoTypeSafe {
           probabilidades: qServico.probabilities as Record<string, number>,
           exigeConsentimento: qConsent.noul > 0.5,
           tempoRespostaMs: Date.now() - inicio,
+          arvoreJev: {
+            foco: {
+              escolha: qFoco?.choice,
+              confianca: qFoco?.confidence,
+              probabilidades: qFoco?.probabilities,
+            },
+            servico: {
+              escolha: qServico?.choice,
+              confianca: qServico?.confidence,
+              probabilidades: qServico?.probabilities,
+            },
+            comportamento: {
+              escolha: qComp?.choice,
+              confianca: qComp?.confidence,
+              probabilidades: qComp?.probabilities,
+            },
+            mandato: {
+              escolha: qMandato?.choice,
+              confianca: qMandato?.confidence,
+              probabilidades: qMandato?.probabilities,
+            },
+            ferramenta: {
+              escolha: qMcp?.choice,
+              confianca: qMcp?.confidence,
+              probabilidades: qMcp?.probabilities,
+            },
+            consentimento: {
+              noul: qConsent?.noul,
+            },
+          },
         };
       } catch (erro) {
         console.warn('TypeSafe Jev alternativa acionado:', (erro as Error)?.message);
