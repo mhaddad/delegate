@@ -2,7 +2,7 @@
 
 **Dona: pessoa A (Henriques).** Canal, Henriques, orquestrador, política, Cofre e mandatos. Parte de [`../../../../AGENTS.md`](../../../../AGENTS.md).
 
-> **Stack:** TypeScript; `grammY` em *long polling* para o Telegram; cifra simétrica AES-256-GCM com serviço de chaves efémeras; **TypeSafe Jev System One** (`@typesafe-ai/sdk`) para julgamentos tipados e verificação de citações com contingência local calibrada (0ms); **OpenRouter** para redação conversacional em pt-PT; e **BuscadorConhecimento** (RAG D0) sobre o corpus municipal oficial.
+> **Stack:** TypeScript; `grammY` em *long polling* para o Telegram; cifra simétrica AES-256-GCM com serviço de chaves efémeras; **TypeSafe Jev** via OpenRouter (`typesafe/jev-router`, cliente em `typesafe/jev-openrouter.ts`) para julgamentos tipados e verificação de citações com contingência local calibrada (0ms); **OpenRouter** para redação conversacional em pt-PT; e **BuscadorConhecimento** (RAG D0) sobre o corpus municipal oficial.
 
 ---
 

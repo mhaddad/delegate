@@ -22,6 +22,7 @@
 | [021](#adr-021) | Base de conhecimento ampla para D0 | Proposta (mentoria) |
 | [022](#adr-022) | Modelo de impacto com custeio por atividades e preço indexado ao valor | Proposta (mentoria) |
 | [023](#adr-023) | O representante passa a chamar-se Henriques | Aceite |
+| [024](#adr-024) | O Jev passa a ser chamado via OpenRouter | Aceite |
 
 ---
 
@@ -136,3 +137,10 @@
 - **Contexto:** já existe outro assistente com o nome «Afonso».
 - **Decisão:** o representante digital passa a chamar-se **Henriques** em toda a documentação, no código (módulo `nucleo/henriques/`) e nos eventos do contrato (`henriques.*`). A alusão a D. Afonso Henriques mantém-se. O username do bot no Telegram (`@afonso_cm_bot`) não pode ser alterado e fica até haver um bot novo.
 - **Consequências:** é preciso voltar a gerar a narração e os renders dos vídeos do pitch; o emblema passa a ter o monograma «H»; `legacy/` e o corpus em `data/conhecimento/` não mudam.
+
+<a id="adr-024"></a>
+## ADR-024 · O Jev passa a ser chamado via OpenRouter
+
+- **Contexto:** o motor de decisão e o re-ranking do RAG D0 chamavam o System One pelo SDK `@typesafe-ai/sdk`, com chave própria da TypeSafe que não estava configurada; na prática corria sempre a contingência local. O redator e os embeddings já usam o OpenRouter. O OpenRouter não expõe o System One: expõe o `typesafe/jev-router`, em que o Jev escolhe o modelo que responde.
+- **Decisão:** as duas chamadas passam a usar o `typesafe/jev-router` pela API do OpenRouter, com as mesmas perguntas e critérios e resposta em JSON Schema estrito (`nucleo/typesafe/jev-openrouter.ts`). Fica uma só chave (`OPEN_ROUTER_API_TOKEN`) e sai a dependência `@typesafe-ai/sdk`.
+- **Consequências:** deixa de haver probabilidades calibradas; a confiança e o `noul` passam a ser declarados pelo modelo e o Observatório mostra-os como «confiança declarada (não calibrada)». O evento regista o modelo que respondeu de facto. Cada julgamento demora 4 a 7 s (limite de 10 s), e sem chave ou em falha mantém-se a contingência local. As 42 perguntas de avaliação devem ser corridas de novo com a chave ativa.

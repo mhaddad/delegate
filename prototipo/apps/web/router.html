@@ -1081,7 +1081,7 @@
       veredCard.innerHTML = `
         <div>
           <div class="jev-title">
-            <span>🛡️ Julgamento TypeSafe Jev System One</span>
+            <span>🛡️ Julgamento TypeSafe Jev (OpenRouter)</span>
           </div>
           <div style="font-size: 0.85rem; color: var(--text); margin-top: 0.25rem;">
             ${jev ? `Vencedor: <b>${jev.titulo}</b>` : '⚠️ Abstenção Formal (Nenhum candidato sustenta a resposta com fidelidade suficiente)'}
@@ -1265,7 +1265,7 @@
             if (Object.keys(probs).length > 0) {
               ramosProbsHtml = `
                 <div style="margin-top: 0.6rem; background: rgba(0,0,0,0.25); padding: 0.6rem; border-radius: 8px;">
-                  <div style="font-size: 0.72rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 700;">Distribuição de Probabilidades do Jev (Top Candidatos):</div>
+                  <div style="font-size: 0.72rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 700;">Confiança declarada pelo modelo (não calibrada):</div>
                   ${Object.entries(probs).slice(0, 4).map(([k, p]) => `
                     <div style="margin-bottom: 0.3rem;">
                       <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #cbd5e1;">
@@ -1282,7 +1282,7 @@
             card.innerHTML = `
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; align-items: center; gap: 0.6rem;">
-                  <span class="score-badge score-high">🧠 Julgamento Jev System One</span>
+                  <span class="score-badge score-high">🧠 Julgamento Jev (OpenRouter)</span>
                   <span style="font-weight: 700; color: #ffffff; font-size: 0.95rem;">Decisão #${ev.seq}</span>
                 </div>
                 <div style="font-size: 0.75rem; color: var(--text-dim); font-family: var(--mono);">

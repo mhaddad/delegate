@@ -22,7 +22,7 @@ Decidida a 18/10/2026 depois de pesquisa. Registada em [ADR-008](../specs/21-reg
 | Interface | Vite + React, `@xyflow/react`, `motion` | 8.3 / 19 / 12.12 / 14.3 |
 | Esquemas | Zod | 4.x |
 | Testes | Vitest | 2.x |
-| Decisão e Julgamento IA | TypeSafe Jev System One (`@typesafe-ai/sdk`) + Contingência Calibrada Local (0ms) | 0.7.x |
+| Decisão e Julgamento IA | TypeSafe Jev via OpenRouter (`typesafe/jev-router`, [ADR-024](../specs/21-registo-de-decisoes.md#adr-024)) + Contingência Calibrada Local (0ms) | — |
 | Redação Conversacional | OpenRouter (`minimax/minimax-m3.1-flash:free`, `google/gemma-4-31b-it`) com validação por regra | — |
 | RAG D0 e Ingestão | Cloudflare `/markdown` + BM25 léxico (`data/conhecimento/`) | — |
 

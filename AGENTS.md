@@ -17,7 +17,7 @@ A base do projeto é a documentação em `specs/`. Este ficheiro orienta; manda 
 
 **Precedência:** onde divergirem, para o R0 vence a estratégia — é a revisão consolidada com a mentoria (Filipe Novais / DTx e CCG):
 1. **Inversão da responsabilidade de integração:** O Delegate detém a orquestração e os processos canónicos; a autarquia implementa contratos de API padronizados (Porta Agêntica MCP + REST).
-2. **Base de Conhecimento e RAG D0:** Ingestão do portal e regulamentos municipais (`data/conhecimento/`), com roteamento, re-ranking e verificação de citações via **TypeSafe Jev System One** (`@typesafe-ai/sdk`).
+2. **Base de Conhecimento e RAG D0:** Ingestão do portal e regulamentos municipais (`data/conhecimento/`), com roteamento, re-ranking e verificação de citações via **TypeSafe Jev** (`typesafe/jev-router` no OpenRouter, [ADR-024](specs/21-registo-de-decisoes.md#adr-024)).
 3. O Telegram é o canal principal do cidadão e a fronteira entre núcleo e porta é auditada via barramento de eventos SSE.
 
 **Plano de construção do protótipo:** [strategy/11 · Ajustes pós-mentoria](specs/strategy/11-ajustes-pos-mentoria.md) e [strategy/08 · Plano de execução](specs/strategy/08-plano-de-execucao.md).

@@ -1,10 +1,10 @@
 /**
  * Motor de Decisão TypeSafe · System One (Jev)
  *
- * Utiliza o modelo System One Jev da TypeSafe para transformar linguagem natural
- * e o contexto da sessão em julgamentos tipados de alta velocidade e precisão.
+ * Utiliza o Jev da TypeSafe, via OpenRouter (`typesafe/jev-router`), para transformar
+ * linguagem natural e o contexto da sessão em julgamentos tipados.
  */
-import { TypeSafeClient, choice, noul, type ChoiceResponse, type NoulResponse } from '@typesafe-ai/sdk';
+import { choice, criarClienteJev, noul, type ChoiceResponse, type ClienteJevOpenRouter, type NoulResponse } from './jev-openrouter.ts';
 import type { ContextoDecisao, FocoServico, ResultadoDecisao, TipoComportamento } from './tipos.ts';
 import type { NivelMandato } from '../mandatos/mandatos.ts';
 import { BASE_INTENCOES_MUNICIPAIS } from './catalogo-intencoes.ts';
@@ -25,17 +25,10 @@ export * from './criterios.ts';
 export * from './avaliador-local.ts';
 
 export class MotorDecisaoTypeSafe {
-  readonly #client: TypeSafeClient | null = null;
-  readonly #temApiKey: boolean;
+  readonly #jev: ClienteJevOpenRouter | null;
 
   constructor() {
-    const key = process.env.JEV_API_KEY || process.env.TYPESAFE_API_KEY;
-    if (key && key.trim().length > 0) {
-      this.#client = new TypeSafeClient({ apiKey: key.trim() });
-      this.#temApiKey = true;
-    } else {
-      this.#temApiKey = false;
-    }
+    this.#jev = criarClienteJev();
   }
 
   /**
@@ -52,10 +45,10 @@ export class MotorDecisaoTypeSafe {
       return AvaliadorLocal.decidir(texto, contexto, inicio);
     }
 
-    // Se temos cliente Jev e pergunta com conteúdo semântico, chamamos a API TypeSafe
-    if (this.#client && this.#temApiKey && texto.length > 2 && !texto.startsWith('/')) {
+    // Se temos cliente Jev e pergunta com conteúdo semântico, chamamos o Jev via OpenRouter
+    if (this.#jev && texto.length > 2 && !texto.startsWith('/')) {
       try {
-        const resposta = await this.#client.systemOne({
+        const resposta = await this.#jev.julgar({
           state: {
             mensagem_cidadao: texto,
             contexto_sessao: {
@@ -106,11 +99,11 @@ export class MotorDecisaoTypeSafe {
           },
         });
 
-        const qFoco = resposta.answers.foco_servico as ChoiceResponse<any>;
-        const qServico = resposta.answers.servico as ChoiceResponse<any>;
-        const qComp = resposta.answers.comportamento as ChoiceResponse<any>;
-        const qMandato = resposta.answers.nivel_mandato as ChoiceResponse<any>;
-        const qMcp = resposta.answers.ferramenta_mcp as ChoiceResponse<any>;
+        const qFoco = resposta.answers.foco_servico as ChoiceResponse;
+        const qServico = resposta.answers.servico as ChoiceResponse;
+        const qComp = resposta.answers.comportamento as ChoiceResponse;
+        const qMandato = resposta.answers.nivel_mandato as ChoiceResponse;
+        const qMcp = resposta.answers.ferramenta_mcp as ChoiceResponse;
         const qConsent = resposta.answers.exige_consentimento as NoulResponse;
         const qFontes = resposta.answers.recomenda_fontes as NoulResponse | undefined;
 
@@ -153,7 +146,7 @@ export class MotorDecisaoTypeSafe {
         }
 
         const percursoJev = [
-          { nivel: 0, noId: 'no-raiz', nome: 'Mensagem Recebida', estado: 'concluido' as const, detalhe: 'Contexto avaliado pelo System One' },
+          { nivel: 0, noId: 'no-raiz', nome: 'Mensagem Recebida', estado: 'concluido' as const, detalhe: `Contexto avaliado pelo Jev Router (${resposta.modelo})` },
           { nivel: 0, noId: 'no-triagem', nome: 'Triagem Rápida', estado: 'concluido' as const, detalhe: 'Avaliação de integridade concluída' },
         ];
 
@@ -182,7 +175,7 @@ export class MotorDecisaoTypeSafe {
 
         return {
           motor: 'typesafe-jev',
-          modelo: 'jev',
+          modelo: resposta.modelo,
           servicoId,
           focoServico,
           mudancaServico,
@@ -192,7 +185,7 @@ export class MotorDecisaoTypeSafe {
           nivelMandato: (qMandato.choice as NivelMandato) || 'D0',
           ferramentaMcp: qMcp.choice || 'consultar_catalogo',
           confianca: qServico.confidence ?? 0.95,
-          probabilidades: qServico.probabilities as Record<string, number>,
+          probabilidades: qServico.probabilities,
           exigeConsentimento: qConsent.noul > 0.5,
           recomendaFontes,
           probabilidadeFontes: probFontes,
@@ -231,7 +224,7 @@ export class MotorDecisaoTypeSafe {
           },
         };
       } catch (erro) {
-        console.warn('TypeSafe Jev alternativa acionado:', (erro as Error)?.message);
+        console.warn('Jev via OpenRouter falhou; alternativa local acionada:', (erro as Error)?.message);
       }
     }
 

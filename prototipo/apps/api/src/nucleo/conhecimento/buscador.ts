@@ -7,12 +7,19 @@
  * Características:
  * 1. Pesquisa Híbrida: BM25 léxico com penalização de stopwords municipais + Embeddings vetoriais.
  * 2. Desduplicação inteligente: funde resultados léxicos e semânticos removendo duplicados por id/url.
- * 3. Re-ranking e Verificação via TypeSafe Jev System One: assegura fidelidade estrita à fonte oficial
+ * 3. Re-ranking e Verificação via TypeSafe Jev (OpenRouter): assegura fidelidade estrita à fonte oficial
  *    e deteção de necessidade de esclarecimento (perguntas incompletas/ambíguas).
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { TypeSafeClient, choice, noul, type ChoiceResponse, type NoulResponse } from '@typesafe-ai/sdk';
+import {
+  choice,
+  criarClienteJev,
+  noul,
+  type ChoiceResponse,
+  type ClienteJevOpenRouter,
+  type NoulResponse,
+} from '../typesafe/jev-openrouter.ts';
 import type { Botao } from '../canal.ts';
 
 export interface EntradaIndice {
@@ -96,23 +103,12 @@ function produtoInterno(a: number[], b: number[]): number {
 export class BuscadorConhecimento {
   readonly #documentos: DocumentoCarregado[] = [];
   readonly #vetores = new Map<string, number[]>();
-  readonly #client: TypeSafeClient | null = null;
-  readonly #temApiKey: boolean;
+  readonly #jev: ClienteJevOpenRouter | null;
   readonly #tokenOpenRouter: string | null;
 
-  constructor(caminhoPasta = PASTA_DADOS, client?: TypeSafeClient) {
-    const key = process.env.JEV_API_KEY || process.env.TYPESAFE_API_KEY;
+  constructor(caminhoPasta = PASTA_DADOS, jev?: ClienteJevOpenRouter) {
     this.#tokenOpenRouter = process.env.OPEN_ROUTER_API_TOKEN || process.env.OPENROUTER_API_KEY || null;
-
-    if (client) {
-      this.#client = client;
-      this.#temApiKey = true;
-    } else if (key && key.trim().length > 0) {
-      this.#client = new TypeSafeClient({ apiKey: key.trim() });
-      this.#temApiKey = true;
-    } else {
-      this.#temApiKey = false;
-    }
+    this.#jev = jev ?? criarClienteJev();
 
     const caminhoIndice = join(caminhoPasta, 'indice.json');
     if (!existsSync(caminhoIndice)) {
@@ -344,13 +340,13 @@ export class BuscadorConhecimento {
   /**
    * Two-Step Hybrid RAG:
    * 1. Recuperação Híbrida desduplicada (BM25 + Embeddings);
-   * 2. Re-ranking Semântico, Verificação Factual de Citação e Avaliação de Ambiguidade via TypeSafe Jev System One.
+   * 2. Re-ranking Semântico, Verificação Factual de Citação e Avaliação de Ambiguidade via TypeSafe Jev (OpenRouter).
    */
   async buscarComJev(pergunta: string): Promise<ResultadoConhecimento | null> {
     const candidatos = await this.buscarCandidatosHibrido(pergunta, 4);
     if (candidatos.length === 0) return null;
 
-    if (this.#client && this.#temApiKey && candidatos.length >= 1) {
+    if (this.#jev && candidatos.length >= 1) {
       try {
         const rubrica: Record<string, string> = {};
         for (let i = 0; i < candidatos.length; i++) {
@@ -359,7 +355,7 @@ export class BuscadorConhecimento {
         }
         rubrica['nenhum_dos_candidatos'] = 'Nenhum dos excertos oficiais apresentados responde adequadamente à pergunta do munícipe.';
 
-        const resposta = await this.#client.systemOne({
+        const resposta = await this.#jev.julgar({
           state: {
             pergunta_municipe: pergunta,
             municipio: 'Câmara Municipal de Guimarães',
@@ -384,7 +380,7 @@ export class BuscadorConhecimento {
           },
         });
 
-        const qChoice = resposta.answers.melhor_excerto as ChoiceResponse<any>;
+        const qChoice = resposta.answers.melhor_excerto as ChoiceResponse;
         const qNoul = resposta.answers.sustenta_afirmacao as NoulResponse;
         const qEsclarece = resposta.answers.precisa_esclarecimento as NoulResponse;
 
@@ -415,7 +411,7 @@ export class BuscadorConhecimento {
     const dataFormatada = resultado.consultadoEm;
     const motorTag =
       resultado.motorDecisao === 'typesafe-jev'
-        ? ' · Verificado por TypeSafe Jev System One'
+        ? ' · Verificado por TypeSafe Jev (OpenRouter)'
         : resultado.motorDecisao === 'hibrido-vetorial'
           ? ' · Pesquisa Híbrida (Vetorial + Léxica)'
           : '';
