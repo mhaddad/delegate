@@ -29,11 +29,14 @@ const WEB = new URL('../../../../web/', import.meta.url);
 const MIMES: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
 };
 
 const ESTATICOS: Record<string, { ficheiro: string; tipo: string }> = {
@@ -57,6 +60,8 @@ const ESTATICOS: Record<string, { ficheiro: string; tipo: string }> = {
   '/autenticacao': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
   '/cofre': { ficheiro: 'cofre.html', tipo: 'text/html; charset=utf-8' },
   '/cofre.html': { ficheiro: 'cofre.html', tipo: 'text/html; charset=utf-8' },
+  '/painel': { ficheiro: '../../../reference-docs/delegate-panel.html', tipo: 'text/html; charset=utf-8' },
+  '/painel.html': { ficheiro: '../../../reference-docs/delegate-panel.html', tipo: 'text/html; charset=utf-8' },
   '/legendas.json': { ficheiro: 'legendas.json', tipo: 'application/json; charset=utf-8' },
   '/favicon.ico': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
   '/favicon.png': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
@@ -300,6 +305,23 @@ export function criarServidorEventos(
         const tipo = MIMES[ext] ?? 'application/octet-stream';
         try {
           const corpo = await readFile(new URL(`assets/${subcaminho}`, WEB));
+          res.writeHead(200, { 'Content-Type': tipo, 'Cache-Control': 'public, max-age=3600' });
+          res.end(corpo);
+          return;
+        } catch {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('recurso não encontrado');
+          return;
+        }
+      }
+
+      // 4. Ficheiros sob /design-system/
+      if (caminho.startsWith('/design-system/')) {
+        const subcaminho = caminho.replace(/^\/design-system\//, '');
+        const ext = subcaminho.slice(subcaminho.lastIndexOf('.')).toLowerCase();
+        const tipo = MIMES[ext] ?? 'application/octet-stream';
+        try {
+          const corpo = await readFile(new URL(`../../../../../../design-system/${subcaminho}`, import.meta.url));
           res.writeHead(200, { 'Content-Type': tipo, 'Cache-Control': 'public, max-age=3600' });
           res.end(corpo);
           return;
