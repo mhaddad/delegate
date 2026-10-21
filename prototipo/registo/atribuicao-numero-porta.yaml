@@ -1,0 +1,55 @@
+id: atribuicao-numero-porta
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Informação Geográfica e Cadastro
+titulo_oficial: Atribuição de Número de Porta (Número de Polícia)
+titulo_simples: Pedir número de porta para casa nova
+sinonimos: [numero de porta, numero de policia, numeracao policial, placa do numero, casa sem numero]
+publico: [particulares, empresas]
+eventos_de_vida: [fazer-obras, comprar-casa]
+tipo_procedimento: requerimento
+condicoes:
+  - texto: >-
+      O pedido destina-se a prédios urbanos novos ou reconstruídos com acesso direto à via pública, para atribuição formal da numeração policial oficial.
+    fonte: corpus-proc-numero-porta
+documentos:
+  - texto: Requerimento Mod. 197/SQ, acompanhado de planta de localização do edifício com identificação do requerente e do prédio.
+    fonte: corpus-proc-numero-porta
+taxas:
+  descricao: Aquando da apresentação do requerimento é cobrada a taxa prevista no Regulamento e Tabela de Taxas e Outras Receitas Municipais em vigor.
+  valor: null
+  fonte: null
+  unidade: por número de porta atribuído
+prazos:
+  - texto: Decisão e notificação após verificação cadastral pelos serviços municipais.
+    fonte: corpus-proc-numero-porta
+canais:
+  - tipo: email
+    descricao: geral@cm-guimaraes.pt
+    url: null
+    fonte: corpus-proc-numero-porta
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA)
+    url: null
+    fonte: corpus-proc-numero-porta
+  - tipo: online
+    descricao: Serviços Online do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-numero-porta
+dados_minimos: [identificacao_predio, freguesia, rua_acesso, planta_localizacao]
+nivel_risco: baixo
+escalonamento: Situações de arruamentos com numeração não sequencial ou novos loteamentos são encaminhadas para a Divisão de Cadastro.
+limites: O número de polícia atribuído deve ser afixado de forma visível na fachada ou entrada do prédio.
+fontes:
+  - id: corpus-proc-numero-porta
+    titulo: Procedimento de Atribuição de Número de Porta da Câmara Municipal de Guimarães (Mod. 197/SQ)
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios
+    consultado_em: 2026-10-18
+    hash: sha256:9ba71bbf995844e11dbdc90984906d3ed737a79304f7ddb8db7badb6488d41cc
+    natureza: oficial
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 11 do Catálogo Anexo A.

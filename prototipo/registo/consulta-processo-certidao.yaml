@@ -1,0 +1,69 @@
+# Serviço sem custo e com fonte oficial completa: é o que permite demonstrar
+# uma resposta correcta sem qualquer número.
+id: consulta-processo-certidao
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Arquivo Municipal e Balcão Único de Atendimento
+titulo_oficial: Certidões e Fotocópias Simples ou Autenticadas
+titulo_simples: Pedir cópia ou consultar um processo
+sinonimos: [certidão, certidao, fotocópia, photocopia, consultar processo, cópia autenticada]
+publico: [empresas, particulares]
+eventos_de_vida: [comprar-casa, pedir-financiamento, alterar-o-cadastro]
+tipo_procedimento: requerimento
+condicoes:
+  - texto: Ao efetuar o pedido deverá anexar todos os elementos instrutórios para a emissão da certidão solicitada.
+    fonte: cm-certidoes
+documentos:
+  - texto: Mod. 204/SQ
+    fonte: cm-certidoes
+taxas:
+  descricao: A emissão de certidões e fotocópias simples não tem taxa associada.
+  valor: null
+  fonte: null
+  unidade: null
+prazos: []
+canais:
+  - tipo: email
+    descricao: geral@cm-guimaraes.pt
+    url: null
+    fonte: cm-certidoes
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento
+    url: null
+    fonte: cm-certidoes
+  - tipo: postal
+    descricao: Largo Cónego José Maria Gomes, 4804-534 Guimarães
+    url: null
+    fonte: cm-certidoes
+  - tipo: online
+    descricao: Submissão nos serviços online do município
+    url: https://www.cm-guimaraes.pt/pages/97?site_help_link_category_id=14
+    fonte: cm-certidoes
+dados_minimos: [tipo_de_certidao, identificacao_do_imovel, destino]
+nivel_risco: baixo
+escalonamento: Pedidos com dados protegidos seguem o regime do Arquivo Municipal
+limites: O acesso a documentos com restrições de comunicabilidade depende da finalidade declarada.
+fontes:
+  - id: cm-certidoes
+    titulo: Portal do Município de Guimarães — Certidões e Arquivo Municipal
+    url: https://www.cm-guimaraes.pt/pages/97?site_help_link_category_id=14
+    consultado_em: 2026-10-18
+    hash: null
+    natureza: oficial
+  - id: corpus-certidoes
+    titulo: >-
+      Corpus municipal, categoria Certidões e Fotocópias. Copia verbatim do que
+      o portal dizia em 2026-10-12, quando o corpus foi recolhido.
+    url: null
+    consultado_em: 2026-10-12
+    hash: sha256:e58cd202f2ee6c06b3e6a40a40f590838f34ece68ccab470a6abd53bcea90753
+    natureza: corpus
+curadoria:
+  por: por curar
+  em: 2026-10-18
+  notas: >-
+    Canais e formulário vêm da página oficial. Falta o hash da página. A
+    ausência de taxa está confirmada pela ausência de linha na tabela de
+    taxas de 2025 para certidões simples, não por uma fonte que diga «grátis».

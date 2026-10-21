@@ -1,0 +1,42 @@
+# A taxa deste serviço é a única das três que a extracção marcou com confiança
+# alta, por isso é citável. As condições continuam por curar.
+id: ocupacao-espaco-publico-andaimes
+versao: 2026-10-18.1
+estado: rascunho
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Gabinete de Serviços Urbanos
+titulo_oficial: Ocupação do Espaço Público por Andaimes
+titulo_simples: Pôr andaime ou tapume na rua durante obras
+sinonimos: [andaime, tapume, andaimes, cofragem de obra, occupations de obra]
+publico: [empresas, particulares]
+eventos_de_vida: [fazer-obras]
+tipo_procedimento: ocupación do espaço público
+condicoes: []
+documentos: []
+taxas:
+  descricao: Ocupação do espaço público delimitado por andaimes
+  valor: 0.56
+  fonte: rttl-2025-andaimes
+  unidade: por m2 ou fração de superfície ocupada e por semana
+prazos: []
+canais: []
+dados_minimos: [localizacao, area, periodo, duracao_da_obra]
+nivel_risco: medio
+escalonamento: Volumes e prazos de ocupação passam para o Gabinete de Serviços Urbanos
+limites: A avaliação técnica local é da Câmara.
+fontes:
+  - id: rttl-2025-andaimes
+    titulo: >-
+      Tabela de Taxas de 2025, Ocupação do espaço público delimitado por
+      andaimes, por m2 ou fração de superfície ocupada e por semana.
+    url: null
+    consultado_em: 2026-10-18
+    hash: sha256:c513b2011c7ddbbaf49ffa14308a3a018fe4fd2020167d745dd0eda6f3d0f117
+    natureza: tabela_taxas
+curadoria:
+  por: por curar
+  em: 2026-10-18
+  notas: >-
+    A taxa é citável porque a extracção a marcou com confiança alta. Falta o
+    Regulamento para as condições e os canais, que dependem do tipo de obra.

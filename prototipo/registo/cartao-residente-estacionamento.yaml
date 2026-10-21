@@ -1,0 +1,51 @@
+id: cartao-residente-estacionamento
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Trânsito e Mobilidade
+titulo_oficial: Emissão de Cartão de Residente para Estacionamento
+titulo_simples: Cartão de residente para estacionar perto de casa
+sinonimos: [cartao de residente, estacionar centro historico, estacionamento moradores, distico residente, parquimetro residente]
+publico: [particulares]
+eventos_de_vida: [mudar-residencia]
+tipo_procedimento: requerimento
+condicoes:
+  - texto: >-
+      Destina-se a pessoas singulares com domicílio fiscal na área abrangida por zonas de estacionamento de duração limitada ou Centro Histórico de Guimarães, proprietárias ou utilizadoras permanentes de veículo automóvel.
+    fonte: corpus-proc-transito
+documentos:
+  - texto: Certidão de domicílio fiscal, título de registo de propriedade do veículo ou contrato de locação financeira, e carta de condução.
+    fonte: corpus-proc-transito
+taxas:
+  descricao: Valor anual de emissão ou renovação previsto no regulamento municipal de estacionamento tarifado.
+  valor: null
+  fonte: null
+  unidade: anuidade por veículo
+prazos:
+  - texto: Emissão do dístico após validação da residência e matrícula.
+    fonte: corpus-proc-transito
+canais:
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA) ou Polícia Municipal
+    url: null
+    fonte: corpus-proc-transito
+  - tipo: online
+    descricao: Serviços Online do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-transito
+dados_minimos: [nome, nif, matricula, morada_residencia]
+nivel_risco: baixo
+escalonamento: Casos com divergência de domicílio fiscal ou veículos de empresa passam para a Divisão de Mobilidade.
+limites: Limite de cartões por fogo habitacional estabelecido no regulamento de estacionamento do Centro Histórico.
+fontes:
+  - id: corpus-proc-transito
+    titulo: Regulamento de Zonas de Estacionamento de Duração Limitada do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    consultado_em: 2026-10-18
+    hash: sha256:1a085b393ae0cfd9d3590bf004f64129dc8e89aafe610609e681265b38dba67a
+    natureza: regulamento
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 12 do Catálogo Anexo A.

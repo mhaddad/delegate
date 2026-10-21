@@ -1,0 +1,32 @@
+SERVIÇO DE FINANÇAS DE GUIMARÃES - [0388]
+CADERNETA PREDIAL URBANA
+
+DADOS DO PRÉDIO:
+Distrito: 03 - BRAGA  Concelho: 08 - GUIMARÃES  Freguesia: 41 - SILVARES
+Artigo Matricial: 1420
+
+LOCALIZAÇÃO DO PRÉDIO:
+Morada: Rua de Silvares, S/N
+Código Postal: 4800-025 SILVARES GMR
+
+CONFRONTAÇÕES:
+Norte: Caminho Público  Sul: Herdeiros de Joaquim Silva
+Nascente: Estrada Municipal  Poente: Terreno Agrícola
+
+ÁREAS (em m2):
+Área total do terreno: 1.250,0000 m2
+Área de implantação do edifício: 0,0000 m2
+Área bruta de construção: 0,0000 m2
+
+VALOR PATRIMONIAL TRIBUTÁRIO:
+VPT atual: 42.500,00 €
+Determinado no ano: 2024
+
+TITULARES:
+NIF: 234567890 - Maria Lurdes Gonçalves (Propriedade Plena: 1/1)
+
+=======================================================
+Auditado pelo Afonso · Delegate Guimarães
+Resumo SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Armazenamento Cifrado: AES-256-GCM no Cofre Digital Pessoal
+=======================================================

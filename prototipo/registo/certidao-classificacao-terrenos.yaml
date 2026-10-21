@@ -1,0 +1,51 @@
+id: certidao-classificacao-terrenos
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Planeamento Urbanístico
+titulo_oficial: Emissão de Certidão de Classificação e Qualificação de Terrenos
+titulo_simples: Saber a classificação do meu terreno no PDM
+sinonimos: [classificacao de terreno, certidao de terreno, solo urbano ou rustico, zonamento pdm, certidao do pdm]
+publico: [particulares, empresas]
+eventos_de_vida: [fazer-obras, comprar-casa]
+tipo_procedimento: certidão administrativa
+condicoes:
+  - texto: >-
+      A certidão atesta unicamente a classificação e qualificação do solo prevista no Plano Diretor Municipal em vigor, sem consubstanciar parecer ou garantia vinculativa de viabilidade de construção.
+    fonte: corpus-urbanismo-certidoes
+documentos:
+  - texto: Requerimento com planta de localização à escala 1:2000 ou 1:5000 com o prédio devidamente delimitado, e certidão predial ou caderneta predial.
+    fonte: corpus-urbanismo-certidoes
+taxas:
+  descricao: Valor previsto na Tabela de Taxas Municipal para emissão de certidões urbanísticas simples.
+  valor: null
+  fonte: null
+  unidade: por certidão
+prazos:
+  - texto: Emissão no prazo regulamentar após validação da localização cadastral.
+    fonte: corpus-urbanismo-certidoes
+canais:
+  - tipo: online
+    descricao: Plataforma Urbanismo Digital
+    url: https://www.cm-guimaraes.pt/municipio/camara-municipal/servicos/urbanismo/urbanismo-digital
+    fonte: corpus-urbanismo-certidoes
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA)
+    url: null
+    fonte: corpus-urbanismo-certidoes
+dados_minimos: [artigo_matricial, freguesia, localizacao, planta_delimitada]
+nivel_risco: baixo
+escalonamento: Situações de dúvidas interpretativas sobre limites entre classes de solo transitam para a Divisão de Planeamento Urbanístico.
+limites: A certidão é meramente descritiva da classificação cartográfica do PDM; para direitos vinculativos deve ser instruído um Pedido de Informação Prévia (PIP).
+fontes:
+  - id: corpus-urbanismo-certidoes
+    titulo: Procedimentos de Urbanismo Digital e Certidões de PDM da Câmara Municipal de Guimarães
+    url: https://pdm.guimaraes.pt
+    consultado_em: 2026-10-18
+    hash: sha256:7c2a891237f9027d00d6245dd807880a35ed11564eb95dcb1815628b7b1b6c1c
+    natureza: oficial
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 10 do Catálogo Anexo A.

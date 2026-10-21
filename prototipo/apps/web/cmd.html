@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chave Móvel Digital · Autenticação e Assinatura Eletrónica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cmd-azul-escuro: #002c52;
+        --cmd-azul-medio: #005691;
+        --cmd-verde: #008559;
+        --cmd-verde-hover: #006b47;
+        --cmd-fundo: #f4f6f8;
+        --cmd-cartao: #ffffff;
+        --cmd-borda: #d1d5db;
+        --cmd-texto: #1f2937;
+        --cmd-texto-secundario: #4b5563;
+        --cmd-texto-suave: #6b7280;
+        --font-primary: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --font-condensed: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background-color: var(--cmd-fundo);
+        color: var(--cmd-texto);
+        font-family: var(--font-primary);
+        font-size: 14px;
+        line-height: 1.5;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+      }
+
+      .container-cmd {
+        width: 100%;
+        max-width: 520px;
+        background: var(--cmd-cartao);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--cmd-borda);
+        overflow: hidden;
+      }
+
+      /* Cabeçalho Oficial Autenticação.Gov */
+      .cmd-cabecalho {
+        background: var(--cmd-azul-escuro);
+        padding: 1.25rem 1.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 3px solid var(--cmd-verde);
+      }
+
+      .cmd-logo-bloco {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+
+      .cmd-emblema {
+        background: #ffffff;
+        color: var(--cmd-azul-escuro);
+        font-weight: 800;
+        font-size: 15px;
+        padding: 0.35rem 0.65rem;
+        border-radius: 6px;
+        letter-spacing: -0.02em;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      .cmd-titulos h1 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+      }
+
+      .cmd-titulos p {
+        font-size: 11px;
+        color: #93c5fd;
+      }
+
+      .badge-simulacao {
+        background: rgba(245, 158, 11, 0.2);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .cmd-corpo {
+        padding: 1.75rem;
+      }
+
+      /* Caixa de Contexto do Pedido */
+      .caixa-pedido {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .pedido-entidade {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--cmd-azul-medio);
+        letter-spacing: 0.04em;
+        margin-bottom: 0.35rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .pedido-finalidade {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--cmd-texto);
+        margin-bottom: 0.5rem;
+      }
+
+      .pedido-atributos {
+        font-size: 11.5px;
+        color: var(--cmd-texto-secundario);
+        line-height: 1.45;
+        border-top: 1px dashed #cbd5e1;
+        padding-top: 0.5rem;
+      }
+
+      .pedido-atributos strong {
+        color: var(--cmd-texto);
+      }
+
+      /* Formulário */
+      .grupo-campo {
+        margin-bottom: 1.15rem;
+      }
+
+      .grupo-campo label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--cmd-texto);
+        margin-bottom: 0.35rem;
+      }
+
+      .grupo-campo input {
+        width: 100%;
+        padding: 0.65rem 0.85rem;
+        border: 1px solid var(--cmd-borda);
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: var(--font-primary);
+        color: var(--cmd-texto);
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+
+      .grupo-campo input:focus {
+        outline: none;
+        border-color: var(--cmd-azul-medio);
+        box-shadow: 0 0 0 3px rgba(0, 86, 145, 0.15);
+      }
+
+      .input-mono {
+        font-family: var(--font-mono) !important;
+        letter-spacing: 0.1em;
+      }
+
+      /* Passo 2: SMS */
+      .caixa-sms-aviso {
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        border-radius: 6px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.15rem;
+        font-size: 12px;
+        color: #065f46;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .btn-auto-preencher {
+        background: #059669;
+        color: #ffffff;
+        border: none;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .btn-auto-preencher:hover {
+        background: #047857;
+      }
+
+      /* Botões */
+      .btn-principal {
+        width: 100%;
+        background: var(--cmd-verde);
+        color: #ffffff;
+        border: none;
+        padding: 0.85rem 1.25rem;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: background-color 0.15s, transform 0.1s;
+      }
+
+      .btn-principal:hover {
+        background: var(--cmd-verde-hover);
+      }
+
+      .btn-principal:active {
+        transform: scale(0.99);
+      }
+
+      .btn-secundario {
+        width: 100%;
+        background: transparent;
+        color: var(--cmd-texto-suave);
+        border: none;
+        padding: 0.65rem;
+        font-size: 12px;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        text-align: center;
+      }
+
+      .btn-secundario:hover {
+        color: var(--cmd-texto);
+      }
+
+      /* Ecrã de Sucesso */
+      .ecra-sucesso {
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+
+      .icone-sucesso {
+        width: 60px;
+        height: 60px;
+        background: #ecfdf5;
+        color: #059669;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        margin: 0 auto 1.25rem auto;
+        border: 2px solid #a7f3d0;
+      }
+
+      .ecra-sucesso h2 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--cmd-texto);
+        margin-bottom: 0.5rem;
+      }
+
+      .ecra-sucesso p {
+        font-size: 13px;
+        color: var(--cmd-texto-secundario);
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .token-pill {
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        padding: 0.35rem 0.65rem;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--cmd-azul-escuro);
+        display: inline-block;
+        margin-bottom: 1.5rem;
+      }
+
+      .cmd-rodape {
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        padding: 0.85rem 1.75rem;
+        font-size: 11px;
+        color: var(--cmd-texto-suave);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-cmd" id="app">
+      <header class="cmd-cabecalho">
+        <div class="cmd-logo-bloco">
+          <div class="cmd-emblema">
+            <span>🇵🇹</span>
+            <span>gov.pt</span>
+          </div>
+          <div class="cmd-titulos">
+            <h1>Chave Móvel Digital</h1>
+            <p>Autenticação e Assinatura Eletrónica</p>
+          </div>
+        </div>
+        <span class="badge-simulacao">Simulação</span>
+      </header>
+
+      <main class="cmd-corpo" id="conteudo-principal">
+        <!-- Caixa de Contexto do Pedido -->
+        <div class="caixa-pedido">
+          <div class="pedido-entidade">
+            <span>🏛️</span>
+            <span>Município de Guimarães</span>
+          </div>
+          <div class="pedido-finalidade" id="texto-finalidade">
+            Submissão de Procedimento Municipal com Mandato Eletrónico D3
+          </div>
+          <div class="pedido-atributos">
+            <strong>Atributos a partilhar:</strong> Nome Completo, NIF, Número de Identificação Civil e Domicílio Fiscal.<br />
+            <span style="color: #059669; font-weight: 600;">✓ Proteção RGPD:</span> Dados bancários e patrimoniais adicionais permanecem sob custódia exclusiva do cidadão no Cofre Local Cifrado.
+          </div>
+        </div>
+
+        <!-- Passo 1: Telemóvel e PIN -->
+        <div id="passo-1">
+          <div class="grupo-campo">
+            <label for="campo-telemovel">Número de Telemóvel ou NIF</label>
+            <input type="text" id="campo-telemovel" value="912 345 678" placeholder="Ex.: 912 345 678 ou NIF" />
+          </div>
+
+          <div class="grupo-campo">
+            <label for="campo-pin">PIN da Chave Móvel Digital (4 dígitos)</label>
+            <input type="password" id="campo-pin" value="1234" maxlength="4" class="input-mono" placeholder="••••" />
+          </div>
+
+          <button type="button" class="btn-principal" id="btn-avancar">
+            <span>Avançar para Validação SMS</span>
+            <span>➔</span>
+          </button>
+          <button type="button" class="btn-secundario" onclick="window.close()">Cancelar e voltar</button>
+        </div>
+
+        <!-- Passo 2: Código SMS (Oculto inicialmente) -->
+        <div id="passo-2" style="display: none;">
+          <div class="caixa-sms-aviso">
+            <span>Simulação SMS: Código gerado: <strong id="codigo-simulado">849 201</strong></span>
+            <button type="button" class="btn-auto-preencher" id="btn-preencher-sms">Preencher</button>
+          </div>
+
+          <div class="grupo-campo">
+            <label for="campo-sms">Código de Segurança Recebido por SMS (6 dígitos)</label>
+            <input type="text" id="campo-sms" maxlength="6" class="input-mono" placeholder="849201" style="font-size: 18px; text-align: center; letter-spacing: 0.25em;" />
+          </div>
+
+          <button type="button" class="btn-principal" id="btn-confirmar">
+            <span>✍️ Autorizar e Assinar com Chave Móvel Digital</span>
+          </button>
+          <button type="button" class="btn-secundario" id="btn-voltar-passo-1">Voltar ao passo anterior</button>
+        </div>
+
+        <!-- Passo 3: Concluído com Sucesso (Oculto inicialmente) -->
+        <div id="passo-3" style="display: none;" class="ecra-sucesso">
+          <div class="icone-sucesso">✓</div>
+          <h2>Autenticação e Assinatura Confirmadas!</h2>
+          <p id="msg-sucesso-detalhe">
+            A sua identidade e assinatura foram validadas com sucesso. O Mandato Eletrónico D3 foi apenso ao processo e submetido aos Serviços da Câmara Municipal de Guimarães.
+          </p>
+          <div class="token-pill" id="token-exibido">TOKEN-CMD-2026-VAL-98214</div>
+          <button type="button" class="btn-principal" id="btn-concluir" style="background: var(--cmd-azul-medio);">
+            <span>Fechar e Voltar ao Telegram</span>
+          </button>
+        </div>
+      </main>
+
+      <footer class="cmd-rodape">
+        República Portuguesa · Agência para a Modernização Administrativa (AMA) · Simulação Segura R0
+      </footer>
+    </div>
+
+    <script>
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pessoa = urlParams.get('pessoa') || 'ines_guimaraes';
+        const servico = urlParams.get('servico') || 'ocupacao-espaco-publico-esplanada';
+        const processo = urlParams.get('processo') || 'OEP/2026/0001';
+
+        const textoFinalidade = document.getElementById('texto-finalidade');
+        if (servico.includes('pdm') || servico.includes('previa') || servico.includes('urbanismo')) {
+          textoFinalidade.textContent = 'Pedido de Informação Prévia (PIP / PDM) · Divisão de Gestão Urbanística';
+        } else if (servico.includes('esplanada')) {
+          textoFinalidade.textContent = 'Mera Comunicação Prévia de Esplanada · Divisão de Gestão do Espaço Público';
+        }
+
+        const passo1 = document.getElementById('passo-1');
+        const passo2 = document.getElementById('passo-2');
+        const passo3 = document.getElementById('passo-3');
+
+        const btnAvancar = document.getElementById('btn-avancar');
+        const btnPreencherSms = document.getElementById('btn-preencher-sms');
+        const btnConfirmar = document.getElementById('btn-confirmar');
+        const btnVoltar = document.getElementById('btn-voltar-passo-1');
+        const btnConcluir = document.getElementById('btn-concluir');
+
+        const campoSms = document.getElementById('campo-sms');
+        const codigoSimulado = document.getElementById('codigo-simulado');
+
+        // Gerar código de 6 dígitos
+        const codigoGerado = Math.floor(100000 + Math.random() * 900000).toString();
+        codigoSimulado.textContent = codigoGerado;
+
+        btnAvancar.addEventListener('click', () => {
+          passo1.style.display = 'none';
+          passo2.style.display = 'block';
+          campoSms.focus();
+        });
+
+        btnVoltar.addEventListener('click', () => {
+          passo2.style.display = 'none';
+          passo1.style.display = 'block';
+        });
+
+        btnPreencherSms.addEventListener('click', () => {
+          campoSms.value = codigoGerado;
+        });
+
+        btnConfirmar.addEventListener('click', async () => {
+          btnConfirmar.disabled = true;
+          btnConfirmar.innerHTML = '<span>A validar assinatura digital...</span>';
+
+          const tokenCmd = 'CMD-TOKEN-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(1000 + Math.random() * 9000);
+
+          try {
+            await fetch('/cmd/confirmar', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                pessoa,
+                servico,
+                processo,
+                token_cmd: tokenCmd,
+                nif: '234567890',
+                nome: 'Maria Lurdes Gonçalves'
+              })
+            });
+          } catch (e) {
+            console.warn('Envio local:', e);
+          }
+
+          document.getElementById('token-exibido').textContent = tokenCmd;
+          passo2.style.display = 'none';
+          passo3.style.display = 'block';
+
+          // Notificar Telegram WebApp se disponível
+          if (window.Telegram && window.Telegram.WebApp) {
+            try {
+              window.Telegram.WebApp.sendData(JSON.stringify({ cmd_token: tokenCmd, status: 'confirmado' }));
+            } catch (_) {}
+          }
+        });
+
+        btnConcluir.addEventListener('click', () => {
+          if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.close();
+          } else {
+            window.close();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

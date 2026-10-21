@@ -1,0 +1,51 @@
+id: provas-desportivas-caminhadas
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Divisão de Desporto e Juventude
+titulo_oficial: Autorização para Realização de Provas Desportivas, Passeios e Caminhadas na Via Pública
+titulo_simples: Organizar caminhada ou prova desportiva na via pública
+sinonimos: [caminhada solidaria, corrida na rua, prova de atletismo, passeio de bicicletas, prova desportiva via publica]
+publico: [associacoes, empresas, particulares]
+eventos_de_vida: [organizar-evento]
+tipo_procedimento: autorização prévia
+condicoes:
+  - texto: >-
+      A realização de provas desportivas, cortejos ou caminhadas na via pública carece de autorização municipal acompanhada de plano de percurso, seguro de acidentes e policiamento obrigatório.
+    fonte: corpus-proc-desporto
+documentos:
+  - texto: Requerimento com mapa detalhado do percurso, termo de responsabilidade, apólice de seguro e parecer das forças de segurança (PSP ou GNR).
+    fonte: corpus-proc-desporto
+taxas:
+  descricao: Taxa prevista na Tabela de Taxas Municipal para ocupação da via pública e licenças desportivas.
+  valor: null
+  fonte: null
+  unidade: por evento
+prazos:
+  - texto: Submissão do pedido com antecedência mínima de 30 dias relativamente à data da realização da prova.
+    fonte: corpus-proc-desporto
+canais:
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA)
+    url: null
+    fonte: corpus-proc-desporto
+  - tipo: online
+    descricao: Serviços Online do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: corpus-proc-desporto
+dados_minimos: [itinerario, data_prova, horario_previsto, numero_estimado_participantes]
+nivel_risco: medio
+escalonamento: Provas com corte total de artérias rodoviárias principais carecem de articulação com a Divisão de Trânsito e Polícia Municipal.
+limites: O percurso não pode colidir com obras em curso nem bloquear acessos de emergência a hospitais ou quartéis de bombeiros.
+fontes:
+  - id: corpus-proc-desporto
+    titulo: Regulamento de Ocupação da Via Pública para Eventos Desportivos e Culturais do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/servicos-online
+    consultado_em: 2026-10-18
+    hash: sha256:2cb05c722a483f8ca9a3ae4729072f203d490d7131f04577f4258ec1bc5f6394
+    natureza: regulamento
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 15 do Catálogo Anexo A.

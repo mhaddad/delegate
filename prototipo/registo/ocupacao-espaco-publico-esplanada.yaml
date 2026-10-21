@@ -1,0 +1,76 @@
+# Âncora da demonstração. Não tem bloco próprio no corpus municipal: o que
+# se sabe vem da página da Câmara sobre comunicação prévia e da tabela de taxas.
+id: ocupacao-espaco-publico-esplanada
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Gabinete de Serviços Urbanos
+titulo_oficial: Ocupação do Espaço Público
+titulo_simples: Pôr uma esplanada à porta do estabelecimento
+sinonimos: [esplanada, mesas na rua, ocupar o passeio, guarda-ventos]
+publico: [empresas]
+eventos_de_vida: [abrir-negocio]
+tipo_procedimento: mera comunicação prévia
+condicoes:
+  - texto: Ocupar o espaço público contíguo à fachada do estabelecimento.
+    fonte: cm-licenciamento-zero
+  - texto: Assegurar um corredor para peões com pelo menos 2,00 metros na calçada.
+    fonte: cm-licenciamento-zero
+documentos:
+  - texto: Requerimento de Ocupação de Espaço Público (Modelo OVP-SO) ou Mera Comunicação Prévia
+    fonte: cmg-formulario-ovp-so
+  - texto: Planta de localização ou fotografia do local cotada com delimitação da área e garantia de corredor de 2,00 m
+    fonte: cm-licenciamento-zero
+  - texto: Certidão permanente da empresa ou comprovativo de início de atividade do estabelecimento comercial
+    fonte: cmg-formulario-ovp-so
+  - texto: Apólice de seguro de responsabilidade civil
+    fonte: cmg-formulario-ovp-so
+taxas:
+  descricao: >-
+    Taxa apurada em função da área (m²) e do período de ocupação (mensal ou anual),
+    calculada nos termos do Regulamento e Tabela de Taxas e Outras Receitas do Município de Guimarães (RTTL).
+  valor: null
+  fonte: null
+  unidade: por m2 e por ano
+prazos:
+  - texto: Mera comunicação prévia — o início da ocupação é imediato após a submissão e o pagamento da taxa devida
+    fonte: cm-licenciamento-zero
+canais:
+  - tipo: online
+    descricao: Serviços Online da Câmara Municipal de Guimarães (Formulário OVP-SO) e Balcão do Empreendedor
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=
+    fonte: cmg-formulario-ovp-so
+dados_minimos: [localizacao, atividade, numero_mesas, area, periodo]
+nivel_risco: baixo
+escalonamento: Dúvidas sobre localização ou dimensões passam para o Gabinete de Serviços Urbanos
+limites: A avaliação técnica local é da Câmara.
+fontes:
+  - id: cmg-formulario-ovp-so
+    titulo: Portal da Câmara Municipal de Guimarães — Detalhe do Procedimento e Formulário OVP-SO (Ocupação de Espaço Público)
+    url: https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=
+    consultado_em: 2026-10-19
+    hash: null
+    natureza: oficial
+  - id: cm-licenciamento-zero
+    titulo: Portal do Município de Guimarães — Balcão do Empreendedor e Licenciamento Zero (Mera Comunicação Prévia)
+    url: https://www.cm-guimaraes.pt/pages/97?site_help_link_category_id=29
+    consultado_em: 2026-10-18
+    hash: null
+    natureza: oficial
+  - id: rttl-2025-esplanadas
+    titulo: >-
+      Tabela de Taxas de 2025, Esplanadas (por m2 e por ano). Corroboração
+      secundária, não citável, por a extracção ser de confiança baixa.
+    url: null
+    consultado_em: 2026-10-18
+    hash: sha256:c513b2011c7ddbbaf49ffa14308a3a018fe4fd2020167d745dd0eda6f3d0f117
+    natureza: tabela_taxas
+curadoria:
+  por: por curar
+  em: 2026-10-18
+  notas: >-
+    DECISÃO A TOMBAR. A resposta a quanto vou pagar é abster-se: a tabela traz
+    15,15 por m2 e por ano mas com confiança de extracção baixa e sem
+    confirmação na fonte oficial. Falta trazer o Regulamento de Ocupação do
+    Espaço Público, art. 8.º e Anexo I, com endereço e hash.

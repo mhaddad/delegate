@@ -1,0 +1,46 @@
+id: publicidade-reclamo-fachada
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Gabinete de Serviços Urbanos
+titulo_oficial: Licenciamento de Publicidade e Ocupação do Espaço Público
+titulo_simples: Pôr um reclamo ou publicidade na fachada
+sinonimos: [publicidade, reclamo luminoso, tabuleta, toldo com publicidade, anúncio na fachada]
+publico: [empresas, particulares]
+eventos_de_vida: [abrir-negocio, fazer-obras]
+tipo_procedimento: autorização prévia
+condicoes:
+  - texto: A afixação de publicidade ou reclamos luminosos em fachadas visíveis do espaço público carece de autorização ou mera comunicação prévia nos termos do regulamento municipal.
+    fonte: cm-publicidade-regulamento
+documentos:
+  - texto: Memória descritiva com dimensões, materiais e cores, e fotomontagem da inserção na fachada.
+    fonte: cm-publicidade-regulamento
+taxas:
+  descricao: Calculada de acordo com a área do dispositivo publicitário e período de afixação nos termos da Tabela de Taxas Municipal.
+  valor: null
+  fonte: null
+  unidade: por m2 e por ano
+prazos:
+  - texto: Decisão no prazo regulamentar após instrução completa do processo.
+    fonte: cm-publicidade-regulamento
+canais:
+  - tipo: online
+    descricao: Balcão do Empreendedor ou Serviços Online
+    url: https://www.cm-guimaraes.pt/servicos-online
+    fonte: cm-publicidade-regulamento
+dados_minimos: [localizacao, tipo_dispositivo, dimensoes_m2, iluminacao]
+nivel_risco: baixo
+escalonamento: Em zonas de proteção patrimonial ou Centro Histórico, exige parecer prévio do Gabinete do Centro Histórico.
+limites: Sujeito às restrições estéticas e de segurança rodoviária e pedonal em vigor.
+fontes:
+  - id: cm-publicidade-regulamento
+    titulo: Regulamento de Ocupação do Espaço Público e Publicidade do Município de Guimarães
+    url: https://www.cm-guimaraes.pt/como-podemos-ajudar/servicos
+    consultado_em: 2026-10-18
+    hash: sha256:81cdd5f728a98d9967b2d8531c949934c8357de65c05cc711407fb5aea1d2d83
+    natureza: regulamento
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 6 do Catálogo Anexo A.

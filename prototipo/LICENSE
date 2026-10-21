@@ -1,0 +1,35 @@
+Licença Pública da União Europeia
+                                   EUPL v. 1.2
+
+                       SPDX-License-Identifier: EUPL-1.2
+
+Copyright (c) 2026 Equipa Delegate — Hack4Guimarães 2035
+
+Este programa é software livre. Pode utilizá-lo, estudá-lo, modificá-lo e
+redistribuí-lo nos termos da Licença Pública da União Europeia, publicada na
+União Europeia, na versão 1.2.
+
+Esta escolha não é um detalhe: o município deve poder reutilizar o código sem
+depender de um fornecedor, e uma licença copyleft é o que garante isso se a
+Câmara quiser estender o programa.
+
+--------------------------------------------------------------------------
+
+ATENÇÃO — este ficheiro precisa de ser completado antes da publicação.
+
+O texto integral e oficial da EUPL v. 1.2 não foi aqui colado, para não correr
+o risco de o reproduzir com erros: uma licença com o texto trocado é pior do
+que uma licença ausente, porque dá falsa garantia de que está em vigor.
+
+O texto oficial está em:
+
+    https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+
+Passos para fechar:
+
+    1. Descarregar o texto oficial da EUPL v. 1.2.
+    2. Colar o texto integral a seguir, substituindo este aviso.
+    3. Confirmar que o README aponta para este ficheiro e não para uma cópia
+       solta.
+
+Referência: ADR-005 no registo de decisões.

@@ -1,0 +1,104 @@
+---
+id: "DOC-DIRETORIO-diretorio-de-servicos-directorio_de_servicos-certidoes-aplic"
+url: "https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/aplicabilidade-do-rgeu?service_action_id=2"
+titulo: "Diretório de Serviços"
+categoria: "diretorio"
+consultado_em: "2026-10-19"
+hash_sha256: "2ad0117112154fff41c308bc09fa1bd8cb48d1d84a00ee135e649b165e7e4a23"
+tamanho_bytes: 6403
+fonte_extracao: "Cloudflare Browser Run /markdown"
+---
+
+Title: Diretório de Serviços
+
+URL Source: https://diretorio.cm-guimaraes.pt/diretorio-de-servicos/directorio_de_servicos/certidoes/aplicabilidade-do-rgeu
+
+Markdown Content:
+---
+description: Diretório de Serviços: aqui pode consultar, pedir e pagar serviços disponibilizados pela Câmara Municipal de Guimarães
+title: Diretório de Serviços
+image: https://diretorio.cm-guimaraes.pt/cmguimaraes-diretoriodeservicos/uploads/site_zone/seo_default_image/1/logo_fb.png
+---
+
+ 
+
+[Passar para o Conteúdo Principal](#accessibilityMainContent) 
+
+**Utilizamos cookies**
+
+Este site utiliza cookies para melhorar a sua experiência. [Política de cookies](/pages/721).
+
+[Personalizar cookies](/personalizar-cookies)Aceitar e prosseguirDesativar os cookies
+
+[Top](#stickyFooter "voltar ao topo da página") 
+
+# 
+
+[#Pedir](/diretorio-de-servicos/directorio%5Fde%5Fservicos?service%5Faction%5Fid=2) [#Certidões](/diretorio-de-servicos/directorio%5Fde%5Fservicos/certidoes) [#licença de utilização](/diretorio-de-servicos/directorio%5Fde%5Fservicos?tag=licença de utilização) 
+
+Pedir
+
+## Aplicabilidade do RGEU
+
+Visa atestar a data de aplicação do RGEU – Regulamento Geral das Edificações Urbanas no concelho de Guimarães.
+
+Para submissão do pedido deve clicar em **Pedir Serviço**.
+
+[ Pedir ](https://www.cm-guimaraes.pt/participar/formularios/detalhe-de-procedimento?procedure%5Fid=QVRFI1BDI0NFUjIw) [ Preciso de ajuda ](/pages/894 "Enviar uma mensagem a pedir mais informações") 
+
+### Perguntas Frequentes
+
+* #### Para além dos Serviços Online, que outros canais podem ser utilizados para solicitar a certidão de Aplicabilidade do RGEU?  
+Para além dos Serviços Online, o pedido pode ser efetuado por um dos seguintes canais:  
+\- **Email** ([geral@cm-guimaraes.pt](mailto:geral@cm-guimaraes.pt));  
+\- **Presencialmente** no Balcão Único de Atendimento (BUA). Para agendar atendimento presencial no BUA clique **[AQUI](/diretorio-de-servicos/directorio%5Fde%5Fservicos/atendimento-presencial-balcao-unico-de-atendimento/agendar-atendimento)**  
+\- **Via postal**, para Largo Cónego José Maria Gomes, 4804-534 Guimarães.  
+Nestes casos, o pedido deve ser formulado através do impresso [Mod. 1144/SQ – “Aplicabilidade RGEU”](https://www.cm-guimaraes.pt/cmguimaraes/uploads/document/file/25450/imp%5F%5F%5F1144%5F%5F%5Faplicabilidade%5Frgeu%5Fsq%5F0.pdf "Mod. 1144/SQ Aplicabilidade RGEU").
+* #### Qual a data de aplicação do RGEU ao concelho de Guimarães?  
+A partir de 7 de agosto de 1951, o Regulamento Geral das Edificações Urbanas abrangeu as freguesias de Oliveira, S. Paio e S. Sebastião.  
+Em 1 de setembro de 1961, aquele regulamento foi extensivo a parte da freguesia de Azurém, Costa, Creixomil, Mesão Frio e Urgezes.  
+Em 2 agosto de 1972, o mesmo diploma abrangeu as freguesias referidas no ponto anterior em área mais alargada e ainda a freguesia de Mascotelos e parte das freguesias de Aldão, Fermentões, Candoso S. Martinho, Gondar, Pencelo, Selho S. Cristóvão, Selho S. Jorge, Silvares e Polvoreira.  
+Dentro da localidade da vila das Taipas e Zona da Estância turística da Penha e em toda a área do concelho, para os casos de edificações de carácter industrial ou de utilização coletiva, o referido Regulamento foi aplicável a partir da data da sua entrada em vigor (07 de agosto de 1951).  
+Finalmente, em 5 de março de 1976, aquele diploma foi extensivo a todo o concelho de Guimarães;  
+Os casos que respeitam a parte das freguesias terão de ser analisados através de planta de localização, que deve ser anexada ao pedido da certidão, de forma a verificar a data da aplicação do mencionado Regulamento face à situação do prédio.
+
+### Passo a Passo
+
+1. #### Passo 1  
+Aceder ao Portal do Cidadão, selecionar o serviço “Certidão Aplicabilidade do RGEU” e clicar no botão Pedir Serviço.
+2. #### Passo 2  
+Preencher corretamente todos os campos do formulário e submeter o pedido.
+
+**Nota:** Nos casos respeitantes a uma localização especifica, deverá ser anexada **planta de localização**, ao pedido da certidão.  
+Para emissão de planta de localização clique [AQUI](https://www.cm-guimaraes.pt/areas-de-intervencao/ambiente-e-sustentabilidade/urbanismo/websig-mapas-online "Mapas online")
+3. #### Passo 3  
+Efetuar o pagamento da taxa.  
+A emissão da Certidão Aplicabilidade do RGEU tem um custo de **10,58€** (n.º 6 do art.º 1º da **[Tabela de Taxas e Outras Receitas Municipais](https://www.cm-guimaraes.pt/municipio/camara-municipal/publicacoes/regulamentos?folders%5Flist%5F82%5Ffolder%5Fid=2499 "Tabela de Taxas e Outras receitas Municipais")**).  
+Caso seja solicitada a emissão da certidão com carácter de urgência, a taxa sofre um “_agravamento em 100%, desde que o pedido se possa satisfazer nos 3 dias úteis subsequentes à entrada do pedido ou da data do despacho que sobre este recaiu, conforme a satisfação do pedido dependa, ou não, desta última formalidade._” (art.º 48º do **[Regulamento de taxas e Outras Receitas Municipais](https://www.cm-guimaraes.pt/municipio/camara-municipal/publicacoes/regulamentos?folders%5Flist%5F82%5Ffolder%5Fid=2499 "Regulamento Municipal de Taxas e Outras receitas Municipais")**).
+
+---
+
+Esta informação foi útil?   
+
+Sim Não 
+
+  
+A justificação precisa de ter entre 10 a 255 caracteres
+
+Enviar Justificação 
+
+Conseguiu pedir o serviço sem ajuda?   
+
+Sim Não 
+
+### Sugerido para si
+
+* [Pedido de consulta de processos](/diretorio-de-servicos/directorio%5Fde%5Fservicos/urbanismo/pedido-de-consulta-de-processos?service%5Faction%5Fid=2)  
+[ Pedido de consulta de processos ](/diretorio-de-servicos/directorio%5Fde%5Fservicos/urbanismo/pedido-de-consulta-de-processos?service%5Faction%5Fid=2)
+* [Urbanismo Digital](/diretorio-de-servicos/directorio%5Fde%5Fservicos/urbanismo/urbanismo-digital?service%5Faction%5Fid=2)  
+[ Urbanismo Digital ](/diretorio-de-servicos/directorio%5Fde%5Fservicos/urbanismo/urbanismo-digital?service%5Faction%5Fid=2)
+* [Isenção de Licença de Utilização](/diretorio-de-servicos/directorio%5Fde%5Fservicos/certidoes/isencao-de-licenca-de-utilizacao?service%5Faction%5Fid=2)  
+[ Isenção de Licença de Utilização ](/diretorio-de-servicos/directorio%5Fde%5Fservicos/certidoes/isencao-de-licenca-de-utilizacao?service%5Faction%5Fid=2)
+Todas as sugestões 
+
+[Voltar](javascript:history.back%28%29)

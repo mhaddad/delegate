@@ -1,0 +1,51 @@
+id: limpeza-terrenos-vegetacao
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Serviço Municipal de Proteção Civil e Gabinete Técnico Florestal
+titulo_oficial: Denúncia / Comunicação de Vegetação Não Limpa e Gestão de Combustíveis
+titulo_simples: Queixar-me de um terreno com mato ou perigo de incêndio
+sinonimos: [terreno com mato, limpeza de terrenos, perigo de incendio, mato alto, terreno abandonado vizinho]
+publico: [particulares, empresas]
+eventos_de_vida: [seguranca-protecao-civil]
+tipo_procedimento: comunicação / denúncia
+condicoes:
+  - texto: >-
+      Os proprietários, arrendatários ou usufrutuários de terrenos confinantes a edifícios em espaços rurais ou florestais são obrigados a proceder à gestão de combustível numa faixa de 50 metros. Na falta de limpeza, qualquer cidadão pode comunicar a situação ao município.
+    fonte: corpus-proc-florestal
+documentos:
+  - texto: Identificação da localização exata do terreno (rua, número de polícia aproximado ou coordenadas GPS/fotografia) e dados do comunicante.
+    fonte: corpus-proc-florestal
+taxas:
+  descricao: Gratuito para o comunicante. Em caso de execução coerciva pela autarquia, os custos de limpeza são imputados ao proprietário faltoso com aplicação de coima.
+  valor: 0.0
+  fonte: corpus-proc-florestal
+  unidade: procedimento gratuito
+prazos:
+  - texto: Fiscalização no local no prazo regulamentar com notificação do proprietário para cumprimento no prazo legal.
+    fonte: corpus-proc-florestal
+canais:
+  - tipo: online
+    descricao: Plataforma de Registo de Ocorrências da Câmara Municipal
+    url: https://www.cm-guimaraes.pt/registar-ocorrencias
+    fonte: corpus-proc-florestal
+  - tipo: presencial
+    descricao: Balcão Único de Atendimento (BUA) ou Proteção Civil Municipal
+    url: null
+    fonte: corpus-proc-florestal
+dados_minimos: [localizacao_terreno, freguesia, descricao_perigo]
+nivel_risco: medio
+escalonamento: Situações de perigo iminente junto a aglomerados populacionais são sinalizadas com prioridade à GNR/SEPNA e Proteção Civil.
+limites: A intervenção direta da autarquia só ocorre após decurso do prazo de notificação sem cumprimento voluntário pelo proprietário.
+fontes:
+  - id: corpus-proc-florestal
+    titulo: Regime de Gestão Integrada de Fogos Rurais e Regulamento Municipal de Proteção Civil de Guimarães
+    url: https://www.cm-guimaraes.pt/registar-ocorrencias
+    consultado_em: 2026-10-18
+    hash: sha256:e6ba900c1d7f6ad693d9c076ef68a79cc12f6737fda1ccfb19b949dd7b80effe
+    natureza: regulamento
+curadoria:
+  por: equipa
+  em: 2026-10-18
+  notas: Serviço 14 do Catálogo Anexo A.

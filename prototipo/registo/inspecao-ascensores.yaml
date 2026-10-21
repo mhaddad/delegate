@@ -1,0 +1,65 @@
+# Único serviço com fonte oficial completa: a página da Câmara traz o
+# formulário, os prazos e remete para a Tabela de Taxas, que temos.
+id: inspecao-ascensores
+versao: 2026-10-18.1
+estado: revisto
+entidade: Câmara Municipal de Guimarães
+competencia: camara
+unidade_responsavel: Gabinete de Fiscalização
+titulo_oficial: Inspeção ou Reinspeção Periódica de Elevador
+titulo_simples: Pedir inspeção ou reinspeção do elevador
+sinonimos: [elevador, ascensor, inspeção do elevador, reinspeção, montacargas]
+publico: [empresas, particulares]
+eventos_de_vida: [fazer-obras, por-reparar]
+tipo_procedimento: requerimento
+condicoes: []
+documentos:
+  - texto: Mod. 316/SQ
+    fonte: cm-ascensores
+taxas:
+  descricao: Inspeções periódicas e reinspecções
+  valor: 73.0
+  fonte: rttl-2025-inspecoes
+  unidade: por inspeção
+prazos:
+  - texto: Na sequência de reprovação, as anomalias devem ser resolvidas dentro do prazo de 30 dias.
+    fonte: cm-ascensores
+  - texto: >-
+      A inspeção periódica faz-se de dois em dois anos em edifícios comerciais
+      ou de serviços abertos ao público, de quatro em quatro anos em edifícios
+      mistos e em edifícios habitacionais com mais de 32 fogos ou 8 pisos, e
+      de seis em seis anos nos restantes.
+    fonte: cm-ascensores
+canais:
+  - tipo: presencial
+    descricao: Pedido apresentado junto da Câmara Municipal
+    url: null
+    fonte: cm-ascensores
+  - tipo: email
+    descricao: geral@cm-guimaraes.pt
+    url: null
+    fonte: cm-ascensores
+dados_minimos: [localizacao, matricula, ultima_inspecao]
+nivel_risco: baixo
+escalonamento: Dúvidas sobre a periodicidade passam para o Gabinete de Fiscalização
+limites: A certificação periódica compete à entidade competente, não à Câmara.
+fontes:
+  - id: cm-ascensores
+    titulo: Portal do Município de Guimarães — Elevadores, Ascensores e Monta-cargas
+    url: https://www.cm-guimaraes.pt/pages/97?site_help_link_category_id=17
+    consultado_em: 2026-10-18
+    hash: null
+    natureza: oficial
+  - id: rttl-2025-inspecoes
+    titulo: Tabela de Taxas de 2025, Inspeções periódicas e reinspecções
+    url: null
+    consultado_em: 2026-10-18
+    hash: sha256:c513b2011c7ddbbaf49ffa14308a3a018fe4fd2020167d745dd0eda6f3d0f117
+    natureza: tabela_taxas
+curadoria:
+  por: por curar
+  em: 2026-10-18
+  notas: >-
+    A taxa de 73,00 euros tem duas fontes concordantes: a página oficial remete
+    para a Tabela de Taxas, e a extracção da tabela marca o valor com
+    confiança alta. Falta o hash da página oficial e confirmar a unidade.
