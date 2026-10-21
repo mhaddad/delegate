@@ -17,6 +17,8 @@ const SENHA = 'delegado';
 const PORTA = 5433;
 const base = { host: '127.0.0.1', port: PORTA, user: 'postgres', password: SENHA };
 
+import { rm } from 'node:fs/promises';
+
 const ESCOLAS = ['nucleo', 'porta', 'su_simulado', 'tesouraria_simulada'];
 const espera = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -28,8 +30,10 @@ async function limpar() {
   await escritor?.end().catch(() => {});
   await leitor?.end().catch(() => {});
   await bd?.stop().catch(() => {});
+  await rm(PASTA, { recursive: true, force: true }).catch(() => {});
 }
 
+await rm(PASTA, { recursive: true, force: true });
 console.log('a arrancar o PostgreSQL embutido…');
 bd = new EmbeddedPostgres({
   databaseDir: PASTA,
@@ -44,9 +48,10 @@ console.log('✓ arrancado');
 
 const admin = new pg.Client({ ...base, database: 'postgres' });
 await admin.connect();
-// IF NOT EXISTS evita que uma segunda execução rebente — este script usa a
-// sua própria pasta, precisamente para não mexer no cluster da demonstração.
-await admin.query('CREATE DATABASE IF NOT EXISTS delegado');
+const existeDb = await admin.query("SELECT 1 FROM pg_database WHERE datname = 'delegado'");
+if (existeDb.rowCount === 0) {
+  await admin.query('CREATE DATABASE delegado');
+}
 await admin.end();
 
 leitor = new pg.Client({ ...base, database: 'delegado' });
