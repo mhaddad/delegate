@@ -1,0 +1,84 @@
+/*
+ * Delegate · tokens de design
+ * Fonte: reference-docs/estudo-identidade-visual.html (paleta, tipografia, forma)
+ * e o símbolo oficial (verde e dourado da marca, medidos na imagem de referência).
+ * Documentação: design-system/README.md
+ */
+
+@font-face {
+  font-family: "Manrope";
+  src: url("./fontes/Manrope-wght.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ── Marca: só para o símbolo e superfícies de marca em fundo escuro ── */
+  --dlg-marca-verde: #7bcc90;      /* porta, sobre Bastidores */
+  --dlg-marca-dourado: #e0b65d;    /* maçaneta, sobre Bastidores */
+
+  /* ── Neutros ── */
+  --dlg-palco: #f4efe6;            /* superfícies */
+  --dlg-branco: #fffefa;           /* cartões, campos */
+  --dlg-tinta: #1d2430;            /* texto */
+  --dlg-cinza: #647080;            /* texto secundário (ver regras de contraste) */
+  --dlg-linha: #e6e2da;            /* bordas e divisórias */
+  --dlg-bastidores: #0f1b2d;       /* tecnologia, consola, fundo do logótipo escuro */
+  --dlg-bastidores-texto: #c3ccd8; /* texto secundário sobre Bastidores */
+
+  /* ── Cor com significado: indicam estado, nunca decoram ── */
+  --dlg-verde: #1a7040;            /* ação concluída · Henriques */
+  --dlg-verde-suave: #dcefe2;
+  --dlg-dourado: #8a6210;          /* autorização · Cofre */
+  --dlg-dourado-suave: #f6edcf;
+  --dlg-terracota: #b4492a;        /* atenção · alertas */
+  --dlg-terracota-suave: #f6e2dc;
+  --dlg-ciano: #167a76;            /* reserva: definido no estudo, sem papel atribuído */
+  --dlg-ciano-suave: #d9efec;
+
+  /* ── Papéis semânticos (usar estes no produto) ── */
+  --dlg-fundo: var(--dlg-palco);
+  --dlg-superficie: var(--dlg-branco);
+  --dlg-texto: var(--dlg-tinta);
+  --dlg-texto-secundario: var(--dlg-cinza);
+  --dlg-borda: var(--dlg-linha);
+  --dlg-acao: var(--dlg-verde);
+  --dlg-acao-fundo: var(--dlg-verde-suave);
+  --dlg-autorizacao: var(--dlg-dourado);
+  --dlg-autorizacao-fundo: var(--dlg-dourado-suave);
+  --dlg-atencao: var(--dlg-terracota);
+  --dlg-atencao-fundo: var(--dlg-terracota-suave);
+
+  /* ── Tipografia: uma só família ── */
+  --dlg-fonte: "Manrope", Arial, sans-serif;
+  --dlg-peso-regular: 400;
+  --dlg-peso-medio: 500;         /* mensagens e texto corrido */
+  --dlg-peso-semi: 600;
+  --dlg-peso-forte: 700;         /* títulos, hierarquia e ações */
+  --dlg-peso-extra: 800;
+
+  --dlg-texto-display: clamp(3rem, 7vw, 6.5rem); /* linha .98 · tracking -0.045em */
+  --dlg-texto-titulo: 2.4rem;      /* linha 1.1 · tracking -0.045em */
+  --dlg-texto-destaque: 3rem;      /* 48px · linha 1.05 · tracking -0.05em */
+  --dlg-texto-interface: 1.5625rem;/* 25px · peso 500 · linha 1.35 · tracking -0.03em */
+  --dlg-texto-lead: 1.1875rem;     /* 19px */
+  --dlg-texto-corpo: 1rem;         /* 16px · linha 1.55 */
+  --dlg-texto-pequeno: 0.8125rem;  /* 13px */
+  --dlg-texto-etiqueta: 0.75rem;   /* 12px · maiúsculas · tracking 0.12em */
+
+  --dlg-tracking-titulo: -0.045em;
+  --dlg-tracking-destaque: -0.05em;
+  --dlg-tracking-interface: -0.03em;
+  --dlg-tracking-etiqueta: 0.12em;
+  --dlg-linha-corpo: 1.55;
+  --dlg-linha-titulo: 1.1;
+
+  /* ── Forma ── */
+  --dlg-raio-pequeno: 10px;        /* botões, itens de navegação, campos */
+  --dlg-raio-medio: 14px;          /* cartões pequenos, amostras */
+  --dlg-raio-grande: 18px;         /* painéis */
+  --dlg-raio-palco: 24px;          /* blocos de marca */
+  --dlg-raio-pilula: 99px;         /* etiquetas de estado */
+  --dlg-sombra: 0 22px 60px #17203318;
+}

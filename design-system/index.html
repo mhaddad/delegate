@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Delegate · Design system</title>
+  <link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--dlg-fundo);color:var(--dlg-texto);font:var(--dlg-peso-regular) var(--dlg-texto-corpo)/var(--dlg-linha-corpo) var(--dlg-fonte)}
+    h1,h2,h3,p{margin-top:0}
+    h1,h2{font-weight:var(--dlg-peso-forte);letter-spacing:var(--dlg-tracking-titulo)}
+    h1{font-size:clamp(2.6rem,6vw,5rem);line-height:.98;max-width:820px;margin:40px 0 20px}
+    h2{font-size:var(--dlg-texto-titulo);line-height:var(--dlg-linha-titulo);margin-bottom:14px}
+    h3{font-size:1.05rem;margin-bottom:4px}
+    code{font-size:.78rem;color:var(--dlg-texto-secundario)}
+    .wrap{max-width:1180px;margin:auto;padding:28px 30px 90px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid #1d243020;padding:8px 0 22px}
+    .top img{height:34px}
+    .tag{color:var(--dlg-texto-secundario);font-size:var(--dlg-texto-etiqueta);font-weight:var(--dlg-peso-forte);letter-spacing:var(--dlg-tracking-etiqueta);text-transform:uppercase}
+    .intro p{font-size:var(--dlg-texto-lead);color:#4e5967;max-width:690px}
+    .section{padding:48px 0;border-top:1px solid #1d243020}
+    .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:24px}
+    .section-head p{max-width:470px;color:#4e5967;margin:0}
+    .card{background:var(--dlg-superficie);border:1px solid var(--dlg-borda);border-radius:var(--dlg-raio-grande)}
+
+    .board{background:var(--dlg-bastidores);color:var(--dlg-branco);border-radius:var(--dlg-raio-palco);padding:46px;display:grid;grid-template-columns:auto 1fr;gap:46px;align-items:center;box-shadow:var(--dlg-sombra)}
+    .board .sym{width:180px}
+    .board .lock{width:100%;max-width:460px}
+    .board p{color:var(--dlg-bastidores-texto);font-size:14px;max-width:380px;margin:22px 0 0}
+
+    .build{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:28px;margin-top:18px;align-items:center}
+    .build svg{width:100%;height:auto;display:block}
+    .build dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:14px}
+    .build dt{font-weight:var(--dlg-peso-forte)}
+    .build dd{margin:0;color:#4e5967}
+
+    .variants{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .variant{overflow:hidden}
+    .preview{height:170px;display:grid;place-items:center;padding:26px;border-bottom:1px solid var(--dlg-borda)}
+    .preview img{max-width:100%;max-height:100%}
+    .preview.escuro{background:var(--dlg-bastidores);border-color:var(--dlg-bastidores)}
+    .preview.claro{background:var(--dlg-palco)}
+    .preview.mono{color:var(--dlg-verde)}
+    .preview.mono svg{width:90px;height:90px}
+    .preview .row{display:flex;gap:22px;align-items:end}
+    .variant .info{padding:16px 18px 18px}
+    .variant .info p{font-size:13px;color:#4e5967;margin:0 0 8px}
+    .variant a{color:var(--dlg-verde);font-weight:var(--dlg-peso-forte);font-size:13px;text-decoration:none}
+    .variant a:hover{text-decoration:underline}
+
+    .group{margin-top:26px}
+    .group > .tag{display:block;margin-bottom:10px}
+    .palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+    .swatch{border-radius:var(--dlg-raio-medio);overflow:hidden;background:var(--dlg-branco);border:1px solid #1d243012}
+    .swatch .color{height:84px}
+    .swatch .info{padding:12px}
+    .swatch b{display:block;font-size:13px}
+    .swatch span{display:block;font-size:12px;color:#4e5967}
+    .swatch code{display:block;margin-top:4px}
+
+    .states{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+    .state{padding:16px;border-radius:var(--dlg-raio-medio);font-size:14px}
+    .state b{display:block}
+    .pill{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:var(--dlg-raio-pilula);font-size:11px;font-weight:var(--dlg-peso-forte)}
+
+    .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .type-card{padding:25px}
+    .sample-destaque{font-size:var(--dlg-texto-destaque);font-weight:var(--dlg-peso-forte);line-height:1.05;letter-spacing:var(--dlg-tracking-destaque);margin:16px 0}
+    .sample-interface{font-size:var(--dlg-texto-interface);font-weight:var(--dlg-peso-medio);line-height:1.35;letter-spacing:var(--dlg-tracking-interface);margin:16px 0}
+    .type-card p{color:#4e5967;font-size:14px;margin:0}
+    .scale{margin-top:16px;padding:8px 25px}
+    .scale-row{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:baseline;padding:14px 0;border-top:1px solid var(--dlg-borda)}
+    .scale-row:first-child{border-top:0}
+    .scale-row .meta{font-size:12px;color:#4e5967}
+    .weights{display:flex;min-width:0;flex-wrap:wrap;gap:8px 26px;font-size:22px}
+
+    .rules{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .rules .card{padding:22px}
+    .rules ul{margin:0;padding-left:18px;color:#4e5967;font-size:14px}
+    .rules li{margin:4px 0}
+    .footer{padding-top:30px;color:#4e5967;font-size:12px}
+    .footer a{color:var(--dlg-verde)}
+
+    @media(max-width:850px){
+      .board{grid-template-columns:minmax(0,1fr);padding:30px}
+      .board .sym{width:120px}
+      .build,.type-grid,.rules{grid-template-columns:minmax(0,1fr)}
+      .variants{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .states{grid-template-columns:1fr}
+    }
+    @media(max-width:580px){
+      .wrap{padding:18px 16px 60px}
+      .top img{height:26px}
+      .top .tag{display:none}
+      .section-head{display:block}
+      .section-head p{margin-top:8px}
+      .variants{grid-template-columns:minmax(0,1fr)}
+      .board{padding:26px 20px}
+      .scale{padding:4px 18px}
+      .scale-row{grid-template-columns:minmax(0,1fr);gap:4px}
+      .sample-destaque{font-size:2.2rem}
+    }
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <img src="logo/delegate-logo-horizontal-claro.svg" alt="Delegate">
+    <span class="tag">Design system · 2026</span>
+  </header>
+
+  <section class="intro">
+    <span class="tag">Identidade visual</span>
+    <h1>Uma porta para a Câmara. A chave fica consigo.</h1>
+    <p>Logótipo, cores e tipografia do Delegate para o Telegram, o Observatório, a Consola Municipal e os documentos. Ficheiros em <code>design-system/</code>; regras completas no README.</p>
+  </section>
+
+  <!-- 01 · Símbolo -->
+  <section class="section">
+    <div class="section-head">
+      <div><span class="tag">01 · Símbolo</span><h2>A porta e a maçaneta.</h2></div>
+      <p>O arco verde é a porta para os serviços municipais. O ponto dourado, junto ao lado direito, é a maçaneta: a porta está ao alcance da mão, e o Henriques só a abre com o mandato da pessoa.</p>
+    </div>
+
+    <div class="board">
+      <img class="sym" src="logo/delegate-simbolo-escuro.svg" alt="Símbolo do Delegate">
+      <div>
+        <img class="lock" src="logo/delegate-logo-horizontal-escuro.svg" alt="Delegate">
+        <p>Versão principal · fundo Bastidores · porta verde <code style="color:inherit">#7BCC90</code> e maçaneta dourada <code style="color:inherit">#E0B65D</code></p>
+      </div>
+    </div>
+
+    <div class="build">
+      <div class="card" style="padding:18px">
+        <svg viewBox="0 0 48 48" role="img" aria-label="Construção do símbolo numa grelha de 48 unidades">
+          <g stroke="#1d243014" stroke-width=".15">
+            <path d="M0 4H48M0 8H48M0 12H48M0 16H48M0 20H48M0 24H48M0 28H48M0 32H48M0 36H48M0 40H48M0 44H48"/>
+            <path d="M4 0V48M8 0V48M12 0V48M16 0V48M20 0V48M24 0V48M28 0V48M32 0V48M36 0V48M40 0V48M44 0V48"/>
+          </g>
+          <rect x="8" y="6" width="32" height="36" fill="none" stroke="#b4492a" stroke-width=".2" stroke-dasharray=".8 .6"/>
+          <circle cx="24" cy="22" r="14" fill="none" stroke="#167a76" stroke-width=".2" stroke-dasharray=".8 .6"/>
+          <path d="M24 6V42" stroke="#167a76" stroke-width=".2" stroke-dasharray=".8 .6"/>
+          <path d="M10 40V22a14 14 0 0 1 28 0v18Z" fill="none" stroke="#1a7040" stroke-opacity=".85" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="30.5" cy="26" r="2.5" fill="#8a6210"/>
+          <path d="M12 26H36" stroke="#b4492a" stroke-width=".2"/>
+          <circle cx="24" cy="22" r=".5" fill="#167a76"/>
+        </svg>
+      </div>
+      <dl>
+        <dt>Grelha</dt><dd>48 × 48 unidades; o símbolo ocupa 32 × 36, centrado (caixa a tracejado).</dd>
+        <dt>Porta</dt><dd>Arco de raio 14 com centro em (24, 22), pernas até y 40, traço 4 com juntas redondas.</dd>
+        <dt>Maçaneta</dt><dd>Círculo de raio 2,5 em (30,5; 26): a 2,5 unidades da face interior direita e um pouco abaixo do meio do vão, como numa porta real.</dd>
+        <dt>Proporções</dt><dd>Traço ≈ 12 % da largura, medido na imagem de referência. A maçaneta é menor que o ponto original (raio 3,5) para não se ler como um olho.</dd>
+        <dt>Proteção</dt><dd>À volta do logótipo, no mínimo a largura do vão (24 unidades).</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 02 · Ficheiros -->
+  <section class="section">
+    <div class="section-head">
+      <div><span class="tag">02 · Versões</span><h2>Um símbolo, sete usos.</h2></div>
+      <p>Todos em SVG, com a palavra convertida em contornos: não dependem da fonte instalada. A versão escura sobre fundo escuro, a clara sobre fundo claro, nunca o inverso.</p>
+    </div>
+    <div class="variants">
+      <article class="card variant">
+        <div class="preview escuro"><img src="logo/delegate-simbolo-escuro.svg" alt="" width="96"></div>
+        <div class="info"><h3>Símbolo escuro</h3><p>Versão principal. Consola, Observatório, slides.</p><a href="logo/delegate-simbolo-escuro.svg" download>delegate-simbolo-escuro.svg</a></div>
+      </article>
+      <article class="card variant">
+        <div class="preview claro"><img src="logo/delegate-simbolo-claro.svg" alt="" width="96"></div>
+        <div class="info"><h3>Símbolo claro</h3><p>Documentos e fundos claros.</p><a href="logo/delegate-simbolo-claro.svg" download>delegate-simbolo-claro.svg</a></div>
+      </article>
+      <article class="card variant">
+        <div class="preview mono" title="Embutido inline, herda a cor do texto">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 40V22a14 14 0 0 1 28 0v18Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30.5" cy="26" r="2.5" fill="currentColor"/></svg>
+        </div>
+        <div class="info"><h3>Símbolo mono</h3><p>Em <code>currentColor</code>: herda a cor quando embutido inline.</p><a href="logo/delegate-simbolo-mono.svg" download>delegate-simbolo-mono.svg</a></div>
+      </article>
+      <article class="card variant">
+        <div class="preview escuro"><img src="logo/delegate-logo-horizontal-escuro.svg" alt="" style="height:44px"></div>
+        <div class="info"><h3>Horizontal</h3><p>Cabeçalhos e navegação. Também <code>-claro</code> e <code>-mono</code>.</p><a href="logo/delegate-logo-horizontal-escuro.svg" download>delegate-logo-horizontal-escuro.svg</a></div>
+      </article>
+      <article class="card variant">
+        <div class="preview claro"><img src="logo/delegate-logo-vertical-claro.svg" alt="" style="height:110px"></div>
+        <div class="info"><h3>Vertical</h3><p>Abertura, capas, slides. Também <code>-escuro</code> e <code>-mono</code>.</p><a href="logo/delegate-logo-vertical-claro.svg" download>delegate-logo-vertical-claro.svg</a></div>
+      </article>
+      <article class="card variant">
+        <div class="preview claro"><div class="row"><img src="logo/delegate-icone-app.svg" alt="" width="88"><img src="logo/delegate-icone-app.svg" alt="" width="64" style="border-radius:50%"><img src="logo/favicon.svg" alt="" width="32"><img src="logo/favicon.svg" alt="" width="16"></div></div>
+        <div class="info"><h3>Ícone e favicon</h3><p>Ícone para o avatar do bot (cabe no recorte circular). Favicon com traço mais grosso, segue o tema do sistema.</p><a href="logo/delegate-icone-app.svg" download>delegate-icone-app.svg</a> · <a href="logo/favicon.svg" download>favicon.svg</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 03 · Cores -->
+  <section class="section">
+    <div class="section-head">
+      <div><span class="tag">03 · Cores</span><h2>Calma no ambiente. Cor com significado.</h2></div>
+      <p>Uma base neutra e institucional. Verde, dourado e terracota indicam estados, nunca decoram. No código, usar os papéis semânticos de <code>tokens.css</code>.</p>
+    </div>
+
+    <div class="group"><span class="tag">Marca</span>
+      <div class="palette">
+        <div class="swatch"><div class="color" style="background:var(--dlg-marca-verde)"></div><div class="info"><b>Verde marca</b><span>Porta, sobre fundo escuro</span><code>#7BCC90 · --dlg-marca-verde</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-marca-dourado)"></div><div class="info"><b>Dourado marca</b><span>Maçaneta, sobre fundo escuro</span><code>#E0B65D · --dlg-marca-dourado</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-bastidores)"></div><div class="info"><b>Bastidores</b><span>Tecnologia, consola</span><code>#0F1B2D · --dlg-bastidores</code></div></div>
+      </div>
+    </div>
+
+    <div class="group"><span class="tag">Neutros</span>
+      <div class="palette">
+        <div class="swatch"><div class="color" style="background:var(--dlg-palco)"></div><div class="info"><b>Palco</b><span>Superfícies</span><code>#F4EFE6 · --dlg-palco</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-branco)"></div><div class="info"><b>Branco</b><span>Cartões, campos</span><code>#FFFEFA · --dlg-branco</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-tinta)"></div><div class="info"><b>Tinta</b><span>Texto</span><code>#1D2430 · --dlg-tinta</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-cinza)"></div><div class="info"><b>Cinza</b><span>Texto secundário, sobre Branco</span><code>#647080 · --dlg-cinza</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-linha)"></div><div class="info"><b>Linha</b><span>Bordas, divisórias</span><code>#E6E2DA · --dlg-linha</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-bastidores-texto)"></div><div class="info"><b>Bastidores texto</b><span>Texto secundário no escuro</span><code>#C3CCD8 · --dlg-bastidores-texto</code></div></div>
+      </div>
+    </div>
+
+    <div class="group"><span class="tag">Estados</span>
+      <div class="palette">
+        <div class="swatch"><div class="color" style="background:var(--dlg-verde)"></div><div class="info"><b>Ação concluída</b><span>Henriques, fonte verificada</span><code>#1A7040 · --dlg-verde</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-dourado)"></div><div class="info"><b>Autorização</b><span>Cofre, mandato</span><code>#8A6210 · --dlg-dourado</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-terracota)"></div><div class="info"><b>Atenção</b><span>Alertas, abstenção</span><code>#B4492A · --dlg-terracota</code></div></div>
+        <div class="swatch"><div class="color" style="background:var(--dlg-ciano)"></div><div class="info"><b>Ciano</b><span>Reserva, sem papel</span><code>#167A76 · --dlg-ciano</code></div></div>
+      </div>
+      <div class="states">
+        <div class="state" style="background:var(--dlg-acao-fundo);color:var(--dlg-acao)"><b>Fonte oficial verificada</b>Regulamento municipal · versão e data à vista<br><span class="pill" style="background:var(--dlg-acao);color:var(--dlg-branco)">Concluído</span></div>
+        <div class="state" style="background:var(--dlg-autorizacao-fundo);color:var(--dlg-autorizacao)"><b>A aguardar a sua autorização</b>Nada é enviado à Câmara sem confirmar<br><span class="pill" style="background:var(--dlg-branco)">A aguardar revisão</span></div>
+        <div class="state" style="background:var(--dlg-atencao-fundo);color:var(--dlg-tinta);border-left:3px solid var(--dlg-atencao)"><b style="color:var(--dlg-atencao)">Sem fonte válida</b>O Henriques abstém-se em vez de inventar<br><span class="pill" style="background:var(--dlg-branco);color:var(--dlg-atencao)">Atenção</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Tipografia -->
+  <section class="section">
+    <div class="section-head">
+      <div><span class="tag">04 · Tipografia</span><h2>Uma fonte em toda a experiência.</h2></div>
+      <p>Manrope, local em <code>fontes/</code> (variável, 200–800, licença OFL). A hierarquia faz-se com peso e tamanho, sem misturar outras famílias.</p>
+    </div>
+    <div class="type-grid">
+      <div class="card type-card"><span class="tag">Manrope 700 · destaque</span><div class="sample-destaque">O Henriques trata do resto.</div><p>Títulos e frases de marca. Peso forte, tracking apertado.</p></div>
+      <div class="card type-card"><span class="tag">Manrope 500 · interface</span><div class="sample-interface">A sua missão está em preparação.</div><p>Peso médio para mensagens e texto corrido; peso forte para hierarquia e ações.</p></div>
+    </div>
+    <div class="card scale">
+      <div class="scale-row"><div class="meta"><b>Título</b><br>2,4 rem · 700 · −0,045 em</div><div style="font-size:var(--dlg-texto-titulo);font-weight:700;letter-spacing:var(--dlg-tracking-titulo);line-height:1.1">Fale com a Câmara</div></div>
+      <div class="scale-row"><div class="meta"><b>Lead</b><br>19 px · 400 · 1,55</div><div style="font-size:var(--dlg-texto-lead)">Diga o que precisa. O Henriques trata do resto.</div></div>
+      <div class="scale-row"><div class="meta"><b>Corpo</b><br>16 px · 400 · 1,55</div><div>Para colocar uma esplanada, o primeiro passo é confirmar a modalidade de ocupação aplicável.</div></div>
+      <div class="scale-row"><div class="meta"><b>Pequeno</b><br>13 px · 400</div><div style="font-size:var(--dlg-texto-pequeno);color:#4e5967">Fonte: Regulamento municipal · consultado a 21/10/2026</div></div>
+      <div class="scale-row"><div class="meta"><b>Etiqueta</b><br>12 px · 700 · +0,12 em</div><div class="tag" style="color:var(--dlg-texto)">Simulação</div></div>
+      <div class="scale-row"><div class="meta"><b>Pesos</b></div><div class="weights"><span style="font-weight:400">Regular 400</span><span style="font-weight:500">Médio 500</span><span style="font-weight:600">Semi 600</span><span style="font-weight:700">Forte 700</span><span style="font-weight:800">Extra 800</span></div></div>
+    </div>
+  </section>
+
+  <!-- 05 · Regras -->
+  <section class="section">
+    <div class="section-head">
+      <div><span class="tag">05 · Regras</span><h2>O que mantém a marca inteira.</h2></div>
+      <p>Contrastes calculados (WCAG 2.2) e os limites de uso estão no README.</p>
+    </div>
+    <div class="rules">
+      <div class="card"><h3>Fazer</h3><ul>
+        <li>Usar a versão escura sobre Bastidores e a clara sobre Palco ou Branco.</li>
+        <li>Deixar à volta do logótipo pelo menos a largura do vão da porta.</li>
+        <li>Abaixo de 24 px, usar o <code>favicon.svg</code>.</li>
+        <li>Em alertas, texto em Tinta; a terracota fica no ícone e na borda.</li>
+      </ul></div>
+      <div class="card"><h3>Não fazer</h3><ul>
+        <li>Mover a maçaneta para fora da porta ou para o lado esquerdo.</li>
+        <li>Mudar cores fora das três variantes, aplicar gradiente, sombra ou contorno.</li>
+        <li>Rodar, esticar ou recompor a palavra com outra fonte.</li>
+        <li>Usar Cinza ou Ciano em texto pequeno sobre Palco (abaixo de 4,5:1).</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <footer class="footer">Delegate · Hack4Guimarães 2035. Parte do <a href="../reference-docs/estudo-identidade-visual.html">estudo de identidade visual</a>. Manrope © The Manrope Project Authors, SIL Open Font License 1.1.</footer>
+</main>
+</body>
+</html>
