@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Delegate · Cofre Digital Pessoal & Guardião de Contexto</title>
+  <meta name="description" content="Inspetor visual do Cofre Digital Pessoal do Cidadão: 3 camadas soberanas, cifra AES-256-GCM em repouso, minimização de dados RGPD e critérios de governança municipal de Guimarães.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --bg-panel: rgba(15, 23, 42, 0.78);
+      --bg-card: rgba(30, 41, 59, 0.65);
+      --bg-card-hover: rgba(51, 65, 85, 0.85);
+      --border: rgba(148, 163, 184, 0.15);
+      --border-accent: rgba(99, 102, 241, 0.45);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-light: rgba(99, 102, 241, 0.15);
+      --emerald: #10b981;
+      --emerald-light: rgba(16, 185, 129, 0.15);
+      --amber: #f59e0b;
+      --amber-light: rgba(245, 158, 11, 0.15);
+      --rose: #f43f5e;
+      --rose-light: rgba(244, 63, 94, 0.15);
+      --purple: #a855f7;
+      --purple-light: rgba(168, 85, 247, 0.15);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 85% 85%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.05) 0px, transparent 60%);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(9, 13, 22, 0.88);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #10b981, #6366f1);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+    }
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(30, 41, 59, 0.5);
+      padding: 0.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .tab-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+    }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .nav-link-btn {
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      transition: all 0.2s;
+      background: rgba(30, 41, 59, 0.4);
+    }
+    .nav-link-btn:hover {
+      color: #fff;
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      background: var(--emerald-light);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    main {
+      padding: 1.5rem 2rem 3rem 2rem;
+      max-width: 1700px;
+      margin: 0 auto;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .gold-rule-banner {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(16, 185, 129, 0.16));
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+    .gold-rule-text h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .gold-rule-text p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .gold-rule-badges {
+      display: flex;
+      gap: 0.8rem;
+      flex-shrink: 0;
+    }
+    .rule-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.7);
+      text-align: center;
+      min-width: 120px;
+    }
+    .rule-pill span.sub { font-size: 0.7rem; font-weight: 400; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .crypto-toggle-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-panel);
+      padding: 0.85rem 1.5rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .toggle-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .toggle-switch-group {
+      display: flex;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.25rem;
+    }
+    .toggle-opt-btn {
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .toggle-opt-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+    }
+
+    .layers-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .layer-section {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    .layer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+    .layer-title-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .layer-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+    .layer-1-badge { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(168, 85, 247, 0.3); }
+    .layer-2-badge { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(99, 102, 241, 0.3); }
+    .layer-3-badge { background: var(--emerald-light); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .layer-name { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; }
+    .layer-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+      position: relative;
+    }
+    .item-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+    .card-id-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(148, 163, 184, 0.1);
+      color: var(--text-muted);
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+    }
+    .tag-pills {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .pill-sensivel { background: var(--rose-light); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .pill-normal { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(99, 102, 241, 0.3); }
+    .pill-consent { background: var(--emerald-light); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .card-content-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin: 0.85rem 0;
+      font-size: 0.88rem;
+    }
+
+    .view-clear { font-family: var(--font); color: #e2e8f0; line-height: 1.5; }
+    .view-crypto { display: none; font-family: var(--mono); font-size: 0.78rem; color: #a5b4fc; word-break: break-all; line-height: 1.6; }
+    body.modo-cripto .view-clear { display: none; }
+    body.modo-cripto .view-crypto { display: block; }
+
+    .crypto-field { margin-bottom: 0.35rem; }
+    .crypto-field span.lbl { color: var(--text-dim); font-size: 0.72rem; text-transform: uppercase; }
+
+    .card-meta-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(148, 163, 184, 0.08);
+      padding-top: 0.75rem;
+    }
+    .card-meta-list div strong { color: var(--text); font-weight: 600; }
+
+    /* RGPD Minimization View */
+    .rgpd-split-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .rgpd-column {
+      background: var(--bg-panel);
+      border-radius: 16px;
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+    }
+    .col-shared { border-top: 4px solid var(--emerald); }
+    .col-shielded { border-top: 4px solid var(--rose); }
+
+    .col-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+    .col-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .col-shared .col-icon { background: var(--emerald-light); color: var(--emerald); }
+    .col-shielded .col-icon { background: var(--rose-light); color: var(--rose); }
+
+    .col-title { font-size: 1.15rem; font-weight: 700; }
+    .col-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .field-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .field-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .field-info strong { display: block; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .field-info span { font-size: 0.78rem; color: var(--text-muted); }
+    .field-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+    .badge-allowed { background: var(--emerald-light); color: var(--emerald); }
+    .badge-blocked { background: var(--rose-light); color: var(--rose); }
+
+    /* Governance Criteria Panel */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .criteria-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+    .criteria-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+    .criteria-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .criteria-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem; }
+    .criteria-test {
+      font-size: 0.78rem;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+      color: #cbd5e1;
+    }
+
+    .antipattern-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-panel);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .antipattern-table th {
+      background: rgba(30, 41, 59, 0.7);
+      padding: 0.9rem 1.2rem;
+      text-align: left;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .antipattern-table td {
+      padding: 0.9rem 1.2rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.1);
+      font-size: 0.88rem;
+    }
+    .antipattern-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    /* Simulator Panel */
+    .simulator-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .sim-group { margin-bottom: 1.5rem; }
+    .sim-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: #cbd5e1; }
+    .sim-input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: var(--font);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .sim-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+    .sim-btn {
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.75rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+      transition: all 0.2s;
+    }
+    .sim-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
+
+    .sim-output-card {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+      display: none;
+    }
+    .sim-output-card.active { display: block; animation: fadeIn 0.3s ease; }
+    .sim-crypto-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+    .sim-field {
+      background: rgba(30, 41, 59, 0.5);
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      word-break: break-all;
+    }
+    .sim-field strong { color: #a5b4fc; display: block; font-size: 0.72rem; margin-bottom: 0.2rem; }
+
+    /* Timeline */
+    .timeline-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 1.25rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      align-items: center;
+    }
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-proposto { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+    .dot-guardado { background: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
+    .dot-aprovado { background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+
+    .timeline-info { flex: 1; }
+    .timeline-title { font-weight: 700; font-size: 0.92rem; }
+    .timeline-detail { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .timeline-time { font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .criteria-grid { grid-template-columns: 1fr 1fr; }
+      .rgpd-split-container { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      header { flex-direction: column; gap: 1rem; padding: 1rem; }
+      .criteria-grid { grid-template-columns: 1fr; }
+      .items-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="logo-badge">🛡️</div>
+      <div>
+        <div class="brand-title">Delegate · Cofre Digital Pessoal</div>
+        <div class="brand-sub">Câmara Municipal de Guimarães · Guardião de Contexto & Cifra AES-256-GCM</div>
+      </div>
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="mudarAba('camadas')">🏛️ 3 Camadas do Cofre</button>
+      <button class="tab-btn" onclick="mudarAba('minimizacao')">🛡️ Minimização RGPD</button>
+      <button class="tab-btn" onclick="mudarAba('governanca')">⚖️ Critérios de Governança</button>
+      <button class="tab-btn" onclick="mudarAba('simulador')">⚡ Simulador Criptográfico</button>
+      <button class="tab-btn" onclick="mudarAba('auditoria')">📜 Timeline de Consentimentos</button>
+    </nav>
+
+    <div class="header-links">
+      <a href="/" class="nav-link-btn">← Router</a>
+      <a href="/arvore" class="nav-link-btn">🌳 Árvore</a>
+      <a href="/observatorio" class="nav-link-btn">🔭 Observatório</a>
+      <a href="/consola" class="nav-link-btn">Consola</a>
+      <a href="/delegate" class="nav-link-btn">Delegate</a>
+      <div class="live-indicator">
+        <span class="pulse-dot"></span>
+        <span>Cofre Ativo</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Regra de Ouro -->
+    <section class="gold-rule-banner">
+      <div class="gold-rule-text">
+        <h2>⚖️ A Regra de Ouro da Soberania do Cidadão</h2>
+        <p>
+          <strong>«Porque é que este dado está aqui e aquele não está?»</strong><br>
+          O Cofre Digital é da exclusiva propriedade da pessoa. Os dados sensíveis são cifrados em repouso com chave simétrica AES-256-GCM.
+          A autarquia nunca acede ao cofre em bruto: recebe apenas o <strong>Pacote Mínimo Estrito</strong> formalmente aprovado para o procedimento.
+        </p>
+      </div>
+      <div class="gold-rule-badges">
+        <div class="rule-pill" style="border-color: rgba(99, 102, 241, 0.4);">
+          <span style="color: #a5b4fc;">DO CIDADÃO</span>
+          <span class="sub">→ Cofre (AES-256)</span>
+        </div>
+        <div class="rule-pill" style="border-color: rgba(16, 185, 129, 0.4);">
+          <span style="color: #6ee7b7;">DA CÂMARA</span>
+          <span class="sub">→ RAG D0 Público</span>
+        </div>
+        <div class="rule-pill" style="border-color: rgba(244, 63, 94, 0.4);">
+          <span style="color: #fda4af;">SEM FINALIDADE</span>
+          <span class="sub">→ Descartado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 1: As 3 Camadas do Cofre -->
+    <section id="tab-camadas" class="tab-content active">
+
+      <div class="crypto-toggle-bar">
+        <div class="toggle-title">
+          <span>Inspecção de Conteúdo do Cofre:</span>
+          <span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 400;">
+            (Alternador dinâmico de visualização)
+          </span>
+        </div>
+        <div class="toggle-switch-group">
+          <button id="btn-toggle-claro" class="toggle-opt-btn active" onclick="alternarModoVisualizacao('claro')">
+            👁️ Ver Texto Legível (Claro)
+          </button>
+          <button id="btn-toggle-cripto" class="toggle-opt-btn" onclick="alternarModoVisualizacao('cripto')">
+            🔒 Ver Cifra AES-256-GCM (Repouso)
+          </button>
+        </div>
+      </div>
+
+      <div class="layers-container">
+
+        <!-- Camada 1 -->
+        <div class="layer-section">
+          <div class="layer-header">
+            <div class="layer-title-box">
+              <div class="layer-badge layer-1-badge">1</div>
+              <div>
+                <div class="layer-name">Camada 1 · Identidade & Legitimidade</div>
+                <div class="layer-desc">Atributos pessoais permanentes necessários para autenticação e legitimidade procedimental.</div>
+              </div>
+            </div>
+            <div class="tag-pills">
+              <span class="pill pill-sensivel">Altamente Sensível</span>
+              <span class="pill pill-consent">Consentimento Explícito</span>
+            </div>
+          </div>
+
+          <div class="items-grid" id="grid-camada-1">
+            <!-- Item 1.1 -->
+            <div class="item-card">
+              <div class="card-top">
+                <span class="card-id-tag">COF-0001</span>
+                <div class="tag-pills">
+                  <span class="pill pill-sensivel">Sensível</span>
+                  <span class="pill pill-consent">Consentido</span>
+                </div>
+              </div>
+              <div class="card-title">NIF & Identificação Fiscal</div>
+              <div class="card-content-box">
+                <div class="view-clear">
+                  • <strong>NIF:</strong> 123 456 789<br>
+                  • <strong>Titular:</strong> Inês Guimarães<br>
+                  • <strong>Atividade:</strong> Restauração e Bebidas (Café Oliveira Lda)
+                </div>
+                <div class="view-crypto">
+                  <div class="crypto-field"><span class="lbl">Algoritmo:</span> AES-256-GCM (NIST SP 800-38D)</div>
+                  <div class="crypto-field"><span class="lbl">IV (96-bit):</span> 8f4b1029c781d044a2b901e3</div>
+                  <div class="crypto-field"><span class="lbl">Auth Tag (128-bit):</span> 9b78a2df140882e9acb19904321fa6c8</div>
+                  <div class="crypto-field"><span class="lbl">Cifrotexto:</span> e32a104f981b2c4d9a8e71b2049fa02187d90cba72164e10</div>
+                </div>
+              </div>
+              <div class="card-meta-list">
+                <div><strong>Finalidade:</strong> Autenticação formal e taxas</div>
+                <div><strong>Origem:</strong> Chave Móvel Digital</div>
+                <div><strong>Conservação:</strong> Até revogação expressa</div>
+                <div><strong>Acesso:</strong> Mandato D2+ com autorização</div>
+              </div>
+            </div>
+
+            <!-- Item 1.2 -->
+            <div class="item-card">
+              <div class="card-top">
+                <span class="card-id-tag">COF-0002</span>
+                <div class="tag-pills">
+                  <span class="pill pill-sensivel">Sensível</span>
+                  <span class="pill pill-consent">Consentido</span>
+                </div>
+              </div>
+              <div class="card-title">Morada Fiscal e Sede do Estabelecimento</div>
+              <div class="card-content-box">
+                <div class="view-clear">
+                  • <strong>Morada:</strong> Largo da Oliveira, n.º 12<br>
+                  • <strong>Código Postal:</strong> 4800-025 Guimarães<br>
+                  • <strong>Freguesia:</strong> Oliveira do Castelo
+                </div>
+                <div class="view-crypto">
+                  <div class="crypto-field"><span class="lbl">Algoritmo:</span> AES-256-GCM</div>
+                  <div class="crypto-field"><span class="lbl">IV (96-bit):</span> c19488a0b712fa44e1903341</div>
+                  <div class="crypto-field"><span class="lbl">Auth Tag (128-bit):</span> 4f10ca9812bc6578019aaeb34091f822</div>
+                  <div class="crypto-field"><span class="lbl">Cifrotexto:</span> a810f4389b0244ca7b9e011299cfa18844be210984da</div>
+                </div>
+              </div>
+              <div class="card-meta-list">
+                <div><strong>Finalidade:</strong> Domicílio fiscal e jurisdição</div>
+                <div><strong>Origem:</strong> Chave Móvel Digital</div>
+                <div><strong>Conservação:</strong> Até revogação</div>
+                <div><strong>Acesso:</strong> Instrução de processo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Camada 2 -->
+        <div class="layer-section">
+          <div class="layer-header">
+            <div class="layer-title-box">
+              <div class="layer-badge layer-2-badge">2</div>
+              <div>
+                <div class="layer-name">Camada 2 · Provas Instrutórias</div>
+                <div class="layer-desc">Evidências factuais submetidas pela pessoa (fotografias, PDFs, medições) para prova regulamentar.</div>
+              </div>
+            </div>
+            <div class="tag-pills">
+              <span class="pill pill-normal">Auditado SHA-256</span>
+              <span class="pill pill-consent">Consentido</span>
+            </div>
+          </div>
+
+          <div class="items-grid" id="grid-camada-2">
+            <!-- Item 2.1 -->
+            <div class="item-card">
+              <div class="card-top">
+                <span class="card-id-tag">COF-0003</span>
+                <div class="tag-pills">
+                  <span class="pill pill-normal">Normal</span>
+                  <span class="pill pill-consent">Consentido</span>
+                </div>
+              </div>
+              <div class="card-title">Medição Fotográfica da Calçada (2,10m)</div>
+              <div class="card-content-box">
+                <div class="view-clear">
+                  • <strong>Largura Livre Apurada:</strong> 2,10 metros<br>
+                  • <strong>Mínimo Regulamentar:</strong> 2,00 metros (Art. 8.º ROPP) ✅<br>
+                  • <strong>Hash da Fotografia:</strong> <code>sha256:a18f40b829c4e209...</code>
+                </div>
+                <div class="view-crypto">
+                  <div class="crypto-field"><span class="lbl">Algoritmo:</span> AES-256-GCM</div>
+                  <div class="crypto-field"><span class="lbl">IV (96-bit):</span> d02239f1aa940177be8341aa</div>
+                  <div class="crypto-field"><span class="lbl">Auth Tag (128-bit):</span> 8419bf81c20499ae7b1029da11409fa1</div>
+                  <div class="crypto-field"><span class="lbl">Cifrotexto:</span> fb90117498cda02914ba77340918efbc001948ba994e</div>
+                </div>
+              </div>
+              <div class="card-meta-list">
+                <div><strong>Finalidade:</strong> Prova de corredor livre (Art. 8.º)</div>
+                <div><strong>Origem:</strong> Foto Telegram com metadados</div>
+                <div><strong>Conservação:</strong> Vigência do processo OEP</div>
+                <div><strong>Acesso:</strong> Mandato D2 / Consola SU</div>
+              </div>
+            </div>
+
+            <!-- Item 2.2 -->
+            <div class="item-card">
+              <div class="card-top">
+                <span class="card-id-tag">COF-0004</span>
+                <div class="tag-pills">
+                  <span class="pill pill-normal">Normal</span>
+                  <span class="pill pill-consent">Consentido</span>
+                </div>
+              </div>
+              <div class="card-title">Apólice de Seguro de Responsabilidade Civil</div>
+              <div class="card-content-box">
+                <div class="view-clear">
+                  • <strong>Seguradora:</strong> Tranquilidade Seguros<br>
+                  • <strong>Apólice:</strong> RC-402914-2026 (Ativa)<br>
+                  • <strong>Capital Seguro:</strong> 150.000 € · Validade: 31/03/2027
+                </div>
+                <div class="view-crypto">
+                  <div class="crypto-field"><span class="lbl">Algoritmo:</span> AES-256-GCM</div>
+                  <div class="crypto-field"><span class="lbl">IV (96-bit):</span> 17aa8920bc4911df830024ba</div>
+                  <div class="crypto-field"><span class="lbl">Auth Tag (128-bit):</span> c09214781ba490123df94811ca9980bb</div>
+                  <div class="crypto-field"><span class="lbl">Cifrotexto:</span> 9948ba0012ca74ef8190334810acbfae9812409bb100</div>
+                </div>
+              </div>
+              <div class="card-meta-list">
+                <div><strong>Finalidade:</strong> Requisito obrigatório OVP-SO</div>
+                <div><strong>Origem:</strong> Upload de documento PDF</div>
+                <div><strong>Conservação:</strong> Até expiração da apólice</div>
+                <div><strong>Acesso:</strong> Instrução formal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Camada 3 -->
+        <div class="layer-section">
+          <div class="layer-header">
+            <div class="layer-title-box">
+              <div class="layer-badge layer-3-badge">3</div>
+              <div>
+                <div class="layer-name">Camada 3 · Intenções de Cidadania e Negócio</div>
+                <div class="layer-desc">Pretensões em preparação sob mandato D2+ que ainda não são do conhecimento público nem da Câmara.</div>
+              </div>
+            </div>
+            <div class="tag-pills">
+              <span class="pill pill-consent" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Mandato D2 Ativo</span>
+              <span class="pill pill-normal">Rascunho Protegido</span>
+            </div>
+          </div>
+
+          <div class="items-grid" id="grid-camada-3">
+            <!-- Item 3.1 -->
+            <div class="item-card">
+              <div class="card-top">
+                <span class="card-id-tag">COF-0005</span>
+                <div class="tag-pills">
+                  <span class="pill pill-normal">Normal</span>
+                  <span class="pill pill-consent">Consentido</span>
+                </div>
+              </div>
+              <div class="card-title">Projeto de Esplanada Aberta (4 mesas)</div>
+              <div class="card-content-box">
+                <div class="view-clear">
+                  • <strong>Serviço:</strong> Mera Comunicação Prévia OVP-SO<br>
+                  • <strong>Elementos:</strong> 4 mesas amovíveis, 8 cadeiras, 1 guarda-sol<br>
+                  • <strong>Área Pretendida:</strong> 12 m² · Período: Anual 2026
+                </div>
+                <div class="view-crypto">
+                  <div class="crypto-field"><span class="lbl">Algoritmo:</span> AES-256-GCM</div>
+                  <div class="crypto-field"><span class="lbl">IV (96-bit):</span> e4108849bca02179a11048bc</div>
+                  <div class="crypto-field"><span class="lbl">Auth Tag (128-bit):</span> 7109acba481029df839011ca0029fa84</div>
+                  <div class="crypto-field"><span class="lbl">Cifrotexto:</span> 1084ef9011ca994801ba291074ea8810bc4901aa7740</div>
+                </div>
+              </div>
+              <div class="card-meta-list">
+                <div><strong>Finalidade:</strong> Instrução do formulário OVP-SO</div>
+                <div><strong>Origem:</strong> Conversa Telegram com Henriques</div>
+                <div><strong>Conservação:</strong> Até submissão com CMD</div>
+                <div><strong>Acesso:</strong> Henriques (Mandato D2)</div>
+              </div>
+            </div>
+
+            <!-- Item 3.2 -->
+            <div class="item-card">
+              <div class="card-top">
+                <span class="card-id-tag">COF-0006</span>
+                <div class="tag-pills">
+                  <span class="pill pill-normal">Normal</span>
+                  <span class="pill pill-consent">Consentido</span>
+                </div>
+              </div>
+              <div class="card-title">Pedido de Informação Prévia (PIP) Silvares</div>
+              <div class="card-content-box">
+                <div class="view-clear">
+                  • <strong>Localização:</strong> Terreno em Silvares (Loteamento Quinta do Ribeiro)<br>
+                  • <strong>Pretensão:</strong> Moradia Unifamiliar T3 (2 pisos)<br>
+                  • <strong>Enquadramento:</strong> Artigo 14.º do RJUE e PDM
+                </div>
+                <div class="view-crypto">
+                  <div class="crypto-field"><span class="lbl">Algoritmo:</span> AES-256-GCM</div>
+                  <div class="crypto-field"><span class="lbl">IV (96-bit):</span> b109aa748104882190cfa140</div>
+                  <div class="crypto-field"><span class="lbl">Auth Tag (128-bit):</span> aa409117ca819024ba7700194812f8bc</div>
+                  <div class="crypto-field"><span class="lbl">Cifrotexto:</span> 774810bcfa001948ba994e10ca8190334810ef8821aa</div>
+                </div>
+              </div>
+              <div class="card-meta-list">
+                <div><strong>Finalidade:</strong> Estudo prévio de viabilidade</div>
+                <div><strong>Origem:</strong> Conversa Telegram (MIS-0002)</div>
+                <div><strong>Conservação:</strong> 180 dias ou submissão</div>
+                <div><strong>Acesso:</strong> Mandato D2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABA 2: Minimização RGPD (Pacote Mínimo) -->
+    <section id="tab-minimizacao" class="tab-content">
+      <div class="rgpd-split-container">
+
+        <!-- Coluna Esquerda: O que a Câmara VÊ -->
+        <div class="rgpd-column col-shared">
+          <div class="col-header">
+            <div class="col-icon">🟢</div>
+            <div>
+              <div class="col-title">Pacote Mínimo para a Câmara (PAC-0001)</div>
+              <div class="col-subtitle">Apenas os campos estritamente necessários para o deferimento legal.</div>
+            </div>
+          </div>
+
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Requerente e NIF</strong>
+                <span>Inês Guimarães · NIF 123 456 789</span>
+              </div>
+              <span class="field-badge badge-allowed">Indispensável</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Localização do Estabelecimento</strong>
+                <span>Largo da Oliveira, n.º 12, Guimarães</span>
+              </div>
+              <span class="field-badge badge-allowed">Indispensável</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Área de Ocupação e Elementos</strong>
+                <span>12 m² · 4 mesas amovíveis sem fixação ao solo</span>
+              </div>
+              <span class="field-badge badge-allowed">Cálculo de Taxa</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Medição do Corredor Livre</strong>
+                <span>2,10 metros (cumpre o requisito regulamentar de 2,00m)</span>
+              </div>
+              <span class="field-badge badge-allowed">Verificação Art. 8.º</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Apólice de Seguro de Responsabilidade Civil</strong>
+                <span>Tranquilidade Seguros · RC-402914-2026</span>
+              </div>
+              <span class="field-badge badge-allowed">Exigência Legal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna Direita: O que a Câmara NUNCA Vê -->
+        <div class="rgpd-column col-shielded">
+          <div class="col-header">
+            <div class="col-icon">🔴</div>
+            <div>
+              <div class="col-title">Blindado no Cofre Pessoal (Câmara Não Vê)</div>
+              <div class="col-subtitle">Dados confidenciais retidos sob soberania da pessoa sem partilha.</div>
+            </div>
+          </div>
+
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-info">
+                <strong>IBAN e Contas Bancárias</strong>
+                <span>A liquidação é feita por referência SIBS anónima. A autarquia não conhece a conta.</span>
+              </div>
+              <span class="field-badge badge-blocked">Protegido RGPD</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Histórico Completo de Conversas Telegram</strong>
+                <span>Dúvidas exploratórias, perguntas sobre taxas e rascunhos nunca saem do dispositivo.</span>
+              </div>
+              <span class="field-badge badge-blocked">Confidencial</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Faturamento e Dados Contabilísticos</strong>
+                <span>A declaração de IRC e receita da empresa não são solicitadas nem transmitidas.</span>
+              </div>
+              <span class="field-badge badge-blocked">Sigilo Comercial</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Outros Imóveis e Bens Pessoais</strong>
+                <span>O Cofre isola estritamente o património não envolvido no procedimento.</span>
+              </div>
+              <span class="field-badge badge-blocked">Não Pertinente</span>
+            </div>
+
+            <div class="field-item">
+              <div class="field-info">
+                <strong>Fotografias Pessoais e Metadados GPS de Origem</strong>
+                <span>Fotos não aprovadas ou dados EXIF supérfluos são limpos antes do pacote mínimo.</span>
+              </div>
+              <span class="field-badge badge-blocked">Descartado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABA 3: Critérios de Governança -->
+    <section id="tab-governanca" class="tab-content">
+
+      <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1.25rem;">
+        Os 6 Critérios de Elegibilidade (Todos Obrigatórios para Entrada no Cofre)
+      </h3>
+
+      <div class="criteria-grid">
+        <div class="criteria-card">
+          <div class="criteria-num">1</div>
+          <div class="criteria-name">Pertence à Pessoa</div>
+          <div class="criteria-desc">O dado pertence à esfera privada do cidadão ou do seu negócio.</div>
+          <div class="criteria-test"><strong>Teste:</strong> «Este dado é da pessoa ou da Câmara?» Se da autarquia → RAG D0.</div>
+        </div>
+
+        <div class="criteria-card">
+          <div class="criteria-num">2</div>
+          <div class="criteria-name">Finalidade Administrativa</div>
+          <div class="criteria-desc">O dado tem um propósito concreto num procedimento municipal.</div>
+          <div class="criteria-test"><strong>Teste:</strong> «Para que serve no formulário?» Se não tem utilidade instrutória → não entra.</div>
+        </div>
+
+        <div class="criteria-card">
+          <div class="criteria-num">3</div>
+          <div class="criteria-name">Consentimento Explícito</div>
+          <div class="criteria-desc">A pessoa autorizou expressamente a guarda com conhecimento de causa.</div>
+          <div class="criteria-test"><strong>Teste:</strong> «A pessoa confirmou o armazenamento?» Sem autorização → propor apenas.</div>
+        </div>
+
+        <div class="criteria-card">
+          <div class="criteria-num">4</div>
+          <div class="criteria-name">Dado Não Público</div>
+          <div class="criteria-desc">O dado não se encontra livremente acessível em fontes ou portais públicos.</div>
+          <div class="criteria-test"><strong>Teste:</strong> «Existe no site ou no PDM?» Se sim → pertence à Base de Conhecimento.</div>
+        </div>
+
+        <div class="criteria-card">
+          <div class="criteria-num">5</div>
+          <div class="criteria-name">Prazo Delimitado</div>
+          <div class="criteria-desc">O dado possui horizonte de conservação definido e data de expiração.</div>
+          <div class="criteria-test"><strong>Teste:</strong> «Quando deixa de ser relevante?» Cada item possui prazo de validade estrito.</div>
+        </div>
+
+        <div class="criteria-card">
+          <div class="criteria-num">6</div>
+          <div class="criteria-name">Proporcionalidade</div>
+          <div class="criteria-desc">Não se recolhe nem guarda mais do que o estritamente exigido pelo regulamento.</div>
+          <div class="criteria-test"><strong>Teste:</strong> «O processo conclui sem este dado?» Se sim → descarte obrigatório.</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1.25rem;">
+        Tabela de Anti-Padrões: O que é Estritamente Excluído do Cofre
+      </h3>
+
+      <table class="antipattern-table">
+        <thead>
+          <tr>
+            <th>Tipo de Dado</th>
+            <th>Motivo da Exclusão</th>
+            <th>Destino Concreto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🚫 Saudações e conversa informal</strong></td>
+            <td>Ruído conversacional sem valor instrutório ou probatório.</td>
+            <td><span style="color: var(--rose);">Descarte imediato da memória</span></td>
+          </tr>
+          <tr>
+            <td><strong>🚫 Regulamentos, artigos e taxas públicas</strong></td>
+            <td>Informação oficial aberta que pertence ao acervo público autárquico.</td>
+            <td><span style="color: var(--primary);">Base de Conhecimento RAG D0</span></td>
+          </tr>
+          <tr>
+            <td><strong>🚫 Opiniões discricionárias do cidadão</strong></td>
+            <td>Não constituem peças instrutórias formais nos termos do CPA.</td>
+            <td><span style="color: var(--rose);">Descarte de contexto</span></td>
+          </tr>
+          <tr>
+            <td><strong>🚫 Dados de terceiros sem consentimento</strong></td>
+            <td>Violação direta do RGPD e do princípio da soberania individual.</td>
+            <td><span style="color: var(--rose);">Recusa expressa com alerta</span></td>
+          </tr>
+          <tr>
+            <td><strong>🚫 Passwords, PINs de autenticação e códigos SMS</strong></td>
+            <td>O Cofre cifra dados de instrução, nunca credenciais de segurança.</td>
+            <td><span style="color: var(--rose);">NUNCA armazenados</span></td>
+          </tr>
+          <tr>
+            <td><strong>🚫 Dados de saúde ou registos clínicos</strong></td>
+            <td>Fora da competência municipal e do escopo do desafio autárquico.</td>
+            <td><span style="color: var(--amber);">Encaminhamento ao SNS</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </section>
+
+    <!-- ABA 4: Simulador Criptográfico Interativo -->
+    <section id="tab-simulador" class="tab-content">
+      <div class="simulator-box">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
+          ⚡ Simulador Criptográfico em Tempo Real
+        </h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.75rem; line-height: 1.5;">
+          Experimente em direto como o Henriques deriva a chave pessoal da sessão e cifra qualquer dado sensível com o algoritmo <strong>AES-256-GCM</strong> antes de persistir em disco.
+        </p>
+
+        <div class="sim-group">
+          <label for="input-segredo">Dado Sensível a Cifrar:</label>
+          <input type="text" id="input-segredo" class="sim-input" value="NIF: 123 456 789 · Apólice Tranquilidade RC-402914">
+        </div>
+
+        <div class="sim-group">
+          <label for="input-pseudonimo">Pseudónimo da Sessão:</label>
+          <input type="text" id="input-pseudonimo" class="sim-input" value="pessoa-1bbe89cb4d" readonly style="opacity: 0.8; font-family: var(--mono);">
+        </div>
+
+        <button class="sim-btn" onclick="executarSimulacaoCifra()">
+          <span>🔒 Cifrar no Cofre Digital (AES-256-GCM)</span>
+        </button>
+
+        <div id="sim-output" class="sim-output-card">
+          <div style="font-weight: 700; color: #10b981; font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>✓ Cifra AES-256-GCM Gerada com Sucesso</span>
+          </div>
+
+          <div class="sim-crypto-grid">
+            <div class="sim-field">
+              <strong>Algoritmo Criptográfico & Modo</strong>
+              <span id="sim-res-algo">AES-256-GCM (Chave simétrica de 256 bits)</span>
+            </div>
+            <div class="sim-field">
+              <strong>Vetor de Inicialização (IV de 96 bits - Não Repetível)</strong>
+              <span id="sim-res-iv" style="color: #6ee7b7;">-</span>
+            </div>
+            <div class="sim-field">
+              <strong>Tag de Autenticação GCM (128 bits - Garante Integridade)</strong>
+              <span id="sim-res-tag" style="color: #fde047;">-</span>
+            </div>
+            <div class="sim-field">
+              <strong>Cifrotexto Hexadecimal em Repouso (O que é gravado no disco)</strong>
+              <span id="sim-res-cipher" style="color: #a5b4fc;">-</span>
+            </div>
+            <div class="sim-field">
+              <strong>Derivação da Chave Mestre (Sal Criptográfico por Pessoa)</strong>
+              <span id="sim-res-salt" style="color: var(--text-dim);">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 5: Timeline de Consentimentos -->
+    <section id="tab-auditoria" class="tab-content">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 800;">📜 Linha do Tempo Auditável de Consentimentos</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;">
+          Cada ato de guarda, recusa ou aprovação de pacote é selado criptograficamente com resumo SHA-256 encadeado.
+        </p>
+      </div>
+
+      <div class="timeline-feed" id="timeline-feed">
+        <div class="timeline-item">
+          <div class="timeline-dot dot-guardado"></div>
+          <div class="timeline-info">
+            <div class="timeline-title">Item Guardado com Consentimento · NIF & Identificação Fiscal</div>
+            <div class="timeline-detail">Cifrado com AES-256-GCM sob mandato D2 para instrução autárquica.</div>
+          </div>
+          <div class="timeline-time">18/10/2026 10:14:02</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot dot-guardado"></div>
+          <div class="timeline-info">
+            <div class="timeline-title">Item Guardado com Consentimento · Medição Fotográfica da Calçada</div>
+            <div class="timeline-detail">Largura de 2,10m apurada por fotografia. Selo SHA-256 anexado ao Cofre.</div>
+          </div>
+          <div class="timeline-time">18/10/2026 10:16:35</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot dot-aprovado"></div>
+          <div class="timeline-info">
+            <div class="timeline-title">Pacote Mínimo Preparado (PAC-0001) · Esplanada Aberta</div>
+            <div class="timeline-detail">Minimização RGPD concluída: 5 campos estritamente necessários partilhados; 5 campos pessoais blindados.</div>
+          </div>
+          <div class="timeline-time">18/10/2026 10:18:50</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot dot-proposto"></div>
+          <div class="timeline-info">
+            <div class="timeline-title">Mandato D3 Proposto para Assinatura com Chave Móvel Digital</div>
+            <div class="timeline-detail">Submissão vinculativa aguardando autorização expressa e PIN SMS da pessoa.</div>
+          </div>
+          <div class="timeline-time">18/10/2026 10:20:12</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function mudarAba(abaId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      const alvo = document.getElementById('tab-' + abaId);
+      if (alvo) alvo.classList.add('active');
+
+      const botoes = document.querySelectorAll('.tab-btn');
+      botoes.forEach(b => {
+        if (b.getAttribute('onclick')?.includes(abaId)) {
+          b.classList.add('active');
+        }
+      });
+    }
+
+    function alternarModoVisualizacao(modo) {
+      const btnClaro = document.getElementById('btn-toggle-claro');
+      const btnCripto = document.getElementById('btn-toggle-cripto');
+
+      if (modo === 'cripto') {
+        document.body.classList.add('modo-cripto');
+        btnCripto.classList.add('active');
+        btnClaro.classList.remove('active');
+      } else {
+        document.body.classList.remove('modo-cripto');
+        btnClaro.classList.add('active');
+        btnCripto.classList.remove('active');
+      }
+    }
+
+    async function executarSimulacaoCifra() {
+      const texto = document.getElementById('input-segredo').value.trim();
+      const pessoa = document.getElementById('input-pseudonimo').value.trim();
+      if (!texto) return;
+
+      try {
+        const res = await fetch('/api/cofre/simular-cifra', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ texto, pessoa }),
+        });
+        const dados = await res.json();
+        if (dados.ok) {
+          document.getElementById('sim-res-algo').textContent = dados.algoritmo + ' (' + dados.tamanhoBytes + ' bytes)';
+          document.getElementById('sim-res-iv').textContent = dados.iv;
+          document.getElementById('sim-res-tag').textContent = dados.tag;
+          document.getElementById('sim-res-cipher').textContent = dados.ciphertext;
+          document.getElementById('sim-res-salt').textContent = dados.kdf + ' · Salt: ' + dados.salt;
+
+          const outCard = document.getElementById('sim-output');
+          outCard.classList.remove('active');
+          void outCard.offsetWidth;
+          outCard.classList.add('active');
+        }
+      } catch (err) {
+        console.error('Erro na simulação criptográfica:', err);
+      }
+    }
+
+    async function carregarDadosCofre() {
+      try {
+        const res = await fetch('/api/cofre?pessoa=pessoa-1bbe89cb4d');
+        const dados = await res.json();
+        if (dados.ok && dados.itens && dados.itens.length > 0) {
+          renderizarItens(dados.itens);
+        }
+      } catch (err) {
+        console.warn('Cofre em modo pré-carregado:', err);
+      }
+    }
+
+    function renderizarItens(itens) {
+      const grid1 = document.getElementById('grid-camada-1');
+      const grid2 = document.getElementById('grid-camada-2');
+      const grid3 = document.getElementById('grid-camada-3');
+
+      const items1 = itens.filter(i => i.camada === 'identidade');
+      const items2 = itens.filter(i => i.camada === 'provas');
+      const items3 = itens.filter(i => i.camada === 'intencoes');
+
+      if (items1.length > 0 && grid1) grid1.innerHTML = items1.map(construirCardItem).join('');
+      if (items2.length > 0 && grid2) grid2.innerHTML = items2.map(construirCardItem).join('');
+      if (items3.length > 0 && grid3) grid3.innerHTML = items3.map(construirCardItem).join('');
+    }
+
+    function construirCardItem(item) {
+      const ehSensivel = item.sensibilidade === 'sensivel';
+      const cifrado = item.conteudoCifrado || {};
+      
+      let conteudoClaroHtml = '';
+      if (item.dadosDecifrados && typeof item.dadosDecifrados === 'object') {
+        conteudoClaroHtml = Object.entries(item.dadosDecifrados)
+          .map(([k, v]) => `• <strong>${formatarChave(k)}:</strong> ${v}`)
+          .join('<br>');
+      } else {
+        conteudoClaroHtml = `• <strong>Descrição:</strong> ${item.titulo}<br>• <strong>Finalidade:</strong> ${item.finalidade}`;
+      }
+
+      return `
+        <div class="item-card">
+          <div class="card-top">
+            <span class="card-id-tag">${item.id}</span>
+            <div class="tag-pills">
+              <span class="pill ${ehSensivel ? 'pill-sensivel' : 'pill-normal'}">${ehSensivel ? 'Sensível' : 'Normal'}</span>
+              <span class="pill pill-consent">Consentido</span>
+            </div>
+          </div>
+          <div class="card-title">${item.titulo}</div>
+          <div class="card-content-box">
+            <div class="view-clear">
+              ${conteudoClaroHtml}
+            </div>
+            <div class="view-crypto">
+              <div class="crypto-field"><span class="lbl">Algoritmo:</span> AES-256-GCM (NIST SP 800-38D)</div>
+              <div class="crypto-field"><span class="lbl">IV (96-bit):</span> ${cifrado.iv || '8f4b1029c781d044a2b901e3'}</div>
+              <div class="crypto-field"><span class="lbl">Auth Tag (128-bit):</span> ${cifrado.tag || '9b78a2df140882e9acb19904321fa6c8'}</div>
+              <div class="crypto-field"><span class="lbl">Cifrotexto:</span> ${cifrado.dados || 'e32a104f981b2c4d9a8e71b2049fa02187d90cba72164e10'}</div>
+            </div>
+          </div>
+          <div class="card-meta-list">
+            <div><strong>Finalidade:</strong> ${item.finalidade || 'Instrução'}</div>
+            <div><strong>Origem:</strong> ${item.origem || 'Telegram'}</div>
+            <div><strong>Conservação:</strong> ${item.conservacao || 'Até revogação'}</div>
+            <div><strong>Acesso:</strong> Mandato D2+ Autorizado</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function formatarChave(c) {
+      return c.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    // Inicialização ao carregar
+    window.addEventListener('DOMContentLoaded', () => {
+      carregarDadosCofre();
+    });
+  </script>
+</body>
+</html>

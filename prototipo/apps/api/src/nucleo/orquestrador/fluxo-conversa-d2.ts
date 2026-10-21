@@ -110,10 +110,21 @@ export class GestorFluxoD2 {
     const texto = [
       'Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2).',
       '',
-      'Para começarmos: qual é o <b>nome</b> e a <b>morada</b> do estabelecimento aqui em Guimarães?',
+      '📋 <b>Documentos Necessários para a Instrução:</b>',
+      '1. Formulário Modelo OVP-SO (preenchido com estes dados);',
+      '2. Planta de localização ou fotografia com corredor livre ≥ 2,00m;',
+      '3. Certidão Permanente da empresa (ou início de atividade);',
+      '4. Apólice de Seguro de Responsabilidade Civil.',
+      '',
+      'Para começarmos a instrução: qual é o <b>nome</b> e a <b>morada</b> do estabelecimento aqui em Guimarães?',
     ].join('\n');
 
-    await this.#canal.enviar(conversa, texto);
+    const botoesIniciais: Botao[][] = [
+      [{ texto: '📍 Exemplo: Casa Joaquim (Largo da Oliveira)', dados: 'd2_morada_joaquim' }],
+      [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+    ];
+
+    await this.#canal.enviar(conversa, texto, botoesIniciais);
     await this.#registo.registar({
       tipo: 'canal.mensagem.enviada',
       origem: 'canal',
@@ -185,18 +196,32 @@ export class GestorFluxoD2 {
       return true;
     }
 
-    // PASSO 2: Recebeu quantidade de mesas
+    // PASSO 2: Recebeu quantidade de mesas ou área
     if (rascunho.estado === 'aguarda_mesas') {
       let numMesas = 4;
-      if (t === 'd2_mesas_2') numMesas = 2;
-      else if (t === 'd2_mesas_4') numMesas = 4;
-      else if (t === 'd2_mesas_6') numMesas = 6;
-      else {
+      let areaEstimada = 10;
+
+      const matchArea = t.match(/(\d+(?:[.,]\d+)?)\s*(?:m2|m²|metros\s*quadrados)/i);
+      if (matchArea) {
+        areaEstimada = parseFloat(matchArea[1].replace(',', '.'));
+        numMesas = Math.max(1, Math.round(areaEstimada / 2.5));
+      } else if (t === 'd2_mesas_2') {
+        numMesas = 2;
+        areaEstimada = 5;
+      } else if (t === 'd2_mesas_4') {
+        numMesas = 4;
+        areaEstimada = 10;
+      } else if (t === 'd2_mesas_6') {
+        numMesas = 6;
+        areaEstimada = 15;
+      } else {
         const match = t.match(/\d+/);
-        if (match) numMesas = parseInt(match[0], 10);
+        if (match) {
+          numMesas = parseInt(match[0], 10);
+          areaEstimada = numMesas * 2.5;
+        }
       }
 
-      // Validação de Sanidade de Dimensões
       if (numMesas <= 0 || numMesas > 50) {
         const aviso = 'O número de mesas indicado (' + numMesas + ') não parece plausível para uma esplanada contígua. Por favor indique um número entre 1 e 30 mesas.';
         await this.#canal.enviar(conversa, aviso);
@@ -213,7 +238,6 @@ export class GestorFluxoD2 {
         return true;
       }
 
-      const areaEstimada = numMesas * 2.5; // ~2.5m² por mesa com cadeiras
       rascunho.mesas = numMesas;
       rascunho.areaM2 = areaEstimada;
       rascunho.estado = 'aguarda_passeio';
@@ -307,17 +331,17 @@ export class GestorFluxoD2 {
           `• <b>Equipamento:</b> ${rascunho.mesas} mesas com cadeiras amovíveis`,
           `• <b>Área Ocupada:</b> ~${rascunho.areaM2} m² (contígua à fachada)`,
           '• <b>Acessibilidade:</b> Corredor de 2,10m salvaguardado (conforme Art. 8.º >= 2,00m)',
-          '• <b>Regime:</b> Mera Comunicação Prévia (eficácia imediata)',
+          '• <b>Documentos:</b> Formulário OVP-SO e certidão reunidos no Pacote Mínimo (PAC-0001)',
           '━━━━━━━━━━━━━━━━━━━━',
           '',
-          '🔒 <i>Dados bancários, fiscais e conversas privadas estão blindados no seu Cofre Pessoal e foram omitidos da Câmara.</i>',
+          '🔒 <i>Princípio da Minimização RGPD: Dados bancários, fiscais e conversas privadas estão blindados no seu Cofre Pessoal e foram omitidos da Câmara.</i>',
           '',
-          '<b>Confirmas que as informações acima estão corretas?</b>',
-          'Para submeter formalmente este documento à Câmara, assine com a sua <b>Chave Móvel Digital</b>:',
+          '<b>Tudo pronto.</b> Para dar entrada formal do pedido na Câmara Municipal com valor legal, confirme a sua autenticação:',
         ].join('\n');
 
         const botoesFinais: Botao[][] = [
-          [{ texto: '✍️ Assinar com Chave Móvel Digital', dados: 'assinar_com_chave_movel_digital' }],
+          [{ texto: '✍️ Autenticar com Chave Móvel Digital (Simulação)', dados: 'assinar_com_chave_movel_digital' }],
+          [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
         ];
 
         await this.#canal.enviar(conversa, textoConclusao, botoesFinais);

@@ -21,7 +21,7 @@ import {
 import { tratarAmbiguidade } from './router-ambiguidade.ts';
 import { gerarRespostaCatalogo } from './respostas-catalogo.ts';
 import { BuscadorConhecimento } from '../conhecimento/buscador.ts';
-import type { Botoes } from '../canal.ts';
+import { fracionarResposta, type Botoes } from '../canal.ts';
 
 export interface MemoriaConversa {
   ultimoServicoId?: string;
@@ -31,6 +31,7 @@ export interface MemoriaConversa {
 
 export interface RespostaHenriques {
   texto: string;
+  mensagens?: string[];
   botoes?: Botoes;
   servicoId?: string;
   servicoTitulo?: string;
@@ -88,7 +89,27 @@ export class Henriques {
 
     const resposta = await this.#tratarMensagem(pessoa, limpo, contextoDecisao);
 
-    // Atualizar o contexto conversacional com ciclo de vida (TTL e descarte de ruído)
+    if (!resposta.mensagens) {
+      resposta.mensagens = fracionarResposta(resposta.texto, resposta.categoria);
+    }
+
+    if (resposta.mensagens.length > 1) {
+      await this.#registo.registar({
+        tipo: 'henriques.mensagem.fracionada',
+        origem: 'henriques',
+        sessao: this.#sessao,
+        pessoa,
+        missao: contextoDecisao.missaoId ?? null,
+        ator: 'agente:acolhimento',
+        simulacao: false,
+        dados: {
+          baloes: resposta.mensagens.length,
+          categoria: resposta.categoria ?? 'geral',
+          factor_variabilidade: Number(Math.random().toFixed(2)),
+        },
+      });
+    }
+
     this.#gestorContexto.atualizarInteracao({
       pessoa,
       mensagemCidadao: limpo,
@@ -163,7 +184,7 @@ export class Henriques {
           '',
           'Estou aqui para o ajudar a tratar de assuntos com a Câmara Municipal de Guimarães sem burocracia.',
           '',
-          'Diga-me o que precisa de fazer ou qual é a sua dúvida (por exemplo: <i>abrir uma esplanada</i>, <i>consultar viabilidade de um terreno no PDM</i>, <i>isenção de licença de utilização</i>, ou <i>pedir cartão sénior</i>).'
+          'Diga-me o que precisa de fazer ou qual é a sua dúvida.',
         ].join('\n'),
         comportamento: 'responder',
         categoria: 'geral',
@@ -257,6 +278,7 @@ export class Henriques {
       redator: this.#redator,
       decisaoJev,
       historico: contextoDecisao.historicoRecente,
+      factosConfirmados: contextoDecisao.factosValidados,
     });
   }
 }

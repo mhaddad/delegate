@@ -26,6 +26,10 @@ export const CATALOGO = [
   { tipo: 'henriques.resposta.redigida', origem: 'henriques', prioridade: 'M', porque: 'A resposta foi escrita a partir dos excertos.' },
   { tipo: 'henriques.resposta.verificada', origem: 'henriques', prioridade: 'M', porque: 'Cada afirmação foi verificada contra a fonte.' },
   { tipo: 'henriques.resposta.abstencao', origem: 'henriques', prioridade: 'M', porque: 'Não há fonte; o Henriques diz que não sabe.' },
+  { tipo: 'henriques.mensagem.fracionada', origem: 'henriques', prioridade: 'M', porque: 'A resposta foi dividida em balões com temporização natural.' },
+  { tipo: 'henriques.fontes.oferecidas', origem: 'henriques', prioridade: 'M', porque: 'A fundamentação oficial foi sugerida ao cidadão.' },
+  { tipo: 'henriques.fontes.omitidas', origem: 'henriques', prioridade: 'S', porque: 'A citação formal foi omitida para fluidez da conversa.' },
+  { tipo: 'henriques.fontes.consultadas', origem: 'henriques', prioridade: 'M', porque: 'A pessoa pediu para consultar a fundamentação oficial.' },
 
   // Missão
   { tipo: 'missao.criada', origem: 'orquestrador', prioridade: 'M', porque: 'Um pedido passou a missão.' },
@@ -37,6 +41,7 @@ export const CATALOGO = [
   { tipo: 'cofre.item.guardado', origem: 'cofre', prioridade: 'M', porque: 'A pessoa autorizou; o conteúdo ficou cifrado.' },
   { tipo: 'cofre.item.recusado', origem: 'cofre', prioridade: 'M', porque: 'A pessoa disse que não.' },
   { tipo: 'cofre.item.apagado', origem: 'cofre', prioridade: 'S', porque: 'A pessoa apagou um item.' },
+  { tipo: 'cofre.elegibilidade.avaliada', origem: 'cofre', prioridade: 'M', porque: 'Os critérios de elegibilidade do Cofre foram avaliados.' },
   { tipo: 'cofre.chave.libertada', origem: 'cofre', prioridade: 'M', porque: 'A chave saiu, por prazo, só para esta missão.' },
   { tipo: 'cofre.chave.recolhida', origem: 'cofre', prioridade: 'M', porque: 'O prazo terminou e a chave voltou a fechar.' },
   { tipo: 'cofre.pacote.preparado', origem: 'cofre', prioridade: 'M', porque: 'Selecionado o mínimo necessário.' },

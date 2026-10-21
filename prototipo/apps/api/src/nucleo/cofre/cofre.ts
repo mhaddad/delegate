@@ -228,6 +228,81 @@ export class CofreDigital {
     return { item, dados };
   }
 
+  listarItensCompletos(pessoa: string): Array<ItemCofre & { dadosDecifrados?: unknown }> {
+    const chave = derivarChavePessoa(pessoa);
+    return Array.from(this.#itens.values())
+      .filter((it) => it.pessoa === pessoa)
+      .map((it) => {
+        let dadosDecifrados: unknown = null;
+        try {
+          dadosDecifrados = decifrarDados(it.conteudoCifrado, chave);
+        } catch {
+          dadosDecifrados = null;
+        }
+        return {
+          ...it,
+          dadosDecifrados,
+        };
+      });
+  }
+
+  async avaliarElegibilidade(
+    pessoa: string,
+    params: {
+      tipo: string;
+      titulo: string;
+      finalidade: string;
+      pertenceAPessoa?: boolean;
+      consentimento?: boolean;
+      publico?: boolean;
+      conservacao?: string;
+    },
+  ) {
+    const criterios = [
+      { id: 'pertence_a_pessoa', nome: 'Pertence à esfera privada da pessoa', aprovado: params.pertenceAPessoa ?? true },
+      { id: 'finalidade_administrativa', nome: 'Finalidade administrativa concreta', aprovado: Boolean(params.finalidade && params.finalidade.length > 3) },
+      { id: 'consentimento_explicito', nome: 'Consentimento explícito manifestado', aprovado: params.consentimento ?? true },
+      { id: 'nao_publico', nome: 'Dado não público (exclui regulamentos/taxas)', aprovado: !(params.publico ?? false) },
+      { id: 'prazo_definido', nome: 'Prazo de conservação delimitado', aprovado: Boolean(params.conservacao ?? true) },
+      { id: 'proporcionalidade', nome: 'Proporcionalidade estrita ao procedimento', aprovado: true },
+    ];
+
+    const todosAprovados = criterios.every((c) => c.aprovado);
+    const noul = todosAprovados ? 0.98 : criterios.filter((c) => c.aprovado).length / criterios.length;
+
+    let camadaSugerida: CamadaCofre = 'intencoes';
+    if (params.tipo.includes('nif') || params.tipo.includes('iban') || params.tipo.includes('identidade') || params.tipo.includes('cmd')) {
+      camadaSugerida = 'identidade';
+    } else if (params.tipo.includes('foto') || params.tipo.includes('pdf') || params.tipo.includes('medicao') || params.tipo.includes('certidao')) {
+      camadaSugerida = 'provas';
+    }
+
+    await this.#registo.registar({
+      tipo: 'cofre.elegibilidade.avaliada',
+      origem: 'cofre',
+      sessao: this.#sessao,
+      pessoa,
+      missao: null,
+      ator: 'agente',
+      simulacao: true,
+      dados: {
+        titulo: params.titulo,
+        tipo: params.tipo,
+        camada_sugerida: camadaSugerida,
+        noul,
+        elegivel: todosAprovados,
+        criterios: criterios.map((c) => `${c.id}:${c.aprovado ? 'ok' : 'falha'}`),
+      },
+    });
+
+    return {
+      elegivel: todosAprovados,
+      noul,
+      camadaSugerida,
+      criterios,
+    };
+  }
+
   /**
    * Guardião de Contexto: Prepara o pacote mínimo (PAC-xxxx) estritamente limitado
    * à finalidade do procedimento oficial.

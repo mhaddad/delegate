@@ -20,6 +20,7 @@ export interface ContextoDecisao {
   mandatoAtivoNivel?: NivelMandato;
   historicoRecente?: Array<{ autor: 'pessoa' | 'henriques'; texto: string }>;
   itensCofre?: Array<{ tipo: string; titulo: string }>;
+  factosValidados?: Record<string, any>;
 }
 
 export interface IntencaoMunicipal {
@@ -46,6 +47,8 @@ export interface ResultadoDecisao {
   confianca: number;
   probabilidades?: Record<string, number>;
   exigeConsentimento: boolean;
+  recomendaFontes?: boolean;
+  probabilidadeFontes?: number;
   tempoRespostaMs: number;
   motivo?: string;
   entidade?: string;

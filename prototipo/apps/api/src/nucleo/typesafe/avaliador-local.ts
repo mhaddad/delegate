@@ -490,6 +490,20 @@ export class AvaliadorLocal {
       });
     }
 
+    const ehTecnicoOuRegulamentar =
+      servicoId === 'ocupacao-espaco-publico-esplanada' ||
+      servicoId === 'pedido-informacao-previa-urbanismo' ||
+      servicoId === 'inspecao-ascensores' ||
+      /esplanada|pdm|silvares|terreno|construir|cércea|cercea|afastamento|taxa|preço|preco|custo|73|elevador|ascensor|ovp-so|rjue|isenção|isençao|licença|licenca|prazo|vinculativo|caderneta/i.test(t);
+
+    const recomendaFontes =
+      catFinal !== 'geral' &&
+      catFinal !== 'adversarial' &&
+      catFinal !== 'fora_competencia' &&
+      ehTecnicoOuRegulamentar;
+
+    const probabilidadeFontes = recomendaFontes ? 0.92 : 0.08;
+
     return {
       motor: 'calibrado-local',
       modelo: 'regras-deterministas',
@@ -503,6 +517,8 @@ export class AvaliadorLocal {
       ferramentaMcp,
       confianca: 0.96,
       exigeConsentimento: nivelMandato === 'D3' || nivelMandato === 'D4',
+      recomendaFontes,
+      probabilidadeFontes,
       tempoRespostaMs: Date.now() - inicio,
       percurso: percursoFinal,
       perguntasPoupadas: 0,

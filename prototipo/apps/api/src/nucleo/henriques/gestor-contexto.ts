@@ -89,12 +89,10 @@ export class GestorContextoConversa {
       mandatoAtivoNivel: contextoExterno.mandatoAtivoNivel ?? (sessao.missaoAtivaId ? 'D2' : 'D0'),
       historicoRecente: contextoExterno.historicoRecente ?? historicoLimpo,
       itensCofre: contextoExterno.itensCofre ?? [],
+      factosValidados: contextoExterno.factosValidados ?? this.obterFactosCompactados(pessoa),
     };
   }
 
-  /**
-   * Atualiza a sessão após uma interação do agente, evitando poluição de serviços em saudações ou recusas.
-   */
   atualizarInteracao(params: {
     pessoa: string;
     mensagemCidadao: string;
@@ -116,14 +114,12 @@ export class GestorContextoConversa {
       params.categoria === 'fora_competencia';
 
     if (ehGeralOuCurtoCircuito) {
-      // Saudações e curto-circuitos não fixam foco de serviços nem acumulam histórico de procedimentos
       sessao.servicoAtivoId = undefined;
       sessao.servicoAtivoTitulo = undefined;
       sessao.historicoRecente = [];
       return;
     }
 
-    // Se houve mudança de assunto deliberada, arquiva os factos do serviço anterior
     if (params.mudancaServico && params.servicoId && params.servicoId !== sessao.servicoAtivoId) {
       sessao.factosValidados.clear();
     }
@@ -141,7 +137,19 @@ export class GestorContextoConversa {
       sessao.estadoProcesso = params.estadoProcesso;
     }
 
-    // Adicionar turnos ao histórico recente com cap de 8 turnos
+    const matchArea = params.mensagemCidadao.match(/(\d+(?:[.,]\d+)?)\s*(?:m2|m²|metros\s*quadrados)/i);
+    if (matchArea) {
+      this.anotarFacto(params.pessoa, 'area_ocupacao', `${matchArea[1].replace(',', '.')} m²`);
+    }
+    const matchMesas = params.mensagemCidadao.match(/(\d+)\s*mesas?/i);
+    if (matchMesas) {
+      this.anotarFacto(params.pessoa, 'numero_mesas', matchMesas[1]);
+    }
+    const matchFreguesia = params.mensagemCidadao.match(/\b(silvares|azurém|creixomil|fermentelos|oliveira|santiago|urgeses|costa|mesão frio|ponte)\b/i);
+    if (matchFreguesia) {
+      this.anotarFacto(params.pessoa, 'freguesia_local', matchFreguesia[1]);
+    }
+
     sessao.historicoRecente.push(
       { autor: 'pessoa', texto: params.mensagemCidadao, timestamp: agora },
       { autor: 'henriques', texto: params.respostaTexto, timestamp: agora },

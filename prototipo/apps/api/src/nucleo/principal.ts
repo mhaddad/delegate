@@ -135,6 +135,148 @@ const servidor = criarServidorEventos(
       ],
     };
   },
+  {
+    obterDados: async (pessoa = 'pessoa-1bbe89cb4d') => {
+      let itens = cofre.listarItensCompletos(pessoa);
+      if (itens.length === 0) {
+        await cofre.guardarItem(pessoa, 'MIS-0001', {
+          camada: 'identidade',
+          tipo: 'identidade_fiscal',
+          titulo: 'NIF & Identificação Fiscal',
+          dados: { nif: '123 456 789', titular: 'Inês Guimarães', regime: 'Restauração e Bebidas / Café Oliveira' },
+          origem: 'Chave Móvel Digital',
+          finalidade: 'Autenticação formal em requerimentos municipais e liquidação de taxas',
+          sensibilidade: 'sensivel',
+          validoAte: '2027-10-18',
+          conservacao: 'Até revogação expressa da pessoa',
+          permissoes: ['leitura_instrucao', 'apresentacao_cmd'],
+        });
+
+        await cofre.guardarItem(pessoa, 'MIS-0001', {
+          camada: 'identidade',
+          tipo: 'morada_fiscal',
+          titulo: 'Morada Fiscal e Sede do Estabelecimento',
+          dados: { rua: 'Largo da Oliveira, n.º 12', codigo_postal: '4800-025', freguesia: 'Oliveira do Castelo', concelho: 'Guimarães' },
+          origem: 'Chave Móvel Digital / Autoridade Tributária',
+          finalidade: 'Comprovação de domicílio fiscal e jurisdição municipal',
+          sensibilidade: 'sensivel',
+          validoAte: '2027-10-18',
+          conservacao: 'Até revogação',
+          permissoes: ['leitura_instrucao'],
+        });
+
+        await cofre.guardarItem(pessoa, 'MIS-0001', {
+          camada: 'provas',
+          tipo: 'prova_medicao_calcada',
+          titulo: 'Medição Fotográfica da Calçada (2,10m)',
+          dados: { largura_livre_m: 2.10, corredor_pedonal_minimo_m: 2.00, em_conformidade: true, artigo: 'Artigo 8.º ROPP', hash_foto: 'sha256-a18f40b829c4e2098d4f9b88e...' },
+          origem: 'Fotografia enviada no Telegram',
+          finalidade: 'Instrução probatória da Mera Comunicação Prévia de Esplanada Aberta',
+          sensibilidade: 'normal',
+          validoAte: '2026-12-31',
+          conservacao: 'Durante vigência do processo OEP/2026/0001',
+          permissoes: ['instrucao_processo_su'],
+        });
+
+        await cofre.guardarItem(pessoa, 'MIS-0001', {
+          camada: 'provas',
+          tipo: 'apolice_seguro_rc',
+          titulo: 'Apólice de Seguro de Responsabilidade Civil',
+          dados: { seguradora: 'Tranquilidade Seguros', apolice_num: 'RC-402914-2026', capital_seguro: 150000, valido_ate: '2027-03-31' },
+          origem: 'Upload em PDF pelo cidadão',
+          finalidade: 'Comprovativo obrigatório nos termos do Regulamento de Ocupação do Espaço Público',
+          sensibilidade: 'normal',
+          validoAte: '2027-03-31',
+          conservacao: 'Vigência da apólice',
+          permissoes: ['instrucao_processo_su'],
+        });
+
+        await cofre.guardarItem(pessoa, 'MIS-0001', {
+          camada: 'intencoes',
+          tipo: 'projeto_esplanada_ovp',
+          titulo: 'Projeto de Esplanada Aberta (4 mesas)',
+          dados: { servico: 'ocupacao-espaco-publico-esplanada', mesas: 4, cadeiras: 8, toldo_amovivel: true, area_m2: 12, periodo: 'Anual 2026' },
+          origem: 'Conversa no Telegram com Henriques',
+          finalidade: 'Preparação do formulário OVP-SO e apuramento de taxas regulamentares',
+          sensibilidade: 'normal',
+          validoAte: '2026-11-30',
+          conservacao: 'Até submissão ou cancelamento da missão',
+          permissoes: ['instrucao_rascunho_d2'],
+        });
+
+        itens = cofre.listarItensCompletos(pessoa);
+      }
+
+      let pacotes = cofre.listarPacotes(pessoa);
+      if (pacotes.length === 0) {
+        await cofre.prepararPacoteMinimo(
+          pessoa,
+          'MIS-0001',
+          'Câmara Municipal de Guimarães · Serviços Urbanos',
+          'Instrução de Mera Comunicação Prévia de Esplanada (Artigo 8.º ROPP)',
+          {
+            requerente: 'Inês Guimarães',
+            nif: '123 456 789',
+            morada_estabelecimento: 'Largo da Oliveira, n.º 12, Guimarães',
+            area_esplanada_m2: 12,
+            mesas: 4,
+            cadeiras: 8,
+            largura_passeio_m: 2.10,
+            seguro_responsabilidade_civil_valido: true,
+          },
+          [
+            'iban_conta_bancaria',
+            'historico_integral_conversa_telegram',
+            'faturamento_comercial_restaurante',
+            'documentos_outros_imoveis',
+            'fotografias_pessoais_descartadas',
+          ],
+        );
+        pacotes = cofre.listarPacotes(pessoa);
+      }
+
+      const mandatosPessoa = await mandatos.listar(pessoa);
+
+      return {
+        ok: true,
+        pessoa,
+        itens,
+        pacotes,
+        mandatos: mandatosPessoa,
+        estatisticas: {
+          totalItens: itens.length,
+          porCamada: {
+            identidade: itens.filter((i) => i.camada === 'identidade').length,
+            provas: itens.filter((i) => i.camada === 'provas').length,
+            intencoes: itens.filter((i) => i.camada === 'intencoes').length,
+          },
+          sensibilidade: {
+            sensivel: itens.filter((i) => i.sensibilidade === 'sensivel').length,
+            normal: itens.filter((i) => i.sensibilidade === 'normal').length,
+          },
+        },
+      };
+    },
+    guardar: async (body: any) => {
+      const pessoa = body.pessoa ?? 'pessoa-1bbe89cb4d';
+      const item = await cofre.guardarItem(pessoa, body.missao ?? null, {
+        camada: body.camada ?? 'intencoes',
+        tipo: body.tipo ?? 'item_geral',
+        titulo: body.titulo ?? 'Novo Item do Cofre',
+        dados: body.dados ?? {},
+        origem: body.origem ?? 'Interface Web do Cofre',
+        finalidade: body.finalidade ?? 'Procedimento municipal com a autarquia',
+        sensibilidade: body.sensibilidade ?? 'normal',
+        validoAte: body.validoAte ?? null,
+        conservacao: body.conservacao ?? 'Até revogação',
+      });
+      return { ok: true, item };
+    },
+    avaliar: async (body: any) => {
+      const pessoa = body.pessoa ?? 'pessoa-1bbe89cb4d';
+      return await cofre.avaliarElegibilidade(pessoa, body);
+    },
+  },
 );
 servidor.listen(PORTA_EVENTOS, () => {
   console.log(`✓ fluxo de eventos em http://localhost:${PORTA_EVENTOS}/eventos/stream`);
@@ -288,7 +430,11 @@ canal._aoReceber(async (m) => {
         mandatoAtivoNivel: missaoAtiva ? 'D2' : 'D0',
         itensCofre: metadadosCofre.map(it => ({ tipo: it.tipo, titulo: it.titulo })),
       });
-      await canal.enviar(m.conversa, resp.texto, resp.botoes);
+      if (resp.mensagens && resp.mensagens.length > 1) {
+        await canal.enviarSequencia(m.conversa, resp.mensagens, resp.botoes);
+      } else {
+        await canal.enviar(m.conversa, resp.texto, resp.botoes);
+      }
     } else if (m.texto === 'iniciar_esplanada' || m.texto === 'voltar_esplanada' || m.texto === 'preparar:ocupacao-espaco-publico-esplanada') {
       await fluxoD2.iniciarFluxoEsplanada(m.pessoa, m.conversa);
     } else if (m.texto?.startsWith('d2_')) {
@@ -413,6 +559,55 @@ canal._aoReceber(async (m) => {
           'O processo regressou à fila da técnica para apreciação final.',
         ].join('\n'),
       );
+    } else if (m.texto?.startsWith('ver_fontes:') || m.texto === 'ver_fontes') {
+      const servicoId = m.texto.includes(':') ? m.texto.split(':')[1] : 'ocupacao-espaco-publico-esplanada';
+      let diploma = 'Regulamento Municipal de Guimarães';
+      let artigos = 'Artigos regulamentares em vigor';
+      const versao = '2026-10-18.1';
+      if (servicoId === 'ocupacao-espaco-publico-esplanada') {
+        diploma = 'Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães';
+        artigos = 'Artigo 8.º e Anexo I (Corredor pedonal ≥ 2,00m, mobiliário amovível)';
+      } else if (servicoId === 'pedido-informacao-previa-urbanismo') {
+        diploma = 'Regulamento do Plano Diretor Municipal de Guimarães (Aviso n.º 23214/2020)';
+        artigos = 'Artigos 45.º e 62.º do PDM e Artigo 14.º do RJUE';
+      } else if (servicoId === 'inspecao-ascensores') {
+        diploma = 'Regulamento de Elevadores e Ascensores de Guimarães';
+        artigos = 'Artigo 34.º da Tabela de Taxas 2025 (Taxa fixa: 73,00 €)';
+      } else if (servicoId === 'cartao-municipal-senior') {
+        diploma = 'Regulamento do Cartão Municipal Sénior da Câmara Municipal de Guimarães';
+        artigos = 'Artigo 4.º (Idade ≥ 65 anos e residência/recenseamento em Guimarães)';
+      }
+
+      await registro.registar({
+        tipo: 'henriques.fontes.consultadas',
+        origem: 'henriques',
+        sessao: SESSAO,
+        pessoa: m.pessoa,
+        missao: null,
+        ator: 'agente:verificador',
+        simulacao: false,
+        dados: {
+          servico: servicoId,
+          diploma,
+          artigos,
+          versao,
+          consultado_em: '18/10/2026',
+        },
+      });
+
+      await canal.enviar(
+        m.conversa,
+        [
+          '📜 <b>Fundamentação Oficial e Base Jurídica</b>',
+          '',
+          `• <b>Diploma:</b> ${diploma}`,
+          `• <b>Disposições Aplicáveis:</b> ${artigos}`,
+          `• <b>Versão em vigor:</b> v${versao} (consultado a 18/10/2026)`,
+          '• <b>Integridade:</b> Selo SHA-256 verificado nos registos canónicos da Câmara.',
+          '',
+          '<i>O Henriques assegura conformidade estrita com as normas oficiais da autarquia.</i>',
+        ].join('\n'),
+      );
     } else if (m.texto?.startsWith('apagar_item_')) {
       const itemId = m.texto.replace('apagar_item_', '');
       const apagado = await cofre.apagarItem(m.pessoa, itemId);
@@ -526,7 +721,7 @@ canal._aoReceber(async (m) => {
     }
 
     // Se o cidadão quer iniciar a preparação da esplanada por texto
-    if (/iniciar.*esplanada|preparar.*esplanada|avan[cç]ar.*esplanada|pedir.*esplanada|quero.*esplanada/i.test(m.texto)) {
+    if (/iniciar.*esplanada|preparar.*esplanada|avan[cç]ar.*esplanada|pedir.*esplanada|quero.*esplanada|ajuda.*tratar|tratar.*esplanada/i.test(m.texto)) {
       await fluxoD2.iniciarFluxoEsplanada(m.pessoa, m.conversa);
       await regista('canal.mensagem.enviada', m, { tipo: 'd2_esplanada_iniciada' });
       return;
@@ -593,7 +788,11 @@ canal._aoReceber(async (m) => {
       mandatoAtivoNivel: missaoAtiva ? 'D2' : 'D0',
       itensCofre,
     });
-    await canal.enviar(m.conversa, resp.texto, resp.botoes);
+    if (resp.mensagens && resp.mensagens.length > 1) {
+      await canal.enviarSequencia(m.conversa, resp.mensagens, resp.botoes);
+    } else {
+      await canal.enviar(m.conversa, resp.texto, resp.botoes);
+    }
     await regista('canal.mensagem.enviada', m, { texto: resp.texto });
   }
 

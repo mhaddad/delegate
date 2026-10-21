@@ -224,7 +224,7 @@ export async function tratarSemFonte(
           '',
           'Cada procedimento tem um cálculo próprio na Tabela de Taxas e Licenças Municipal (RTTL 2025).',
           '',
-          'Por favor indique a licença pretendida (por exemplo: esplanada, andaimes, ruído ou publicidade).',
+          'Por favor indique a licença ou procedimento pretendido.',
         ].join('\n'),
         comportamento: 'responder',
         categoria: 'conhecimento_d0',

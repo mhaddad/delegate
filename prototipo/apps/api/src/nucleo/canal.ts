@@ -45,20 +45,76 @@ export interface Botao {
 export type Botoes = Botao[][];
 
 export interface Canal {
-  /** Liga o canal. Devolve quando deixa de receber. */
   ligar(): Promise<void>;
-  /** Envia uma mensagem. */
   enviar(conversa: string, texto: string, botoes?: Botoes): Promise<void>;
-  /** Substitui o texto de uma mensagem já enviada. */
+  enviarSequencia(conversa: string, mensagens: string[], botoes?: Botoes): Promise<void>;
   editar(conversa: string, mensagem: number, texto: string, botoes?: Botoes): Promise<void>;
-  /** Mostra «a escrever» sem mandar mensagem. */
   aEscrever(conversa: string): Promise<void>;
 }
 
-/**
- * O Telegram manda HTML, e um `>` por extenso rejeita a mensagem inteira.
- * Como o Henriques interpola texto que veio da pessoa, isto não é opcional.
- */
+export function fracionarResposta(texto: string, categoria?: string): string[] {
+  const limpo = texto.trim();
+  if (!limpo) return [];
+
+  if (
+    categoria === 'geral' ||
+    categoria === 'adversarial' ||
+    categoria === 'agradecimento' ||
+    limpo.length < 220 ||
+    !limpo.includes('\n\n')
+  ) {
+    return [limpo];
+  }
+
+  const blocos = limpo
+    .split(/\n\s*\n/)
+    .map((b) => b.trim())
+    .filter(Boolean);
+
+  if (blocos.length <= 1) {
+    return [limpo];
+  }
+
+  let baloesBase = blocos.length >= 4 || limpo.length > 550 ? 3 : 2;
+  const sorte = Math.random();
+  let baloesFinal = baloesBase;
+
+  if (baloesBase === 2 && sorte < 0.15) {
+    baloesFinal = 1;
+  } else if (baloesBase === 2 && sorte > 0.90) {
+    baloesFinal = 3;
+  } else if (baloesBase === 3 && sorte < 0.12) {
+    baloesFinal = 2;
+  }
+
+  if (baloesFinal === 1 || blocos.length < 2) {
+    return [limpo];
+  }
+
+  if (baloesFinal === 2) {
+    const ultimoBloco = blocos[blocos.length - 1];
+    const ehAcao = /apoio|dizer|carregar|bot[aã]o|posso|quer|basta|ajuda/i.test(ultimoBloco);
+    if (ehAcao && blocos.length > 2) {
+      const parte1 = blocos.slice(0, blocos.length - 1).join('\n\n');
+      const parte2 = ultimoBloco;
+      return [parte1, parte2];
+    }
+    const meio = Math.ceil(blocos.length / 2);
+    const parte1 = blocos.slice(0, meio).join('\n\n');
+    const parte2 = blocos.slice(meio).join('\n\n');
+    return [parte1, parte2];
+  }
+
+  if (blocos.length === 2) {
+    return [blocos[0], blocos[1]];
+  }
+
+  const p1 = blocos[0];
+  const p3 = blocos[blocos.length - 1];
+  const p2 = blocos.slice(1, blocos.length - 1).join('\n\n');
+  return [p1, p2, p3];
+}
+
 export function escapar(texto: string): string {
   return texto.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -198,6 +254,29 @@ export function criarCanalGrammy(token: string): CanalGrammy {
         parse_mode: 'HTML',
         ...(teclado ? { reply_markup: teclado } : {}),
       });
+    },
+
+    async enviarSequencia(conversa, mensagens, botoes) {
+      if (!mensagens || mensagens.length === 0) return;
+      for (let i = 0; i < mensagens.length; i++) {
+        const msg = mensagens[i];
+        const eUltima = i === mensagens.length - 1;
+        const teclado = eUltima ? paraBotoes(botoes) : undefined;
+
+        if (i > 0) {
+          await bot.api.sendChatAction(Number(conversa), 'typing').catch(() => {});
+          const palavras = msg.trim().split(/\s+/).length;
+          const tempoBase = Math.min(1200, Math.max(350, palavras * 25));
+          const jitter = Math.floor(Math.random() * 400) - 150;
+          const pausa = Math.max(250, Math.min(1500, tempoBase + jitter));
+          await new Promise((r) => setTimeout(r, pausa));
+        }
+
+        await bot.api.sendMessage(conversa, msg, {
+          parse_mode: 'HTML',
+          ...(teclado ? { reply_markup: teclado } : {}),
+        });
+      }
     },
 
     async editar(conversa, mensagem, texto, botoes) {

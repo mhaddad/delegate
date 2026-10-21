@@ -23,10 +23,15 @@ export async function gerarRespostaCatalogo(params: {
   redator: RedatorOpenRouter;
   decisaoJev: ResultadoDecisao;
   historico?: Array<{ autor: 'pessoa' | 'henriques'; texto: string }>;
+  factosConfirmados?: Record<string, any>;
 }): Promise<RespostaHenriques> {
-  const { servicoId, ficha, limpo, prefixoMudanca, pessoa, sessao, registo, redator, decisaoJev, historico } = params;
+  const { servicoId, ficha, limpo, prefixoMudanca, pessoa, sessao, registo, redator, decisaoJev, historico, factosConfirmados } = params;
+  const canaisTexto = ficha?.canais?.map((c) => `${c.descricao}: ${c.url}`).join('\n') ?? '';
+  const factosTexto = factosConfirmados && Object.keys(factosConfirmados).length > 0
+    ? `Dados já confirmados pelo cidadão (NÃO voltar a perguntar):\n` +
+      Object.entries(factosConfirmados).map(([k, v]) => `• ${k}: ${v}`).join('\n')
+    : '';
 
-  // 1. Esplanada Aberta
   if (servicoId === 'ocupacao-espaco-publico-esplanada') {
     const versao = ficha?.versao ?? '2026-10-18.1';
     const refTitulo = 'Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º e Anexo I)';
@@ -41,7 +46,7 @@ export async function gerarRespostaCatalogo(params: {
       '• O mobiliário tem de ser amovível (mesas, cadeiras, guarda-sóis) e sem fixação ao pavimento.',
       '',
       '<b>Documentos Necessários (Formulário OVP-SO):</b>',
-      '1. Requerimento/Formulário de Ocupação de Espaço Público (Modelo OVP-SO);',
+      '1. Requerimento/Formulário de Ocupação de Espaço Público (<a href="https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=">Modelo OVP-SO ↗</a>);',
       '2. Planta de localização ou fotografia do local com a área delimitada e corredor livre de 2,00 metros;',
       '3. Certidão permanente da empresa ou comprovativo de início de atividade do estabelecimento;',
       '4. Apólice de seguro de responsabilidade civil válida.',
@@ -65,10 +70,13 @@ export async function gerarRespostaCatalogo(params: {
         ...(ficha?.condicoes.map((c) => c.texto) ?? []),
         'Taxa apurada em função da área e do período (RTTL 2025). Corredor pedonal livre de pelo menos 2,00 metros na calçada. Mobiliário amovível sem fixação ao pavimento.',
         'Formulário Modelo OVP-SO Certidão permanente Seguro responsabilidade civil',
-      ].join('\n'),
+        canaisTexto,
+        factosTexto,
+      ].filter(Boolean).join('\n'),
       fonteOficial,
       versao,
       textoReferencia: textoCandidato,
+      historicoConversa: historico,
     });
 
     const textoFinal = redacao.texto;
@@ -76,6 +84,8 @@ export async function gerarRespostaCatalogo(params: {
       ficha?.condicoes.map((c) => c.texto).join(' ') ?? '',
       ficha?.titulo_oficial ?? '',
       '2,00 metros 2.00 metros corredor 2,00 m OVP-SO RTTL 2025',
+      canaisTexto,
+      factosTexto,
       textoCandidato,
     ];
     const validacao = VerificadorRegra.verificar(textoFinal, textosFontes);
@@ -99,12 +109,33 @@ export async function gerarRespostaCatalogo(params: {
       },
     });
 
+    await registo.registar({
+      tipo: 'henriques.fontes.oferecidas',
+      origem: 'henriques',
+      sessao,
+      pessoa,
+      missao: null,
+      ator: 'agente:verificador',
+      simulacao: false,
+      dados: {
+        servico: servicoId,
+        criterios_acionados: ['implicacao_legal', 'metrica_tecnica', 'taxa'],
+        forma: 'botao',
+      },
+    });
+
     return {
       servicoId,
       servicoTitulo: ficha?.titulo_simples ?? ficha?.titulo_oficial ?? 'Ocupação do Espaço Público — Esplanada',
       focoServico: decisaoJev.focoServico,
       mudancaServico: decisaoJev.mudancaServico,
       texto: prefixoMudanca + textoFinal,
+      botoes: [
+        [{ texto: '📥 Abrir Formulário OVP-SO ↗', ligacao: 'https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=' }],
+        [{ texto: '🚀 Ajuda-me a tratar (Cofre D2)', dados: 'iniciar_esplanada' }],
+        [{ texto: '📜 Ver Fundamentação Oficial', dados: `ver_fontes:${servicoId}` }],
+        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+      ],
       comportamento: 'responder',
       categoria: 'catalogo',
       fontes: [fonteOficial],
@@ -153,15 +184,20 @@ export async function gerarRespostaCatalogo(params: {
         'Aviso n.º 23214/2020 PDM de Guimarães Artigos 45 e 62',
         'Cércea máxima 3 pisos índice de utilização 0.60 afastamento 3 metros',
         'Pedido de Informação Prévia RJUE Artigo 14',
-      ].join('\n'),
+        canaisTexto,
+        factosTexto,
+      ].filter(Boolean).join('\n'),
       fonteOficial,
       versao,
       textoReferencia: textoCandidato,
+      historicoConversa: historico,
     });
 
     const textoFinal = redacao.texto;
     const textosFontes = [
       'Aviso n.º 23214/2020 Artigos 45.º e 62.º PDM 3 pisos 0.60 3 metros RJUE Artigo 14 1 ano',
+      canaisTexto,
+      factosTexto,
       textoCandidato,
     ];
     const validacao = VerificadorRegra.verificar(textoFinal, textosFontes);
@@ -185,12 +221,32 @@ export async function gerarRespostaCatalogo(params: {
       },
     });
 
+    await registo.registar({
+      tipo: 'henriques.fontes.oferecidas',
+      origem: 'henriques',
+      sessao,
+      pessoa,
+      missao: null,
+      ator: 'agente:verificador',
+      simulacao: false,
+      dados: {
+        servico: servicoId,
+        criterios_acionados: ['implicacao_legal', 'metrica_tecnica', 'prazo_vinculativo'],
+        forma: 'botao',
+      },
+    });
+
     return {
       servicoId,
       servicoTitulo: ficha?.titulo_simples ?? ficha?.titulo_oficial ?? 'Pedido de Informação Prévia (PDM)',
       focoServico: decisaoJev.focoServico,
       mudancaServico: decisaoJev.mudancaServico,
       texto: prefixoMudanca + textoFinal,
+      botoes: [
+        [{ texto: '🚀 Ajuda-me a tratar (Cofre D2)', dados: 'iniciar_pdm' }],
+        [{ texto: '📜 Ver Artigos PDM', dados: `ver_fontes:${servicoId}` }],
+        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+      ],
       comportamento: 'responder',
       categoria: 'catalogo',
       fontes: [fonteOficial],
@@ -234,10 +290,28 @@ export async function gerarRespostaCatalogo(params: {
       contextoFactos: [
         'Regulamento de Elevadores e Ascensores 73,00 euros 73 € Mod. 316/SQ',
         'Periodicidade 2 anos comercial ou 4 anos residencial',
-      ].join('\n'),
+        canaisTexto,
+        factosTexto,
+      ].filter(Boolean).join('\n'),
       fonteOficial,
       versao,
       textoReferencia: textoCandidato,
+      historicoConversa: historico,
+    });
+
+    await registo.registar({
+      tipo: 'henriques.fontes.oferecidas',
+      origem: 'henriques',
+      sessao,
+      pessoa,
+      missao: null,
+      ator: 'agente:verificador',
+      simulacao: false,
+      dados: {
+        servico: servicoId,
+        criterios_acionados: ['taxa', 'metrica_tecnica'],
+        forma: 'botao',
+      },
     });
 
     return {
@@ -246,6 +320,10 @@ export async function gerarRespostaCatalogo(params: {
       focoServico: decisaoJev.focoServico,
       mudancaServico: decisaoJev.mudancaServico,
       texto: prefixoMudanca + redacao.texto,
+      botoes: [
+        [{ texto: '📊 Ver Tabela de Taxas (73 €)', dados: `ver_fontes:${servicoId}` }],
+        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+      ],
       comportamento: 'responder',
       categoria: 'catalogo',
       fontes: [fonteOficial],
@@ -288,10 +366,28 @@ export async function gerarRespostaCatalogo(params: {
       comportamento: 'responder',
       contextoFactos: [
         'Regulamento do Cartão Municipal Sénior 65 anos gratuito descontos transportes cultura',
-      ].join('\n'),
+        canaisTexto,
+        factosTexto,
+      ].filter(Boolean).join('\n'),
       fonteOficial,
       versao,
       textoReferencia: textoCandidato,
+      historicoConversa: historico,
+    });
+
+    await registo.registar({
+      tipo: 'henriques.fontes.oferecidas',
+      origem: 'henriques',
+      sessao,
+      pessoa,
+      missao: null,
+      ator: 'agente:verificador',
+      simulacao: false,
+      dados: {
+        servico: servicoId,
+        criterios_acionados: ['condicoes_acesso'],
+        forma: 'botao',
+      },
     });
 
     return {
@@ -300,6 +396,10 @@ export async function gerarRespostaCatalogo(params: {
       focoServico: decisaoJev.focoServico,
       mudancaServico: decisaoJev.mudancaServico,
       texto: prefixoMudanca + redacao.texto,
+      botoes: [
+        [{ texto: '📜 Ver Condições Oficiais', dados: `ver_fontes:${servicoId}` }],
+        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+      ],
       comportamento: 'responder',
       categoria: 'catalogo',
       fontes: [fonteOficial],
@@ -350,7 +450,7 @@ export async function gerarRespostaCatalogo(params: {
     servicoId,
     categoria: 'catalogo',
     comportamento: 'responder',
-    contextoFactos: [tituloOficial, condicoesTexto, documentosTexto, fonte].join('\n'),
+    contextoFactos: [tituloOficial, condicoesTexto, documentosTexto, canaisTexto, factosTexto, fonte].filter(Boolean).join('\n'),
     fonteOficial: fonte,
     versao,
     textoReferencia: textoRef,
@@ -376,16 +476,35 @@ export async function gerarRespostaCatalogo(params: {
     },
   });
 
-  return {
-    servicoId,
-    servicoTitulo: tituloSimples,
-    focoServico: decisaoJev.focoServico,
-    mudancaServico: decisaoJev.mudancaServico,
-    texto: prefixoMudanca + redacao.texto,
-    comportamento: 'responder',
-    categoria: 'catalogo',
-    fontes: [fonte],
-    modeloRedacao: redacao.modeloUsado,
-    geradoPorLlm: redacao.geradoPorLlm,
-  };
-}
+  await registo.registar({
+      tipo: 'henriques.fontes.oferecidas',
+      origem: 'henriques',
+      sessao,
+      pessoa,
+      missao: null,
+      ator: 'agente:verificador',
+      simulacao: false,
+      dados: {
+        servico: servicoId,
+        criterios_acionados: ['procedimento_oficial'],
+        forma: 'botao',
+      },
+    });
+
+    return {
+      servicoId,
+      servicoTitulo: tituloSimples,
+      focoServico: decisaoJev.focoServico,
+      mudancaServico: decisaoJev.mudancaServico,
+      texto: prefixoMudanca + redacao.texto,
+      botoes: [
+        [{ texto: '📜 Ver Fundamentação Oficial', dados: `ver_fontes:${servicoId}` }],
+        [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+      ],
+      comportamento: 'responder',
+      categoria: 'catalogo',
+      fontes: [fonte],
+      modeloRedacao: redacao.modeloUsado,
+      geradoPorLlm: redacao.geradoPorLlm,
+    };
+  }

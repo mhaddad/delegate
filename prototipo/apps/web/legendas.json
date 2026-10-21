@@ -7,6 +7,10 @@
   "henriques.resposta.redigida": "Escreveu a resposta só com o que está nos registos oficiais.",
   "henriques.resposta.verificada": "Antes de responder, confirmou que cada afirmação tem fonte.",
   "henriques.resposta.abstencao": "Não encontrou fonte para esse valor. Por isso, não o inventa.",
+  "henriques.mensagem.fracionada": "O Henriques dividiu a resposta em balões com cadência e temporização natural.",
+  "henriques.fontes.oferecidas": "O Henriques ofereceu a fundamentação oficial sob demanda ao cidadão.",
+  "henriques.fontes.omitidas": "A fundamentação formal foi omitida para garantir uma conversa fluida e humana.",
+  "henriques.fontes.consultadas": "A pessoa consultou os diplomas e artigos oficiais fundamentadores.",
 
   "missao.criada": "O pedido passou a uma missão com objetivo, dados e prazo.",
   "missao.estado.alterado": "A missão mudou de estado.",
@@ -16,6 +20,7 @@
   "cofre.item.guardado": "Guardado no Cofre, cifrado. Nem o operador consegue ler.",
   "cofre.item.recusado": "A pessoa preferiu não guardar.",
   "cofre.item.apagado": "A pessoa apagou um item do seu Cofre.",
+  "cofre.elegibilidade.avaliada": "Avaliados os critérios de elegibilidade e minimização RGPD para o Cofre.",
   "cofre.chave.libertada": "Com o mandato da pessoa, o Cofre abre só para esta missão e só por um prazo.",
   "cofre.chave.recolhida": "O prazo terminou e a chave voltou a fechar.",
   "cofre.pacote.preparado": "Selecionado apenas o mínimo necessário para tratar da missão.",

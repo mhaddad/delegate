@@ -100,6 +100,9 @@ export class MotorDecisaoTypeSafe {
             exige_consentimento: noul(
               'Esta ação exige consentimento expresso, acede a dados privados do cofre digital ou remete submissão vinculativa à autarquia?',
             ),
+            recomenda_fontes: noul(
+              'A resposta beneficia de citação regulamentar ou jurídica formal, métricas técnicas ou tabela de taxas sob demanda?',
+            ),
           },
         });
 
@@ -109,6 +112,13 @@ export class MotorDecisaoTypeSafe {
         const qMandato = resposta.answers.nivel_mandato as ChoiceResponse<any>;
         const qMcp = resposta.answers.ferramenta_mcp as ChoiceResponse<any>;
         const qConsent = resposta.answers.exige_consentimento as NoulResponse;
+        const qFontes = resposta.answers.recomenda_fontes as NoulResponse | undefined;
+
+        const probFontes = qFontes?.noul ?? 0.5;
+        let recomendaFontes = probFontes > 0.6;
+        if (probFontes >= 0.3 && probFontes <= 0.6) {
+          recomendaFontes = Math.random() > 0.45;
+        }
 
         const servicoAtivoPrevio = contexto.servicoAtivo;
         let focoServico: FocoServico =
@@ -184,6 +194,8 @@ export class MotorDecisaoTypeSafe {
           confianca: qServico.confidence ?? 0.95,
           probabilidades: qServico.probabilities as Record<string, number>,
           exigeConsentimento: qConsent.noul > 0.5,
+          recomendaFontes,
+          probabilidadeFontes: probFontes,
           tempoRespostaMs: Date.now() - inicio,
           percurso: percursoJev,
           perguntasPoupadas: 0,

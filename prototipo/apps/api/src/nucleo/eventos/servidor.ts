@@ -12,6 +12,7 @@ import { createServer, type ServerResponse } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import pg from 'pg';
 import type { Registo } from './registo.ts';
+import { cifrarDados, derivarChavePessoa } from '../cofre/cifra.ts';
 
 const CABECALHOS = {
   'Content-Type': 'text/event-stream',
@@ -54,6 +55,8 @@ const ESTATICOS: Record<string, { ficheiro: string; tipo: string }> = {
   '/cmd': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
   '/cmd.html': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
   '/autenticacao': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
+  '/cofre': { ficheiro: 'cofre.html', tipo: 'text/html; charset=utf-8' },
+  '/cofre.html': { ficheiro: 'cofre.html', tipo: 'text/html; charset=utf-8' },
   '/legendas.json': { ficheiro: 'legendas.json', tipo: 'application/json; charset=utf-8' },
   '/favicon.ico': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
   '/favicon.png': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
@@ -68,9 +71,13 @@ export interface DadosConfirmacaoCmd {
   nome?: string;
 }
 
-/**
- * Serve o Observatório, a Consola, o Router de Conhecimento, a CMD e o fluxo de eventos.
- */
+export interface AcoesCofreServidor {
+  obterDados?: (pessoa?: string) => Promise<any> | any;
+  guardar?: (dados: any) => Promise<any> | any;
+  avaliar?: (dados: any) => Promise<any> | any;
+  simularCifra?: (texto: string, pessoa?: string) => any;
+}
+
 export function criarServidorEventos(
   registro: Registo,
   abrirEscuta: () => Promise<pg.Client>,
@@ -78,6 +85,7 @@ export function criarServidorEventos(
   obterConhecimento?: () => Promise<any> | any,
   testarPerguntaRouter?: (pergunta: string) => Promise<any> | any,
   obterEstadoProcesso?: () => Promise<any> | any,
+  acoesCofre?: AcoesCofreServidor,
 ) {
   return createServer((req, res) => {
     void (async () => {
@@ -154,6 +162,90 @@ export function criarServidorEventos(
           return;
         } catch (err) {
           res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
+      if (caminho === '/api/cofre' && req.method === 'GET') {
+        try {
+          const params = new URL(req.url ?? '', 'http://localhost').searchParams;
+          const pessoa = params.get('pessoa') ?? 'pessoa-1bbe89cb4d';
+          let dados = null;
+          if (acoesCofre?.obterDados) {
+            dados = await acoesCofre.obterDados(pessoa);
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify(dados ?? {}));
+          return;
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
+      if (caminho === '/api/cofre/simular-cifra' && req.method === 'POST') {
+        let corpo = '';
+        for await (const pedaco of req) corpo += pedaco;
+        try {
+          const body = JSON.parse(corpo);
+          const texto = body.texto ?? '';
+          const pessoa = body.pessoa ?? 'pessoa-1bbe89cb4d';
+          const chave = derivarChavePessoa(pessoa);
+          const cifrado = cifrarDados(texto, chave);
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({
+            ok: true,
+            algoritmo: 'AES-256-GCM',
+            iv: cifrado.iv,
+            tag: cifrado.tag,
+            ciphertext: cifrado.dados,
+            tamanhoBytes: Buffer.from(cifrado.dados, 'hex').length,
+            kdf: 'scrypt-256 (sal criptográfico por pessoa)',
+            salt: `pessoa:${pessoa}`,
+          }));
+          return;
+        } catch (err) {
+          res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
+      if (caminho === '/api/cofre/avaliar' && req.method === 'POST') {
+        let corpo = '';
+        for await (const pedaco of req) corpo += pedaco;
+        try {
+          const body = JSON.parse(corpo);
+          let resultado = null;
+          if (acoesCofre?.avaliar) {
+            resultado = await acoesCofre.avaliar(body);
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify(resultado ?? { ok: true }));
+          return;
+        } catch (err) {
+          res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
+      if (caminho === '/api/cofre/guardar' && req.method === 'POST') {
+        let corpo = '';
+        for await (const pedaco of req) corpo += pedaco;
+        try {
+          const body = JSON.parse(corpo);
+          let resultado = null;
+          if (acoesCofre?.guardar) {
+            resultado = await acoesCofre.guardar(body);
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify(resultado ?? { ok: true }));
+          return;
+        } catch (err) {
+          res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
           res.end(JSON.stringify({ erro: (err as Error).message }));
           return;
         }
