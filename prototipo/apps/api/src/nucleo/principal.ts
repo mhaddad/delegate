@@ -44,7 +44,38 @@ const base = await abrirBase();
 const registro = new Registo(base.escrita);
 console.log('✓ base aberta');
 
-const canal: CanalGrammy = criarCanalGrammy(token);
+const conversasPorPessoa = new Map<string, string>();
+let ultimaConversa: string | null = null;
+let aguardaFachada = false;
+
+// Cada mensagem que sai para o Telegram fica no registo, com texto e botões, seja
+// qual for o módulo que a enviou. É o que deixa o painel replicar a conversa
+// sem adivinhar. A marca `entregue_no_canal` distingue-a dos eventos `enviada`
+// que alguns módulos já registam por conta própria, sem texto ou em duplicado.
+const canalTelegram: CanalGrammy = criarCanalGrammy(token);
+const canal: CanalGrammy = {
+  ...canalTelegram,
+  async enviar(conversa, texto, botoes) {
+    await canalTelegram.enviar(conversa, texto, botoes);
+    const pessoa = [...conversasPorPessoa].find(([, c]) => c === conversa)?.[0] ?? null;
+    await registro
+      .registar({
+        tipo: 'canal.mensagem.enviada',
+        origem: 'canal',
+        sessao: SESSAO,
+        pessoa,
+        missao: null,
+        ator: 'agente:henriques',
+        simulacao: false,
+        dados: {
+          texto,
+          botoes: botoes?.map((linha) => linha.map((b) => ({ texto: b.texto, dados: b.dados ?? null }))) ?? [],
+          entregue_no_canal: true,
+        },
+      })
+      .catch((err: unknown) => console.warn('⚠ envio sem registo:', err));
+  },
+};
 const clientePorta = new ClientePortaMcp();
 const buscador = new BuscadorConhecimento();
 const henriques = new Henriques(registro, clientePorta, SESSAO, undefined, undefined, buscador);
@@ -64,10 +95,6 @@ const fluxoD2 = new GestorFluxoD2({
   canal,
   sessao: SESSAO,
 });
-
-const conversasPorPessoa = new Map<string, string>();
-let ultimaConversa: string | null = null;
-let aguardaFachada = false;
 
 // Processador de cenários simulados (CMD, PIP Urbanismo, Medição de Calçada)
 const cenarios = new ProcessadorCenarios({
@@ -358,6 +385,22 @@ canal._aoReceber(async (m) => {
     conversasPorPessoa.set(m.pessoa, m.conversa);
     ultimaConversa = m.conversa;
 
+  // Regista-se antes dos comandos, para que um /start também apareça no registo.
+  const dados: Record<string, unknown> =
+    m.tipo === 'foto'
+      ? { tem_foto: Boolean(m.foto), texto: m.texto, entrada: m.tipo }
+      : m.tipo === 'botao'
+        ? { botao: m.texto }
+        : m.tipo === 'documento'
+          ? { texto: m.texto, documento: m.documento?.nome ?? null, entrada: m.tipo }
+          : { texto: m.texto, entrada: m.tipo };
+
+  await regista(
+    m.tipo === 'botao' ? 'canal.botao.carregado' : 'canal.mensagem.recebida',
+    m,
+    dados,
+  );
+
     // 1. Tratamento de Comandos de Barra (/) delegados ao módulo TratadorComandos
     if (m.tipo === 'comando' && m.texto) {
       const tratado = await comandos.tratar(m);
@@ -366,19 +409,6 @@ canal._aoReceber(async (m) => {
         return;
       }
     }
-
-  const dados: Record<string, unknown> =
-    m.tipo === 'foto'
-      ? { tem_foto: Boolean(m.foto) }
-      : m.tipo === 'botao'
-        ? { botao: m.texto }
-        : { texto: m.texto };
-
-  await regista(
-    m.tipo === 'botao' ? 'canal.botao.carregado' : 'canal.mensagem.recebida',
-    m,
-    dados,
-  );
 
   // 2. Tratamento de botões de decisão da pessoa
   if (m.tipo === 'botao') {

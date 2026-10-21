@@ -150,6 +150,8 @@ export class Henriques {
         intencao: decisaoJev.servicoId ?? decisaoJev.categoria,
         confianca: decisaoJev.confianca,
         categoria: decisaoJev.categoria,
+        comportamento: decisaoJev.comportamento,
+        exige_consentimento: decisaoJev.exigeConsentimento,
         motor: decisaoJev.motor,
         modelo: decisaoJev.modelo,
         mandato_inferido: decisaoJev.nivelMandato,
