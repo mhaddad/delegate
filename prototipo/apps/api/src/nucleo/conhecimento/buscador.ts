@@ -17,7 +17,7 @@ import {
   criarClienteJev,
   noul,
   type ChoiceResponse,
-  type ClienteJevOpenRouter,
+  type ClienteJev,
   type NoulResponse,
 } from '../typesafe/jev-openrouter.ts';
 import type { Botao } from '../canal.ts';
@@ -60,6 +60,7 @@ export interface ResultadoConhecimento {
   pontuacao: number;
   confiancaJev?: number;
   motorDecisao?: 'typesafe-jev' | 'calibrado-local' | 'hibrido-vetorial';
+  modelo?: string;
   precisaEsclarecimento?: boolean;
 }
 
@@ -103,10 +104,10 @@ function produtoInterno(a: number[], b: number[]): number {
 export class BuscadorConhecimento {
   readonly #documentos: DocumentoCarregado[] = [];
   readonly #vetores = new Map<string, number[]>();
-  readonly #jev: ClienteJevOpenRouter | null;
+  readonly #jev: ClienteJev | null;
   readonly #tokenOpenRouter: string | null;
 
-  constructor(caminhoPasta = PASTA_DADOS, jev?: ClienteJevOpenRouter) {
+  constructor(caminhoPasta = PASTA_DADOS, jev?: ClienteJev) {
     this.#tokenOpenRouter = process.env.OPEN_ROUTER_API_TOKEN || process.env.OPENROUTER_API_KEY || null;
     this.#jev = jev ?? criarClienteJev();
 
@@ -396,6 +397,7 @@ export class BuscadorConhecimento {
             ...escolhido,
             confiancaJev: qChoice.confidence ?? qNoul?.noul ?? 0.9,
             motorDecisao: 'typesafe-jev',
+            modelo: resposta.modelo,
             precisaEsclarecimento: qEsclarece && qEsclarece.noul > 0.65,
           };
         }
@@ -411,7 +413,7 @@ export class BuscadorConhecimento {
     const dataFormatada = resultado.consultadoEm;
     const motorTag =
       resultado.motorDecisao === 'typesafe-jev'
-        ? ' · Verificado por TypeSafe Jev (OpenRouter)'
+        ? ` · Verificado por TypeSafe Jev (${resultado.modelo?.includes('system-one') ? 'System One Nativo' : 'OpenRouter'})`
         : resultado.motorDecisao === 'hibrido-vetorial'
           ? ' · Pesquisa Híbrida (Vetorial + Léxica)'
           : '';

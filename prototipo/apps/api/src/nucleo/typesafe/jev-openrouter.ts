@@ -1,12 +1,18 @@
 /**
- * Cliente do Jev via OpenRouter
+ * Cliente do Jev (Híbrido: TypeSafe System One Nativo + OpenRouter)
  *
- * Envia perguntas tipadas (escolha e noul) ao `typesafe/jev-router` pela mesma API
- * do redator. O Jev escolhe o modelo que responde e a resposta segue um JSON Schema
- * estrito. A confiança é declarada pelo modelo, não é uma probabilidade calibrada.
+ * Suporta dois motores de julgamento:
+ * 1. TypeSafe System One Nativo (@typesafe-ai/sdk) via JEV_API_KEY ou TYPESAFE_API_KEY.
+ * 2. Jev via OpenRouter (typesafe/jev-router) via OPEN_ROUTER_API_TOKEN ou OPENROUTER_API_KEY.
+ *
+ * Se existirem ambas as chaves (modo multi-api local), prioriza o System One nativo
+ * com alternativa automática para o OpenRouter. Se existir apenas OpenRouter, funciona
+ * diretamente via OpenRouter sem dependência de chaves adicionais.
  */
+import { TypeSafeClient, choice as sdkChoice, noul as sdkNoul } from '@typesafe-ai/sdk';
 
 export const MODELO_JEV_OPENROUTER = 'typesafe/jev-router';
+export const MODELO_JEV_NATIVO = 'typesafe-jev-system-one';
 const TEMPO_LIMITE_MS = 10_000;
 
 export interface PerguntaEscolha {
@@ -34,8 +40,12 @@ export interface NoulResponse {
 
 export interface RespostaJev {
   answers: Record<string, ChoiceResponse | NoulResponse>;
-  /** Modelo que respondeu de facto, escolhido pelo router. */
+  /** Modelo que respondeu de facto. */
   modelo: string;
+}
+
+export interface ClienteJev {
+  julgar(pedido: { state: unknown; questions: Record<string, PerguntaJev> }): Promise<RespostaJev>;
 }
 
 export function choice(instrucao: string, criterios: Record<string, unknown>): PerguntaEscolha {
@@ -46,15 +56,62 @@ export function noul(instrucao: string): PerguntaNoul {
   return { tipo: 'noul', instrucao };
 }
 
-/** Devolve um cliente se houver chave do OpenRouter no ambiente; caso contrário, `null`. */
-export function criarClienteJev(): ClienteJevOpenRouter | null {
-  const token = process.env.OPEN_ROUTER_API_TOKEN || process.env.OPENROUTER_API_KEY;
-  return token && token.trim().length > 0 ? new ClienteJevOpenRouter(token.trim()) : null;
-}
-
 const limitar = (valor: unknown): number => Math.min(1, Math.max(0, Number(valor) || 0));
 
-export class ClienteJevOpenRouter {
+/**
+ * Cliente nativo do TypeSafe Jev System One via @typesafe-ai/sdk
+ */
+export class ClienteJevTypeSafe implements ClienteJev {
+  readonly #client: TypeSafeClient;
+
+  constructor(apiKey: string) {
+    this.#client = new TypeSafeClient({ apiKey });
+  }
+
+  async julgar(pedido: { state: unknown; questions: Record<string, PerguntaJev> }): Promise<RespostaJev> {
+    const perguntas = Object.entries(pedido.questions);
+    const sdkQuestions: Record<string, any> = {};
+
+    for (const [nome, p] of perguntas) {
+      if (p.tipo === 'escolha') {
+        sdkQuestions[nome] = sdkChoice(p.instrucao, p.criterios);
+      } else {
+        sdkQuestions[nome] = sdkNoul(p.instrucao);
+      }
+    }
+
+    const resultado = await this.#client.systemOne({
+      state: pedido.state as any,
+      questions: sdkQuestions,
+    });
+
+    const answers: RespostaJev['answers'] = {};
+    for (const [nome, ans] of Object.entries(resultado.answers)) {
+      const a = ans as any;
+      if (a?.type === 'choice' || a?.choice !== undefined) {
+        answers[nome] = {
+          choice: a.choice,
+          confidence: a.confidence ?? 1.0,
+          probabilities: a.probabilities ?? { [a.choice]: a.confidence ?? 1.0 },
+        };
+      } else if (a?.type === 'noul' || a?.noul !== undefined) {
+        answers[nome] = {
+          noul: a.noul,
+        };
+      }
+    }
+
+    return {
+      answers,
+      modelo: resultado.model || MODELO_JEV_NATIVO,
+    };
+  }
+}
+
+/**
+ * Cliente do Jev via OpenRouter (typesafe/jev-router)
+ */
+export class ClienteJevOpenRouter implements ClienteJev {
   readonly #token: string;
 
   constructor(token: string) {
@@ -160,4 +217,52 @@ export class ClienteJevOpenRouter {
       clearTimeout(timeoutId);
     }
   }
+}
+
+/**
+ * Cliente Híbrido: tenta Jev Nativo primeiro (se configurado), com alternativa para OpenRouter.
+ */
+export class ClienteJevHibrido implements ClienteJev {
+  readonly #tipoSafe: ClienteJevTypeSafe | null;
+  readonly #openRouter: ClienteJevOpenRouter | null;
+
+  constructor(opcoes: { keyJev?: string; tokenOpenRouter?: string }) {
+    this.#tipoSafe = opcoes.keyJev ? new ClienteJevTypeSafe(opcoes.keyJev) : null;
+    this.#openRouter = opcoes.tokenOpenRouter ? new ClienteJevOpenRouter(opcoes.tokenOpenRouter) : null;
+  }
+
+  async julgar(pedido: { state: unknown; questions: Record<string, PerguntaJev> }): Promise<RespostaJev> {
+    if (this.#tipoSafe) {
+      try {
+        return await this.#tipoSafe.julgar(pedido);
+      } catch (erro) {
+        console.warn('TypeSafe Jev Nativo falhou; recurso a OpenRouter:', (erro as Error)?.message);
+      }
+    }
+
+    if (this.#openRouter) {
+      return await this.#openRouter.julgar(pedido);
+    }
+
+    throw new Error('Nenhum motor Jev (Nativo ou OpenRouter) disponível com sucesso.');
+  }
+}
+
+/** Devolve um cliente Jev (Híbrido ou OpenRouter) conforme as chaves disponíveis no ambiente. */
+export function criarClienteJev(): ClienteJev | null {
+  const tokenOpenRouter = process.env.OPEN_ROUTER_API_TOKEN || process.env.OPENROUTER_API_KEY;
+  const keyJev = process.env.JEV_API_KEY || process.env.TYPESAFE_API_KEY;
+
+  if (keyJev && keyJev.trim().length > 0) {
+    return new ClienteJevHibrido({
+      keyJev: keyJev.trim(),
+      tokenOpenRouter: tokenOpenRouter?.trim(),
+    });
+  }
+
+  if (tokenOpenRouter && tokenOpenRouter.trim().length > 0) {
+    return new ClienteJevOpenRouter(tokenOpenRouter.trim());
+  }
+
+  return null;
 }

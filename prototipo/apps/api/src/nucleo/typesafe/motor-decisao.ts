@@ -4,7 +4,7 @@
  * Utiliza o Jev da TypeSafe, via OpenRouter (`typesafe/jev-router`), para transformar
  * linguagem natural e o contexto da sessão em julgamentos tipados.
  */
-import { choice, criarClienteJev, noul, type ChoiceResponse, type ClienteJevOpenRouter, type NoulResponse } from './jev-openrouter.ts';
+import { choice, criarClienteJev, noul, type ChoiceResponse, type ClienteJev, type NoulResponse } from './jev-openrouter.ts';
 import type { ContextoDecisao, FocoServico, ResultadoDecisao, TipoComportamento } from './tipos.ts';
 import type { NivelMandato } from '../mandatos/mandatos.ts';
 import { BASE_INTENCOES_MUNICIPAIS } from './catalogo-intencoes.ts';
@@ -25,10 +25,10 @@ export * from './criterios.ts';
 export * from './avaliador-local.ts';
 
 export class MotorDecisaoTypeSafe {
-  readonly #jev: ClienteJevOpenRouter | null;
+  readonly #jev: ClienteJev | null;
 
-  constructor() {
-    this.#jev = criarClienteJev();
+  constructor(jev?: ClienteJev) {
+    this.#jev = jev ?? criarClienteJev();
   }
 
   /**
