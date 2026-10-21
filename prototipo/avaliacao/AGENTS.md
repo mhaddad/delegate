@@ -6,7 +6,7 @@
 
 ## O que é
 
-42 perguntas reais, um executor e um relatório. É a prova de que o Afonso não está a adivinhar — e o que permite dizer no pitch com números em vez de com adjetivos.
+42 perguntas reais, um executor e um relatório. É a prova de que o Henriques não está a adivinhar — e o que permite dizer no pitch com números em vez de com adjetivos.
 
 ## Composição obrigatória
 
@@ -21,7 +21,7 @@
 
 Cada pergunta declara: identificador, pergunta, serviço esperado, comportamento esperado e o que é proibido responder.
 
-Os quatro comportamentos são `responder`, `abster`, `encaminhar` e `recusar`. Uma pergunta de «sem fonte» cuja resposta correta é abster conta como acerto **só** se o Afonso disser que não sabe e indicar onde confirmar.
+Os quatro comportamentos são `responder`, `abster`, `encaminhar` e `recusar`. Uma pergunta de «sem fonte» cuja resposta correta é abster conta como acerto **só** se o Henriques disser que não sabe e indicar onde confirmar.
 
 ## Métricas e Resultados (Calibração TypeSafe Jev System One)
 

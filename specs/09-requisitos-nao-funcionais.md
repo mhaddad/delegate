@@ -67,7 +67,7 @@
 
 | ID | Requisito | R0 | R1 |
 |---|---|---|---|
-| RNF-TRA-01 | O Afonso identifica-se como IA | Obrigatório | Obrigatório |
+| RNF-TRA-01 | O Henriques identifica-se como IA | Obrigatório | Obrigatório |
 | RNF-TRA-02 | O que é simulado aparece marcado «Simulação» | Obrigatório | — |
 | RNF-TRA-03 | Ferramentas, modelos e bibliotecas de terceiros identificados | Obrigatório (regra do hackathon) | Obrigatório |
 | RNF-TRA-04 | Resultados da avaliação publicados | No painel | Relatório periódico |

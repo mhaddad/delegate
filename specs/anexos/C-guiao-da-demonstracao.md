@@ -14,7 +14,7 @@
 | 3:10–3:40 | Diferença | Trabalha para a pessoa; fonte em cada resposta; mandato; Porta aberta que serve também o atendedor da Câmara | Inovação |
 | 3:40–4:10 | Impacto | Pessoas, empresas, técnicos; Cidade Europeia da Inovação | Impacto |
 | 4:10–4:45 | Continuidade | Piloto de 5 meses, 65 mil €, contratável; modelo: o munícipe nunca paga | Continuidade |
-| 4:45–5:00 | Fecho | «Diga o que precisa. O Afonso trata do resto.» | Apresentação |
+| 4:45–5:00 | Fecho | «Diga o que precisa. O Henriques trata do resto.» | Apresentação |
 
 ## 2. Demo ao vivo (2 minutos)
 
@@ -22,11 +22,11 @@
 |---|---|---|
 | 1 | Vista Munícipe. Escrever: «Quero pôr uma esplanada à porta do meu restaurante, o que preciso?» | «Uma pergunta real, em linguagem simples.» |
 | 2 | Resposta com o cartão de fonte | «Resposta correta, simples, e a fonte à vista: regulamento, artigo e data de consulta.» |
-| 3 | Escrever: «Quanto vou pagar?» | «Quando não há fonte, o Afonso diz que não sabe. Não inventa.» |
+| 3 | Escrever: «Quanto vou pagar?» | «Quando não há fonte, o Henriques diz que não sabe. Não inventa.» |
 | 4 | «Sim, trate disso.» → cartão de missão e pedido de mandato D3 | «O pedido vira uma missão. A Inês decide quanto delega.» |
 | 5 | Aceitar mandato, ver o pacote mínimo, confirmar → recibo «Simulação» | «Só sai o mínimo. Cada passo fica registado.» |
 | 6 | Mudar para a Consola: caso preparado | «Do lado da Câmara, o técnico recebe tudo o que precisa. A decisão é dele.» |
-| 7 | Mudar para o cliente MCP: «Que preciso para pôr uma esplanada em Guimarães? Usa a Porta da Câmara.» | «O Afonso é o primeiro cliente da Porta, não o único. Qualquer agente, incluindo o atendedor da Câmara, pode usar as mesmas fontes, com as mesmas regras.» |
+| 7 | Mudar para o cliente MCP: «Que preciso para pôr uma esplanada em Guimarães? Usa a Porta da Câmara.» | «O Henriques é o primeiro cliente da Porta, não o único. Qualquer agente, incluindo o atendedor da Câmara, pode usar as mesmas fontes, com as mesmas regras.» |
 | 8 | Mostrar as chamadas no trilho de auditoria | «E tudo fica auditado.» |
 
 ## 3. Plano B

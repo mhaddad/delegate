@@ -26,7 +26,7 @@ TITULARES:
 NIF: 234567890 - Maria Lurdes Gonçalves (Propriedade Plena: 1/1)
 
 =======================================================
-Auditado pelo Afonso · Delegate Guimarães
+Auditado pelo Henriques · Delegate Guimarães
 Resumo SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 Armazenamento Cifrado: AES-256-GCM no Cofre Digital Pessoal
 =======================================================

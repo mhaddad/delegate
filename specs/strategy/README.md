@@ -6,21 +6,21 @@ Esta pasta transforma a proposta da equipa para a semana do hackathon numa estra
 
 ## A estratégia numa frase
 
-> **Um só fluxo de eventos, visível de ponta a ponta.** A Inês fala com o Afonso no Telegram; cada passo da plataforma emite um evento; o Observatório desenha esses eventos ao vivo; a Consola fecha o ciclo com uma decisão humana que volta ao telemóvel da Inês.
+> **Um só fluxo de eventos, visível de ponta a ponta.** A Inês fala com o Henriques no Telegram; cada passo da plataforma emite um evento; o Observatório desenha esses eventos ao vivo; a Consola fecha o ciclo com uma decisão humana que volta ao telemóvel da Inês.
 
 ## O que mantemos, melhoramos e acrescentamos
 
 | Ideia da equipa | Veredicto | Melhoria principal |
 |---|---|---|
-| Afonso como bot do Telegram | ✅ Manter | Botões de consentimento e mandato, Mini App como «vista segura», adaptador de canal para dizer «no piloto é o WhatsApp» |
+| Henriques como bot do Telegram | ✅ Manter | Botões de consentimento e mandato, Mini App como «vista segura», adaptador de canal para dizer «no piloto é o WhatsApp» |
 | Interface web dos bastidores | ✅ Manter, é a peça central | **Observatório orientado a eventos reais**, não a animações encenadas; modo narrativo e modo técnico; repetição e reposição da demo |
-| Porta Agêntica | ✅ Manter | O Afonso usa a Porta por MCP **como qualquer terceiro**; os sistemas simulados só são acessíveis através da Porta |
+| Porta Agêntica | ✅ Manter | O Henriques usa a Porta por MCP **como qualquer terceiro**; os sistemas simulados só são acessíveis através da Porta |
 | Consola da Câmara | ✅ Manter | A decisão do técnico volta ao Telegram ao vivo; a Consola vê casos e pacotes mínimos, nunca o Cofre |
 | Simulação de sistemas da Câmara | ✅ Manter | Dois sistemas com papéis claros: Serviços Urbanos (processo) e Tesouraria (referência de pagamento); uma missão atravessa os dois |
 | — | ➕ Acrescentar | **Contrato de eventos** comum a todos os componentes |
 | — | ➕ Acrescentar | **Registo Canónico e avaliação** continuam obrigatórios: são o critério do desafio |
 | — | ➕ Acrescentar | **Esqueleto de ponta a ponta no dia 1**, antes de qualquer componente ficar bonito |
-| — | ➕ Acrescentar | **Momento do júri:** um elemento do júri faz a sua própria pergunta ao Afonso |
+| — | ➕ Acrescentar | **Momento do júri:** um elemento do júri faz a sua própria pergunta ao Henriques |
 
 ## Documentos
 

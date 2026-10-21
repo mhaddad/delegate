@@ -25,7 +25,7 @@ Demonstrar, com fontes públicas reais e um sistema a funcionar:
 
 | Prioridade | Funcionalidade | Requisitos |
 |---|---|---|
-| **M** | Chat web estilo WhatsApp com o Afonso, em PT-PT | RF-CON-01..03 |
+| **M** | Chat web estilo WhatsApp com o Henriques, em PT-PT | RF-CON-01..03 |
 | **M** | Registo Canónico com **10 a 15 serviços** reais curados de fontes públicas, com URL, data de consulta e versão | RF-REG-01..04 |
 | **M** | Respostas com fonte e data visíveis; abstenção quando não há fonte; encaminhamento fora de competência | RF-RES-01..06 |
 | **M** | Identificação do procedimento certo | RF-RES-02 |

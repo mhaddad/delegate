@@ -68,7 +68,7 @@ Cada equipa escolhe **um** desafio. Não é preciso ter acesso a dados de empres
 - **Pergunta:** como simular alternativas de atuação antes de comprometer meios no terreno e melhorar a coordenação nos primeiros minutos?
 - **Por onde começar:** simulação de cenários, deteção precoce, imagem comum da situação entre entidades. Há dados abertos de território, meteorologia e ocupação do solo.
 - **Bom resultado:** uma ferramenta que mostre o efeito de duas decisões diferentes sobre o mesmo cenário, de forma compreensível para quem decide.
-- **Mentoria:** Prof. Paulo Afonso (UMinho, Dep. de Produção e Sistemas), Laboratório da Paisagem
+- **Mentoria:** Prof. Paulo Henriques (UMinho, Dep. de Produção e Sistemas), Laboratório da Paisagem
 - **Proposto por:** Departamento de Produção e Sistemas da Universidade do Minho
 
 ### 3.3 Proteção Individual e Novos Materiais — *Proteção e Defesa*
@@ -213,7 +213,7 @@ Júri designado pela organização, composto por especialistas nas áreas temát
 | Helder Vasconcelos | CTO & co-founder da TAIKAI — questões técnicas e criação de empresas |
 | ickas | VP of Engineering da TAIKAI — questões técnicas |
 
-Mentores citados nos enunciados dos desafios: CEiiA, Complear, CCG/ZGDV, Prof. Paulo Afonso (UMinho), Laboratório da Paisagem, Filipe Novais (DTx), Lucas Nascimento (VITRUS Ambiente).
+Mentores citados nos enunciados dos desafios: CEiiA, Complear, CCG/ZGDV, Prof. Paulo Henriques (UMinho), Laboratório da Paisagem, Filipe Novais (DTx), Lucas Nascimento (VITRUS Ambiente).
 
 ---
 

@@ -18,14 +18,14 @@ export interface Entrada {
 export const CATALOGO = [
   // Canal
   { tipo: 'canal.mensagem.recebida', origem: 'canal', prioridade: 'M', porque: 'A pessoa escreveu algo.' },
-  { tipo: 'canal.mensagem.enviada', origem: 'canal', prioridade: 'M', porque: 'O Afonso respondeu.' },
+  { tipo: 'canal.mensagem.enviada', origem: 'canal', prioridade: 'M', porque: 'O Henriques respondeu.' },
   { tipo: 'canal.botao.carregado', origem: 'canal', prioridade: 'M', porque: 'A pessoa decidiu com um botão.' },
 
-  // Afonso
-  { tipo: 'afonso.intencao.classificada', origem: 'afonso', prioridade: 'M', porque: 'O pedido foi reduzido a um serviço.' },
-  { tipo: 'afonso.resposta.redigida', origem: 'afonso', prioridade: 'M', porque: 'A resposta foi escrita a partir dos excertos.' },
-  { tipo: 'afonso.resposta.verificada', origem: 'afonso', prioridade: 'M', porque: 'Cada afirmação foi verificada contra a fonte.' },
-  { tipo: 'afonso.resposta.abstencao', origem: 'afonso', prioridade: 'M', porque: 'Não há fonte; o Afonso diz que não sabe.' },
+  // Henriques
+  { tipo: 'henriques.intencao.classificada', origem: 'henriques', prioridade: 'M', porque: 'O pedido foi reduzido a um serviço.' },
+  { tipo: 'henriques.resposta.redigida', origem: 'henriques', prioridade: 'M', porque: 'A resposta foi escrita a partir dos excertos.' },
+  { tipo: 'henriques.resposta.verificada', origem: 'henriques', prioridade: 'M', porque: 'Cada afirmação foi verificada contra a fonte.' },
+  { tipo: 'henriques.resposta.abstencao', origem: 'henriques', prioridade: 'M', porque: 'Não há fonte; o Henriques diz que não sabe.' },
 
   // Missão
   { tipo: 'missao.criada', origem: 'orquestrador', prioridade: 'M', porque: 'Um pedido passou a missão.' },
@@ -33,7 +33,7 @@ export const CATALOGO = [
   { tipo: 'missao.checklist.gerada', origem: 'orquestrador', prioridade: 'M', porque: 'A ficha virou uma lista de passos.' },
 
   // Cofre
-  { tipo: 'cofre.item.proposto', origem: 'cofre', prioridade: 'M', porque: 'O Afonso sugeriu guardar; ainda não é da pessoa.' },
+  { tipo: 'cofre.item.proposto', origem: 'cofre', prioridade: 'M', porque: 'O Henriques sugeriu guardar; ainda não é da pessoa.' },
   { tipo: 'cofre.item.guardado', origem: 'cofre', prioridade: 'M', porque: 'A pessoa autorizou; o conteúdo ficou cifrado.' },
   { tipo: 'cofre.item.recusado', origem: 'cofre', prioridade: 'M', porque: 'A pessoa disse que não.' },
   { tipo: 'cofre.item.apagado', origem: 'cofre', prioridade: 'S', porque: 'A pessoa apagou um item.' },
@@ -43,7 +43,7 @@ export const CATALOGO = [
   { tipo: 'cofre.pacote.aprovado', origem: 'cofre', prioridade: 'M', porque: 'A pessoa aprovou o que sai e o que não sai.' },
 
   // Mandatos
-  { tipo: 'mandato.proposto', origem: 'mandatos', prioridade: 'M', porque: 'O Afonso propôs âmbito e nível.' },
+  { tipo: 'mandato.proposto', origem: 'mandatos', prioridade: 'M', porque: 'O Henriques propôs âmbito e nível.' },
   { tipo: 'mandato.concedido', origem: 'mandatos', prioridade: 'M', porque: 'A pessoa concedeu, com nível e validade.' },
   { tipo: 'mandato.recusado', origem: 'mandatos', prioridade: 'M', porque: 'A pessoa não concedeu.' },
   { tipo: 'mandato.revogado', origem: 'mandatos', prioridade: 'S', porque: 'A pessoa retirou a autorização.' },
@@ -66,7 +66,7 @@ export const CATALOGO = [
   { tipo: 'consola.caso.decidido', origem: 'consola', prioridade: 'M', porque: 'Uma pessoa decidiu, com fundamento.' },
 
   // Proatividade, intenções, auditoria, avaliação
-  { tipo: 'proatividade.alerta.enviado', origem: 'proatividade', prioridade: 'S', porque: 'O Afonso escreveu sem ser chamado, e disse porquê.' },
+  { tipo: 'proatividade.alerta.enviado', origem: 'proatividade', prioridade: 'S', porque: 'O Henriques escreveu sem ser chamado, e disse porquê.' },
   { tipo: 'proatividade.alerta.desligado', origem: 'proatividade', prioridade: 'S', porque: 'A pessoa desligou um alerta.' },
   { tipo: 'intencoes.agregado.atualizado', origem: 'intencoes', prioridade: 'S', porque: 'Uma intenção consentida mudou o agregado.' },
   { tipo: 'auditoria.integridade.verificada', origem: 'avaliacao', prioridade: 'S', porque: 'A cadeia de selos foi verificada de ponta a ponta.' },

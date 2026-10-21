@@ -39,7 +39,7 @@ async function repor() {
     console.log('✓ Estado de demonstração reposto com sucesso!');
     console.log('  - O Painel de Atividade (http://localhost:4000/) está limpo');
     console.log('  - A Consola (http://localhost:4000/consola) está pronta');
-    console.log('  - O Afonso (@afonso_cm_bot) está pronto para o ensaio');
+    console.log('  - O Henriques (@afonso_cm_bot) está pronto para o ensaio');
     console.log('======================================================\n');
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);

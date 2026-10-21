@@ -22,7 +22,7 @@ export class AvaliadorLocal {
     const t = texto.toLowerCase().trim();
 
     // 0. Saudações e Cumprimentos Gerais (sem intenção de procedimento nem consulta a regulamentos)
-    const ehSaudacao = /^(ol[aá]|bom dia|boa tarde|boa noite|boas|viva|oi|hey|hello|como est[aá]s?|tudo bem)(\s+afonso)?[\s!.?]*$/i.test(t);
+    const ehSaudacao = /^(ol[aá]|bom dia|boa tarde|boa noite|boas|viva|oi|hey|hello|como est[aá]s?|tudo bem)(\s+henriques)?[\s!.?]*$/i.test(t);
     if (ehSaudacao) {
       return {
         motor: 'calibrado-local',

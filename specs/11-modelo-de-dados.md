@@ -97,7 +97,7 @@ simulada: true             # em R0
 {
   "id": "M-2026-0412",
   "mandante": "pessoa:demo-ines",
-  "representante": "delegate:afonso",
+  "representante": "delegate:henriques",
   "ambito": "ocupacao-espaco-publico",
   "objeto": "Casa Joaquim",
   "entidade": "Câmara Municipal de Guimarães",

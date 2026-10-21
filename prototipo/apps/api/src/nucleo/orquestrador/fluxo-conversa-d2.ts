@@ -1,7 +1,7 @@
 /**
  * Gestor do Fluxo Conversacional D2 (Preparação Guiada de Processos no Telegram)
  *
- * Permite ao Afonso conduzir um diálogo fluido e natural passo-a-passo com o cidadão:
+ * Permite ao Henriques conduzir um diálogo fluido e natural passo-a-passo com o cidadão:
  * Passo 1: Nome e Morada do estabelecimento;
  * Passo 2: Quantidade de mesas e cadeiras (área m²);
  * Passo 3: Verificação de conformidade regulamentar do passeio (>= 2,00m);
@@ -97,12 +97,12 @@ export class GestorFluxoD2 {
     });
 
     await this.#registo.registar({
-      tipo: 'afonso.missao_iniciada',
-      origem: 'afonso',
+      tipo: 'henriques.missao_iniciada',
+      origem: 'henriques',
       sessao: this.#sessao,
       pessoa,
       missao: missaoId,
-      ator: 'agente:afonso',
+      ator: 'agente:henriques',
       simulacao: false,
       dados: { servico: 'ocupacao-espaco-publico-esplanada', mandato: mandato.id },
     });
@@ -120,7 +120,7 @@ export class GestorFluxoD2 {
       sessao: this.#sessao,
       pessoa,
       missao: missaoId,
-      ator: 'agente:afonso',
+      ator: 'agente:henriques',
       simulacao: false,
       dados: { texto },
     });
@@ -178,7 +178,7 @@ export class GestorFluxoD2 {
         sessao: this.#sessao,
         pessoa,
         missao: rascunho.missaoId,
-        ator: 'agente:afonso',
+        ator: 'agente:henriques',
         simulacao: false,
         dados: { texto: textoResp },
       });
@@ -206,7 +206,7 @@ export class GestorFluxoD2 {
           sessao: this.#sessao,
           pessoa,
           missao: rascunho.missaoId,
-          ator: 'agente:afonso',
+          ator: 'agente:henriques',
           simulacao: false,
           dados: { texto: aviso },
         });
@@ -244,7 +244,7 @@ export class GestorFluxoD2 {
         sessao: this.#sessao,
         pessoa,
         missao: rascunho.missaoId,
-        ator: 'agente:afonso',
+        ator: 'agente:henriques',
         simulacao: false,
         dados: { texto: textoResp },
       });
@@ -281,12 +281,12 @@ export class GestorFluxoD2 {
         this.#orquestrador.atualizarPassoChecklist(rascunho.missaoId, 'chk-3', true, 'Corredor 2,10 m validado');
 
         await this.#registo.registar({
-          tipo: 'afonso.pacote_preparado',
-          origem: 'afonso',
+          tipo: 'henriques.pacote_preparado',
+          origem: 'henriques',
           sessao: this.#sessao,
           pessoa,
           missao: rascunho.missaoId,
-          ator: 'agente:afonso',
+          ator: 'agente:henriques',
           simulacao: false,
           dados: {
             pacote: 'PAC-0001',
@@ -327,7 +327,7 @@ export class GestorFluxoD2 {
           sessao: this.#sessao,
           pessoa,
           missao: rascunho.missaoId,
-          ator: 'agente:afonso',
+          ator: 'agente:henriques',
           simulacao: false,
           dados: { texto: textoConclusao },
         });

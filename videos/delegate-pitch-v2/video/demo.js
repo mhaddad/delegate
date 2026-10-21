@@ -1,6 +1,6 @@
 /* ATO III — cenas 5 a 10: plano contínuo acima/abaixo da Linha de Superfície */
 (function () {
-  const { CUT, cue, shake, burst, rings, motes, P, L, W, S, O, D, type, ease, clamp, H, q, qa, ines, afonso, afonsoRingSVG, ICON, scene, win } = F;
+  const { CUT, cue, shake, burst, rings, motes, P, L, W, S, O, D, type, ease, clamp, H, q, qa, ines, henriques, henriquesRingSVG, ICON, scene, win } = F;
 
   const T0 = CUT.s05;
   const TOP = 60, BOT = 1000; // y do mundo no topo do ecrã
@@ -19,13 +19,13 @@
   // ---------- tempos-chave ----------
   const tType0 = W("05a", "escreve") - 0.1, tType1 = W("05a", "amigo") + 0.6, tSend = tType1 + 0.35;
   const tM2 = tSend + 1.3;
-  const tM3 = W("08", "afonso");
+  const tM3 = W("08", "henriques");
   const tTap = W("08", "ines"), tPin0 = W("08", "confirma"), tOk = W("08", "digital") + 0.2;
   const tM4 = W("10", "ines") - 0.1;
 
   // ---------- mensagens ----------
   const MSG = [
-    { t: tSend, cls: "me", html: `Afonso, com o novo PDM ainda posso construir uma casa de 150 m² no terreno do meu avô?<div class="meta">10:14<span class="ticks">✓✓</span></div>` },
+    { t: tSend, cls: "me", html: `Henriques, com o novo PDM ainda posso construir uma casa de 150 m² no terreno do meu avô?<div class="meta">10:14<span class="ticks">✓✓</span></div>` },
     { t: tM2, cls: "af", typing: 0.9, html: `Olá, Inês! Já tenho o terreno de Ponte no seu Cofre. Vou verificar e volto a falar consigo.<div class="meta">10:14</div>` },
     { t: tM3, cls: "af", typing: 0.8, html: `Inês, a análise preliminar é <b>favorável</b>: com o novo PDM, o seu terreno permite habitação e os 150 m² cabem nos limites.<br><br>Para ter certeza formal, preparei o <b>Pedido de Informação Prévia</b>.
         <div><span class="chip"><i style="background:#E8EEF6">${ICON.clip("#0F1B33")}</i>Fonte: PDM de Guimarães · versão em vigor</span></div>
@@ -35,7 +35,7 @@
         <div><span class="chip c1"><i>${ICON.clip()}</i>Fonte</span><span class="chip c2"><i>${ICON.doc()}</i>Recibo</span><span class="chip c3"><i>${ICON.arrow()}</i>Próximos passos</span></div>
         <div class="meta">11:02</div>` },
   ];
-  const INPUT_TXT = "Afonso, com o novo PDM ainda posso construir uma casa de 150 m² no terreno do meu avô?";
+  const INPUT_TXT = "Henriques, com o novo PDM ainda posso construir uma casa de 150 m² no terreno do meu avô?";
 
   // ===================================================================
   // camada de cima: a Inês e o telemóvel
@@ -63,8 +63,8 @@
     <div class="phone" style="left:1180px;top:120px">
       <div class="screen">
         <div class="head">
-          ${afonsoRingSVG(64)}
-          <div><div class="name">Afonso</div><div class="status">online</div></div>
+          ${henriquesRingSVG(64)}
+          <div><div class="name">Henriques</div><div class="status">online</div></div>
         </div>
         <div class="feed"><div class="feed-in">
           ${MSG.map((m, i) => `${m.typing ? `<div class="typing ty${i}"><b></b><b></b><b></b></div>` : ""}<div class="bubble ${m.cls} m${i}">${m.html}</div>`).join("")}
@@ -108,7 +108,7 @@
         <g class="shackle"><path d="M-20 -6 V-26 A20 20 0 0 1 20 -26 V-6" stroke="#E8B44A" stroke-width="8" fill="none"/></g>
         <rect x="-32" y="-8" width="64" height="50" rx="10" fill="#E8B44A"/><circle cy="14" r="7" fill="#0F1B33"/>
       </g>
-      <g class="afv" transform="translate(1240 150)"><g class="afvi">${afonso(44)}</g></g>
+      <g class="afv" transform="translate(1240 150)"><g class="afvi">${henriques(44)}</g></g>
     </svg>
     <div class="mono abs vkey" style="left:${VC[0] + 50}px;top:${VC[1] - 380}px;padding:6px 14px;border-radius:999px;background:#E8B44A;color:#0F1B33;font-size:18px;font-weight:700">chave: Inês</div>
     <div class="vnode abs" style="left:${VC[0]}px;top:${VC[1]}px"><div class="ni mono" style="transform:translate(-50%,-50%);padding:14px 22px;border-radius:14px;background:#E8B44A;color:#0F1B33;font-size:23px;font-weight:700;white-space:nowrap">Terreno em Ponte</div></div>
@@ -141,9 +141,9 @@
       </g>
       <path class="sup-l" pathLength="1" d="M1610 160 V520 H${AX[0]}" stroke="#E8B44A" stroke-width="3" fill="none" stroke-dasharray="1 1"/>
       <g class="pulses">${[...Array(8).keys()].map((i) => `<circle class="pl" r="9" fill="#7AF0E8"/>`).join("")}</g>
-      <g class="afa" transform="translate(150 105)"><g>${afonso(40)}</g></g>
+      <g class="afa" transform="translate(150 105)"><g>${henriques(40)}</g></g>
     </svg>
-    <div class="ab abs" style="left:110px;top:150px;width:80px;text-align:center;color:#8FA3C4;font-size:18px">Afonso</div>
+    <div class="ab abs" style="left:110px;top:150px;width:80px;text-align:center;color:#8FA3C4;font-size:18px">Henriques</div>
     <div class="ab pk abs mono" style="left:60px;top:226px;width:270px;height:68px;border-radius:14px;background:#E8B44A;color:#0F1B33;font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center">pacote mínimo</div>
     <div class="ab mo dark-card" style="left:380px;top:58px;width:600px;height:92px;padding:16px 26px"><div class="label-sm" style="color:#3FD0C9">Motor de política</div><div style="font-size:21px;color:#B8C4DA;margin-top:4px">consentimento · risco · autoridade</div></div>
     <div class="ab or dark-card" style="left:380px;top:220px;width:600px;height:80px;padding:0 26px;display:flex;align-items:center"><div class="label-sm" style="color:#3FD0C9">Orquestrador de missões</div></div>

@@ -1,18 +1,18 @@
 {
   "canal.mensagem.recebida": "A pessoa escreveu no Telegram.",
-  "canal.mensagem.enviada": "O Afonso respondeu.",
+  "canal.mensagem.enviada": "O Henriques respondeu.",
   "canal.botao.carregado": "A pessoa decidiu com um botão, em vez de escrever.",
 
-  "afonso.intencao.classificada": "O Afonso percebeu o pedido e identificou o serviço da Câmara.",
-  "afonso.resposta.redigida": "Escreveu a resposta só com o que está nos registos oficiais.",
-  "afonso.resposta.verificada": "Antes de responder, confirmou que cada afirmação tem fonte.",
-  "afonso.resposta.abstencao": "Não encontrou fonte para esse valor. Por isso, não o inventa.",
+  "henriques.intencao.classificada": "O Henriques percebeu o pedido e identificou o serviço da Câmara.",
+  "henriques.resposta.redigida": "Escreveu a resposta só com o que está nos registos oficiais.",
+  "henriques.resposta.verificada": "Antes de responder, confirmou que cada afirmação tem fonte.",
+  "henriques.resposta.abstencao": "Não encontrou fonte para esse valor. Por isso, não o inventa.",
 
   "missao.criada": "O pedido passou a uma missão com objetivo, dados e prazo.",
   "missao.estado.alterado": "A missão mudou de estado.",
   "missao.checklist.gerada": "A ficha do serviço virou uma lista de passos.",
 
-  "cofre.item.proposto": "O Afonso sugeriu guardar alguma coisa no Cofre. Ainda não é da pessoa.",
+  "cofre.item.proposto": "O Henriques sugeriu guardar alguma coisa no Cofre. Ainda não é da pessoa.",
   "cofre.item.guardado": "Guardado no Cofre, cifrado. Nem o operador consegue ler.",
   "cofre.item.recusado": "A pessoa preferiu não guardar.",
   "cofre.item.apagado": "A pessoa apagou um item do seu Cofre.",
@@ -21,7 +21,7 @@
   "cofre.pacote.preparado": "Selecionado apenas o mínimo necessário para tratar da missão.",
   "cofre.pacote.aprovado": "A pessoa aprovou o que sai, para quem e até quando.",
 
-  "mandato.proposto": "O Afonso propôs um âmbito e um nível de delegação.",
+  "mandato.proposto": "O Henriques propôs um âmbito e um nível de delegação.",
   "mandato.concedido": "A pessoa concedeu o mandato, com nível e validade.",
   "mandato.recusado": "A pessoa não quer delegar.",
   "mandato.revogado": "A pessoa retirou a autorização.",
@@ -39,7 +39,7 @@
 
   "consola.caso.criado": "Um caso preparado entrou na fila da técnica.",
   "consola.caso.aberto": "A técnica abriu o caso.",
-  "consola.caso.decidido": "A decisão é humana. A técnica decidiu, e o Afonso avisa a pessoa.",
+  "consola.caso.decidido": "A decisão é humana. A técnica decidiu, e o Henriques avisa a pessoa.",
 
   "proatividade.alerta.enviado": "Aviso sobre o que a pessoa autorizou.",
   "proatividade.alerta.desligado": "A pessoa desligou este alerta.",

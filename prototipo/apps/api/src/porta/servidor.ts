@@ -3,7 +3,7 @@
  *
  * Implementa o protocolo MCP (Model Context Protocol) v2 e endpoints REST
  * correspondentes. É a porta de entrada para qualquer agente (incluindo o
- * Afonso) aceder aos serviços municipais com regras, mandato e auditoria.
+ * Henriques) aceder aos serviços municipais com regras, mandato e auditoria.
  *
  * Ver apps/api/src/porta/AGENTS.md.
  */

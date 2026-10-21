@@ -1,6 +1,6 @@
 /* VÍDEO 2 — A solução, vista pela Inês */
 (function () {
-  const { CUT, cue, shake, burst, rings, motes, P, L, W, B, S, O, D, ease, clamp, rng, H, q, qa, ines, afonso, afonsoRingSVG, ICON, scene, win, onFrame, stage, TL } = F;
+  const { CUT, cue, shake, burst, rings, motes, P, L, W, B, S, O, D, ease, clamp, rng, H, q, qa, ines, henriques, henriquesRingSVG, ICON, scene, win, onFrame, stage, TL } = F;
   const TOTAL = TL.total;
   CUT.chat = W("1", "abre") - 0.3;
   CUT.fim = B("8").start - 0.9;
@@ -12,12 +12,12 @@
   T.m0 = B("2").start - 0.7;
   T.cmd1 = W("2", "chave") - 0.2; T.ok1 = W("2", "digital") + 0.5; T.m1 = W("2", "partir") + 0.5;
   T.rec = W("3", "manda") - 1.4; T.m2 = W("3", "manda") + 0.3;
-  T.m3 = W("3", "afonso") - 0.1; T.m4 = W("3", "essencial") + 0.5; T.m5 = B("3").end + 0.4;
+  T.m3 = W("3", "henriques") - 0.1; T.m4 = W("3", "essencial") + 0.5; T.m5 = B("3").end + 0.4;
   T.loc = B("3").end + 2.2; T.doc = B("4").start - 0.9; T.foto = W("4", "fotografa") + 0.6;
   T.m7 = W("4", "autorizacao") - 0.6; T.sim = W("4", "guardado") - 0.3;
-  T.m8 = W("5", "resposta") - 0.1; T.m9 = W("5", "afonso") - 0.2; T.m10 = W("5", "pergunta") - 0.1; T.m11 = W("5", "explica-lhe") - 0.2;
+  T.m8 = W("5", "resposta") - 0.1; T.m9 = W("5", "henriques") - 0.2; T.m10 = W("5", "pergunta") - 0.1; T.m11 = W("5", "explica-lhe") - 0.2;
   T.tap1 = B("5").end + 0.9; T.cmd2 = T.tap1 + 0.25; T.ok2 = T.cmd2 + 1.4; T.sub1 = T.ok2 + 0.9;
-  T.dias = B("6").start - 0.7; T.m13 = W("6", "esplanada") - 0.3; T.m14 = W("6", "afonso") + 0.1; T.m15 = W("6", "mesas") + 0.2; T.m16 = W("6", "passeio") + 0.1;
+  T.dias = B("6").start - 0.7; T.m13 = W("6", "esplanada") - 0.3; T.m14 = W("6", "henriques") + 0.1; T.m15 = W("6", "mesas") + 0.2; T.m16 = W("6", "passeio") + 0.1;
   T.m17 = W("6", "propoe") - 0.1; T.m18 = W("6", "prepara") - 0.1; T.tap2 = B("6").end + 1.6; T.sub2 = T.tap2 + 0.8;
   T.semanas = B("7").start - 0.9; T.m20 = W("7", "avisa") - 0.2; T.m21 = W("7", "quando", 2) - 0.2;
 
@@ -41,9 +41,9 @@
   const sep = (txt) => `<div style="font-size:15px;font-weight:600;color:#5C6578;background:#FBF8F2;padding:6px 14px;border-radius:10px">${txt}</div>`;
 
   const MSG = [
-    { t: T.m0, k: "af", ty: 0.9, h: `Olá! Sou o <b>Afonso</b> 👋 Trato dos seus assuntos com a Câmara e as Freguesias de Guimarães. Para agir em seu nome, preciso que se identifique uma vez.${btns("Identificar-me (CMD)")}` },
+    { t: T.m0, k: "af", ty: 0.9, h: `Olá! Sou o <b>Henriques</b> 👋 Trato dos seus assuntos com a Câmara e as Freguesias de Guimarães. Para agir em seu nome, preciso que se identifique uma vez.${btns("Identificar-me (CMD)")}` },
     { t: T.m1, k: "af", ty: 0.5, h: `Obrigado, Inês ✓ Em que posso ajudar?` },
-    { t: T.m2, k: "me", h: `<div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:50%;background:#5C8A4A;display:flex;align-items:center;justify-content:center"><div style="width:0;height:0;border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px"></div></div>${wave(30, 7)}<span style="font-size:15px;color:#5C6578">0:12</span></div><div style="font-size:16px;font-style:italic;color:#3A4560;margin-top:6px">“Afonso, queria saber se posso construir uma casa no terreno atrás do restaurante. Uns 150 metros quadrados.”</div>` },
+    { t: T.m2, k: "me", h: `<div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:50%;background:#5C8A4A;display:flex;align-items:center;justify-content:center"><div style="width:0;height:0;border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px"></div></div>${wave(30, 7)}<span style="font-size:15px;color:#5C6578">0:12</span></div><div style="font-size:16px;font-style:italic;color:#3A4560;margin-top:6px">“Henriques, queria saber se posso construir uma casa no terreno atrás do restaurante. Uns 150 metros quadrados.”</div>` },
     { t: T.m3, k: "af", ty: 0.8, h: `Percebi: <b>moradia de ~150 m²</b> no terreno atrás da Casa Joaquim 🏡<br>Para verificar, preciso de:<br>📍 localização · 📄 caderneta predial · 🗺️ uma planta, se tiver` },
     { t: T.m4, k: "af", ty: 0.5, h: `Já tem projeto, ou é só uma ideia?` },
     { t: T.m5, k: "me", h: `Só uma ideia 🙂` },
@@ -99,12 +99,12 @@
     </div>`;
 
   // ===================================================================
-  // CENA 1 — o cartaz do Afonso
+  // CENA 1 — o cartaz do Henriques
   // ===================================================================
   scene({
     id: "a1", start: 0, end: CUT.chat + 1.0, fi: 0, fo: 0,
     build(el) {
-      cue("qr", W("1", "decide") + 0.2, 0.8); cue("shimmer", W("1", "afonso") - 0.3, 0.5);
+      cue("qr", W("1", "decide") + 0.2, 0.8); cue("shimmer", W("1", "henriques") - 0.3, 0.5);
       motes({ seed: 21, a: 0, b: CUT.chat + 1, n: 40, area: [0, 0, 1920, 900] });
       el.style.background = "#F3E6D0";
       el.innerHTML = `
@@ -121,8 +121,8 @@
           <g class="hph" transform="translate(745 640)"><rect x="-22" y="-38" width="44" height="76" rx="8" fill="#101524"/><rect x="-17" y="-31" width="34" height="58" rx="4" fill="#7AF0E8" opacity=".6"/></g>
         </svg>
         <div class="poster abs" style="left:1440px;top:190px;width:300px;height:420px;background:#0F1B33;border-radius:10px;padding:26px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.25);transform:rotate(2deg)">
-          <div style="display:flex;justify-content:center">${afonsoRingSVG(96)}</div>
-          <div class="serif" style="font-size:34px;font-weight:650;text-align:center;line-height:1.1;margin-top:8px">Fale com o Afonso</div>
+          <div style="display:flex;justify-content:center">${henriquesRingSVG(96)}</div>
+          <div class="serif" style="font-size:34px;font-weight:650;text-align:center;line-height:1.1;margin-top:8px">Fale com o Henriques</div>
           <div style="font-size:16px;color:#B8C4DA;text-align:center;margin-top:8px">o representante digital dos munícipes de Guimarães</div>
           <div style="margin:16px auto 0;width:120px;height:120px;background:#fff;padding:10px"><svg viewBox="0 0 21 21" width="100" height="100">${(() => { const r = rng(5); let s = ""; for (let y = 0; y < 21; y++) for (let x = 0; x < 21; x++) { const f = (x < 7 && y < 7) || (x > 13 && y < 7) || (x < 7 && y > 13); const on = f ? ((x % 6 === 0 || y % 6 === 0 || (x > 13 && (x - 14) % 6 === 0)) || ((x % 7 > 1 && x % 7 < 5) && (y % 7 > 1 && y % 7 < 5))) : r() < 0.5; if (on) s += `<rect x="${x}" y="${y}" width="1" height="1"/>`; } return s; })()}</svg></div>
         </div>
@@ -163,7 +163,7 @@
         </svg>
         <div class="phone" style="left:690px;top:40px;width:540px;height:1000px">
           <div class="screen">
-            <div class="head">${afonsoRingSVG(64)}<div><div class="name">Afonso</div><div class="status">online</div></div></div>
+            <div class="head">${henriquesRingSVG(64)}<div><div class="name">Henriques</div><div class="status">online</div></div></div>
             <div class="feed"><div class="feed-in">
               ${MSG.map((m, i) => `${m.ty ? `<div class="typing ty${i}"><b></b><b></b><b></b></div>` : ""}<div class="m m${i} ${m.k === "me" || m.k === "af" ? "bubble " + m.k : ""}" style="${m.k === "sys" || m.k === "sep" ? "align-self:center;max-width:94%" : ""}${m.pad ? `;padding:${m.pad}px` : ""}">${m.h}${m.k === "me" ? `<div class="meta"><span class="ticks">✓✓</span></div>` : ""}</div>`).join("")}
             </div></div>
@@ -219,7 +219,7 @@
       // gravação da mensagem de voz
       const rv = t >= T.rec && t < T.m2; c.rec.style.display = rv ? "flex" : "none"; if (rv) c.rt.textContent = `0:${String(Math.min(12, Math.floor((t - T.rec) * 7))).padStart(2, "0")}`;
       // chave móvel digital
-      [[c.cmd1, T.cmd1, T.ok1, "Autorizar o Afonso a representá-la junto da Câmara Municipal de Guimarães"], [c.cmd2, T.cmd2, T.ok2, "Confirmar a submissão do Pedido de Informação Prévia no Urbanismo Digital"]].forEach(([el, a, b, txt]) => {
+      [[c.cmd1, T.cmd1, T.ok1, "Autorizar o Henriques a representá-la junto da Câmara Municipal de Guimarães"], [c.cmd2, T.cmd2, T.ok2, "Confirmar a submissão do Pedido de Informação Prévia no Urbanismo Digital"]].forEach(([el, a, b, txt]) => {
         const op = P(t, a, 0.4, ease.out) * (1 - P(t, b + 0.7, 0.35, ease.in));
         S(el, { y: L(980, 0, op), o: op > 0 ? 1 : 0 });
         q(el, ".cmdtxt").textContent = txt;
@@ -262,7 +262,7 @@
   scene({
     id: "a3", start: CUT.fim, end: TOTAL + 0.1, fi: 0.9, fo: 0, z: 3,
     build(el) {
-      cue("esplanada", CUT.fim, 0.6); cue("celebrar", W("8", "diga") - 0.2, 0.7); cue("final", W("8", "afonso") - 0.1, 0.7);
+      cue("esplanada", CUT.fim, 0.6); cue("celebrar", W("8", "diga") - 0.2, 0.7); cue("final", W("8", "henriques") - 0.1, 0.7);
       burst({ seed: 91, t0: W("8", "diga") - 0.1, x: 960, y: 300, n: 120, speed: 900, life: 3.4, grav: 820, colors: ["#D9623B", "#E8B44A", "#3FD0C9", "#5BBF7A", "#F2EEE6"], size: [5, 10], shape: "rect", spread: [-Math.PI * 0.95, -Math.PI * 0.05] });
       motes({ seed: 33, a: CUT.fim, b: TOTAL, n: 40, color: "255,224,170", area: [0, 0, 1920, 800] });
       el.style.background = "#F6C98B";
@@ -282,7 +282,7 @@
           <g transform="translate(1420 520) scale(1.05)"><g class="fin">${ines({ smile: true })}</g></g>
           <g transform="translate(1420 520) scale(1.05)"><ellipse cx="160" cy="300" rx="50" ry="9" fill="#F7F1E4" stroke="#B9AF9E" stroke-width="3"/><circle cx="140" cy="292" r="8" fill="#B94E2C"/><circle cx="170" cy="292" r="8" fill="#E8B44A"/></g>
         </svg>
-        <div class="slg abs serif" style="left:0;width:1920px;top:34px;text-align:center;font-size:70px;line-height:1.12;font-weight:600;color:#0F1B33;text-shadow:0 2px 0 rgba(255,255,255,.4)">Diga o que precisa.<br><span style="color:#B94E2C;font-style:italic">O Afonso trata do resto.</span></div>
+        <div class="slg abs serif" style="left:0;width:1920px;top:34px;text-align:center;font-size:70px;line-height:1.12;font-weight:600;color:#0F1B33;text-shadow:0 2px 0 rgba(255,255,255,.4)">Diga o que precisa.<br><span style="color:#B94E2C;font-style:italic">O Henriques trata do resto.</span></div>
         <div class="sig abs mono" style="left:0;width:1920px;top:1000px;text-align:center;font-size:22px;letter-spacing:.2em;color:#5A4630">DELEGATE · 2/3</div>`;
       return { mesa: qa(el, ".mesa > g"), slg: q(el, ".slg"), sig: q(el, ".sig"), obra: q(el, ".obra") };
     },

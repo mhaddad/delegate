@@ -8,7 +8,7 @@
 import type { Registo } from '../eventos/registo.ts';
 import type { RedatorOpenRouter } from './redator-openrouter.ts';
 import { VerificadorRegra } from './verificador.ts';
-import type { RespostaAfonso } from './afonso.ts';
+import type { RespostaHenriques } from './henriques.ts';
 import type { Servico as TipoServico } from '../../../../../registo/esquema.ts';
 import type { ResultadoDecisao } from '../typesafe/tipos.ts';
 
@@ -22,8 +22,8 @@ export async function gerarRespostaCatalogo(params: {
   registo: Registo;
   redator: RedatorOpenRouter;
   decisaoJev: ResultadoDecisao;
-  historico?: Array<{ autor: 'pessoa' | 'afonso'; texto: string }>;
-}): Promise<RespostaAfonso> {
+  historico?: Array<{ autor: 'pessoa' | 'henriques'; texto: string }>;
+}): Promise<RespostaHenriques> {
   const { servicoId, ficha, limpo, prefixoMudanca, pessoa, sessao, registo, redator, decisaoJev, historico } = params;
 
   // 1. Esplanada Aberta
@@ -50,7 +50,7 @@ export async function gerarRespostaCatalogo(params: {
       '• <b>Taxa:</b> O valor é apurado pela Câmara em função da área (m²) e do período de ocupação, nos termos do Regulamento de Taxas (RTTL 2025);',
       '• <b>Prazo:</b> Mera comunicação prévia com efeitos imediatos após submissão e liquidação da taxa devida.',
       '',
-      '<b>Apoio do Afonso:</b> Se pretender que eu trate deste pedido por si — reunindo os documentos no seu Cofre Digital, instruindo o formulário e apoiando na submissão com a sua Chave Móvel Digital —, basta dizer <i>«Ajuda-me a tratar»</i> ou carregar no botão abaixo.',
+      '<b>Apoio do Henriques:</b> Se pretender que eu trate deste pedido por si — reunindo os documentos no seu Cofre Digital, instruindo o formulário e apoiando na submissão com a sua Chave Móvel Digital —, basta dizer <i>«Ajuda-me a tratar»</i> ou carregar no botão abaixo.',
       '',
       `📄 Fonte: <i>${fonteOficial}</i>`,
     ].join('\n');
@@ -81,8 +81,8 @@ export async function gerarRespostaCatalogo(params: {
     const validacao = VerificadorRegra.verificar(textoFinal, textosFontes);
 
     await registo.registar({
-      tipo: 'afonso.resposta.verificada',
-      origem: 'afonso',
+      tipo: 'henriques.resposta.verificada',
+      origem: 'henriques',
       sessao,
       pessoa,
       missao: null,
@@ -139,7 +139,7 @@ export async function gerarRespostaCatalogo(params: {
       '• A resposta da Câmara ao PIP tem efeito vinculativo pelo prazo de 1 ano;',
       '• A consulta sumária e enquadramento prévio não têm custos associados.',
       '',
-      '<b>Apoio do Afonso:</b> Se pretender que eu organize o processo no seu Cofre Digital pessoal para posterior submissão com Chave Móvel Digital, basta dizer <i>«Ajuda-me a tratar»</i> ou carregar no botão abaixo.',
+      '<b>Apoio do Henriques:</b> Se pretender que eu organize o processo no seu Cofre Digital pessoal para posterior submissão com Chave Móvel Digital, basta dizer <i>«Ajuda-me a tratar»</i> ou carregar no botão abaixo.',
       '',
       `📄 Fonte: <i>${fonteOficial}</i>`,
     ].join('\n');
@@ -167,8 +167,8 @@ export async function gerarRespostaCatalogo(params: {
     const validacao = VerificadorRegra.verificar(textoFinal, textosFontes);
 
     await registo.registar({
-      tipo: 'afonso.resposta.verificada',
-      origem: 'afonso',
+      tipo: 'henriques.resposta.verificada',
+      origem: 'henriques',
       sessao,
       pessoa,
       missao: null,
@@ -221,7 +221,7 @@ export async function gerarRespostaCatalogo(params: {
       '<b>Taxa Municipal Fixa:</b>',
       '• 73,00 € nos termos da Tabela de Taxas 2025 da Câmara Municipal de Guimarães.',
       '',
-      '<b>Apoio do Afonso:</b> Se pretender que eu instrua o formulário de pedido de vistoria ou emita a referência para pagamento, basta dizer.',
+      '<b>Apoio do Henriques:</b> Se pretender que eu instrua o formulário de pedido de vistoria ou emita a referência para pagamento, basta dizer.',
       '',
       `📄 Fonte: <i>${fonteOficial}</i>`,
     ].join('\n');
@@ -276,7 +276,7 @@ export async function gerarRespostaCatalogo(params: {
       '• <b>Custo:</b> Gratuito;',
       '• <b>Vantagens:</b> Descontos em transportes públicos concelhios, ingressos em eventos culturais municipais, piscinas e taxas autárquicas.',
       '',
-      '<b>Apoio do Afonso:</b> Se pretender que eu guarde o pedido no seu Cofre Digital Pessoal para validação e emissão pela Câmara, basta dizer.',
+      '<b>Apoio do Henriques:</b> Se pretender que eu guarde o pedido no seu Cofre Digital Pessoal para validação e emissão pela Câmara, basta dizer.',
       '',
       `📄 Fonte: <i>${fonteOficial}</i>`,
     ].join('\n');
@@ -340,7 +340,7 @@ export async function gerarRespostaCatalogo(params: {
     `• <b>Prazo:</b> ${prazosTexto.replace(/^• /, '')}`,
     `• <b>Taxas:</b> ${ficha?.taxas?.descricao ?? 'Consulte a Tabela de Taxas em vigor'}.`,
     '',
-    '<b>Apoio do Afonso:</b> Se pretender que eu organize os elementos instrutórios no seu Cofre Digital Pessoal, basta dizer.',
+    '<b>Apoio do Henriques:</b> Se pretender que eu organize os elementos instrutórios no seu Cofre Digital Pessoal, basta dizer.',
     '',
     `📄 Fonte: <i>${fonte}</i>`,
   ].join('\n');
@@ -358,8 +358,8 @@ export async function gerarRespostaCatalogo(params: {
   });
 
   await registo.registar({
-    tipo: 'afonso.resposta.verificada',
-    origem: 'afonso',
+    tipo: 'henriques.resposta.verificada',
+    origem: 'henriques',
     sessao,
     pessoa,
     missao: null,

@@ -77,7 +77,7 @@ Cada serviço tem um nível de integração, independente do nível de delegaç�
 | **I2** | Leitura | Endpoints de consulta (estado, pendências) | Acompanha e traduz estados; avisa a pessoa | `consultar_estado_processo` |
 | **I3** | Ação | Endpoints de ação (submeter, juntar elementos, referência) | Executa a missão de ponta a ponta, com mandato | `submeter_comunicacao_previa` |
 
-Regra: um mandato D3 só executa ações num serviço de nível I1 ou superior. Em I0, o Afonso prepara e a pessoa submete.
+Regra: um mandato D3 só executa ações num serviço de nível I1 ou superior. Em I0, o Henriques prepara e a pessoa submete.
 
 ## 3. Kit de integração
 
@@ -101,7 +101,7 @@ O que o Delegate entrega para a Câmara (ou o fornecedor) implementar depressa:
 | Publicar o contrato de capacidades | **R/A** | C | C |
 | Implementar os endpoints | C (apoio) | **A** | **R** (quando é o fornecedor) |
 | Testes de conformidade | **R** (kit) | A (aceita o resultado) | R (corre) |
-| Orquestração, mandato, Cofre, Afonso | **R/A** | I | — |
+| Orquestração, mandato, Cofre, Henriques | **R/A** | I | — |
 | Decisões administrativas | — | **R/A** | — |
 | Operação dos endpoints | — | **R/A** | R |
 
@@ -121,7 +121,7 @@ Cada passo é independente e reversível. Um serviço pode ficar em I1 para semp
 
 | Face | Quem a usa | O que é |
 |---|---|---|
-| **Porta Agêntica** (norte) | Afonso e agentes de terceiros | Interface MCP/REST do Delegate sobre o catálogo e os processos canónicos, com mandato e auditoria |
+| **Porta Agêntica** (norte) | Henriques e agentes de terceiros | Interface MCP/REST do Delegate sobre o catálogo e os processos canónicos, com mandato e auditoria |
 | **Contrato de Capacidades** (sul) | Delegate, a chamar a Câmara | Endpoints implementados pela Câmara |
 
 A Câmara torna-se «pronta para agentes» implementando o contrato uma vez. Qualquer agente que passe pela Porta beneficia, com as mesmas regras.

@@ -14,7 +14,7 @@ import { z } from 'zod';
 /** As origens possíveis. Cada evento pertence exactamente a uma. */
 export const ORIGENS = [
   'canal',
-  'afonso',
+  'henriques',
   'orquestrador',
   'politica',
   'cofre',

@@ -111,5 +111,5 @@
 Para quem **não** desenhamos o protótipo:
 
 - Profissionais que já dominam o Urbanismo Digital e só querem submeter rapidamente: o ganho é pequeno em R0.
-- Quem procura parecer jurídico ou decisão de viabilidade: o Afonso explica e encaminha, não decide.
-- Utilizadores de serviços nacionais (Cartão de Cidadão, IRS): o Afonso encaminha para o Espaço Cidadão, mas não trata desses serviços.
+- Quem procura parecer jurídico ou decisão de viabilidade: o Henriques explica e encaminha, não decide.
+- Utilizadores de serviços nacionais (Cartão de Cidadão, IRS): o Henriques encaminha para o Espaço Cidadão, mas não trata desses serviços.

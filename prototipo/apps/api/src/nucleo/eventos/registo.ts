@@ -109,11 +109,11 @@ export class Registo {
     return this.desde(0, filtros.limite ?? 100, filtros.sessao);
   }
 
-  /** Lista o histórico completo de decisões classificadas do Afonso / TypeSafe Jev. */
+  /** Lista o histórico completo de decisões classificadas do Henriques / TypeSafe Jev. */
   async listarDecisoes(limite = 100, sessao?: string): Promise<EventoGuardado[]> {
     const { rows } = await this.#escrita.query(
       `SELECT seq, ${COLUNAS} FROM nucleo.eventos
-       WHERE (tipo = 'afonso.intencao.classificada' OR tipo = 'afonso.resposta.verificada' OR tipo = 'afonso.resposta.abstencao' OR tipo = 'canal.mensagem.recebida' OR tipo = 'canal.mensagem.enviada')
+       WHERE (tipo = 'henriques.intencao.classificada' OR tipo = 'henriques.resposta.verificada' OR tipo = 'henriques.resposta.abstencao' OR tipo = 'canal.mensagem.recebida' OR tipo = 'canal.mensagem.enviada')
        ${sessao ? 'AND sessao = $2' : ''}
        ORDER BY seq DESC LIMIT $1`,
       sessao ? [limite, sessao] : [limite],

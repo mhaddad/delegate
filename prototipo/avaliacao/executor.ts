@@ -1,5 +1,5 @@
 /**
- * Executor da Avaliação Automatizada do Afonso.
+ * Executor da Avaliação Automatizada do Henriques.
  *
  * Corre as 42 perguntas do Anexo B e gera os indicadores oficiais:
  *  - MET-Q1: Procedimento certo (Meta >= 85%)
@@ -12,8 +12,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { performance } from 'node:perf_hooks';
-import { Afonso } from '../apps/api/src/nucleo/afonso/afonso.ts';
-import { ClientePortaMcp } from '../apps/api/src/nucleo/afonso/cliente-porta.ts';
+import { Henriques } from '../apps/api/src/nucleo/henriques/henriques.ts';
+import { ClientePortaMcp } from '../apps/api/src/nucleo/henriques/cliente-porta.ts';
 import { CatalogoPorta } from '../apps/api/src/porta/servicos.ts';
 import type { Evento, EventoSemIdOuSelo } from '@delegate/eventos';
 
@@ -106,14 +106,14 @@ async function executarAvaliacao() {
   const portaLocal = new PortaLocalAdapter();
   await portaLocal.inicializar();
 
-  const afonso = new Afonso(registo as any, portaLocal, 'avaliacao-v1');
+  const henriques = new Henriques(registo as any, portaLocal, 'avaliacao-v1');
 
   const resultados: ResultadoPergunta[] = [];
   const latencias: number[] = [];
 
   for (const p of perguntas) {
     const t0 = performance.now();
-    const resp = await afonso.responder('avaliador', p.pergunta);
+    const resp = await henriques.responder('avaliador', p.pergunta);
     const t1 = performance.now();
     const latencia = Math.round(t1 - t0);
     latencias.push(latencia);
@@ -217,7 +217,7 @@ async function executarAvaliacao() {
 
   // Gravar relatório em Markdown
   const relatorioMd = [
-    '# Relatório de Avaliação Automatizada · Afonso',
+    '# Relatório de Avaliação Automatizada · Henriques',
     '',
     `> Data de execução: ${new Date().toISOString()} · Total de perguntas: ${total}`,
     '',

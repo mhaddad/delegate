@@ -1,5 +1,5 @@
 /**
- * Verificador por Regra do Afonso.
+ * Verificador por Regra do Henriques.
  *
  * Garante que zero valores inventados chegam à pessoa:
  *  - Qualquer número (euros, metros, m², dias, prazos) presente no texto da resposta

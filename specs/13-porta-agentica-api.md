@@ -4,7 +4,7 @@
 
 ## 1. Propósito
 
-A Porta Agêntica torna a Câmara **legível e segura para qualquer agente de IA**, com as mesmas regras para todos: o Afonso, o atendedor virtual da Câmara, o assistente de um contabilista ou o assistente pessoal de um munícipe.
+A Porta Agêntica torna a Câmara **legível e segura para qualquer agente de IA**, com as mesmas regras para todos: o Henriques, o atendedor virtual da Câmara, o assistente de um contabilista ou o assistente pessoal de um munícipe.
 
 Expõe o **Registo Canónico** (leitura pública) e **capacidades** (ações limitadas, com mandato). Não dá acesso geral a bases de dados, sessões de funcionários nem credenciais permanentes.
 
@@ -110,10 +110,10 @@ Saída:
 
 1. Abrir um cliente MCP de uso geral, configurado com o endereço da Porta.
 2. Pedir: «Que preciso para pôr uma esplanada em Guimarães? Usa a Porta da Câmara.»
-3. Mostrar as chamadas `procurar_servicos` e `obter_servico`, e a resposta com a mesma fonte do Afonso.
+3. Mostrar as chamadas `procurar_servicos` e `obter_servico`, e a resposta com a mesma fonte do Henriques.
 4. Mostrar as duas chamadas no trilho de auditoria.
 
-Mensagem: **o Afonso é o primeiro cliente da Porta, não o único.** O atendedor virtual da Câmara também pode ser.
+Mensagem: **o Henriques é o primeiro cliente da Porta, não o único.** O atendedor virtual da Câmara também pode ser.
 
 ## 7. Evolução
 

@@ -21,10 +21,10 @@ Dois membros da equipa fazem de Inês e de Marta. Isto torna visível que há du
 | Tempo | Ação | O júri vê no Observatório | O que se diz |
 |---|---|---|---|
 | 0:00 | Inês: «Quero pôr uma esplanada à porta do meu restaurante, o que preciso?» | Bolha no Palco; Entendimento acende; Porta consultada; Verificador ✓; cartão de fonte | «Uma pergunta real. Resposta simples, com a fonte oficial e a data.» |
-| 0:25 | Inês: «Quanto vou pagar?» | Verificador a terracota: «Sem fonte, não inventa» | «Quando não há fonte, o Afonso diz que não sabe.» |
+| 0:25 | Inês: «Quanto vou pagar?» | Verificador a terracota: «Sem fonte, não inventa» | «Quando não há fonte, o Henriques diz que não sabe.» |
 | 0:40 | Inês: «Trate disso.» → `Guardar no Cofre` → `Conceder D3` | Missão criada; item cifrado no Cofre; mandato carimbado | «A Inês decide o que se guarda e quanto delega. Nem nós lemos o Cofre.» |
 | 1:00 | Mini App: aprova pacote mínimo, confirma CMD (Simulação) | Chave libertada 10 min; política «permitir»; Porta → Serviços Urbanos; processo OEP/2026/0001 | «Só sai o mínimo, só para esta missão. O processo nasce no sistema da Câmara.» |
-| 1:25 | Marta, na Consola: «Aceitar» | Impulso Consola → Serviços Urbanos → Tesouraria → Afonso → Palco | «A decisão é humana. A Inês recebe a resposta no telemóvel.» |
+| 1:25 | Marta, na Consola: «Aceitar» | Impulso Consola → Serviços Urbanos → Tesouraria → Henriques → Palco | «A decisão é humana. A Inês recebe a resposta no telemóvel.» |
 | 1:45 | — | Mapa de Intenções +1; cadeia de auditoria | «A Câmara passa a ver o que a cidade quer fazer. E tudo fica auditado.» |
 
 ## 3. Versão de 4 minutos (completa)
@@ -35,7 +35,7 @@ Acrescenta à versão de 2 minutos:
 |---|---|---|
 | Antes da aceitação | Marta: «Pedir elemento: largura da fachada» → Inês recebe e responde «8 metros» → caso volta à fila | «O pedido chega completo; quando falta algo, o ciclo fecha-se em segundos.» |
 | Depois da aceitação | Inês: `/dados` | «A Inês vê quem acedeu aos dados e para quê.» |
-| Porta | Agente externo: «Que preciso para pôr uma esplanada em Guimarães? Usa a Porta da Câmara.» → nó «Agente externo» acende | «O Afonso é o primeiro cliente da Porta, não o único. O assistente da Câmara também a pode usar.» |
+| Porta | Agente externo: «Que preciso para pôr uma esplanada em Guimarães? Usa a Porta da Câmara.» → nó «Agente externo» acende | «O Henriques é o primeiro cliente da Porta, não o único. O assistente da Câmara também a pode usar.» |
 | Proatividade | Marta: «Simular evento: votação da revisão do PDM» → alerta no Telegram | «Avisos só sobre o que a Inês autorizou.» |
 | Avaliação | Painel com os números da execução de congelamento | «Medimos: {MET-Q1} procedimento certo, 100% com fonte, zero valores inventados.» |
 
@@ -43,11 +43,11 @@ Acrescenta à versão de 2 minutos:
 
 No fim da demo ou nas perguntas:
 
-> «Querem experimentar? Leiam este código e façam ao Afonso uma pergunta real sobre um serviço da Câmara.»
+> «Querem experimentar? Leiam este código e façam ao Henriques uma pergunta real sobre um serviço da Câmara.»
 
 - Código QR → `/start visitante` (D0, só informação, limite de 10 mensagens).
 - A pergunta aparece ao vivo no Observatório.
-- Se o serviço não estiver no catálogo, o Afonso abstém-se e diz onde confirmar. **Também é uma boa resposta**: dizê-lo.
+- Se o serviço não estiver no catálogo, o Henriques abstém-se e diz onde confirmar. **Também é uma boa resposta**: dizê-lo.
 
 Fazer só se a avaliação de congelamento cumprir as metas. Decisão a 22/10 às 18h00.
 

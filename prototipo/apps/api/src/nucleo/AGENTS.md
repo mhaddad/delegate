@@ -1,6 +1,6 @@
 # AGENTS.md — núcleo
 
-**Dona: pessoa A (Afonso).** Canal, Afonso, orquestrador, política, Cofre e mandatos. Parte de [`../../../../AGENTS.md`](../../../../AGENTS.md).
+**Dona: pessoa A (Henriques).** Canal, Henriques, orquestrador, política, Cofre e mandatos. Parte de [`../../../../AGENTS.md`](../../../../AGENTS.md).
 
 > **Stack:** TypeScript; `grammY` em *long polling* para o Telegram; cifra simétrica AES-256-GCM com serviço de chaves efémeras; **TypeSafe Jev System One** (`@typesafe-ai/sdk`) para julgamentos tipados e verificação de citações com contingência local calibrada (0ms); **OpenRouter** para redação conversacional em pt-PT; e **BuscadorConhecimento** (RAG D0) sobre o corpus municipal oficial.
 
@@ -11,7 +11,7 @@
 | Módulo | Responsabilidade |
 |---|---|
 | `canal.ts` | Adaptador do Telegram (grammY). Normaliza mensagens, fotos, documentos e botões. |
-| `afonso/` | Afonso (representante digital leal), orquestração de respostas de catálogo e salvaguardas de fronteira. |
+| `henriques/` | Henriques (representante digital leal), orquestração de respostas de catálogo e salvaguardas de fronteira. |
 | `typesafe/` | Motor de Decisão System One Jev (`motor-decisao.ts`), critérios Zod/TypeSafe, catálogo de intenções e avaliador local. |
 | `conhecimento/` | Buscador RAG D0 em duas etapas (BM25 léxico + re-ranking semântico Jev) sobre 120+ páginas municipais. |
 | `orquestrador/` | Máquina de estados da missão e checklist oficial de passos instrutórios. |
@@ -28,11 +28,11 @@
 
 **O verificador é uma regra, não um pedido ao modelo.** A resposta é montada a partir dos excertos do registo; qualquer número que não apareça literalmente num excerto é rejeitado e provoca abstenção. É assim que MET-Q3 — zero valores inventados — passa a ser garantido pelo código.
 
-**O roteamento é determinístico primeiro.** A classificação é por correspondência de termos distintivos contra o título e a secção de cada registo, com limiar de força e porta de ambiguidade. O modelo só entra se essa correspondência for fraca ou ambígua — e o caminho sem modelo tem de funcionar, porque é o que garante que o Afonso responde mesmo quando a chave falha ou a rede está mau.
+**O roteamento é determinístico primeiro.** A classificação é por correspondência de termos distintivos contra o título e a secção de cada registo, com limiar de força e porta de ambiguidade. O modelo só entra se essa correspondência for fraca ou ambígua — e o caminho sem modelo tem de funcionar, porque é o que garante que o Henriques responde mesmo quando a chave falha ou a rede está mau.
 
 **O Cofre é cifrado e a chave só sai por missão.** Conteúdo cifrado por pessoa; o serviço de chaves só liberta com mandato válido e missão ativa, e por prazo. Todo o ciclo emite eventos, e conteúdo cifrado nunca aparece num deles.
 
-**O Afonso só escreve sem ser chamado em três casos:** resposta da Câmara a uma missão, alerta autorizado, ou pedido de elemento. Cada mensagem diz porquê.
+**O Henriques só escreve sem ser chamado em três casos:** resposta da Câmara a uma missão, alerta autorizado, ou pedido de elemento. Cada mensagem diz porquê.
 
 ## Livre
 

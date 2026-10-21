@@ -2,7 +2,7 @@
  * Orquestrador de Missões e Máquina de Estados.
  *
  * Estados do ciclo de vida:
- *   - 'entendido': O Afonso identificou a necessidade e o serviço do catálogo;
+ *   - 'entendido': O Henriques identificou a necessidade e o serviço do catálogo;
  *   - 'a_verificar': A analisar requisitos, condições e documentação da pessoa;
  *   - 'preparado': Rascunho concluído e pacote mínimo aprovado, pronto a submeter;
  *   - 'submetido': Comunicação prévia enviada formalmente à Câmara (Porta Agêntica);

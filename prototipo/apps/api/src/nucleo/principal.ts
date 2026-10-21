@@ -1,11 +1,11 @@
 /**
- * O núcleo: passagem de mensagens e orquestração do representante digital Afonso.
+ * O núcleo: passagem de mensagens e orquestração do representante digital Henriques.
  *
  * Arquitetura modular segundo o Princípio da Responsabilidade Única (SRP):
  *   Telegram -> canal -> evento na base -> notificação -> SSE -> Observatório / Consola
  *
  * Módulos integrados:
- *   - Afonso: respostas com fonte e verificação estrita
+ *   - Henriques: respostas com fonte e verificação estrita
  *   - Cofre Digital: cifra AES-256-GCM, 3 camadas e Guardião de Contexto
  *   - Serviço de Chaves: libertação temporária auditada e recolha automática
  *   - Mandatos: níveis D0 a D3, concessão, verificação e revogação
@@ -18,9 +18,9 @@ import { criarCanalGrammy, escapar, type CanalGrammy } from './canal.ts';
 import { abrirBase, SESSAO } from './bd.ts';
 import { Registo } from './eventos/registo.ts';
 import { criarServidorEventos } from './eventos/servidor.ts';
-import { Afonso } from './afonso/afonso.ts';
+import { Henriques } from './henriques/henriques.ts';
 import { MotorDecisaoTypeSafe } from './typesafe/motor-decisao.ts';
-import { ClientePortaMcp } from './afonso/cliente-porta.ts';
+import { ClientePortaMcp } from './henriques/cliente-porta.ts';
 import { BuscadorConhecimento } from './conhecimento/buscador.ts';
 import { CofreDigital } from './cofre/cofre.ts';
 import { ServicoChavesCofre } from './cofre/servico-chaves.ts';
@@ -47,7 +47,7 @@ console.log('✓ base aberta');
 const canal: CanalGrammy = criarCanalGrammy(token);
 const clientePorta = new ClientePortaMcp();
 const buscador = new BuscadorConhecimento();
-const afonso = new Afonso(registro, clientePorta, SESSAO, undefined, undefined, buscador);
+const henriques = new Henriques(registro, clientePorta, SESSAO, undefined, undefined, buscador);
 
 // Módulos de autoridade e privacidade
 const servicoChaves = new ServicoChavesCofre(registro, SESSAO);
@@ -91,7 +91,7 @@ const comandos = new TratadorComandos({
   orquestrador,
   registo: registro,
   sessao: SESSAO,
-  afonso,
+  henriques,
   fluxoD2,
 });
 
@@ -125,7 +125,7 @@ const servidor = criarServidorEventos(
       missao,
       rascunhoD2,
       estadosPossiveis: [
-        { id: 'entendido', nome: '1. Entendido', desc: 'Afonso compreendeu a intenção e enquadrou o serviço' },
+        { id: 'entendido', nome: '1. Entendido', desc: 'Henriques compreendeu a intenção e enquadrou o serviço' },
         { id: 'a_verificar', nome: '2. A Verificar', desc: 'Instrução de dados e medições regulamentares' },
         { id: 'preparado', nome: '3. Preparado (D2)', desc: 'Rascunho completo no Cofre Digital aguardando CMD' },
         { id: 'submetido', nome: '4. Submetido (D3)', desc: 'Requerimento formal com Chave Móvel Digital na Porta' },
@@ -259,7 +259,7 @@ canal._aoReceber(async (m) => {
       await canal.enviar(
         m.conversa,
         [
-          '📜 <b>Carta de Lealdade do Afonso</b>',
+          '📜 <b>Carta de Lealdade do Henriques</b>',
           '',
           '1. <b>Trabalho para si.</b> Não trabalho para a Câmara, para um banco nem para quem me financia.',
           '2. <b>Digo-lhe sempre os seus direitos</b>, incluindo o de reclamar, ser ouvido e recorrer de uma decisão.',
@@ -278,7 +278,7 @@ canal._aoReceber(async (m) => {
           return [];
         }
       })();
-      const resp = await afonso.responder(m.pessoa, 'quanto vou pagar', {
+      const resp = await henriques.responder(m.pessoa, 'quanto vou pagar', {
         pessoa: m.pessoa,
         servicoAtivo: missaoAtiva?.servico ?? 'ocupacao-espaco-publico-esplanada',
         servicoTituloAtivo: missaoAtiva?.servicoTitulo,
@@ -336,7 +336,7 @@ canal._aoReceber(async (m) => {
         [
           'Guardei a intenção no seu <b>Cofre Digital Pessoal</b> (cifrado AES-256-GCM) e abri a missão <b>MIS-0002</b>.',
           '',
-          `Concedeu ao Afonso o <b>Mandato D2</b> (${mandato.id}): preparar o rascunho instrutório e organizar as provas, <b>sem autorização para submeter</b> sem a sua assinatura.`,
+          `Concedeu ao Henriques o <b>Mandato D2</b> (${mandato.id}): preparar o rascunho instrutório e organizar as provas, <b>sem autorização para submeter</b> sem a sua assinatura.`,
           '',
           '<b>Elementos necessários (Art. 14.º do RJUE):</b>',
           '1. 📍 <b>Localização do terreno:</b> envie um link do Google Maps ou coordenadas (ex.: <code>41.4425, -8.2918</code>).',
@@ -375,7 +375,7 @@ canal._aoReceber(async (m) => {
           '',
           '1. Carregue no ícone do clipe / anexo 📎 no Telegram.',
           '2. Selecione o ficheiro PDF da Caderneta Predial do Portal das Finanças.',
-          '3. O Afonso cifra o ficheiro com AES-256-GCM no seu Cofre Digital Pessoal.',
+          '3. O Henriques cifra o ficheiro com AES-256-GCM no seu Cofre Digital Pessoal.',
           '',
           'Ou teste de imediato com a simulação:',
         ].join('\n'),
@@ -476,7 +476,7 @@ canal._aoReceber(async (m) => {
         [
           `📋 <b>Missão iniciada no Cofre Digital: ${tituloServico}</b>`,
           '',
-          `Concedeu ao Afonso o <b>Mandato D2</b> (<code>${mandato.id}</code>): preparar o processo e organizar os documentos necessários, <b>sem autorização para submeter</b> sem a sua assinatura expressa.`,
+          `Concedeu ao Henriques o <b>Mandato D2</b> (<code>${mandato.id}</code>): preparar o processo e organizar os documentos necessários, <b>sem autorização para submeter</b> sem a sua assinatura expressa.`,
           '',
           '🔒 <b>Cofre Digital Pessoal (AES-256-GCM):</b>',
           'Os seus ficheiros e intenções estão guardados em segurança. Pode anexar documentos oficiais (ex.: Caderneta Predial em PDF) através do clipe 📎 do Telegram.',
@@ -573,7 +573,7 @@ canal._aoReceber(async (m) => {
       return;
     }
 
-    // 4. Pergunta em linguagem natural: responde com o Afonso e a Porta
+    // 4. Pergunta em linguagem natural: responde com o Henriques e a Porta
     await canal.aEscrever(m.conversa);
     const metadadosCofre = (() => {
       try {
@@ -583,7 +583,7 @@ canal._aoReceber(async (m) => {
       }
     })();
     const itensCofre = metadadosCofre.map(it => ({ tipo: it.tipo, titulo: it.titulo }));
-    const resp = await afonso.responder(m.pessoa, m.texto, {
+    const resp = await henriques.responder(m.pessoa, m.texto, {
       pessoa: m.pessoa,
       servicoAtivo: missaoAtiva?.servico,
       servicoTituloAtivo: missaoAtiva?.servicoTitulo,

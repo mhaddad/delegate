@@ -18,7 +18,7 @@ export interface ContextoDecisao {
   missaoId?: string;
   estadoMissao?: string;
   mandatoAtivoNivel?: NivelMandato;
-  historicoRecente?: Array<{ autor: 'pessoa' | 'afonso'; texto: string }>;
+  historicoRecente?: Array<{ autor: 'pessoa' | 'henriques'; texto: string }>;
   itensCofre?: Array<{ tipo: string; titulo: string }>;
 }
 

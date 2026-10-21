@@ -27,10 +27,10 @@
 
 | ID | Requisito | MoSCoW | Rel. |
 |---|---|---|---|
-| RF-CON-01 | O munícipe conversa com o Afonso num chat web em linguagem natural, em PT-PT. | M | R0 |
-| RF-CON-02 | O Afonso apresenta-se como assistente de IA na primeira mensagem de cada conversa e indica como falar com uma pessoa. | M | R0 |
+| RF-CON-01 | O munícipe conversa com o Henriques num chat web em linguagem natural, em PT-PT. | M | R0 |
+| RF-CON-02 | O Henriques apresenta-se como assistente de IA na primeira mensagem de cada conversa e indica como falar com uma pessoa. | M | R0 |
 | RF-CON-03 | O chat mostra, ao lado da conversa, o painel da missão ativa e do Cofre. | M | R0 |
-| RF-CON-04 | O mesmo Afonso está disponível no WhatsApp (sandbox em R0; WhatsApp Business em R1). | C | R1 |
+| RF-CON-04 | O mesmo Henriques está disponível no WhatsApp (sandbox em R0; WhatsApp Business em R1). | C | R1 |
 | RF-CON-05 | O munícipe pode enviar mensagens de voz, que são transcritas e tratadas como texto. | C | R1 |
 | RF-CON-06 | A missão mantém-se entre canais (WhatsApp, portal, SMS, telefone, balcão) sem repetir a história. | W | R1 |
 | RF-CON-07 | Passos sensíveis (autenticação, anexos, confirmação de atos) abrem numa vista web segura, fora do WhatsApp. | W | R1 |
@@ -52,12 +52,12 @@
 | ID | Requisito | MoSCoW | Rel. |
 |---|---|---|---|
 | RF-RES-01 | Cada resposta factual cita pelo menos uma fonte do Registo Canónico, com título, ligação e data de consulta. | M | R0 |
-| RF-RES-02 | O Afonso identifica o procedimento aplicável e indica o seu nome oficial e o nome em linguagem simples. | M | R0 |
-| RF-RES-03 | Quando não existe fonte válida, o Afonso diz que não consegue confirmar, explica onde se confirma e oferece passar a uma pessoa. | M | R0 |
-| RF-RES-04 | O Afonso nunca indica taxas, prazos ou requisitos que não constem de uma fonte. Taxas sem valor na fonte aparecem como «calculada pela Câmara». | M | R0 |
+| RF-RES-02 | O Henriques identifica o procedimento aplicável e indica o seu nome oficial e o nome em linguagem simples. | M | R0 |
+| RF-RES-03 | Quando não existe fonte válida, o Henriques diz que não consegue confirmar, explica onde se confirma e oferece passar a uma pessoa. | M | R0 |
+| RF-RES-04 | O Henriques nunca indica taxas, prazos ou requisitos que não constem de uma fonte. Taxas sem valor na fonte aparecem como «calculada pela Câmara». | M | R0 |
 | RF-RES-05 | Pedidos fora da competência da Câmara são encaminhados para a entidade certa (ex.: Espaço Cidadão). | M | R0 |
 | RF-RES-06 | Pedidos de juízo técnico ou decisão (viabilidade, deferimento) são recusados com explicação do caminho formal. | M | R0 |
-| RF-RES-07 | O Afonso pergunta só os dados que a ficha do serviço exige para avançar. | S | R0 |
+| RF-RES-07 | O Henriques pergunta só os dados que a ficha do serviço exige para avançar. | S | R0 |
 | RF-RES-08 | As respostas seguem o formato de [15](15-ux-conteudo-e-tom.md#formato): resposta curta, passos, limites, fonte, próxima ação. | M | R0 |
 
 ## MIS · Missões
@@ -75,7 +75,7 @@
 
 | ID | Requisito | MoSCoW | Rel. |
 |---|---|---|---|
-| RF-COF-01 | O Afonso sugere guardar um item e só o guarda depois de o munícipe aceitar. | M | R0 |
+| RF-COF-01 | O Henriques sugere guardar um item e só o guarda depois de o munícipe aceitar. | M | R0 |
 | RF-COF-02 | Cada item guarda origem, finalidade, sensibilidade, validade, conservação e permissões. | M | R0 |
 | RF-COF-03 | O munícipe vê, corrige e apaga itens, e desliga alertas. | M | R0 |
 | RF-COF-04 | O Cofre está organizado em três camadas: identidade (referências), provas e intenções/missões. | S | R0 |
@@ -151,7 +151,7 @@
 | ID | Requisito | MoSCoW | Rel. |
 |---|---|---|---|
 | RF-AVA-01 | Existe um conjunto de avaliação com pergunta, procedimento esperado, comportamento esperado e fonte esperada ([anexo B](anexos/B-conjunto-de-avaliacao.md)). | M | R0 |
-| RF-AVA-02 | Um executor corre o conjunto contra o Afonso e calcula as métricas de [12](12-ia-e-avaliacao.md#metricas). | M | R0 |
+| RF-AVA-02 | Um executor corre o conjunto contra o Henriques e calcula as métricas de [12](12-ia-e-avaliacao.md#metricas). | M | R0 |
 | RF-AVA-03 | Um painel mostra os resultados da última execução, por métrica e por pergunta. | M | R0 |
 | RF-AVA-04 | O conjunto inclui casos adversariais (injeção de instruções, dados de terceiros). | M | R0 |
 | RF-AVA-05 | A avaliação corre automaticamente a cada alteração do Registo Canónico. | W | R1 |

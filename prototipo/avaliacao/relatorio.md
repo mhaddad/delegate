@@ -1,4 +1,4 @@
-# Relatório de Avaliação Automatizada · Afonso
+# Relatório de Avaliação Automatizada · Henriques
 
 > Data de execução: 2026-10-19T22:18:55.350Z · Total de perguntas: 42
 

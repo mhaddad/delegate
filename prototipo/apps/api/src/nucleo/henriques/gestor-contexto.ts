@@ -1,5 +1,5 @@
 /**
- * Gestor Central de Contexto Conversacional do Afonso
+ * Gestor Central de Contexto Conversacional do Henriques
  *
  * Aplica as melhores práticas de gestão de contexto para agentes de IA:
  * 1. Arquitetura Multi-Tiered (Working Memory com TTL vs. Memória Semântica de Factos);
@@ -23,7 +23,7 @@ export interface EstadoContextoSessao {
   missaoAtivaId?: string;
   estadoProcesso?: string;
   ultimoContactoEm: number;
-  historicoRecente: Array<{ autor: 'pessoa' | 'afonso'; texto: string; timestamp: number }>;
+  historicoRecente: Array<{ autor: 'pessoa' | 'henriques'; texto: string; timestamp: number }>;
   factosValidados: Map<string, FactoExtraido>;
 }
 
@@ -144,7 +144,7 @@ export class GestorContextoConversa {
     // Adicionar turnos ao histórico recente com cap de 8 turnos
     sessao.historicoRecente.push(
       { autor: 'pessoa', texto: params.mensagemCidadao, timestamp: agora },
-      { autor: 'afonso', texto: params.respostaTexto, timestamp: agora },
+      { autor: 'henriques', texto: params.respostaTexto, timestamp: agora },
     );
     if (sessao.historicoRecente.length > 8) {
       sessao.historicoRecente = sessao.historicoRecente.slice(-8);

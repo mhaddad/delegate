@@ -4,7 +4,7 @@
 
 ## Numa frase
 
-**Diga o que precisa. O Afonso trata do resto.** O Delegate dá a cada pessoa e a cada negócio de Guimarães um representante digital leal que trata da Câmara por si. E dá à Câmara a capacidade de ouvir o que a cidade quer fazer antes de lhe pedirem.
+**Diga o que precisa. O Henriques trata do resto.** O Delegate dá a cada pessoa e a cada negócio de Guimarães um representante digital leal que trata da Câmara por si. E dá à Câmara a capacidade de ouvir o que a cidade quer fazer antes de lhe pedirem.
 
 ## O problema
 
@@ -24,7 +24,7 @@ A Câmara já tem um **atendedor virtual com IA** (✅ portal municipal). O Dele
 
 | Peça | O que faz |
 |---|---|
-| **Representante Digital Pessoal (Afonso)** | Recebe pedidos em linguagem natural, identifica o procedimento certo, responde com a fonte oficial à vista e acompanha a missão até ao fim. Trabalha para a pessoa, com uma Carta de Lealdade pública. |
+| **Representante Digital Pessoal (Henriques)** | Recebe pedidos em linguagem natural, identifica o procedimento certo, responde com a fonte oficial à vista e acompanha a missão até ao fim. Trabalha para a pessoa, com uma Carta de Lealdade pública. |
 | **Mandato Digital** | Autorização verificável, por níveis (D0 informar a D4 agir dentro de regras), revogável a qualquer momento. |
 | **Cofre Digital Pessoal** | Memória cifrada da pessoa: identidade (via carteira europeia), provas (credenciais) e intenções. As chaves ficam com a pessoa. |
 | **Contrato de Missão** | Cada pedido é uma ficha legível com objetivo, dados partilhados, prazo e estado. |
@@ -33,7 +33,7 @@ A Câmara já tem um **atendedor virtual com IA** (✅ portal municipal). O Dele
 
 ## Porque é diferente do atendedor que já existe
 
-1. **Fonte e versão à vista em cada resposta.** Quando não há fonte válida, o Afonso diz que não sabe.
+1. **Fonte e versão à vista em cada resposta.** Quando não há fonte válida, o Henriques diz que não sabe.
 2. **Procedimento certo, não só resposta certa.** O pedido torna-se uma missão com passos, documentos e canal competente.
 3. **Qualidade medida e publicada.** Um conjunto de perguntas reais avalia a precisão, as fontes e as abstenções.
 4. **Age em nome da pessoa**, com mandato verificável e recibo.
@@ -43,7 +43,7 @@ A Câmara já tem um **atendedor virtual com IA** (✅ portal municipal). O Dele
 
 Um protótipo funcional, construído de raiz, que responde ao «bom resultado» do desafio 3.4: *alguém faz uma pergunta real sobre um serviço municipal e obtém uma resposta correta, em linguagem simples, com a fonte à vista*.
 
-- Afonso num chat web (estilo WhatsApp) sobre um **Registo Canónico** de 10 a 15 serviços reais, curados de fontes públicas;
+- Henriques num chat web (estilo WhatsApp) sobre um **Registo Canónico** de 10 a 15 serviços reais, curados de fontes públicas;
 - caso âncora da esplanada de ponta a ponta, com missão, cofre e mandato (submissão simulada);
 - alerta proativo da revisão do PDM;
 - Consola Municipal com um caso preparado;

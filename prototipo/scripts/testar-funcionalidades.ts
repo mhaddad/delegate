@@ -8,12 +8,12 @@
  * 4. Cálculo Regulamentar de Taxas de Esplanada (RTTL 2025)
  * 5. Integridade e Encadeamento Criptográfico dos Eventos (SHA-256)
  */
-import { ClientePortaMcp } from '../apps/api/src/nucleo/afonso/cliente-porta.ts';
+import { ClientePortaMcp } from '../apps/api/src/nucleo/henriques/cliente-porta.ts';
 import { Registo } from '../apps/api/src/nucleo/eventos/registo.ts';
 import { CofreDigital } from '../apps/api/src/nucleo/cofre/cofre.ts';
 import { ServicoChavesCofre } from '../apps/api/src/nucleo/cofre/servico-chaves.ts';
 import { GestorMandatos } from '../apps/api/src/nucleo/mandatos/mandatos.ts';
-import { Afonso } from '../apps/api/src/nucleo/afonso/afonso.ts';
+import { Henriques } from '../apps/api/src/nucleo/henriques/henriques.ts';
 import { BuscadorConhecimento } from '../apps/api/src/nucleo/conhecimento/buscador.ts';
 import pg from 'pg';
 
@@ -30,7 +30,7 @@ async function main() {
   const cofre = new CofreDigital(registo, chaves, 'demo');
   const mandatos = new GestorMandatos(registo, 'demo');
   const buscador = new BuscadorConhecimento();
-  const afonso = new Afonso(registo, porta, 'demo', undefined, undefined, buscador);
+  const henriques = new Henriques(registo, porta, 'demo', undefined, undefined, buscador);
 
   // -------------------------------------------------------------
   // TESTE 1: POLÍTICA DE SEGURANÇA E MANDATOS NA PORTA MCP
@@ -109,14 +109,14 @@ async function main() {
   
   // 3.a Pergunta com competência municipal e fonte comprovada
   console.log('  • Pergunta Municipal: «Qual a cércea máxima no PDM para construir em Silvares?»');
-  const respPdm = await afonso.responder(cidadao, 'Qual a cércea máxima no PDM para construir em Silvares?');
+  const respPdm = await henriques.responder(cidadao, 'Qual a cércea máxima no PDM para construir em Silvares?');
   console.log('    -> Serviço Identificado:', respPdm.servicoId);
   const linhasPdm = respPdm.texto.split('\n').filter(l => l.trim().length > 0).slice(0, 3);
   linhasPdm.forEach(l => console.log('       ' + l.replace(/<[^>]+>/g, '')));
 
   // 3.b Pergunta fora da competência da autarquia
   console.log('\n  • Pergunta Fora de Competência: «Como faço para renovar o meu passaporte?»');
-  const respFora = await afonso.responder(cidadao, 'Como faço para renovar o meu passaporte?');
+  const respFora = await henriques.responder(cidadao, 'Como faço para renovar o meu passaporte?');
   console.log('    -> Ação / Foco:', respFora.focoServico ?? 'fora_competencia');
   const linhasFora = respFora.texto.split('\n').filter(l => l.trim().length > 0).slice(0, 3);
   linhasFora.forEach(l => console.log('       ' + l.replace(/<[^>]+>/g, '')));

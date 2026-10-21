@@ -90,5 +90,5 @@ Baseado no [dossiê, secção 13](../reference-docs/Camara_Municipal_de_Guimarae
 | Executivo municipal | «Guimarães, a primeira câmara pronta para agentes de IA, com controlo humano e fonte em cada resposta.» |
 | Divisão de Atendimento | «Pedidos completos à primeira e menos chamadas a perguntar o estado, medidos contra uma linha de base.» |
 | Técnicos | «Casos preparados. A decisão continua a ser sua.» |
-| Munícipes | «Diga o que precisa. O Afonso trata do resto.» |
+| Munícipes | «Diga o que precisa. O Henriques trata do resto.» |
 | Parceiros privados | «Uma porta governada para tratar da Câmara pelos seus clientes.» |

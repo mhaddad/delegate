@@ -13,7 +13,7 @@ flowchart LR
   end
   subgraph Nucleo[Núcleo Delegate]
     CA[Adaptador de canal<br/>Telegram]
-    AF[Afonso<br/>conversa]
+    AF[Henriques<br/>conversa]
     OR[Orquestrador de missões<br/>máquina de estados]
     PO[Motor de política]
     CO[Cofre<br/>cifra + serviço de chaves]
@@ -60,8 +60,8 @@ Três serviços, para equilibrar fiabilidade e uma arquitetura visível:
 
 | Implementável | Contém | Porquê separado |
 |---|---|---|
-| **núcleo** | Adaptador Telegram, Afonso, orquestrador, política, Cofre, mandatos, barramento de eventos (SSE) | Um só processo reduz falhas de rede na demo |
-| **porta** | Servidor MCP/REST, Registo Canónico, adaptadores, **e os dois sistemas simulados** (rotas separadas, base de dados separada) | A fronteira de rede entre núcleo e Porta é real: o Afonso usa a Porta como um terceiro |
+| **núcleo** | Adaptador Telegram, Henriques, orquestrador, política, Cofre, mandatos, barramento de eventos (SSE) | Um só processo reduz falhas de rede na demo |
+| **porta** | Servidor MCP/REST, Registo Canónico, adaptadores, **e os dois sistemas simulados** (rotas separadas, base de dados separada) | A fronteira de rede entre núcleo e Porta é real: o Henriques usa a Porta como um terceiro |
 | **web** | Observatório, Consola, Mini App, página da Porta | Interface independente; lê eventos por SSE |
 
 Base de dados: uma instância Postgres com esquemas separados (`nucleo`, `porta`, `su_simulado`, `tesouraria_simulada`). Alternativa para a máquina local: SQLite por serviço.
@@ -74,7 +74,7 @@ Base de dados: uma instância Postgres com esquemas separados (`nucleo`, `porta`
 | Bot | grammY (Telegram), *long polling* | Simples; funciona sem URL pública; plano B local |
 | Orquestração | **Máquina de estados explícita** (ex.: XState ou código simples) com o modelo de IA em passos delimitados | Previsível, rápida, cada passo é um evento legível |
 | Modelo de IA | Família Claude 5: modelo menor para classificação, maior para redação e verificação | Identificar na submissão |
-| Porta | SDK oficial MCP (TypeScript) com transporte HTTP + REST espelhado | O Afonso e agentes externos usam o mesmo caminho |
+| Porta | SDK oficial MCP (TypeScript) com transporte HTTP + REST espelhado | O Henriques e agentes externos usam o mesmo caminho |
 | Eventos | Tabela `eventos` só de acréscimo + `LISTEN/NOTIFY` → SSE | O registo de eventos é a auditoria; sem broker extra |
 | Web | Next.js + React; React Flow para o grafo; Framer Motion para animações | Rápido de construir; boa qualidade visual |
 | Cofre | Cifra AES-GCM por pessoa; **serviço de chaves** interno que só liberta a chave com mandato válido e missão ativa, por prazo | Demonstra «o operador não lê»; ver secção 5 |
@@ -86,10 +86,10 @@ O júri vê «agentes»; o código tem passos com responsabilidades claras.
 
 | Passo (agente no Observatório) | Usa IA? | Evento |
 |---|---|---|
-| Entendimento de missão | Sim (modelo menor): intenção, competência, categoria, confiança | `afonso.intencao.classificada` |
+| Entendimento de missão | Sim (modelo menor): intenção, competência, categoria, confiança | `henriques.intencao.classificada` |
 | Navegador de regras | Não (chamada MCP `procurar_servicos` + `obter_servico`) | `porta.servicos.procurados`, `porta.servico.obtido` |
-| Redator | Sim (modelo maior), só com os excertos | `afonso.resposta.redigida` |
-| Verificador | Regras + IA: citações existem? números estão nos excertos? | `afonso.resposta.verificada` / `afonso.resposta.abstencao` |
+| Redator | Sim (modelo maior), só com os excertos | `henriques.resposta.redigida` |
+| Verificador | Regras + IA: citações existem? números estão nos excertos? | `henriques.resposta.verificada` / `henriques.resposta.abstencao` |
 | Guardião de contexto | Não: seleciona itens do Cofre pela finalidade | `cofre.pacote.preparado` |
 | Supervisor de risco | Não: motor de política declarativo | `politica.decisao` |
 | Construtor de jornada | Não: checklist a partir do registo | `missao.checklist.gerada` |
@@ -114,7 +114,7 @@ Em R0 o serviço de chaves é um módulo interno que simula um HSM. É uma simpl
 ```mermaid
 sequenceDiagram
   actor I as Inês (Telegram)
-  participant N as Núcleo (Afonso + orquestrador)
+  participant N as Núcleo (Henriques + orquestrador)
   participant P as Porta (MCP)
   participant SU as Serviços Urbanos (simulado)
   participant T as Tesouraria (simulada)
@@ -146,7 +146,7 @@ sequenceDiagram
 ```text
 delegate/
 ├── apps/
-│   ├── nucleo/           # bot, Afonso, orquestrador, política, cofre, eventos
+│   ├── nucleo/           # bot, Henriques, orquestrador, política, cofre, eventos
 │   ├── porta/            # MCP + REST, adaptadores, sistemas simulados
 │   └── web/              # Observatório, Consola, Mini App, página da Porta
 ├── packages/

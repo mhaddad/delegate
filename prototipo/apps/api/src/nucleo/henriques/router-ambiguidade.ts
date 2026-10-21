@@ -1,12 +1,12 @@
 /**
- * Router de Desambiguação do Afonso
+ * Router de Desambiguação do Henriques
  *
  * Quando a mensagem do munícipe é vaga, ambígua ou omissa (ex.: "quanto custa a licença?",
  * "preciso de uma autorização", "como peço uma certidão?"), o router não rejeita
  * nem fecha a porta com abstenção: identifica as intenções municipais mais prováveis
  * e devolve uma pergunta pedagógica de clarificação com botões de seleção rápida.
  */
-import type { RespostaAfonso } from './afonso.ts';
+import type { RespostaHenriques } from './henriques.ts';
 import type { Registo } from '../eventos/registo.ts';
 import type { ContextoDecisao } from '../typesafe/tipos.ts';
 
@@ -84,7 +84,7 @@ export async function tratarAmbiguidade(
   contexto: ContextoDecisao,
   registo: Registo,
   sessao: string,
-): Promise<RespostaAfonso | null> {
+): Promise<RespostaHenriques | null> {
   // Se o utilizador já tem um serviço claramente ativo na sessão, não interferir
   if (contexto.servicoAtivo && contexto.servicoAtivo !== 'ocupacao-espaco-publico-esplanada') {
     return null;
@@ -97,8 +97,8 @@ export async function tratarAmbiguidade(
       }
 
       await registo.registar({
-        tipo: 'afonso.esclarecimento.solicitado',
-        origem: 'afonso',
+        tipo: 'henriques.esclarecimento.solicitado',
+        origem: 'henriques',
         sessao,
         pessoa,
         missao: contexto.missaoId ?? null,

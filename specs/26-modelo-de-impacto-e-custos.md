@@ -44,7 +44,7 @@ Todas as frequências e tempos são hipóteses 🧪, a medir no piloto.
 | Email de esclarecimento | 1 × 8 = 8 | 0,1 × 8 = 0,8 | Idem |
 | Instrução técnica | 1 × 30 = 30 | 1 × 20 = 20 | Caso preparado, fontes e dados mínimos |
 | Pedido de elementos (retrabalho) | 0,4 × 25 = 10 | 0,15 × 25 = 3,75 | Pedido completo à primeira |
-| Notificação ao requerente | 1 × 5 = 5 | 0 | O Afonso notifica |
+| Notificação ao requerente | 1 × 5 = 5 | 0 | O Henriques notifica |
 | **Total** | **69 min** | **27,4 min** | **−42 min (−60%)** |
 
 Com um custo horário hipotético de **20 €/h** 🧪: hoje **23,00 €**, com Delegate **9,12 €**, poupança **13,88 € por processo**. O custo variável do Delegate (IA e mensagens) é de cêntimos por missão 🧪.
@@ -57,7 +57,7 @@ Com um custo horário hipotético de **20 €/h** 🧪: hoje **23,00 €**, com 
 
 ### 5.1 Contactos informativos resolvidos em D0
 
-Volumes ✅ do dossiê (fevereiro a novembro de 2025). `s` = parte dos contactos que passam a ser resolvidos pelo Afonso 🧪.
+Volumes ✅ do dossiê (fevereiro a novembro de 2025). `s` = parte dos contactos que passam a ser resolvidos pelo Henriques 🧪.
 
 | Canal | Volume ✅ | Tempo por contacto | Horas libertadas com s = 20% |
 |---|---:|---|---:|
@@ -142,4 +142,4 @@ O resultado entra no relatório de impacto (marco M4 do piloto) e substitui as h
 
 ## 9. Como dizer no pitch
 
-> «Em 10 meses de 2025, o Balcão Único fez 22.425 atendimentos presenciais, de 20 a 28 minutos cada, e a Câmara atendeu 41.473 chamadas. Se só um em cada cinco destes contactos for resolvido pelo Afonso com a fonte certa, a Câmara liberta mais de 3 mil horas, o equivalente a duas pessoas e meia a tempo inteiro, para trabalho que exige uma pessoa. Os pressupostos estão na calculadora, e o piloto mede-os.»
+> «Em 10 meses de 2025, o Balcão Único fez 22.425 atendimentos presenciais, de 20 a 28 minutos cada, e a Câmara atendeu 41.473 chamadas. Se só um em cada cinco destes contactos for resolvido pelo Henriques com a fonte certa, a Câmara liberta mais de 3 mil horas, o equivalente a duas pessoas e meia a tempo inteiro, para trabalho que exige uma pessoa. Os pressupostos estão na calculadora, e o piloto mede-os.»

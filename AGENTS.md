@@ -37,7 +37,7 @@ AGENTS.md                              este ficheiro — base documental e regra
 └── prototipo/AGENTS.md                o protótipo R0: comandos, as três pessoas, definição de pronto
     ├── packages/eventos/AGENTS.md     o contrato de eventos — a espinha dorsal
     ├── apps/api/AGENTS.md             API: dois processos, portas independentes, base por serviço
-    │   ├── src/nucleo/AGENTS.md        Pessoa A · Afonso, bot, Cofre, mandatos, TypeSafe Jev e RAG D0
+    │   ├── src/nucleo/AGENTS.md        Pessoa A · Henriques, bot, Cofre, mandatos, TypeSafe Jev e RAG D0
     │   └── src/porta/AGENTS.md         Pessoa B · Porta Agêntica (MCP), contratos municipais e sistemas simulados
     ├── apps/web/AGENTS.md              Pessoa C · Observatório e Consola
     ├── registo/AGENTS.md               curadoria das fontes canónicas municipais
@@ -46,7 +46,7 @@ AGENTS.md                              este ficheiro — base documental e regra
 
 | Pessoa | Território | Entrega que responde |
 |---|---|---|
-| **A · Afonso** | `apps/api/src/nucleo/` | Afonso, Telegram, Cofre Digital (AES-256-GCM), mandatos D0-D4, TypeSafe Jev System One e Base de Conhecimento RAG D0 |
+| **A · Henriques** | `apps/api/src/nucleo/` | Henriques, Telegram, Cofre Digital (AES-256-GCM), mandatos D0-D4, TypeSafe Jev System One e Base de Conhecimento RAG D0 |
 | **B · Infra** | `packages/eventos/`, `apps/api/src/porta/` | Contratos de API da Porta (MCP + REST), eventos selados, sistemas simulados |
 | **C · Ecrãs e conteúdo** | `apps/web/`, `registo/`, `avaliacao/` | Observatório, Consola Municipal, Registo Canónico e conjunto de avaliação |
 
@@ -54,9 +54,9 @@ AGENTS.md                              este ficheiro — base documental e regra
 
 ## 3. O produto numa frase
 
-**«Diga o que precisa. O Afonso trata do resto.»** Cada pessoa e negócio tem um representante digital leal (o Afonso) que responde com a fonte oficial à vista e trata da Câmara por si, com mandato verificável; a Câmara recebe casos preparados e vê, agregado, o que a cidade quer fazer.
+**«Diga o que precisa. O Henriques trata do resto.»** Cada pessoa e negócio tem um representante digital leal (o Henriques) que responde com a fonte oficial à vista e trata da Câmara por si, com mandato verificável; a Câmara recebe casos preparados e vê, agregado, o que a cidade quer fazer.
 
-O «bom resultado» do desafio: *pergunta real → resposta correta, em linguagem simples, com a fonte à vista*. Sem fonte válida, o Afonso **abstém-se** — nunca inventa.
+O «bom resultado» do desafio: *pergunta real → resposta correta, em linguagem simples, com a fonte à vista*. Sem fonte válida, o Henriques **abstém-se** — nunca inventa.
 
 ---
 
@@ -66,10 +66,10 @@ O «bom resultado» do desafio: *pergunta real → resposta correta, em linguage
 
 | Processo | Serve |
 |---|---|
-| **núcleo** | o canal (Telegram), o Afonso, o Cofre, os mandatos, e o fluxo de eventos |
+| **núcleo** | o canal (Telegram), o Henriques, o Cofre, os mandatos, e o fluxo de eventos |
 | **porta** | a Porta Agêntica, o Registo Canónico, os Serviços Urbanos, a Tesouraria |
 
-O núcleo chama a Porta **pela rede como cliente MCP**, nunca em memória: é o critério de inovação (o Afonso é o primeiro cliente da Porta, não o dono) e o Observatório mostra-o como um salto real.
+O núcleo chama a Porta **pela rede como cliente MCP**, nunca em memória: é o critério de inovação (o Henriques é o primeiro cliente da Porta, não o dono) e o Observatório mostra-o como um salto real.
 
 A stack está consolidada em TypeScript (Node 22+): núcleo na porta `4000` (Fastify + grammY + TypeSafe Jev System One + RAG D0) e Porta Agêntica na porta `4001` (`@modelcontextprotocol/server` v2).
 

@@ -8,10 +8,10 @@
 
 ## A ideia
 
-> **O Afonso é cliente da Porta, não dono dela.**
+> **O Henriques é cliente da Porta, não dono dela.**
 > **Inversão de integração:** O Delegate detém a orquestração e os processos canónicos; a Câmara ou os seus fornecedores de software implementam os contratos abertos da Porta (MCP + REST).
 
-A infraestrutura serve qualquer agente municipal ou terceiro autorizado. O Afonso comunica por protocolo de rede padronizado. Os Serviços Urbanos simulados em `src/su/` servem como **implementação de referência** do contrato municipal.
+A infraestrutura serve qualquer agente municipal ou terceiro autorizado. O Henriques comunica por protocolo de rede padronizado. Os Serviços Urbanos simulados em `src/su/` servem como **implementação de referência** do contrato municipal.
 
 ## Congelado
 

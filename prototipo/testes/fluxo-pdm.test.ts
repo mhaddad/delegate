@@ -11,9 +11,9 @@
  */
 import { describe, expect, it } from 'vitest';
 import { MotorDecisaoTypeSafe } from '../apps/api/src/nucleo/typesafe/motor-decisao.ts';
-import { Afonso } from '../apps/api/src/nucleo/afonso/afonso.ts';
-import { ClientePortaMcp } from '../apps/api/src/nucleo/afonso/cliente-porta.ts';
-import { RedatorOpenRouter } from '../apps/api/src/nucleo/afonso/redator-openrouter.ts';
+import { Henriques } from '../apps/api/src/nucleo/henriques/henriques.ts';
+import { ClientePortaMcp } from '../apps/api/src/nucleo/henriques/cliente-porta.ts';
+import { RedatorOpenRouter } from '../apps/api/src/nucleo/henriques/redator-openrouter.ts';
 import { CofreDigital } from '../apps/api/src/nucleo/cofre/cofre.ts';
 import { ServicoChavesCofre } from '../apps/api/src/nucleo/cofre/servico-chaves.ts';
 import { GestorMandatos } from '../apps/api/src/nucleo/mandatos/mandatos.ts';
@@ -39,7 +39,7 @@ describe('Simulação do Fluxo Completo de PDM / PIP Urbanismo', () => {
     const porta = new ClientePortaMcp('http://localhost:4001/mcp');
     const redator = new RedatorOpenRouter();
     const motorDecisao = new MotorDecisaoTypeSafe();
-    const afonso = new Afonso(registo, porta, 'demo', motorDecisao, redator);
+    const henriques = new Henriques(registo, porta, 'demo', motorDecisao, redator);
     const servicoChaves = new ServicoChavesCofre(registo, 'demo');
     const cofre = new CofreDigital(registo, servicoChaves, 'demo');
     const mandatos = new GestorMandatos(registo, 'demo');
@@ -51,7 +51,7 @@ describe('Simulação do Fluxo Completo de PDM / PIP Urbanismo', () => {
     // PASSO 1: Pergunta inicial em linguagem natural sobre o PDM (D0)
     // -------------------------------------------------------------
     const pergunta1 = 'Tenho um terreno em Silvares e quero saber as regras do PDM para construir uma casa';
-    const resp1 = await afonso.responder(pessoa, pergunta1);
+    const resp1 = await henriques.responder(pessoa, pergunta1);
 
     expect(resp1.servicoId).toBe('pedido-informacao-previa-urbanismo');
     expect(resp1.focoServico).toBe('primeiro_contacto');
@@ -65,7 +65,7 @@ describe('Simulação do Fluxo Completo de PDM / PIP Urbanismo', () => {
     // PASSO 2: Pergunta de seguimento mantendo o contexto de PDM
     // -------------------------------------------------------------
     const pergunta2 = 'Qual é a cércea máxima e o índice de utilização do solo permitidos?';
-    const resp2 = await afonso.responder(pessoa, pergunta2);
+    const resp2 = await henriques.responder(pessoa, pergunta2);
 
     expect(resp2.servicoId).toBe('pedido-informacao-previa-urbanismo');
     expect(resp2.focoServico).toBe('mesmo_servico');
@@ -212,7 +212,7 @@ describe('Simulação do Fluxo Completo de PDM / PIP Urbanismo', () => {
     // -------------------------------------------------------------
     // PASSO 8: Auditoria de Eventos
     // -------------------------------------------------------------
-    expect(eventos.some((e) => e.tipo === 'afonso.intencao.classificada')).toBe(true);
+    expect(eventos.some((e) => e.tipo === 'henriques.intencao.classificada')).toBe(true);
     expect(eventos.some((e) => e.tipo === 'cofre.item.guardado')).toBe(true);
     expect(eventos.some((e) => e.tipo === 'mandato.concedido')).toBe(true);
     expect(eventos.some((e) => e.tipo === 'missao.criada')).toBe(true);

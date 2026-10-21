@@ -11,7 +11,7 @@
  *  - Corredor de circulação livre >= 2,00 m (verificado na fotografia da calçada).
  *  - Número de processo com formato fictício: OEP/2026/0001.
  *  - Taxa calculada com marcação explícita de simulação (valor_ficticio: true).
- *  - O Afonso e terceiros só acedem a este sistema através da Porta Agêntica (MCP).
+ *  - O Henriques e terceiros só acedem a este sistema através da Porta Agêntica (MCP).
  *  - A Consola Municipal acede a este sistema para consulta e decisão técnica.
  */
 
@@ -169,7 +169,7 @@ export class ArmazenamentoSU {
       },
       elementos_pedidos: [],
       proposta_ia:
-        'Rascunho preparado pelo Afonso. Aguarda confirmação formal da pessoa com Chave Móvel Digital.',
+        'Rascunho preparado pelo Henriques. Aguarda confirmação formal da pessoa com Chave Móvel Digital.',
       fontes: [
         {
           id: 'cm-licenciamento-zero',
@@ -294,7 +294,7 @@ export class ArmazenamentoSU {
     return p;
   }
 
-  juntarElementos(numero: string, novosDados: Record<string, unknown>, ator = 'agente:afonso'): ProcessoSU | null {
+  juntarElementos(numero: string, novosDados: Record<string, unknown>, ator = 'agente:henriques'): ProcessoSU | null {
     const p = this.#processos.get(numero);
     if (!p) return null;
     const agora = new Date().toISOString();
@@ -305,7 +305,7 @@ export class ArmazenamentoSU {
       de: p.estado,
       para: 'em_apreciacao',
       ator,
-      fundamento: 'Elementos adicionais submetidos pelo requerente através do Afonso',
+      fundamento: 'Elementos adicionais submetidos pelo requerente através do Henriques',
     });
     p.estado = 'em_apreciacao';
     p.proposta_ia = p.numero.startsWith('PIP')

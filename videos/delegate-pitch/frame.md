@@ -8,7 +8,7 @@ colors:
   bastidores-panel: "#16263D" # painéis e nós sobre azul-noite
   bastidores-line: "#8C9099" # granito — traço técnico, burocracia
   bastidores-ink: "#E8EDF3"  # texto sobre azul-noite
-  verde: "#2FBF71"           # Delegate / Afonso / agentes / resolução
+  verde: "#2FBF71"           # Delegate / Henriques / agentes / resolução
   terracota: "#D9653B"       # condicionantes, alertas, a dor, cadeados
 typography:
   display:
@@ -33,7 +33,7 @@ spacing:
   safe-margin: 96px
   caption-keepout-bottom: 180px
 components:
-  chat-bubble: "radius 28px; Inês = palco-ink sobre branco #FFFFFF; Afonso = bastidores-bg com texto bastidores-ink"
+  chat-bubble: "radius 28px; Inês = palco-ink sobre branco #FFFFFF; Henriques = bastidores-bg com texto bastidores-ink"
   node: "círculo 1.5px verde, fill bastidores-panel, ícone + rótulo mono"
   box: "retângulo radius 10px, borda 1.5px bastidores-line, fill bastidores-panel"
   surface-line: "linha horizontal 2px verde a 50% de opacidade, com brilho suave apenas nesta linha"
@@ -48,7 +48,7 @@ Dois mundos num só ecrã. **Palco**: o mundo calmo e quente da munícipe, em cr
 ## The Frame
 
 - 1920×1080, margem de segurança de 96px. As legendas ocupam os últimos 180px, por isso o conteúdo principal fica acima dessa zona.
-- Um único foco por cena. O verde só aparece onde o Afonso ou a resolução atuam. A terracota só aparece onde há dor, condicionante ou cadeado.
+- Um único foco por cena. O verde só aparece onde o Henriques ou a resolução atuam. A terracota só aparece onde há dor, condicionante ou cadeado.
 
 ## Composition Rules
 

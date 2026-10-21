@@ -1,6 +1,6 @@
 /* VÍDEO 3 — Por trás da magia: conceitos e arquitetura */
 (function () {
-  const { CUT, cue, shake, burst, rings, motes, P, L, W, B, S, O, D, ease, clamp, rng, H, q, qa, ines, afonso, afonsoRingSVG, ICON, scene, win, onFrame, stage, TL } = F;
+  const { CUT, cue, shake, burst, rings, motes, P, L, W, B, S, O, D, ease, clamp, rng, H, q, qa, ines, henriques, henriquesRingSVG, ICON, scene, win, onFrame, stage, TL } = F;
   const TOTAL = TL.total;
   const CAP = ["1", "2", "3", "4", "5", "6", "7"];
   CAP.forEach((k) => (CUT["c" + k] = B(k).start - 2.4));
@@ -18,7 +18,7 @@
   // ===================================================================
   const TIT = ["Representante Digital Pessoal", "Cofre Digital Pessoal", "Agentes de IA orquestrados", "Autonomia responsável", "Arquitetura técnica", "Consola Municipal", "Gestão e otimização"];
   const CURTO = ["Representante", "Cofre", "Agentes", "Autonomia", "Arquitetura", "Consola", "Gestão"];
-  const FRASE = ["Um representante por munícipe. Uma missão, qualquer canal.", "A memória do Afonso pertence à Inês.", "Especialistas que trabalham em equipa, com fontes oficiais.", "Rápido quando pode. Humano quando deve.", "Acesso mínimo. Tudo registado.", "Os técnicos recebem casos prontos a decidir.", "Cada missão ensina a Câmara a melhorar."];
+  const FRASE = ["Um representante por munícipe. Uma missão, qualquer canal.", "A memória do Henriques pertence à Inês.", "Especialistas que trabalham em equipa, com fontes oficiais.", "Rápido quando pode. Humano quando deve.", "Acesso mínimo. Tudo registado.", "Os técnicos recebem casos prontos a decidir.", "Cada missão ensina a Câmara a melhorar."];
   const FRASE_T = [W("1", "missoes"), W("2", "pertence"), W("3", "fontes"), W("4", "segundos"), W("5", "registo"), W("6", "decisao"), W("7", "simplificar")];
   scene({
     id: "ag", start: CUT.c1 - 0.2, end: CUT.c8 + 0.6, fi: 0, fo: 0.5, z: 20, kb: 0,
@@ -84,17 +84,17 @@
   scene({
     id: "s1", start: CUT.c1, end: CUT.c2 + 0.8, fi: 0.6, fo: 0, z: 2,
     build(el) {
-      cue("shimmer", W("1", "afonso") - 0.2, 0.6); cue("enviar", W("1", "recebe") - 0.1, 0.5); cue("porta_dados", W("1", "transforma-os"), 0.7);
+      cue("shimmer", W("1", "henriques") - 0.2, 0.6); cue("enviar", W("1", "recebe") - 0.1, 0.5); cue("porta_dados", W("1", "transforma-os"), 0.7);
       CANAIS.forEach(([w]) => cue("blip", W("1", w), 0.45));
-      rings({ t0: W("1", "afonso") - 0.1, x: 960, y: 290, n: 2, r1: 260, life: 1.2 });
+      rings({ t0: W("1", "henriques") - 0.1, x: 960, y: 290, n: 2, r1: 260, life: 1.2 });
       el.style.cssText += BG;
       el.innerHTML = `
         <svg class="abs" width="1920" height="1080" viewBox="0 0 1920 1080">
-          <g class="ring">${afonso(92)}</g>
+          <g class="ring">${henriques(92)}</g>
           ${CANAIS.map((_, i) => `<path class="cl" pathLength="1" d="M1480 ${470 + i * 92} C1360 ${470 + i * 92} 1300 690 1190 690" stroke="#3FD0C9" stroke-width="3" fill="none"/>`).join("")}
           <path class="tr" pathLength="1" d="M640 690 H760" stroke="#E8B44A" stroke-width="4" stroke-dasharray="1 1"/>
         </svg>
-        <div class="nm abs serif" style="left:0;width:1920px;top:400px;text-align:center;font-size:44px;font-weight:600;color:#fff">Afonso <span style="color:#8FA3C4;font-size:30px;font-weight:400">· Representante Digital Pessoal</span></div>
+        <div class="nm abs serif" style="left:0;width:1920px;top:400px;text-align:center;font-size:44px;font-weight:600;color:#fff">Henriques <span style="color:#8FA3C4;font-size:30px;font-weight:400">· Representante Digital Pessoal</span></div>
         <div class="one abs" style="left:1100px;top:200px">${pill("", "1 por munícipe")}</div>
         <div class="met abs" style="left:0;width:1920px;top:470px;text-align:center">${pill("", "💼 funcionário particular para assuntos públicos", "#E8B44A", "rgba(232,180,74,.12)")}</div>
         <div class="fra abs bubble me" style="left:200px;top:640px;font-size:26px;max-width:440px">E posso ter uma esplanada à porta?</div>
@@ -120,7 +120,7 @@
   });
 
   // ===================================================================
-  // 2 — COFRE DIGITAL PESSOAL: a memória do Afonso
+  // 2 — COFRE DIGITAL PESSOAL: a memória do Henriques
   // ===================================================================
   const VC = [860, 590];
   const hex = (r, cx = VC[0], cy = VC[1]) => [...Array(6).keys()].map((k) => { const a = ((-90 + 60 * k) * Math.PI) / 180; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
@@ -140,7 +140,7 @@
           <path class="mem" pathLength="1" d="M300 270 C520 260 700 280 ${VC[0]} ${VC[1] - 300}" stroke="#E8B44A" stroke-width="4" fill="none" stroke-dasharray="1 1"/>
           <polygon class="hx" pathLength="1" points="${hex(310).map((p) => p.join(",")).join(" ")}" fill="rgba(232,180,74,.06)" stroke="#E8B44A" stroke-width="4"/>
           ${NP.map(([x, y]) => `<line class="ln" pathLength="1" x1="${VC[0]}" y1="${VC[1]}" x2="${x}" y2="${y}" stroke="#E8B44A" stroke-width="2" opacity=".5"/>`).join("")}
-          <g class="af">${afonso(56)}</g>
+          <g class="af">${henriques(56)}</g>
           <g class="lk" transform="translate(${VC[0]} ${VC[1] - 310})"><g><rect x="-30" y="-6" width="60" height="46" rx="9" fill="#E8B44A"/><path d="M-18 -6 V-24 A18 18 0 0 1 18 -24 V-6" stroke="#E8B44A" stroke-width="8" fill="none"/></g></g>
           <path class="no" d="M1210 820 L1480 820" stroke="#E5484D" stroke-width="5" stroke-dasharray="12 10"/><path class="no2" d="M1320 790 L1380 850 M1380 790 L1320 850" stroke="#E5484D" stroke-width="8" stroke-linecap="round"/>
         </svg>
@@ -304,7 +304,7 @@
           </g>
           <path class="bad" d="M1760 470 C1840 560 1860 700 1800 760" stroke="#E5484D" stroke-width="3" fill="none" stroke-dasharray="10 8"/>
           <g class="badx" transform="translate(1830 610)"><g><circle r="22" fill="#E5484D"/><path d="M-9 -9 L9 9 M9 -9 L-9 9" stroke="#fff" stroke-width="4" stroke-linecap="round"/></g></g>
-          <g class="af">${afonso(46)}</g>
+          <g class="af">${henriques(46)}</g>
           <polygon class="cf" points="${hex(52, 430, 620).map((p) => p.join(",")).join(" ")}" fill="rgba(232,180,74,.12)" stroke="#E8B44A" stroke-width="3"/>
         </svg>
         <div class="b cn abs" style="left:90px;top:300px;display:flex;flex-direction:column;gap:10px">${["💬 WhatsApp", "🖥️ Portal", "✉️ SMS", "🎙️ Voz", "🏛️ Balcão"].map((x) => pill("", x)).join("")}<div class="label-sm" style="color:#5E7096;font-size:14px;margin-top:4px">canais</div></div>
@@ -371,7 +371,7 @@
             </div>
             <div style="width:330px;border-left:1px solid #1B2D55;padding:20px">
               <div class="label-sm" style="color:#5E7096;font-size:15px;margin-bottom:12px">Histórico</div>
-              ${["10:41 · missão criada pelo Afonso", "10:41 · pacote mínimo recebido", "10:42 · regras verificadas (fonte)", "10:43 · munícipe confirmou (CMD)", "10:43 · encaminhado: confirmar largura"].map((h) => `<div class="mono" style="font-size:15px;color:#9FB3D6;padding:8px 0;border-bottom:1px solid #1B2D55">${h}</div>`).join("")}
+              ${["10:41 · missão criada pelo Henriques", "10:41 · pacote mínimo recebido", "10:42 · regras verificadas (fonte)", "10:43 · munícipe confirmou (CMD)", "10:43 · encaminhado: confirmar largura"].map((h) => `<div class="mono" style="font-size:15px;color:#9FB3D6;padding:8px 0;border-bottom:1px solid #1B2D55">${h}</div>`).join("")}
               <div class="hn mono" style="font-size:15px;color:#5BBF7A;padding:8px 0">11:05 · aprovado por técnica competente</div>
             </div>
           </div>
@@ -475,7 +475,7 @@
           <div class="l3" style="margin-top:44px;display:flex;align-items:center;gap:20px"><svg width="80" height="90" viewBox="0 0 90 100"><ellipse cx="45" cy="16" rx="38" ry="12" fill="none" stroke="#8FA3C4" stroke-width="4"/><path d="M7 16 V82 A38 12 0 0 0 83 82 V16 M7 49 A38 12 0 0 0 83 49" fill="none" stroke="#8FA3C4" stroke-width="4"/><path class="sk" pathLength="1" d="M0 96 L90 4" stroke="#E5484D" stroke-width="8" stroke-linecap="round"/></svg><div style="font-size:30px;color:#fff;font-weight:650">Rede federada<br><span style="color:#B8C4DA;font-weight:400;font-size:24px">sem base de dados central</span></div></div>
         </div>
         <div class="end abs" style="width:1920px;height:1080px;${BG}">
-          <svg class="abs" width="1920" height="1080" viewBox="0 0 1920 1080"><g class="er">${afonso(70)}</g>
+          <svg class="abs" width="1920" height="1080" viewBox="0 0 1920 1080"><g class="er">${henriques(70)}</g>
             <text class="el serif" x="960" y="610" text-anchor="middle" font-size="160" font-weight="600" fill="#fff" letter-spacing="-3">Delegate</text><circle class="ed" cx="1290" cy="598" r="13" fill="#3FD0C9"/></svg>
           <div class="es abs serif" style="left:160px;width:1600px;top:700px;text-align:center;font-size:50px;font-style:italic;color:#F2EEE6;line-height:1.25">A magia que a Inês vê é <span style="color:#3FD0C9">a burocracia que ela não precisa de perceber.</span></div>
           <div class="eh abs mono" style="left:0;width:1920px;top:960px;text-align:center;font-size:24px;letter-spacing:.2em;color:#8FA3C4">DELEGATE · 3/3 · HACK4GUIMARÃES</div>

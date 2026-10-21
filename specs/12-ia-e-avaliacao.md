@@ -29,7 +29,7 @@ Em R0 os agentes podem ser funções de um único serviço com instruções sepa
 
 - **Unidade de indexação:** cada campo de cada registo (condições, documentos, canais, taxas), com o id de fonte associado.
 - **Pesquisa híbrida:** palavras-chave + embeddings; sinónimos do registo (`sinonimos`) entram na pesquisa.
-- **Limiar de confiança:** se o melhor resultado ficar abaixo do limiar calibrado no conjunto de avaliação, o Afonso pede um esclarecimento ou abstém-se.
+- **Limiar de confiança:** se o melhor resultado ficar abaixo do limiar calibrado no conjunto de avaliação, o Henriques pede um esclarecimento ou abstém-se.
 - **Catálogo pequeno em R0 (10–15 serviços):** permite passar a lista de títulos ao modelo para classificação direta, com a pesquisa como confirmação.
 
 ## 4. Salvaguardas
@@ -46,7 +46,7 @@ Em R0 os agentes podem ser funções de um único serviço com instruções sepa
 
 ## 5. Transparência (Regulamento Europeu de IA)
 
-- O Afonso identifica-se como IA (art. 50.º, aplicável desde 02/08/2026).
+- O Henriques identifica-se como IA (art. 50.º, aplicável desde 02/08/2026).
 - A interface indica o fornecedor e o modelo usados (também exigido pelas regras do hackathon).
 - O Delegate não toma decisões com efeito jurídico. A classificação de risco do sistema deve ser avaliada em R1 com a equipa jurídica da Câmara.
 
@@ -82,7 +82,7 @@ Pedir ao mentor do desafio perguntas reais de munícipes, anonimizadas, para sub
 
 ### 6.3 Método
 
-1. O executor envia cada pergunta ao Afonso e guarda a resposta completa, as fontes citadas e a latência.
+1. O executor envia cada pergunta ao Henriques e guarda a resposta completa, as fontes citadas e a latência.
 2. MET-Q1, Q2, Q3, Q5 e Q7 são calculadas automaticamente (correspondência de ids e verificação de números).
 3. MET-Q4 usa um modelo juiz com critérios escritos, e **todas as discordâncias são revistas por uma pessoa**.
 4. MET-Q6 é revista por pessoas.

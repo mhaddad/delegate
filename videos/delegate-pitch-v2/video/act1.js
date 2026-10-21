@@ -1,6 +1,6 @@
 /* ATO I — cenas 1 a 4 */
 (function () {
-  const { CUT, cue, shake, burst, rings, motes, P, L, W, B, S, O, D, type, ease, clamp, rng, H, q, qa, ines, afonso, ICON, scene, win } = F;
+  const { CUT, cue, shake, burst, rings, motes, P, L, W, B, S, O, D, type, ease, clamp, rng, H, q, qa, ines, henriques, ICON, scene, win } = F;
 
   // ===================================================================
   // CENA 1 + início da 2 — o terreno do avô, o novo PDM
@@ -298,7 +298,7 @@
   // ===================================================================
   const BOX_X = [150, 590, 1030, 1470], BOX_Y = 330, BOX_W = 300, BOX_H = 150;
   const OLD = ["Necessidade", "Cidadão descobre o serviço", "Cidadão aprende a burocracia", "Câmara trata o processo"];
-  const NEW = ["Necessidade", "Afonso entende o contexto", "Afonso orquestra a Câmara", "Cidadão recebe o resultado"];
+  const NEW = ["Necessidade", "Henriques entende o contexto", "Henriques orquestra a Câmara", "Cidadão recebe o resultado"];
 
   scene({
     id: "s03", start: CUT.s03, end: W("04", "delegate") + 0.5, fi: 0.8, fo: 0, z: 3,
@@ -314,7 +314,7 @@
           <g class="brk"><path d="M600 300 V284 H1320 V300" stroke="#D9623B" stroke-width="5" fill="none"/></g>
           <g class="ines3">${ines()}</g>
           <g class="blk"><rect x="-150" y="-60" width="300" height="120" rx="10" fill="#8E96A6"/><rect x="-150" y="-60" width="300" height="120" rx="10" fill="none" stroke="#6E7686" stroke-width="4"/><path d="M-120 -20 h70 M-30 10 h90 M-110 30 h40" stroke="#7A8292" stroke-width="5" stroke-linecap="round"/><text y="12" text-anchor="middle" font-size="30" font-weight="700" fill="#fff" letter-spacing="2">COMPLEXIDADE</text></g>
-          <g class="ring3">${afonso(46)}</g>
+          <g class="ring3">${henriques(46)}</g>
         </svg>
         <div class="brklbl abs label-sm" style="left:860px;top:240px;width:200px;text-align:center;color:#D9623B">peso no cidadão</div>
         <div class="leg1 abs" style="left:1500px;top:510px;display:flex;align-items:center;gap:12px;font-size:24px;font-weight:600;color:#3A4560"><span style="width:40px;height:40px">${ICON.shield("#0F1B33")}</span>interesse público</div>
@@ -371,7 +371,7 @@
       S(c.ines, { x: 960 - 100, y: 870 - 500 + L(30, 0, ip), s: 0.44, sy: 0.44 * sq, o: ip });
       const by = L(-200, 870 - inesH * sq - 60, fall);
       S(c.blk, { x: 960, y: by - lift * 420 + (hit ? Math.sin(t * 50) * 3 * hit : 0), s: 1 - lift * 0.8, o: fall > 0 ? 1 - lift : 0 });
-      // anel do Afonso substitui o bloco
+      // anel do Henriques substitui o bloco
       const rp = P(t, tFlip + 0.2, 0.6, ease.back);
       S(c.ring, { x: 960, y: L(560, 640, rp), s: rp, o: rp > 0 ? 1 : 0 });
       // textos
@@ -382,7 +382,7 @@
   });
 
   // ===================================================================
-  // CENA 4 — Delegate + Afonso
+  // CENA 4 — Delegate + Henriques
   // ===================================================================
   scene({
     id: "s04", start: W("04", "delegate") - 0.3, end: CUT.s05 + 0.6, fi: 0, fo: 0, z: 4,
@@ -396,11 +396,11 @@
             <text class="lg serif" x="960" y="560" text-anchor="middle" font-size="210" font-weight="600" fill="none" stroke="#3FD0C9" stroke-width="2.5" pathLength="1" letter-spacing="-4">Delegate</text>
             <circle class="dot" cx="1342" cy="545" r="15" fill="#3FD0C9"/>
           </g>
-          <g class="ring4">${afonso(130)}</g>
+          <g class="ring4">${henriques(130)}</g>
           <line class="surf" x1="0" y1="560" x2="1920" y2="560" stroke="#3FD0C9" stroke-width="3" pathLength="1"/>
         </svg>
         <div class="sub abs" style="left:0;width:1920px;top:650px;text-align:center;font-size:38px;color:#B8C4DA">Um representante digital pessoal para cada munícipe</div>
-        <div class="afn abs serif" style="left:0;width:1920px;top:740px;text-align:center;font-size:76px;font-weight:600;color:#fff">Afonso</div>
+        <div class="afn abs serif" style="left:0;width:1920px;top:740px;text-align:center;font-size:76px;font-weight:600;color:#fff">Henriques</div>
         <div class="afn2 abs" style="left:0;width:1920px;top:840px;text-align:center;font-size:30px;color:#8FA3C4">o representante digital dos munícipes de Guimarães</div>
         <div class="top abs" style="left:0;top:0;width:1920px;height:560px;background:#F2EEE6;transform-origin:50% 100%"></div>`;
       const t0r = W("04", "delegate") - 0.3, tAfr = W("04", "em", 1) - 0.1;
@@ -422,7 +422,7 @@
       c.lg.style.strokeDasharray = "1 1"; c.lg.style.strokeDashoffset = String(1 - dr);
       c.lg.style.fill = `rgba(255,255,255,${P(t, t0 + 1.2, 0.6, ease.lin)})`;
       const dp = P(t, t0 + 1.5, 0.5, ease.back); S(c.dot, { s: dp, o: dp > 0 ? 1 : 0 });
-      // sobe e encolhe quando aparece o Afonso
+      // sobe e encolhe quando aparece o Henriques
       const tAf = W("04", "em", 1) - 0.1;
       const up = P(t, tAf, 0.9, ease.io);
       S(c.logo, { y: L(0, -380, up), s: L(1, 0.42, up), o: 1 - P(t, CUT.s05 - 1.5, 0.5, ease.lin) });
@@ -431,8 +431,8 @@
       const rg = P(t, tAf + 0.4, 0.9, ease.back);
       const breathe = 1 + 0.03 * Math.sin(t * 3);
       S(c.ring, { x: 960, y: 560, s: rg * breathe, o: rg > 0 ? 1 : 0 });
-      S(c.afn, { y: L(20, 0, P(t, W("04", "afonso"), 0.5)), o: P(t, W("04", "afonso") - 0.1, 0.4, ease.lin) });
-      S(c.afn2, { o: P(t, W("04", "afonso") + 0.6, 0.6, ease.lin) * (1 - P(t, CUT.s05 - 1.3, 0.4, ease.lin)) });
+      S(c.afn, { y: L(20, 0, P(t, W("04", "henriques"), 0.5)), o: P(t, W("04", "henriques") - 0.1, 0.4, ease.lin) });
+      S(c.afn2, { o: P(t, W("04", "henriques") + 0.6, 0.6, ease.lin) * (1 - P(t, CUT.s05 - 1.3, 0.4, ease.lin)) });
       // castelo (D. Afonso Henriques)
       O(c.cst, 0.13 * P(t, W("04", "um", 2), 1.0, ease.lin));
       // linha de superfície e mundo de cima

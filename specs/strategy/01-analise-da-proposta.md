@@ -9,12 +9,12 @@ A proposta acerta no essencial: **a solução é sobretudo arquitetura**, e o j�
 Há três riscos de fundo:
 
 1. **Âmbito.** Cinco componentes (bot, bastidores, Porta, Consola, sistemas simulados) mais agentes, Registo Canónico e avaliação, em 5 dias e com até 5 pessoas.
-2. **Esquecer o critério do desafio.** O «bom resultado» do desafio 3.4 é uma resposta correta com fonte. A proposta não refere o Registo Canónico nem a avaliação. Sem conteúdo bom, a demo mais bonita mostra um Afonso que erra.
+2. **Esquecer o critério do desafio.** O «bom resultado» do desafio 3.4 é uma resposta correta com fonte. A proposta não refere o Registo Canónico nem a avaliação. Sem conteúdo bom, a demo mais bonita mostra um Henriques que erra.
 3. **Encenação.** Animações que não correspondem ao que o sistema faz são detetadas por um júri técnico e destroem a nota de viabilidade técnica (25%).
 
 ---
 
-## 1. Afonso como bot do Telegram
+## 1. Henriques como bot do Telegram
 
 **Pontos fortes**
 
@@ -26,7 +26,7 @@ Há três riscos de fundo:
 
 | Risco | Mitigação |
 |---|---|
-| A narrativa e os vídeos dizem «WhatsApp» | Dizer no pitch: «Na demo usamos o Telegram; no piloto, o mesmo Afonso fala por WhatsApp. O canal é um adaptador.» A arquitetura mostra o adaptador de canal |
+| A narrativa e os vídeos dizem «WhatsApp» | Dizer no pitch: «Na demo usamos o Telegram; no piloto, o mesmo Henriques fala por WhatsApp. O canal é um adaptador.» A arquitetura mostra o adaptador de canal |
 | O júri não vê o ecrã do telemóvel | O Observatório replica a conversa na faixa «Palco», a partir dos eventos. Basta projetar um ecrã |
 | O Telegram não cifra ponta a ponta as conversas com bots | Sem dados reais (ADR-006); aviso no `/start`; o canal é «campainha», o Cofre é que guarda |
 
@@ -77,7 +77,7 @@ Detalhe em [04](04-observatorio.md).
 
 | Risco | Mitigação |
 |---|---|
-| A Porta ser apenas uma camada interna que ninguém vê | O Afonso usa a Porta **por MCP, através da rede, como qualquer terceiro**. Na demo, um agente externo usa a mesma Porta |
+| A Porta ser apenas uma camada interna que ninguém vê | O Henriques usa a Porta **por MCP, através da rede, como qualquer terceiro**. Na demo, um agente externo usa a mesma Porta |
 | Agentes chamarem os sistemas simulados diretamente | Os sistemas simulados só são acessíveis através da Porta. Isto demonstra «capacidades limitadas, nunca acesso geral» |
 
 **Melhorias**

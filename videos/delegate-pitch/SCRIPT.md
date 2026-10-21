@@ -43,19 +43,19 @@
 
     E se fosse ao contrário? Isto é o Delegate: um representante digital ao serviço de cada munícipe.
 
-## Line 6 — Conheça o Afonso (Frame 6)
+## Line 6 — Conheça o Henriques (Frame 6)
 
 **Time:** 0:52 – 1:04
 **Delivery:** Caloroso ao apresentar o nome. Tagline final pausada.
 
-    Em Guimarães, chama-se Afonso — um nome com história nesta cidade. Por mensagem, portal, voz ou balcão: a Inês diz o que precisa. O Afonso trata do resto.
+    Em Guimarães, chama-se Henriques — um nome com história nesta cidade. Por mensagem, portal, voz ou balcão: a Inês diz o que precisa. O Henriques trata do resto.
 
 ## Line 7 — O palco: parece magia (Frame 7)
 
 **Time:** 1:04 – 1:25
 **Delivery:** Leve e fluido, a acompanhar a conversa no ecrã. Deixar respirar entre frases. "Parece magia" com um sorriso, quase em segredo.
 
-    A Inês pergunta como perguntaria a um amigo. O Afonso pede para usar a localização do terreno, consulta o novo PDM e responde: o que mudou, o que é certo, o que depende de um técnico. E deixa o pedido formal pronto. Para a Inês, parece magia.
+    A Inês pergunta como perguntaria a um amigo. O Henriques pede para usar a localização do terreno, consulta o novo PDM e responde: o que mudou, o que é certo, o que depende de um técnico. E deixa o pedido formal pronto. Para a Inês, parece magia.
 
 ## Line 8 — Os bastidores (Frame 8)
 
@@ -104,4 +104,4 @@
 **Time:** 2:48 – 3:00
 **Delivery:** Regressa ao tom de história da abertura. Pausa longa antes de "Delegate". Tagline calma e com sorriso.
 
-    Aqui nasceu Portugal. Aqui pode nascer um serviço público que trabalha por cada pessoa. Delegate. Diga o que precisa. O Afonso trata do resto.
+    Aqui nasceu Portugal. Aqui pode nascer um serviço público que trabalha por cada pessoa. Delegate. Diga o que precisa. O Henriques trata do resto.

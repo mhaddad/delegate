@@ -338,7 +338,7 @@
         align-self: flex-start;
       }
 
-      .linha-dialogo.afonso {
+      .linha-dialogo.henriques {
         align-self: flex-end;
         max-width: 94%;
       }
@@ -365,7 +365,7 @@
         color: var(--cmg-texto);
       }
 
-      .dialogo-balao.balao-afonso {
+      .dialogo-balao.balao-henriques {
         background: #f4f8fd;
         border-left: 3px solid var(--cmg-azul-medio);
         color: var(--cmg-azul-escuro);
@@ -677,7 +677,7 @@
         const [eventos, setEventos] = useState([]);
         const [ultimoEvento, setUltimoEvento] = useState(null);
         const [modoTecnico, setModoTecnico] = useState(false);
-        const [nodoAtivo, setNodoAtivo] = useState('afonso');
+        const [nodoAtivo, setNodoAtivo] = useState('henriques');
         const [conectado, setConectado] = useState(true);
 
         useEffect(() => {
@@ -692,7 +692,7 @@
                 setUltimoEvento(ev);
 
                 if (ev.origem === 'canal') setNodoAtivo('canal');
-                else if (ev.origem === 'afonso') setNodoAtivo('afonso');
+                else if (ev.origem === 'henriques') setNodoAtivo('henriques');
                 else if (ev.origem === 'politica' || ev.origem === 'mandatos' || ev.origem === 'cofre') setNodoAtivo('politica');
                 else if (ev.origem === 'porta') setNodoAtivo('porta');
                 else if (ev.origem === 'su') setNodoAtivo('su');
@@ -712,7 +712,7 @@
           const tipo = ultimoEvento.tipo;
           if (tipo === 'canal.mensagem.recebida') return 'Mensagem do requerente registada no canal digital.';
           if (tipo === 'porta.servico.obtido') return 'Consulta certificada à Porta Agêntica com validação de versão.';
-          if (tipo === 'afonso.resposta.verificada') return 'Resposta validada contra a fonte regulamentar oficial do Município.';
+          if (tipo === 'henriques.resposta.verificada') return 'Resposta validada contra a fonte regulamentar oficial do Município.';
           if (tipo === 'cofre.item.guardado') return 'Elemento instrutório cifrado com chave AES-256 no Cofre Pessoal.';
           if (tipo === 'mandato.concedido') return 'Mandato eletrónico qualificado D3 formalmente emitido.';
           if (tipo === 'missao.estado.alterado') return `Tramitação avançada: estado ${ultimoEvento.dados?.para || 'em curso'}.`;
@@ -795,9 +795,9 @@
                       </div>
                     </div>
 
-                    <div class="linha-dialogo afonso">
-                      <span class="dialogo-remetente" style=${{ textAlign: 'right' }}>Afonso (Representante Digital) · 10:24</span>
-                      <div class="dialogo-balao balao-afonso">
+                    <div class="linha-dialogo henriques">
+                      <span class="dialogo-remetente" style=${{ textAlign: 'right' }}>Henriques (Representante Digital) · 10:24</span>
+                      <div class="dialogo-balao balao-henriques">
                         Bom dia! No Largo da Oliveira, a instalação de esplanada aberta contígua à fachada efetua-se mediante <b>Mera Comunicação Prévia</b> à Câmara Municipal de Guimarães.<br /><br />
                         As regras essenciais a observar são as seguintes:<br />
                         1. Deixar desimpedido um <b>canal pedonal de circulação de pelo menos 2,00 metros</b>;<br />
@@ -817,9 +817,9 @@
                       </div>
                     </div>
 
-                    <div class="linha-dialogo afonso">
-                      <span class="dialogo-remetente" style=${{ textAlign: 'right' }}>Afonso (Representante Digital) · 10:26</span>
-                      <div class="dialogo-balao balao-afonso">
+                    <div class="linha-dialogo henriques">
+                      <span class="dialogo-remetente" style=${{ textAlign: 'right' }}>Henriques (Representante Digital) · 10:26</span>
+                      <div class="dialogo-balao balao-henriques">
                         Requisito de circulação validado (2,10 m ≥ 2,00 m). Ao abrigo do <b>Mandato Eletrónico D3</b>, foi instruído e submetido o processo de Mera Comunicação Prévia n.º <b>OEP/2026/0001</b> à Divisão de Gestão do Espaço Público da Câmara Municipal de Guimarães.
                       </div>
                     </div>
@@ -841,9 +841,9 @@
                       <span class="nodo-descricao-texto">Atendimento Direto</span>
                     </div>
 
-                    <div class=${`nodo-barramento ${nodoAtivo === 'afonso' ? 'ativo' : ''}`}>
+                    <div class=${`nodo-barramento ${nodoAtivo === 'henriques' ? 'ativo' : ''}`}>
                       <span class="nodo-protocolo-tag">Orquestrador</span>
-                      <span class="nodo-titulo-texto">Afonso</span>
+                      <span class="nodo-titulo-texto">Henriques</span>
                       <span class="nodo-descricao-texto">Roteador e Agente</span>
                     </div>
 

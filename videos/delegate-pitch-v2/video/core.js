@@ -89,17 +89,17 @@
     </g>`;
   }
 
-  // Afonso: anel de luz ciano com "A" ao centro
-  function afonso(r = 80, id = "") {
+  // Henriques: anel de luz ciano com "H" ao centro
+  function henriques(r = 80, id = "") {
     return `
-    <g class="afonso" ${id ? `id="${id}"` : ""}>
+    <g class="henriques" ${id ? `id="${id}"` : ""}>
       <circle class="af-glow" r="${r * 1.25}" fill="url(#gGlow)"/>
       <circle class="af-ring" r="${r}" fill="none" stroke="url(#gRing)" stroke-width="${Math.max(3, r * 0.12)}"/>
       <circle r="${r * 0.78}" fill="#0F1B33"/>
-      <text class="serif" y="${r * 0.36}" text-anchor="middle" font-size="${r * 1.05}" font-weight="600" fill="#3FD0C9">A</text>
+      <text class="serif" y="${r * 0.36}" text-anchor="middle" font-size="${r * 1.05}" font-weight="600" fill="#3FD0C9">H</text>
     </g>`;
   }
-  // gradientes partilhados (cada SVG que use o Afonso inclui isto)
+  // gradientes partilhados (cada SVG que use o Henriques inclui isto)
   const DEFS = `
     <defs>
       <radialGradient id="gGlow"><stop offset="0" stop-color="#3FD0C9" stop-opacity=".45"/><stop offset="1" stop-color="#3FD0C9" stop-opacity="0"/></radialGradient>
@@ -107,8 +107,8 @@
       <radialGradient id="gGold"><stop offset="0" stop-color="#E8B44A" stop-opacity=".35"/><stop offset="1" stop-color="#E8B44A" stop-opacity="0"/></radialGradient>
       <filter id="fBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
     </defs>`;
-  const afonsoRingSVG = (size) =>
-    `<svg width="${size}" height="${size}" viewBox="-60 -60 120 120">${afonso(40)}</svg>`;
+  const henriquesRingSVG = (size) =>
+    `<svg width="${size}" height="${size}" viewBox="-60 -60 120 120">${henriques(40)}</svg>`;
 
   // ---------- ícones simples ----------
   const ICON = {
@@ -226,5 +226,5 @@
     for (const fn of hooks) fn(t);
   }
 
-  window.F = { TL, FPS, CUT, CUES, cue, shake, fx, burst, rings, motes, clamp, ease, P, L, win, W, B, S, O, D, type, rng, H, q, qa, ines, afonso, afonsoRingSVG, DEFS, ICON, scene, onFrame, seek, stage };
+  window.F = { TL, FPS, CUT, CUES, cue, shake, fx, burst, rings, motes, clamp, ease, P, L, win, W, B, S, O, D, type, rng, H, q, qa, ines, henriques, henriquesRingSVG, DEFS, ICON, scene, onFrame, seek, stage };
 })();

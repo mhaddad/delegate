@@ -1,9 +1,9 @@
 /**
- * Tratador de Comandos de Barra (/) do Bot do Afonso no Telegram.
+ * Tratador de Comandos de Barra (/) do Bot do Henriques no Telegram.
  *
  * Módulo com responsabilidade única de responder a comandos estruturados:
  * - /start: Apresentação da demonstração e comandos disponíveis
- * - /carta: Carta de Lealdade do Afonso e compromissos do AI Act
+ * - /carta: Carta de Lealdade do Henriques e compromissos do AI Act
  * - /cofre: Consulta e gestão de itens cifrados no Cofre Digital Pessoal
  * - /mandatos: Consulta de mandatos de representação ativos (D0 a D3)
  * - /missoes: Estado do orquestrador de missões e checklist de passos
@@ -15,7 +15,7 @@ import type { CofreDigital } from '../cofre/cofre.ts';
 import type { GestorMandatos } from '../mandatos/mandatos.ts';
 import type { OrquestradorMissoes } from '../orquestrador/missao.ts';
 import type { Registo } from '../eventos/registo.ts';
-import type { Afonso } from '../afonso/afonso.ts';
+import type { Henriques } from '../henriques/henriques.ts';
 import type { GestorFluxoD2 } from '../orquestrador/fluxo-conversa-d2.ts';
 
 export interface DependenciasComandos {
@@ -25,7 +25,7 @@ export interface DependenciasComandos {
   orquestrador: OrquestradorMissoes;
   registo: Registo;
   sessao: string;
-  afonso?: Afonso;
+  henriques?: Henriques;
   fluxoD2?: GestorFluxoD2;
 }
 
@@ -36,7 +36,7 @@ export class TratadorComandos {
   readonly #orquestrador: OrquestradorMissoes;
   readonly #registo: Registo;
   readonly #sessao: string;
-  readonly #afonso?: Afonso;
+  readonly #henriques?: Henriques;
   readonly #fluxoD2?: GestorFluxoD2;
 
   constructor(deps: DependenciasComandos) {
@@ -46,7 +46,7 @@ export class TratadorComandos {
     this.#orquestrador = deps.orquestrador;
     this.#registo = deps.registo;
     this.#sessao = deps.sessao;
-    this.#afonso = deps.afonso;
+    this.#henriques = deps.henriques;
     this.#fluxoD2 = deps.fluxoD2;
   }
 
@@ -58,9 +58,9 @@ export class TratadorComandos {
     const textoLimpo = m.texto.trim();
 
     if (textoLimpo.startsWith('/start')) {
-      // Reiniciar contexto conversacional do Afonso, missões ativas e rascunhos em aberto
-      if (this.#afonso) {
-        this.#afonso.reiniciarConversa(m.pessoa);
+      // Reiniciar contexto conversacional do Henriques, missões ativas e rascunhos em aberto
+      if (this.#henriques) {
+        this.#henriques.reiniciarConversa(m.pessoa);
       }
       if (this.#fluxoD2) {
         this.#fluxoD2.cancelarRascunho(m.pessoa);
@@ -71,13 +71,13 @@ export class TratadorComandos {
       await this.#canal.enviar(
         m.conversa,
         [
-          'Olá, sou o <b>Afonso</b>, o seu representante digital que trabalha para si.',
+          'Olá, sou o <b>Henriques</b>, o seu representante digital que trabalha para si.',
           '',
           'Esta é uma <b>demonstração</b> com dados fictícios do desafio 3.4 (Hack4Guimarães 2035).',
           `Persona: <code>${escapar(persona)}</code>`,
           '',
           '<b>Comandos úteis:</b>',
-          '• /carta — Carta de Lealdade do Afonso',
+          '• /carta — Carta de Lealdade do Henriques',
           '• /cofre — Itens guardados no seu Cofre Digital',
           '• /mandatos — Mandatos de representação ativos',
           '• /missoes — Estado das suas missões em curso',
@@ -109,7 +109,7 @@ export class TratadorComandos {
       await this.#canal.enviar(
         m.conversa,
         [
-          '📜 <b>Carta de Lealdade do Afonso</b>',
+          '📜 <b>Carta de Lealdade do Henriques</b>',
           '',
           '1. <b>Trabalho para si.</b> Não trabalho para a Câmara, para um banco nem para quem me financia.',
           '2. <b>Digo-lhe sempre os seus direitos</b>, incluindo o de reclamar, ser ouvido e recorrer de uma decisão.',
@@ -170,7 +170,7 @@ export class TratadorComandos {
           [
             '🤝 <b>Não tem nenhum mandato ativo.</b>',
             '',
-            'Os mandatos definem o que o Afonso pode fazer por si:',
+            'Os mandatos definem o que o Henriques pode fazer por si:',
             '• D0: Informar · D1: Vigiar · D2: Preparar · D3: Agir com a sua confirmação.',
           ].join('\n'),
         );

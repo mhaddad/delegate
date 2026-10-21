@@ -9,7 +9,7 @@
 
 Analogia: a rede Multibanco. O cliente usa o caixa sem pagar; os bancos pagam à SIBS pela rede.
 
-Nome do modelo: **Porta Agêntica como infraestrutura, Afonso como bem público.**
+Nome do modelo: **Porta Agêntica como infraestrutura, Henriques como bem público.**
 
 ## 2. Business Model Canvas
 
@@ -30,7 +30,7 @@ Nome do modelo: **Porta Agêntica como infraestrutura, Afonso como bem público.
 | Fonte | Quem paga | Natureza | Quando |
 |---|---|---|---|
 | Implementação de capacidades (conector, conteúdo, testes) | Município | Pontual, por jornada | Desde o piloto |
-| Subscrição (Porta, Consola, Afonso, auditoria, alojamento, SLA) | Município | Recorrente anual | R1–R2 |
+| Subscrição (Porta, Consola, Henriques, auditoria, alojamento, SLA) | Município | Recorrente anual | R1–R2 |
 | Componente por resultado (missões concluídas) | Município | Variável, com teto | R2 |
 | Acesso de agentes terceiros (certificação + operação) | Empresas privadas | Recorrente e por uso | R3 |
 | Módulos de gestão (Mapa de Intenções, painéis) | Município / CIM | Complemento | R2–R3 |
@@ -123,10 +123,10 @@ Especificação da Porta e núcleo em EUPL. Monetiza-se a operação alojada com
 
 ## 9. Linhas vermelhas
 
-1. O munícipe nunca paga pelo Afonso nem por nenhum nível de serviço.
+1. O munícipe nunca paga pelo Henriques nem por nenhum nível de serviço.
 2. Não há venda de dados, nem agregados. O Mapa de Intenções é só para a Câmara.
 3. Não há recomendações pagas.
-4. O Afonso funciona igual para todos, independentemente de quem paga.
+4. O Henriques funciona igual para todos, independentemente de quem paga.
 5. Agentes terceiros só com Mandato Digital válido e no mesmo trilho de auditoria.
 
 <a id="revisao-mentoria"></a>

@@ -1,6 +1,6 @@
 # 21 · Registo de decisões (ADR)
 
-> Estado: versão de trabalho · Atualizado: 18/10/2026 · [Índice](README.md)
+> Estado: versão de trabalho · Atualizado: 21/10/2026 · [Índice](README.md)
 > Estados: **Proposta** (a decidir pela equipa) · **Aceite** · **Substituída**. Formato: contexto → decisão → consequências.
 
 | ADR | Título | Estado |
@@ -21,6 +21,7 @@
 | [020](#adr-020) | Integração invertida: processos canónicos e contratos de capacidades | Proposta (mentoria) |
 | [021](#adr-021) | Base de conhecimento ampla para D0 | Proposta (mentoria) |
 | [022](#adr-022) | Modelo de impacto com custeio por atividades e preço indexado ao valor | Proposta (mentoria) |
+| [023](#adr-023) | O representante passa a chamar-se Henriques | Aceite |
 
 ---
 
@@ -48,8 +49,8 @@
 <a id="adr-004"></a>
 ## ADR-004 · Operador independente e Cofre com chaves da pessoa
 
-- **Contexto:** se o Afonso pertencer à Câmara, perde-se o argumento de lealdade. Se o operador ler o Cofre, a palavra «cofre» é enganadora.
-- **Decisão (proposta):** o Delegate é um operador independente com contrato municipal; o Afonso é a marca local; o Cofre é cifrado com chave controlada pela pessoa.
+- **Contexto:** se o Henriques pertencer à Câmara, perde-se o argumento de lealdade. Se o operador ler o Cofre, a palavra «cofre» é enganadora.
+- **Decisão (proposta):** o Delegate é um operador independente com contrato municipal; o Henriques é a marca local; o Cofre é cifrado com chave controlada pela pessoa.
 - **Consequências:** papéis RGPD do Cofre exigem análise própria; em R0 demonstra-se a cifra no navegador.
 
 <a id="adr-005"></a>
@@ -71,7 +72,7 @@
 
 - **Contexto:** o WhatsApp Business exige verificação e aprovação; a demo precisa de fiabilidade.
 - **Decisão (proposta):** interface web com aparência de mensagens, sem a marca WhatsApp; sandbox de WhatsApp só se sobrar tempo.
-- **Consequências:** no pitch, dizer «no piloto, o mesmo Afonso fala por WhatsApp».
+- **Consequências:** no pitch, dizer «no piloto, o mesmo Henriques fala por WhatsApp».
 
 <a id="adr-008"></a>
 ## ADR-008 · Stack do protótipo
@@ -92,7 +93,7 @@
 
 - **Contexto:** o MCP é um padrão aberto suportado por vários clientes de IA; demonstrável ao vivo.
 - **Decisão (proposta):** MCP como interface principal para agentes; REST/OpenAPI equivalente para integrações.
-- **Consequências:** o mesmo serviço alimenta o Afonso e agentes externos.
+- **Consequências:** o mesmo serviço alimenta o Henriques e agentes externos.
 
 <a id="adr-011"></a>
 ## ADR-011 · Complementar o atendedor virtual existente
@@ -128,3 +129,10 @@
 - **Contexto:** o critério de impacto vale 30%; a Câmara precisa de ver custo atual × custo com o Delegate. Recomendação da mentoria.
 - **Decisão (proposta):** modelo de custeio por atividades com pressupostos visíveis, calculadora na Consola e plano de medição no piloto ([26](26-modelo-de-impacto-e-custos.md)). O preço passa a ser indexado à poupança medida.
 - **Consequências:** a hipótese de subscrição de 116 mil €/ano não se paga só com poupança interna no cenário central; rever preços e contar o valor para munícipes e economia em separado.
+
+<a id="adr-023"></a>
+## ADR-023 · O representante passa a chamar-se Henriques
+
+- **Contexto:** já existe outro assistente com o nome «Afonso».
+- **Decisão:** o representante digital passa a chamar-se **Henriques** em toda a documentação, no código (módulo `nucleo/henriques/`) e nos eventos do contrato (`henriques.*`). A alusão a D. Afonso Henriques mantém-se. O username do bot no Telegram (`@afonso_cm_bot`) não pode ser alterado e fica até haver um bot novo.
+- **Consequências:** é preciso voltar a gerar a narração e os renders dos vídeos do pitch; o emblema passa a ter o monograma «H»; `legacy/` e o corpus em `data/conhecimento/` não mudam.

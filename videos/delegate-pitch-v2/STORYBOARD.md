@@ -18,18 +18,18 @@ O vídeo inteiro assenta numa metáfora visual: a **Linha de Superfície**, uma 
 | Formas orgânicas, ilustração humana | Linhas finas, grelhas, diagramas, tipografia mono |
 | Poucos elementos, muito espaço vazio | Densidade, muitos nós e ligações |
 | Calma, ritmo lento | Movimento preciso, ritmo rápido |
-| O chat com o Afonso | Cofre, agentes, sistemas, técnicos, auditoria |
+| O chat com o Henriques | Cofre, agentes, sistemas, técnicos, auditoria |
 
-A câmara "mergulha" abaixo da linha quando o Afonso começa a trabalhar e "volta à tona" sempre que fala com a Inês. É assim que o vídeo mostra que a interação **parece magia** (por cima) e que a burocracia continua lá, **inteira e necessária**, mas sem tocar na Inês (por baixo).
+A câmara "mergulha" abaixo da linha quando o Henriques começa a trabalhar e "volta à tona" sempre que fala com a Inês. É assim que o vídeo mostra que a interação **parece magia** (por cima) e que a burocracia continua lá, **inteira e necessária**, mas sem tocar na Inês (por baixo).
 
 ## 2. Estrutura do pitch e arco narrativo
 
-O roteiro segue a estrutura clássica de pitch (gancho → problema → solução → demo → tecnologia → diferencial → impacto → plano → visão → pedido), montada sobre um arco de história em que **a Inês é a heroína e o Afonso é o guia**. A Inês nunca é "salva" pela tecnologia: é ela quem decide, confirma e avança.
+O roteiro segue a estrutura clássica de pitch (gancho → problema → solução → demo → tecnologia → diferencial → impacto → plano → visão → pedido), montada sobre um arco de história em que **a Inês é a heroína e o Henriques é o guia**. A Inês nunca é "salva" pela tecnologia: é ela quem decide, confirma e avança.
 
 | Ato | Tempo | Função no pitch | Função na história |
 |---|---|---|---|
 | I — O sonho e o obstáculo | 0:00 – 0:44 | Gancho + problema + insight | Herança, desejo, conflito (novo PDM), labirinto |
-| II — O guia | 0:44 – 1:07 | Solução + produto | Aparece o Afonso; a Inês faz um pedido simples |
+| II — O guia | 0:44 – 1:07 | Solução + produto | Aparece o Henriques; a Inês faz um pedido simples |
 | III — Por baixo da superfície | 1:07 – 2:17 | Demo + arquitetura tecnológica | A jornada resolvida: Cofre, agentes, sistemas, técnica, resposta |
 | IV — O que isto significa | 2:17 – 2:53 | Diferencial + valor + plano + visão + pedido | Magia × rigor; Câmara; Guimarães → país |
 | V — Regresso ao terreno | 2:53 – 3:00 | Fecho memorável | A casa desenhada no terreno do avô |
@@ -45,7 +45,7 @@ O vídeo abre e fecha no **mesmo terreno**: na abertura, um terreno vazio e uma 
 | Granito | `#F2EEE6` | Fundo do mundo da Inês |
 | Tinta | `#0F1B33` | Fundo do mundo invisível, texto principal |
 | Terracota | `#D9623B` | Inês, momentos humanos, calor |
-| Ciano Afonso | `#3FD0C9` | Afonso, fluxos de dados, agentes |
+| Ciano Henriques | `#3FD0C9` | Henriques, fluxos de dados, agentes |
 | Ouro Cofre | `#E8B44A` | Cofre Digital Pessoal, chaves, autorizações |
 | Verde Validação | `#5BBF7A` | Confirmações, validação humana, "pode avançar" |
 | Cinza Burocracia | `#9AA3B2` | Papéis, formulários, labirinto do ato I |
@@ -60,7 +60,7 @@ O vídeo abre e fecha no **mesmo terreno**: na abertura, um terreno vazio e uma 
 
 - **Inês:** ilustração flat, cerca de 35 anos, casaco terracota. Expressiva mas simples, sem rosto detalhado (estilo editorial).
 - **O avô:** aparece apenas numa fotografia antiga, em sépia, no terreno, com uma enxada. Volta no fecho.
-- **Afonso:** **não é um robô nem um avatar humano.** É um anel de luz ciano que respira, com um "A" em Fraunces ao centro. Quando trabalha, o anel abre-se em fios que descem abaixo da linha.
+- **Henriques:** **não é um robô nem um avatar humano.** É um anel de luz ciano que respira, com um "H" em Fraunces ao centro. Quando trabalha, o anel abre-se em fios que descem abaixo da linha.
 - **Arquiteta Marta:** técnica de urbanismo da Câmara, ilustração no mesmo estilo da Inês, com cor neutra (azul-acinzentado).
 - **Chat:** interface de mensagens genérica inspirada no WhatsApp (balões, fundo, tiques de leitura), **sem logótipo da Meta/WhatsApp**.
 - **Câmara Municipal:** representada por um ícone arquitetónico genérico, **sem o brasão nem o logótipo oficial**, a menos que haja autorização.
@@ -126,18 +126,18 @@ O vídeo abre e fecha no **mesmo terreno**: na abertura, um terreno vazio e uma 
 
 ---
 
-### CENA 4 — Revelação: Delegate e Afonso · 0:44 – 0:57
+### CENA 4 — Revelação: Delegate e Henriques · 0:44 – 0:57
 
 **Visual**
 1. O diagrama **inverte-se**: as setas rodam 180° e as caixas reorganizam-se no **Modelo Delegate**:
-   `necessidade → Afonso entende o contexto → Afonso orquestra a Câmara → cidadão recebe o resultado`
+   `necessidade → Henriques entende o contexto → Henriques orquestra a Câmara → cidadão recebe o resultado`
 2. O peso sai de cima da Inês e passa para um anel ciano que surge entre ela e a Câmara.
 3. Corte para ecrã tinta: o logótipo **Delegate** desenha-se em traço.
-4. O anel ciano acende, respira, e aparece o "A" ao centro: **Afonso**.
+4. O anel ciano acende, respira, e aparece o "H" ao centro: **Henriques**.
 5. Por trás, muito subtil, a silhueta do Castelo de Guimarães (a piscadela a D. Afonso Henriques).
-6. Aparece a Linha de Superfície pela primeira vez: uma linha horizontal fina divide o ecrã, com o Afonso exatamente sobre ela.
+6. Aparece a Linha de Superfície pela primeira vez: uma linha horizontal fina divide o ecrã, com o Henriques exatamente sobre ela.
 
-**Texto no ecrã:** `Delegate` · `Afonso — o seu representante digital`
+**Texto no ecrã:** `Delegate` · `Henriques — o seu representante digital`
 **Narração:** "E se fosse ao contrário? Este é o Delegate…"
 **Som:** a trilha abre (o filtro sai) e há um "swell" no momento do logótipo.
 
@@ -146,16 +146,16 @@ O vídeo abre e fecha no **mesmo terreno**: na abertura, um terreno vazio e uma 
 ### CENA 5 — O pedido · 0:57 – 1:07
 
 **Visual (acima da linha)**
-1. A metade superior mostra um telemóvel grande com o chat. Contacto: **Afonso**, com o anel ciano como avatar.
+1. A metade superior mostra um telemóvel grande com o chat. Contacto: **Henriques**, com o anel ciano como avatar.
 2. A Inês escreve; vemos o texto a ser digitado:
-   > *"Afonso, com o novo PDM ainda posso construir uma casa de 150 m² no terreno do meu avô?"*
+   > *"Henriques, com o novo PDM ainda posso construir uma casa de 150 m² no terreno do meu avô?"*
 3. Enviar. Dois tiques.
-4. Resposta imediata do Afonso:
+4. Resposta imediata do Henriques:
    > *"Olá, Inês. Já tenho o terreno de Ponte no seu Cofre. Vou verificar e volto a falar consigo."*
 5. A Inês pousa o telemóvel e vai fazer outra coisa (pega numa chávena de café). **A vida dela continua.**
 
 **Texto no ecrã:** as mensagens do chat.
-**Narração:** "A Inês abre o WhatsApp e escreve ao Afonso…" *(pausa)* "É tudo o que precisa de fazer."
+**Narração:** "A Inês abre o WhatsApp e escreve ao Henriques…" *(pausa)* "É tudo o que precisa de fazer."
 **Som:** sons de teclado e de envio de mensagem, discretos.
 
 ---
@@ -163,7 +163,7 @@ O vídeo abre e fecha no **mesmo terreno**: na abertura, um terreno vazio e uma 
 ### CENA 6 — Mergulho: o Cofre Digital Pessoal · 1:07 – 1:23
 
 **Visual (a câmara atravessa a linha e desce)**
-1. Mergulho vertical: o granito fica em cima e entramos no mundo tinta. O anel do Afonso desfaz-se em fios ciano que descem connosco.
+1. Mergulho vertical: o granito fica em cima e entramos no mundo tinta. O anel do Henriques desfaz-se em fios ciano que descem connosco.
 2. Ao centro, o **Cofre Digital Pessoal da Inês**: um cofre hexagonal em ouro, com um cadeado e a etiqueta "controlado pela Inês". Lá dentro, um grafo de notas ligadas, ao estilo de um mapa de conhecimento:
    ```
    Terreno em Ponte
@@ -183,7 +183,7 @@ O vídeo abre e fecha no **mesmo terreno**: na abertura, um terreno vazio e uma 
 5. Os nós que ficam lá dentro ganham um cadeado pequeno e a etiqueta **"não partilhado"**. O cofre fecha.
 
 **Texto no ecrã:** `Cofre Digital Pessoal` · `cifrado · controlado pela Inês` · `Partilhado: só o necessário` · `Não partilhado`
-**Narração:** "Do outro lado, começa o trabalho invisível. O Afonso abre o Cofre Digital Pessoal…"
+**Narração:** "Do outro lado, começa o trabalho invisível. O Henriques abre o Cofre Digital Pessoal…"
 **Som:** whoosh no mergulho, clique metálico do cofre, "ding" suave quando cada nó é selecionado.
 
 ---
@@ -196,7 +196,7 @@ O pacote mínimo desliza para a esquerda e a câmara afasta-se para revelar o di
 
 ```
                     ┌─────────────────────────┐
-  [Afonso] ───────► │   MOTOR DE POLÍTICA     │  consentimento · risco · autoridade
+  [Henriques] ───────► │   MOTOR DE POLÍTICA     │  consentimento · risco · autoridade
      ▲              └────────────┬────────────┘
      │                           ▼
  [Cofre] ──pacote──►  ORQUESTRADOR DE MISSÕES
@@ -236,14 +236,14 @@ Sequência de animação (cada agente é um pequeno nó ciano com nome em mono):
 
 **Visual (sobe acima da linha)**
 1. Os fios ciano sobem, atravessam a linha e voltamos ao granito. O telemóvel vibra.
-2. Mensagem do Afonso:
+2. Mensagem do Henriques:
    > *"Inês, a análise preliminar é favorável: com o novo PDM, o seu terreno permite habitação e 150 m² cabem nos limites. Para ter certeza formal, preparei o Pedido de Informação Prévia. Quer rever e confirmar?"*
    > 📎 *Fonte: PDM Guimarães, versão em vigor*
 3. A Inês toca em **Rever e confirmar**. Abre-se um ecrã seguro, com o selo **Chave Móvel Digital**, código PIN e confirmação.
 4. Check verde. O pedido desce pela linha como um envelope luminoso.
 
 **Texto no ecrã:** mensagens · `Chave Móvel Digital` · `Pedido submetido · recibo n.º …`
-**Narração:** "Minutos depois, o Afonso responde…"
+**Narração:** "Minutos depois, o Henriques responde…"
 **Som:** vibração, toque suave de confirmação.
 
 ---
@@ -342,8 +342,8 @@ Sequência de animação (cada agente é um pequeno nó ciano com nome em mono):
 2. O contorno tracejado da casa de 150 m², que estava cinzento desde a Cena 2, **ganha cor terracota** e eleva-se suavemente em linhas de projeto (paredes, telhado).
 3. A fotografia do avô, na mão da Inês, ganha um brilho leve.
 4. Fade para o ecrã final, em fundo tinta:
-   - Logótipo **Delegate** + anel do **Afonso**
-   - Tagline: **"Diga o que precisa. O Afonso trata do resto."**
+   - Logótipo **Delegate** + anel do **Henriques**
+   - Tagline: **"Diga o que precisa. O Henriques trata do resto."**
    - Pequeno, em baixo: `Hack4Guimarães · 2026`
 
 **Texto no ecrã:** tagline e assinatura.
@@ -362,7 +362,7 @@ Sequência de animação (cada agente é um pequeno nó ciano com nome em mono):
 
 - O mundo da Inês perde cor quando chega o novo PDM; a Inês fica preocupada; o labirinto treme e pisca a vermelho em cada beco.
 - Pó a flutuar na luz no terreno do avô e ao pôr do sol; vinheta e grão de filme.
-- Explosão de luz na revelação do Delegate e ondas de choque no Afonso.
+- Explosão de luz na revelação do Delegate e ondas de choque no Henriques.
 - Faíscas douradas no cofre, brilho no telemóvel a cada mensagem.
 - "Pode avançar": a Inês salta de braços no ar e há confettis.
 - Rasto de faíscas na Linha de Superfície em "parece magia".
@@ -372,6 +372,6 @@ Sequência de animação (cada agente é um pequeno nó ciano com nome em mono):
 1. **Nome do cofre:** no seu pedido aparece **"Cofre Digital Pessoal"**; o documento de produto diz **"Cofre de Contexto Pessoal"**. Usei "Cofre Digital Pessoal", como pediu. Confirme qual vai a júri.
 2. **"Aprovado pela Câmara":** formalmente, o PDM é aprovado pela Assembleia Municipal, sob proposta da Câmara. Para evitar um reparo de alguém da Câmara presente no júri, a narração diz **"Guimarães acaba de aprovar um novo PDM"**.
 3. **Freguesia:** usei **Ponte**, a mesma do exemplo do documento de produto. Pode ser trocada.
-4. **Desfecho:** a história termina com **informação prévia favorável**. É o desfecho mais satisfatório; mas, se quiser mostrar o Afonso a lidar com uma condicionante (um final mais realista e com "plot twist"), consigo adaptar as cenas 8 a 10.
+4. **Desfecho:** a história termina com **informação prévia favorável**. É o desfecho mais satisfatório; mas, se quiser mostrar o Henriques a lidar com uma condicionante (um final mais realista e com "plot twist"), consigo adaptar as cenas 8 a 10.
 5. **Arquiteta Marta:** personagem fictícia. Pode ser outro nome ou outra função.
 6. **Contador da Cena 11:** números ilustrativos ou só ícones (ver nota na cena).

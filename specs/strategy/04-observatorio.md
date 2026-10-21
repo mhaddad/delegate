@@ -4,7 +4,7 @@
 
 ## 1. Propósito
 
-Mostrar ao júri, num só ecrã projetado, **o que acontece por baixo da linha de superfície** quando a Inês fala com o Afonso. É a peça que torna a arquitetura compreensível.
+Mostrar ao júri, num só ecrã projetado, **o que acontece por baixo da linha de superfície** quando a Inês fala com o Henriques. É a peça que torna a arquitetura compreensível.
 
 **Regra de ouro:** o Observatório só desenha eventos reais do [contrato de eventos](07-contrato-de-eventos.md). Não há animações encenadas. Se um evento não existiu, nada acende.
 
@@ -15,12 +15,12 @@ Mostrar ao júri, num só ecrã projetado, **o que acontece por baixo da linha d
 │ DELEGATE · Observatório      ● ao vivo  [Narrativo|Técnico] [1×|½×] [⏸] [↺] │
 ├──────────────────────────────────────────────────────────────────────────────┤
 │ PALCO · conversa no Telegram (réplica a partir dos eventos)                  │
-│  Inês: Quero pôr uma esplanada…   Afonso: Para uma esplanada aberta… 📄      │
-│  ▸ Legenda: «O Afonso identificou o pedido: ocupação do espaço público.»     │
+│  Inês: Quero pôr uma esplanada…   Henriques: Para uma esplanada aberta… 📄      │
+│  ▸ Legenda: «O Henriques identificou o pedido: ocupação do espaço público.»     │
 ├══════════════════════ linha de superfície ═══════════════════════════════════┤
 │ BASTIDORES · grafo da arquitetura                    │ MISSÃO │ COFRE │ ...   │
 │                                                      │                        │
-│  Telegram → Afonso → Política → Orquestrador         │ Esplanada Casa Joaquim │
+│  Telegram → Henriques → Política → Orquestrador         │ Esplanada Casa Joaquim │
 │                         ↓                            │ ●entendido ●a verificar│
 │        Entendimento · Regras · Redator · Verificador │ ○preparado ○submetido  │
 │                         ↓                            │                        │
@@ -31,7 +31,7 @@ Mostrar ao júri, num só ecrã projetado, **o que acontece por baixo da linha d
 │                         ↓                            │                        │
 │                 Consola Municipal                    │                        │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│ Fluxo de eventos: 10:02:11 porta.servico.obtido · 10:02:12 afonso.resposta… │
+│ Fluxo de eventos: 10:02:11 porta.servico.obtido · 10:02:12 henriques.resposta… │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -69,18 +69,18 @@ Tipografia legível a 6 metros: mínimo de 20 px; legendas a 28 px. Identidade �
 
 | Evento | Animação |
 |---|---|
-| `canal.mensagem.recebida` | Bolha entra no Palco; impulso Telegram → Afonso |
-| `afonso.intencao.classificada` | Nó «Entendimento» acende; etiqueta com intenção e confiança |
-| `porta.servicos.procurados` | Impulso Afonso → Porta; a Porta mostra a ferramenta MCP chamada |
-| `afonso.resposta.verificada` | Visto verde no nó «Verificador»; cartão de fonte desce para o Palco |
-| `afonso.resposta.abstencao` | Nó «Verificador» a terracota: «Sem fonte, não respondo» |
+| `canal.mensagem.recebida` | Bolha entra no Palco; impulso Telegram → Henriques |
+| `henriques.intencao.classificada` | Nó «Entendimento» acende; etiqueta com intenção e confiança |
+| `porta.servicos.procurados` | Impulso Henriques → Porta; a Porta mostra a ferramenta MCP chamada |
+| `henriques.resposta.verificada` | Visto verde no nó «Verificador»; cartão de fonte desce para o Palco |
+| `henriques.resposta.abstencao` | Nó «Verificador» a terracota: «Sem fonte, não respondo» |
 | `cofre.item.guardado` | Item voa da conversa para a camada certa do Cofre; o conteúdo vira texto cifrado |
 | `mandato.concedido` | Cartão do mandato carimbado com o nível |
 | `cofre.chave.libertada` | Cadeado abre com cronómetro «10:00 · MIS-0007» |
 | `politica.decisao` | Portão no nó «Política»: verde (permitir), âmbar (confirmar), terracota (bloquear) |
 | `porta.capacidade.chamada` | Impulso Porta → sistema simulado; o sistema pisca |
 | `su.processo.criado` | Número de processo aparece no nó Serviços Urbanos |
-| `consola.caso.decidido` | Impulso Consola → Serviços Urbanos → Afonso → Palco |
+| `consola.caso.decidido` | Impulso Consola → Serviços Urbanos → Henriques → Palco |
 | `intencoes.agregado.atualizado` | Contador da freguesia sobe +1 |
 | `auditoria.evento.selado` | Novo elo na cadeia de auditoria |
 
@@ -92,14 +92,14 @@ O texto de cada legenda vive no catálogo de eventos ([07](07-contrato-de-evento
 
 | Evento | Legenda |
 |---|---|
-| `afonso.intencao.classificada` | «O Afonso percebeu o pedido: pôr uma esplanada. É um assunto da Câmara.» |
+| `henriques.intencao.classificada` | «O Henriques percebeu o pedido: pôr uma esplanada. É um assunto da Câmara.» |
 | `porta.servico.obtido` | «Foi buscar a ficha oficial à Porta da Câmara, versão de 20/10.» |
-| `afonso.resposta.verificada` | «Antes de responder, verificou que cada afirmação tem fonte.» |
-| `afonso.resposta.abstencao` | «Não encontrou fonte para o valor da taxa. Por isso, não o inventa.» |
+| `henriques.resposta.verificada` | «Antes de responder, verificou que cada afirmação tem fonte.» |
+| `henriques.resposta.abstencao` | «Não encontrou fonte para o valor da taxa. Por isso, não o inventa.» |
 | `cofre.item.guardado` | «Guardado no Cofre da Inês, cifrado. Nem nós conseguimos ler.» |
 | `cofre.chave.libertada` | «Com o mandato da Inês, o Cofre abre só para esta missão, durante 10 minutos.» |
 | `politica.decisao` (permitir) | «A política confirmou: há mandato, há confirmação, o risco é baixo.» |
-| `consola.caso.decidido` | «A decisão é humana. A técnica aceitou, e o Afonso avisa a Inês.» |
+| `consola.caso.decidido` | «A decisão é humana. A técnica aceitou, e o Henriques avisa a Inês.» |
 
 ## 8. Repetição e reposição
 

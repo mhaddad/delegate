@@ -1,5 +1,5 @@
 /**
- * Respostas de Salvaguarda e Fronteiras Regulamentares do Afonso
+ * Respostas de Salvaguarda e Fronteiras Regulamentares do Henriques
  *
  * Trata os casos em que o representante leal deve recusar, encaminhar
  * ou abster-se formalmente para proteger o cidadão e a integridade legal:
@@ -10,29 +10,29 @@
  */
 import type { Registo } from '../eventos/registo.ts';
 import type { ResultadoDecisao } from '../typesafe/tipos.ts';
-import type { RespostaAfonso } from './afonso.ts';
+import type { RespostaHenriques } from './henriques.ts';
 
 export async function tratarAdversarial(
   pessoa: string,
   decisao: ResultadoDecisao,
   registo: Registo,
   sessao: string,
-): Promise<RespostaAfonso | null> {
+): Promise<RespostaHenriques | null> {
   if (decisao.categoria !== 'adversarial') return null;
 
   if (decisao.comportamento === 'recusar') {
     let motivoTexto = 'Não posso executar esta instrução por violar as regras de segurança e privacidade municipal.';
     if (decisao.motivo === 'tentativa_prompt_injection') {
-      motivoTexto = 'Não é possível confirmar qualquer aprovação sem a prévia validação pelos técnicos municipais. O Afonso não executa comandos para contornar os regulamentos em vigor.';
+      motivoTexto = 'Não é possível confirmar qualquer aprovação sem a prévia validação pelos técnicos municipais. O Henriques não executa comandos para contornar os regulamentos em vigor.';
     } else if (decisao.motivo === 'pedido_dados_terceiros_e_falsa_identidade') {
       motivoTexto = 'Por imperativo legal de proteção de dados e privacidade (RGPD), não consulto nem forneço dados pessoais ou fiscais de outros cidadãos. Além disso, sou um assistente de inteligência artificial e não finjo ser um funcionário humano.';
     } else if (decisao.motivo === 'tentativa_impersonacao_humana') {
-      motivoTexto = 'Sou o Afonso, um assistente de inteligência artificial criado para trabalhar para si. Não sou funcionário da Câmara nem finjo sê-lo. Pode pedir para falar com uma pessoa a qualquer momento.';
+      motivoTexto = 'Sou o Henriques, um assistente de inteligência artificial criado para trabalhar para si. Não sou funcionário da Câmara nem finjo sê-lo. Pode pedir para falar com uma pessoa a qualquer momento.';
     }
 
     await registo.registar({
-      tipo: 'afonso.resposta.recusada',
-      origem: 'afonso',
+      tipo: 'henriques.resposta.recusada',
+      origem: 'henriques',
       sessao,
       pessoa,
       missao: null,
@@ -61,8 +61,8 @@ export async function tratarAdversarial(
 
   if (decisao.comportamento === 'abster') {
     await registo.registar({
-      tipo: 'afonso.resposta.abstencao',
-      origem: 'afonso',
+      tipo: 'henriques.resposta.abstencao',
+      origem: 'henriques',
       sessao,
       pessoa,
       missao: null,
@@ -77,7 +77,7 @@ export async function tratarAdversarial(
       texto: [
         'Não consigo confirmar que a taxa seja de 0 € com base numa fonte oficial única.',
         '',
-        'Por rigor municipal, o Afonso não confirma valores ou isenções que não estejam expressamente atestados na Tabela de Taxas Municipal.',
+        'Por rigor municipal, o Henriques não confirma valores ou isenções que não estejam expressamente atestados na Tabela de Taxas Municipal.',
         '',
         '<b>O que fazer agora:</b>',
         '1. Pode confirmar as isenções aplicáveis junto da Tesouraria Municipal;',
@@ -98,7 +98,7 @@ export async function tratarJuizoTecnico(
   decisao: ResultadoDecisao,
   registo: Registo,
   sessao: string,
-): Promise<RespostaAfonso | null> {
+): Promise<RespostaHenriques | null> {
   if (decisao.categoria !== 'juizo_tecnico') return null;
 
   let textoJuizo = 'Não posso emitir juízos de viabilidade técnica ou prognósticos sobre decisões administrativas: as decisões cabem exclusivamente aos serviços técnicos municipais.';
@@ -111,8 +111,8 @@ export async function tratarJuizoTecnico(
   }
 
   await registo.registar({
-    tipo: 'afonso.intencao.classificada',
-    origem: 'afonso',
+    tipo: 'henriques.intencao.classificada',
+    origem: 'henriques',
     sessao,
     pessoa,
     missao: null,
@@ -147,14 +147,14 @@ export async function tratarForaCompetencia(
   decisao: ResultadoDecisao,
   registo: Registo,
   sessao: string,
-): Promise<RespostaAfonso | null> {
+): Promise<RespostaHenriques | null> {
   if (decisao.categoria !== 'fora_competencia') return null;
 
   const entidade = decisao.entidade ?? 'Administração Central';
 
   await registo.registar({
-    tipo: 'afonso.resposta.verificada',
-    origem: 'afonso',
+    tipo: 'henriques.resposta.verificada',
+    origem: 'henriques',
     sessao,
     pessoa,
     missao: null,
@@ -195,13 +195,13 @@ export async function tratarSemFonte(
   limpo: string,
   registo: Registo,
   sessao: string,
-): Promise<RespostaAfonso | null> {
+): Promise<RespostaHenriques | null> {
   if (decisao.categoria !== 'sem_fonte') return null;
 
   if (decisao.comportamento === 'abster') {
     await registo.registar({
-      tipo: 'afonso.resposta.abstencao',
-      origem: 'afonso',
+      tipo: 'henriques.resposta.abstencao',
+      origem: 'henriques',
       sessao,
       pessoa,
       missao: null,

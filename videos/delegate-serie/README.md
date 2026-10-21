@@ -3,16 +3,16 @@
 | Vídeo | Duração | Pergunta a que responde | Música | Roteiro |
 |---|---|---|---|---|
 | 1 · O problema | ~1:50 | *Porque é que a Inês está presa?* | melancólica, baixa | [01-PROBLEMA.md](01-PROBLEMA.md) |
-| 2 · A solução | ~2:00 | *Como é a vida da Inês com o Afonso?* | alegre, divertida, emocionante | [02-SOLUCAO.md](02-SOLUCAO.md) |
+| 2 · A solução | ~2:00 | *Como é a vida da Inês com o Henriques?* | alegre, divertida, emocionante | [02-SOLUCAO.md](02-SOLUCAO.md) |
 | 3 · A tecnologia | ~3:55 | *O que está por trás da magia?* | genial, brilhante, inteligente | [03-TECNOLOGIA.md](03-TECNOLOGIA.md) |
 
 ## Como os vídeos se ligam
 
 - **Os mesmos dois casos atravessam a série:** a **casa** no terreno do avô, atrás do restaurante, e a **esplanada** da Casa Joaquim. O vídeo 1 mostra o problema nos dois casos, o vídeo 2 resolve-os do ponto de vista da Inês e o vídeo 3 abre o caso da esplanada por dentro.
-- **A ligação entre vídeos é feita por quem apresenta.** Ainda assim, o 1 termina com *"E se bastasse dizer o que precisa?"*, o 2 com o slogan *"Diga o que precisa. O Afonso trata do resto."* e o 3 abre com as mensagens do vídeo 2 a afundarem abaixo da Linha de Superfície.
-- **O fio do arquiteto:** no vídeo 1 a Inês pensa em contratar um arquiteto só para perceber o caminho; no vídeo 2 pergunta isso mesmo ao Afonso, e ele explica quando e para quê.
+- **A ligação entre vídeos é feita por quem apresenta.** Ainda assim, o 1 termina com *"E se bastasse dizer o que precisa?"*, o 2 com o slogan *"Diga o que precisa. O Henriques trata do resto."* e o 3 abre com as mensagens do vídeo 2 a afundarem abaixo da Linha de Superfície.
+- **O fio do arquiteto:** no vídeo 1 a Inês pensa em contratar um arquiteto só para perceber o caminho; no vídeo 2 pergunta isso mesmo ao Henriques, e ele explica quando e para quê.
 - **A cor conta a história:** o vídeo 1 é frio e dessaturado, a cair para a noite; o vídeo 2 é quente e solar; o vídeo 3 é técnico, em blueprint azul-tinta.
-- **Os elementos visuais transitam da versão aprovada:** a Inês, o anel do Afonso, o Cofre hexagonal, a Linha de Superfície, a paleta e as tipografias.
+- **Os elementos visuais transitam da versão aprovada:** a Inês, o anel do Henriques, o Cofre hexagonal, a Linha de Superfície, a paleta e as tipografias.
 
 ## Voz: como garantir que a Sofia soa sempre igual
 
@@ -27,7 +27,7 @@ Na versão anterior, cada frase foi gerada num pedido separado, com uma indicaç
 
 - **PDM:** em vigor está a revisão de 2015 (Aviso 6936/2015). A proposta de **2.ª revisão** foi aprovada pela Câmara a 14/09/2026 e segue para a Assembleia Municipal ([pdm.guimaraes.pt](https://pdm.guimaraes.pt/)). Por isso os vídeos dizem "a Câmara aprovou a **proposta** de um novo PDM" e "pelo PDM em vigor e pela proposta de revisão".
 - **Esplanada:** o Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (art. 8.º e Anexo I) prevê que uma esplanada aberta, contígua à fachada e que não excede a largura do estabelecimento, segue a **mera comunicação prévia** do Licenciamento Zero. Exige um **corredor para peões de pelo menos 2,00 m**. A taxa existe, mas o valor não foi verificado e não aparece nos vídeos. ([regulamento](https://www.cm-guimaraes.pt/cmguimaraes/uploads/document/file/2797/47138.pdf), [alteração 2020](https://www.cm-guimaraes.pt/cmguimaraes/uploads/document/file/16470/alteracao_ao_regulamento_de_ocupacao_do_espaco_publico_e_publicidade__no_municipio_de_guimaraes.pdf))
-- **Pedido de informação prévia:** é submetido na plataforma **Urbanismo Digital** ([ud.cm-guimaraes.pt](https://ud.cm-guimaraes.pt)). Na prática costuma ter apoio de um técnico habilitado, e por isso o Afonso não promete dispensá-lo. O RJUE foi revisto pelo DL 108/2026.
+- **Pedido de informação prévia:** é submetido na plataforma **Urbanismo Digital** ([ud.cm-guimaraes.pt](https://ud.cm-guimaraes.pt)). Na prática costuma ter apoio de um técnico habilitado, e por isso o Henriques não promete dispensá-lo. O RJUE foi revisto pelo DL 108/2026.
 - **Freguesias:** desde 2025 são **55**, não 48. Os vídeos não indicam número.
 
 ## Produção

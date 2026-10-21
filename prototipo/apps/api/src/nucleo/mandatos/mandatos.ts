@@ -1,8 +1,8 @@
 /**
  * Gestão de Mandatos Digitais Representativos.
  *
- * Princípio da Lealdade do Afonso:
- * O Afonso é um representante digital leal, agindo apenas nos limites estritos
+ * Princípio da Lealdade do Henriques:
+ * O Henriques é um representante digital leal, agindo apenas nos limites estritos
  * da autorização delegada pela pessoa.
  *
  * Níveis de Mandato:
@@ -28,7 +28,7 @@ const ORDEM_NIVEIS: Record<NivelMandato, number> = {
 export interface MandatoDigital {
   id: string; // ex: MAN-2026-0001
   mandante: string; // pessoa:demo-ines
-  representante: string; // delegate:afonso
+  representante: string; // delegate:henriques
   ambito: string; // ex: ocupacao-espaco-publico
   objeto: string; // ex: Casa Joaquim
   entidade: string; // ex: Câmara Municipal de Guimarães
@@ -102,7 +102,7 @@ export class GestorMandatos {
     const mandato: MandatoDigital = {
       id,
       mandante,
-      representante: 'delegate:afonso',
+      representante: 'delegate:henriques',
       ambito: params.ambito,
       objeto: params.objeto,
       entidade: params.entidade ?? 'Câmara Municipal de Guimarães',

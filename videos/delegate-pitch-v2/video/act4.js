@@ -1,6 +1,6 @@
 /* ATO IV e V — cenas 11 a 14 */
 (function () {
-  const { CUT, cue, shake, burst, rings, motes, P, L, W, S, O, D, ease, clamp, rng, H, q, qa, ines, afonso, ICON, scene, win } = F;
+  const { CUT, cue, shake, burst, rings, motes, P, L, W, S, O, D, ease, clamp, rng, H, q, qa, ines, henriques, ICON, scene, win } = F;
 
   // ===================================================================
   // CENA 11 — magia × rigor
@@ -115,7 +115,7 @@
         </div>
         <svg class="abs" width="1920" height="1080" viewBox="0 0 1920 1080">
           ${[560, 960, 1360].map((x, i) => `<path class="wr" pathLength="1" d="M960 740 C960 790 ${x} 780 ${x} 830" stroke="#3FD0C9" stroke-width="3" fill="none"/>`).join("")}
-          <g class="hub">${afonso(42)}</g>
+          <g class="hub">${henriques(42)}</g>
         </svg>
         ${["Balcão Único", "Serviços Online", "Urbanismo Digital"].map((n, i) => `<div class="sy abs" style="left:${[560, 960, 1360][i] - 150}px;top:830px;width:300px;padding:14px 0;text-align:center;border-radius:14px;border:2px solid #3A4E7A;background:#16264A;color:#fff;font-size:25px;font-weight:650">${n}</div>`).join("")}
         <div class="cap abs" style="left:0;width:1920px;top:935px;text-align:center;font-size:34px;color:#B8C4DA">Liga-se ao que <b style="color:#fff">já existe</b>. Não substitui nenhum sistema.</div>`;
@@ -255,11 +255,11 @@
         </svg>
         <div class="end abs" style="width:1920px;height:1080px;background:#0F1B33">
           <svg class="abs" width="1920" height="1080" viewBox="0 0 1920 1080">
-            <g class="ering">${afonso(70)}</g>
+            <g class="ering">${henriques(70)}</g>
             <text class="elogo serif" x="960" y="640" text-anchor="middle" font-size="170" font-weight="600" fill="#fff" letter-spacing="-3">Delegate</text>
             <circle class="edot" cx="1305" cy="628" r="13" fill="#3FD0C9"/>
           </svg>
-          <div class="etag abs serif" style="left:0;width:1920px;top:720px;text-align:center;font-size:52px;font-style:italic;color:#F2EEE6">Diga o que precisa. <span style="color:#3FD0C9">O Afonso trata do resto.</span></div>
+          <div class="etag abs serif" style="left:0;width:1920px;top:720px;text-align:center;font-size:52px;font-style:italic;color:#F2EEE6">Diga o que precisa. <span style="color:#3FD0C9">O Henriques trata do resto.</span></div>
           <div class="sweep abs" style="left:0;top:470px;width:420px;height:230px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);mix-blend-mode:overlay"></div>
           <div class="ehack abs mono" style="left:0;width:1920px;top:960px;text-align:center;font-size:24px;letter-spacing:.2em;color:#8FA3C4">HACK4GUIMARÃES · 2026</div>
         </div>`;

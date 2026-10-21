@@ -1,5 +1,5 @@
 /**
- * Redator OpenRouter do Afonso.
+ * Redator OpenRouter do Henriques.
  *
  * Utiliza modelos gratuitos do OpenRouter (ex.: minimax/minimax-m3.1-flash:free)
  * para redigir respostas em linguagem natural simples e rigorosa (pt-PT),
@@ -16,7 +16,7 @@ export interface ParametrosRedacao {
   fonteOficial: string;
   versao?: string;
   textoReferencia: string;
-  historicoConversa?: Array<{ autor: 'pessoa' | 'afonso'; texto: string }>;
+  historicoConversa?: Array<{ autor: 'pessoa' | 'henriques'; texto: string }>;
 }
 
 export interface ResultadoRedacao {
@@ -62,12 +62,12 @@ export class RedatorOpenRouter {
     const historicoFormatado = params.historicoConversa && params.historicoConversa.length > 0
       ? params.historicoConversa
           .slice(-6)
-          .map((h) => `${h.autor === 'pessoa' ? 'Cidadão' : 'Afonso'}: ${h.texto.replace(/<[^>]+>/g, '').trim()}`)
+          .map((h) => `${h.autor === 'pessoa' ? 'Cidadão' : 'Henriques'}: ${h.texto.replace(/<[^>]+>/g, '').trim()}`)
           .join('\n')
       : '';
 
     const promptSistema = [
-      'És o Afonso, o representante digital pessoal do cidadão em Guimarães.',
+      'És o Henriques, o representante digital pessoal do cidadão em Guimarães.',
       'Missão: O cidadão diz o que precisa, e tu ajudas e tratas da burocracia por ele.',
       '',
       'Diretrizes essenciais de conversação:',
@@ -108,7 +108,7 @@ export class RedatorOpenRouter {
             'Authorization': `Bearer ${this.#token.trim()}`,
             'Content-Type': 'application/json',
             'HTTP-Referer': 'https://delegate.guimaraes.pt',
-            'X-Title': 'Delegate Guimarães · Afonso',
+            'X-Title': 'Delegate Guimarães · Henriques',
           },
           body: JSON.stringify({
             model: modelo,
@@ -159,11 +159,11 @@ export class RedatorOpenRouter {
               geradoPorLlm: true,
             };
           } else {
-            console.warn(`[Afonso Redator] Rejeitado por número sem fonte: ${validacao.numerosSemFonte.join(', ')}`);
+            console.warn(`[Henriques Redator] Rejeitado por número sem fonte: ${validacao.numerosSemFonte.join(', ')}`);
           }
         }
       } catch (erro) {
-        console.warn(`[Afonso Redator] Erro no modelo ${modelo}:`, (erro as Error)?.message);
+        console.warn(`[Henriques Redator] Erro no modelo ${modelo}:`, (erro as Error)?.message);
       }
     }
 

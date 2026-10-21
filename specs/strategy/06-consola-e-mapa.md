@@ -28,10 +28,10 @@ Inês submete (Telegram + Mini App)
   → Serviços Urbanos (simulado) cria OEP/2026/0001 → caso aparece na fila da Consola
 Técnica abre o caso → vê proposta: «Falta a largura da fachada para confirmar o corredor de 2,00 m»
 Técnica clica «Pedir elemento» → Serviços Urbanos muda para pedido_elementos
-  → Afonso, no Telegram: «A Câmara pede a largura da fachada do restaurante.»
-Inês responde «8 metros» → Afonso junta o elemento pela Porta → caso volta à fila
+  → Henriques, no Telegram: «A Câmara pede a largura da fachada do restaurante.»
+Inês responde «8 metros» → Henriques junta o elemento pela Porta → caso volta à fila
 Técnica clica «Aceitar» → Serviços Urbanos calcula taxa (fictícia) → Tesouraria emite referência
-  → Afonso, no Telegram: «Aceite. Pode pagar com esta referência (Simulação).»
+  → Henriques, no Telegram: «Aceite. Pode pagar com esta referência (Simulação).»
 ```
 
 Cada passo emite eventos e aparece no Observatório. Este ciclo é o momento mais forte para mostrar a decisão humana.
@@ -41,10 +41,10 @@ Cada passo emite eventos e aparece no Observatório. Este ciclo é o momento mai
 | Campo | Origem |
 |---|---|
 | Motivo do encaminhamento | Orquestrador (submissão, pedido humano, risco) |
-| Resumo | Gerado pelo Afonso a partir do pacote mínimo, marcado «resumo gerado por IA» |
+| Resumo | Gerado pelo Henriques a partir do pacote mínimo, marcado «resumo gerado por IA» |
 | Fontes | Ids e versões do Registo Canónico usados na missão |
 | Pacote mínimo | Exatamente o que a Inês aprovou na Mini App |
-| Proposta de ação | Regras do sistema simulado + sugestão do Afonso, marcada «sugestão» |
+| Proposta de ação | Regras do sistema simulado + sugestão do Henriques, marcada «sugestão» |
 | Risco e prazo | Do registo do serviço |
 | Histórico | Eventos da missão e do processo |
 
@@ -54,8 +54,8 @@ A técnica pode ignorar a proposta. A decisão é registada com identidade funci
 
 | Indicador | Cálculo (ao vivo, na demo) |
 |---|---|
-| Perguntas por tema | Contagem de `afonso.intencao.classificada` por serviço |
-| Abstenções | Contagem de `afonso.resposta.abstencao`, com o motivo |
+| Perguntas por tema | Contagem de `henriques.intencao.classificada` por serviço |
+| Abstenções | Contagem de `henriques.resposta.abstencao`, com o motivo |
 | Lacunas de conteúdo | Abstenções agrupadas → «tarefas de curadoria» sugeridas |
 | Encaminhamentos | Contagem por entidade (Espaço Cidadão, Vimágua…) |
 | Pedidos completos à primeira | Processos sem `pedido_elementos` ÷ processos submetidos |

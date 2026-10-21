@@ -829,7 +829,7 @@
             localizacao: 'Largo da Oliveira, 12',
             area_m2: 10,
             meses: 6,
-            cliente: 'afonso'
+            cliente: 'henriques'
           }
         },
         {
@@ -842,7 +842,7 @@
             mandato: 'MAN-2026-0001',
             token_confirmacao: 'cmd-token-valido-123',
             rascunho_id: 'RASC-OEP-0001',
-            cliente: 'afonso'
+            cliente: 'henriques'
           }
         },
         {
@@ -854,7 +854,7 @@
           payloadExemplo: {
             processo: 'OEP/2026/0001',
             mandato: 'MAN-2026-0001',
-            cliente: 'afonso'
+            cliente: 'henriques'
           }
         }
       ];
@@ -863,7 +863,7 @@
         const [eventos, setEventos] = useState([]);
         const [ultimoEvento, setUltimoEvento] = useState(null);
         const [ferramentaAtiva, setFerramentaAtiva] = useState(FERRAMENTAS_MCP[0]);
-        const [clienteId, setClienteId] = useState('afonso');
+        const [clienteId, setClienteId] = useState('henriques');
         const [payloadJson, setPayloadJson] = useState(JSON.stringify(FERRAMENTAS_MCP[0].payloadExemplo, null, 2));
         const [resposta, setResposta] = useState(null);
         const [executando, setExecutando] = useState(false);
@@ -880,7 +880,7 @@
                 setUltimoEvento(ev);
                 setEventos((prev) => [ev, ...prev].slice(0, 30));
 
-                if (ev.tipo === 'afonso.intencao.classificada' && ev.dados?.mandato_inferido) {
+                if (ev.tipo === 'henriques.intencao.classificada' && ev.dados?.mandato_inferido) {
                   setMandatoAtivo({
                     nivel: ev.dados.mandato_inferido,
                     id: ev.dados.motor === 'typesafe-jev' ? 'MAN-JEV-INFERIDO' : 'MAN-2026-0001',
@@ -904,22 +904,22 @@
           if (!ultimoEvento) {
             return {
               titulo: 'Intermediário em Escuta Contínua',
-              descricao: 'A monitorizar a fronteira de comunicação entre cidadãos (Afonso/Telegram) e os serviços municipais da autarquia.',
+              descricao: 'A monitorizar a fronteira de comunicação entre cidadãos (Henriques/Telegram) e os serviços municipais da autarquia.',
               origem: 'delegate:idle'
             };
           }
           const t = ultimoEvento.tipo;
           if (t === 'canal.mensagem.recebida') {
             return {
-              titulo: 'Cidadão contactou o Afonso no Telegram',
-              descricao: `Mensagem: «${ultimoEvento.dados?.texto || '...'}». Afonso ativa o motor de inferência TypeSafe Jev.`,
+              titulo: 'Cidadão contactou o Henriques no Telegram',
+              descricao: `Mensagem: «${ultimoEvento.dados?.texto || '...'}». Henriques ativa o motor de inferência TypeSafe Jev.`,
               origem: 'telegram:cidadao'
             };
           }
-          if (t === 'afonso.intencao.classificada') {
+          if (t === 'henriques.intencao.classificada') {
             const isJev = ultimoEvento.dados?.motor === 'typesafe-jev';
             return {
-              titulo: isJev ? 'TypeSafe Jev inferiu Intenção e Mandato em Tempo Real' : 'Afonso classificou a intenção do cidadão',
+              titulo: isJev ? 'TypeSafe Jev inferiu Intenção e Mandato em Tempo Real' : 'Henriques classificou a intenção do cidadão',
               descricao: `Procedimento: ${ultimoEvento.dados?.intencao} · Mandato: ${ultimoEvento.dados?.mandato_inferido || 'D0'} · Confiança: ${Math.round((ultimoEvento.dados?.confianca || 1)*100)}% (${ultimoEvento.dados?.tempo_ms || 250}ms).`,
               origem: 'typesafe:jev'
             };
@@ -941,7 +941,7 @@
           if (t === 'mandato.concedido') {
             return {
               titulo: `Mandato ${ultimoEvento.dados?.nivel} emitido pela Pessoa`,
-              descricao: `O cidadão autorizou o Afonso a preparar e agir com confirmação expressa para ${ultimoEvento.dados?.objeto}.`,
+              descricao: `O cidadão autorizou o Henriques a preparar e agir com confirmação expressa para ${ultimoEvento.dados?.objeto}.`,
               origem: 'cidadao:mandato'
             };
           }
@@ -1295,11 +1295,11 @@
                     </label>
                     <div class="cliente-selector">
                       <button
-                        class="cliente-btn ${clienteId === 'afonso' ? 'ativo' : ''}"
-                        onClick=${() => mudarCliente('afonso')}
+                        class="cliente-btn ${clienteId === 'henriques' ? 'ativo' : ''}"
+                        onClick=${() => mudarCliente('henriques')}
                       >
                         ${ico('escudo')}
-                        <span>Afonso (Representante com Mandato)</span>
+                        <span>Henriques (Representante com Mandato)</span>
                       </button>
                       <button
                         class="cliente-btn ${clienteId === 'agente_externo' ? 'ativo' : ''}"

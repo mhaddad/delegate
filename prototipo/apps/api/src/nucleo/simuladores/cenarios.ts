@@ -12,7 +12,7 @@ import type { GestorMandatos } from '../mandatos/mandatos.ts';
 import type { CofreDigital } from '../cofre/cofre.ts';
 import type { MotorPolitica } from '../politica/politica.ts';
 import type { ServicoChavesCofre } from '../cofre/servico-chaves.ts';
-import type { ClientePortaMcp } from '../afonso/cliente-porta.ts';
+import type { ClientePortaMcp } from '../henriques/cliente-porta.ts';
 import type { OrquestradorMissoes } from '../orquestrador/missao.ts';
 import type { CanalTelegram, MensagemCanal } from '../canal.ts';
 import type { DadosConfirmacaoCmd } from '../eventos/servidor.ts';
@@ -258,7 +258,7 @@ export class ProcessadorCenarios {
         '• Cércea Máxima: 3 pisos',
         '• Reserva Agrícola (RAN): Não abrangido · Reserva Ecológica (REN): Não abrangido',
         '',
-        '<i>Nota de Transparência: O Afonso não emite parecer técnico vinculativo; este resumo provém do cruzamento do geoportal com o regulamento oficial (Aviso n.º 23214/2020).</i>',
+        '<i>Nota de Transparência: O Henriques não emite parecer técnico vinculativo; este resumo provém do cruzamento do geoportal com o regulamento oficial (Aviso n.º 23214/2020).</i>',
         '',
         '<b>Próximo passo:</b> Anexe a Caderneta Predial (PDF) para concluir o pacote instrutório ou avance para a assinatura digital com Chave Móvel Digital.',
         '',

@@ -567,14 +567,14 @@
         <div class="card-title">
           <span>🚀 Simulador Instantâneo</span>
         </div>
-        <textarea id="sim-prompt" class="prompt-box" placeholder="Escreva uma pergunta ou simule uma mensagem do Telegram...">Olá Afonso</textarea>
+        <textarea id="sim-prompt" class="prompt-box" placeholder="Escreva uma pergunta ou simule uma mensagem do Telegram...">Olá Henriques</textarea>
         <button id="btn-disparar" class="btn-fire">
           <span>⚡ Testar Percurso do Jev</span>
         </button>
 
         <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">Casos de Teste Rápidos:</div>
         <div class="quick-chips">
-          <span class="qchip" onclick="preencherPrompt('Olá Afonso')">👋 Olá Afonso (Curto-circuito)</span>
+          <span class="qchip" onclick="preencherPrompt('Olá Henriques')">👋 Olá Henriques (Curto-circuito)</span>
           <span class="qchip" onclick="preencherPrompt('Quero abrir uma esplanada com 6 mesas')">☕ Esplanada (D0/D2)</span>
           <span class="qchip" onclick="preencherPrompt('A fatura da água está muito cara este mês')">💧 Água (Vimágua)</span>
           <span class="qchip" onclick="preencherPrompt('Posso construir uma moradia no meu terreno em Silvares?')">🏗️ PIP Urbanismo</span>
@@ -794,7 +794,7 @@
       sse.onmessage = (e) => {
         try {
           const ev = JSON.parse(e.data);
-          if (ev.tipo === 'afonso.intencao.classificada') {
+          if (ev.tipo === 'henriques.intencao.classificada') {
             const dados = ev.dados || {};
             const pergunta = dados.intencao || 'Evento ao vivo recebido';
             const percurso = dados.percurso || deduzirPercurso(dados, pergunta);

@@ -163,7 +163,7 @@ for k in range(5):  # clique de carimbos durante a acumulação
     add(sfx, at(3, 2.5 + k * 2.2), thud(), 0.22)
 arpeggio(at(4), at(5), [Dm, E], step=BEAT, octave=0, gain=0.09, bright=0.4)
 
-# C — revelação, Afonso, palco (cenas 5–7)
+# C — revelação, Henriques, palco (cenas 5–7)
 add(sfx, at(5) - 0.6, whoosh(1.2), 0.5)
 c0, c1 = at(5, 0.4), at(8)
 pads(c0, c1, [C, Am, F, G], gain=0.2)

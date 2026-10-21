@@ -9,7 +9,7 @@
 |---|---|---|
 | **Delegate** | A plataforma e o seu operador | — |
 | **Representante Digital Pessoal** | Agente de IA que representa uma pessoa ou negócio perante a Administração | RDE, Representante Digital Embarcado, «procurador digital» |
-| **Afonso** | Nome e voz do representante em Guimarães. Noutro concelho a voz pode mudar; o representante e o Cofre continuam os mesmos | — |
+| **Henriques** | Nome e voz do representante em Guimarães. Noutro concelho a voz pode mudar; o representante e o Cofre continuam os mesmos | — |
 | **Mandato Digital** | Autorização verificável dada pela pessoa, com âmbito, entidade, prazo e nível de delegação | — |
 | **Níveis de delegação** | D0 informar · D1 vigiar · D2 preparar · D3 agir com confirmação · D4 agir dentro de regras | — |
 | **Delegação em cadeia** | Mandato concedido a um representante humano (familiar, Junta, contabilista) | — |

@@ -6,7 +6,7 @@
 
 ```mermaid
 flowchart LR
-  C[Canais<br/>WhatsApp · portal · SMS · voz · balcão] --> R[Representante Digital Pessoal<br/>Afonso]
+  C[Canais<br/>WhatsApp · portal · SMS · voz · balcão] --> R[Representante Digital Pessoal<br/>Henriques]
   R <--> V[Cofre Digital Pessoal<br/>chaves da pessoa]
   R --> P[Motor de política<br/>mandato · consentimento · risco · competência]
   P --> O[Orquestrador de missões]

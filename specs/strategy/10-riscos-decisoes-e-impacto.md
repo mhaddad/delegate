@@ -28,7 +28,7 @@ Continuam a numeração de [21 · Registo de decisões](../21-registo-de-decisoe
 ### ADR-013 · Telegram como canal da demo
 
 - **Contexto:** o WhatsApp Business exige verificação e aprovação; a equipa propõe o Telegram.
-- **Decisão:** o Afonso fala por Telegram em R0, através de um adaptador de canal. Substitui o [ADR-007](../21-registo-de-decisoes.md#adr-007).
+- **Decisão:** o Henriques fala por Telegram em R0, através de um adaptador de canal. Substitui o [ADR-007](../21-registo-de-decisoes.md#adr-007).
 - **Consequências:** botões inline e Mini App disponíveis; no pitch, «no piloto, WhatsApp»; o chat web passa a reserva.
 
 <a id="adr-014"></a>
@@ -50,7 +50,7 @@ Continuam a numeração de [21 · Registo de decisões](../21-registo-de-decisoe
 
 - **Contexto:** equilibrar fiabilidade da demo e uma fronteira de rede real.
 - **Decisão:** `núcleo`, `porta` (com os sistemas simulados) e `web`.
-- **Consequências:** o Afonso é cliente MCP da Porta através da rede.
+- **Consequências:** o Henriques é cliente MCP da Porta através da rede.
 
 <a id="adr-017"></a>
 ### ADR-017 · Sistemas simulados só atrás da Porta
@@ -69,7 +69,7 @@ Continuam a numeração de [21 · Registo de decisões](../21-registo-de-decisoe
 <a id="adr-019"></a>
 ### ADR-019 · Cofre com serviço de chaves e libertação por missão
 
-- **Contexto:** mostrar que o operador não lê o Cofre, mas que o Afonso consegue cumprir a missão.
+- **Contexto:** mostrar que o operador não lê o Cofre, mas que o Henriques consegue cumprir a missão.
 - **Decisão:** conteúdo cifrado por pessoa; um serviço de chaves liberta a chave só com mandato válido e missão ativa, por prazo, com evento de auditoria.
 - **Consequências:** em R0 o serviço de chaves é interno (simplificação declarada); em R1 a chave fica do lado da pessoa.
 

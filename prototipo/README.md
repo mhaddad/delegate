@@ -47,7 +47,7 @@ escolhida por costume.
 
 ## Modelo de IA
 
-Por decidir — ver [ADR-023](../specs/21-registo-de-decisoes.md#adr-023). O Afonso
+Por decidir — ver [ADR-023](../specs/21-registo-de-decisoes.md#adr-023). O Henriques
 tem um caminho que não depende de modelo: o roteamento é determinístico e o
 verificador são regras em código. Sem chave, responde na mesma; a modelo só
 muda a redação.

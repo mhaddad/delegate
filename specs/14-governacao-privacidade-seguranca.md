@@ -9,9 +9,9 @@
 |---|---|---|
 | Código do Procedimento Administrativo | Meios eletrónicos com disponibilidade, integridade, autenticidade, confidencialidade e conservação; direito à informação sobre o andamento | O chat não é o arquivo nem substitui o recibo; atos e prova vivem no sistema competente |
 | RGPD e Lei n.º 58/2019 | Licitude, minimização, limitação da finalidade, direitos dos titulares | Pacote mínimo por missão; Cofre com controlo da pessoa; sem «aceito tudo» |
-| RGPD, art. 22.º | Sem decisões exclusivamente automatizadas com efeitos significativos | Decisão sempre humana; o Afonso explica e prepara |
+| RGPD, art. 22.º | Sem decisões exclusivamente automatizadas com efeitos significativos | Decisão sempre humana; o Henriques explica e prepara |
 | RGPD, art. 28.º | Contrato com subcontratante | O Delegate é subcontratante da Câmara na Porta e na Consola |
-| Regulamento Europeu de IA, art. 50.º | Informar que se interage com IA | O Afonso identifica-se sempre como IA |
+| Regulamento Europeu de IA, art. 50.º | Informar que se interage com IA | O Henriques identifica-se sempre como IA |
 | eIDAS 2 | Carteira europeia de identidade digital | Ligação à EUDI Wallet em R3+ |
 | Licenciamento Zero e regulamentos municipais | Regras dos procedimentos | Fonte canónica de cada resposta |
 

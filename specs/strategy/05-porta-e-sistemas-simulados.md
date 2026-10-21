@@ -5,7 +5,7 @@
 
 ## 1. Princípios
 
-1. **O Afonso é cliente da Porta, não dono dela.** Usa MCP através da rede, com uma chave de cliente, como qualquer terceiro.
+1. **O Henriques é cliente da Porta, não dono dela.** Usa MCP através da rede, com uma chave de cliente, como qualquer terceiro.
 2. **Os sistemas simulados só se alcançam pela Porta.** Nenhum agente tem credenciais dos sistemas.
 3. **Cada capacidade tem dono, finalidade, mandato mínimo, efeito e recibo.**
 4. **Tudo o que é simulado diz que é simulado**, incluindo nas respostas MCP (`"simulacao": true`).
@@ -67,7 +67,7 @@ Página simples, com aspeto de sistema antigo, que lista os processos. Mostra ao
 
 ## 4. Sistema simulado 2 · Tesouraria (referências de pagamento)
 
-Emite referências de pagamento depois da aceitação. **Não há pagamentos**: o Afonso entrega a referência e o pagamento faz-se fora do chat (regra de autonomia responsável).
+Emite referências de pagamento depois da aceitação. **Não há pagamentos**: o Henriques entrega a referência e o pagamento faz-se fora do chat (regra de autonomia responsável).
 
 | Método | Rota | Faz |
 |---|---|---|

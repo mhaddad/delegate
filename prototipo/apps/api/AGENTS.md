@@ -10,7 +10,7 @@ Processos do núcleo e da Porta. Parte de [`../../AGENTS.md`](../../AGENTS.md) e
 
 | Processo | Porta | Serve |
 |---|---|---|
-| **núcleo** | `4000` | O bot Telegram (`grammY`), Afonso, motor de decisão TypeSafe Jev System One, buscador e base de conhecimento RAG D0, Cofre Digital (AES-256-GCM), mandatos, e o servidor Fastify com fluxo SSE e ecrãs web |
+| **núcleo** | `4000` | O bot Telegram (`grammY`), Henriques, motor de decisão TypeSafe Jev System One, buscador e base de conhecimento RAG D0, Cofre Digital (AES-256-GCM), mandatos, e o servidor Fastify com fluxo SSE e ecrãs web |
 | **porta** | `4001` | A Porta Agêntica (MCP v2 + REST), Registo Canónico, adaptadores contratuais e sistemas simulados (Serviços Urbanos e Tesouraria) como implementação de referência para autarquias |
 
 São dois executáveis independentes no mesmo repositório (`npm run nucleo` e `npm run porta`). A separação é de processo e de rede: o núcleo fala com a Porta via protocolo MCP pela rede (`http://127.0.0.1:4001/mcp`), e o Observatório audita esse salto em direto.
@@ -18,7 +18,7 @@ São dois executáveis independentes no mesmo repositório (`npm run nucleo` e `
 ## Congelado
 
 - **A Porta só se acede pelo protocolo da Porta.** O núcleo nunca importa código da Porta nem chama os sistemas simulados em memória.
-- **Os sistemas simulados não conhecem o Afonso.** Só recebem o que a Porta lhes passa, depois de verificar mandato.
+- **Os sistemas simulados não conhecem o Henriques.** Só recebem o que a Porta lhes passa, depois de verificar mandato.
 - **O fluxo de eventos é só de leitura** para a web. A web nunca lê a base de dados.
 - **Uma base por serviço lógico.** Separadas de propósito: é o que impede que uma rota simulada sirva de atalho para outra.
 

@@ -6,7 +6,7 @@ O código do R0. Parte de [`../AGENTS.md`](../AGENTS.md) e de [ajustes pós-ment
 
 ## O que é
 
-Monorepositório com três faces: o **Telegram** por onde o Afonso fala com as pessoas, a **Consola Municipal** do lado da Câmara, e o **Observatório**, que é a demonstração visual da infraestrutura a funcionar.
+Monorepositório com três faces: o **Telegram** por onde o Henriques fala com as pessoas, a **Consola Municipal** do lado da Câmara, e o **Observatório**, que é a demonstração visual da infraestrutura a funcionar.
 
 ## Stack
 
@@ -57,7 +57,7 @@ O protótipo tem de arrancar com um comando só, sem passos manuais.
 
 **Tudo local.** O protótipo corre no portátil de quem apresenta. Não há alojamento, nem base de dados na cloud, nem dependência de rede para além do Telegram. O plano B de rede passou a ser o plano A.
 
-**A fronteira é o produto.** O núcleo chama a Porta pela rede como cliente MCP, nunca em memória. Se alguém encurtar esse caminho por conveniência, mata a coisa que o júri está a avaliar: a Porta é a porta, e o Afonso é o primeiro cliente, não o dono.
+**A fronteira é o produto.** O núcleo chama a Porta pela rede como cliente MCP, nunca em memória. Se alguém encurtar esse caminho por conveniência, mata a coisa que o júri está a avaliar: a Porta é a porta, e o Henriques é o primeiro cliente, não o dono.
 
 ## Regras do repositório
 
@@ -94,7 +94,7 @@ Uma funcionalidade está pronta quando:
 | Pasta | Dono | O que lá mora |
 |---|---|---|
 | `packages/eventos/` | B | envelope, esquema, catálogo, legendas e selos criptográficos |
-| `apps/api/src/nucleo/` | A | bot Telegram, Afonso, `typesafe/` (Jev System One), `conhecimento/` (RAG D0), `cofre/`, `mandatos/`, `orquestrador/`, `politica/`, `simuladores/`, `comandos/` |
+| `apps/api/src/nucleo/` | A | bot Telegram, Henriques, `typesafe/` (Jev System One), `conhecimento/` (RAG D0), `cofre/`, `mandatos/`, `orquestrador/`, `politica/`, `simuladores/`, `comandos/` |
 | `apps/api/src/porta/` | B | Porta Agêntica (MCP + REST), Registo Canónico, adaptadores e contratos municipais |
 | `apps/api/src/su/` | B | Gabinete de Serviços Urbanos (simulado) |
 | `apps/web/` | C | Observatório e Consola Municipal |

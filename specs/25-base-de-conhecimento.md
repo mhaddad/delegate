@@ -5,9 +5,9 @@
 
 ## 1. Porquê
 
-O Registo Canónico curado cobre 10 a 15 serviços. Isso deixa o Afonso a abster-se em quase tudo o resto, ao passo que o atendedor atual da Câmara e as outras equipas do desafio respondem a perguntas gerais.
+O Registo Canónico curado cobre 10 a 15 serviços. Isso deixa o Henriques a abster-se em quase tudo o resto, ao passo que o atendedor atual da Câmara e as outras equipas do desafio respondem a perguntas gerais.
 
-A mentoria recomendou uma **base de conhecimento ampla**, construída a partir do site da Câmara e das leis e regulamentos em vigor, para dar ao Afonso capacidade de resposta básica no nível **D0 (informar)**. Isto põe-nos ao nível do que já existe. A diferença passa a estar no que vem por cima: fonte verificada, missões, mandato, integração e medição.
+A mentoria recomendou uma **base de conhecimento ampla**, construída a partir do site da Câmara e das leis e regulamentos em vigor, para dar ao Henriques capacidade de resposta básica no nível **D0 (informar)**. Isto põe-nos ao nível do que já existe. A diferença passa a estar no que vem por cima: fonte verificada, missões, mandato, integração e medição.
 
 ## 2. Duas camadas de conhecimento
 
@@ -18,7 +18,7 @@ A mentoria recomendou uma **base de conhecimento ampla**, construída a partir d
 
 ### Política de resposta
 
-| Ordem | Fonte encontrada | O Afonso |
+| Ordem | Fonte encontrada | O Henriques |
 |---|---|---|
 | 1 | Processo canónico do serviço | Responde e oferece tratar da missão |
 | 2 | Ficha oficial (Diretório ou Formulário) | Responde com a ficha como fonte; orienta para o canal oficial (I0) |

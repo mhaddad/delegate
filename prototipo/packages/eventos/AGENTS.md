@@ -46,7 +46,7 @@ O esquema recusa um evento da Porta sem eles — não é um aviso, é um erro:
 
 ## Ao acrescentar um evento
 
-1. Tipo em `dominio.entidade.acao`, nomeado pelo **facto** que ocorreu, não pelo ecrã que o mostra. `afonso.resposta.abstencao`, não `verificador.ficou.vermelho`.
+1. Tipo em `dominio.entidade.acao`, nomeado pelo **facto** que ocorreu, não pelo ecrã que o mostra. `henriques.resposta.abstencao`, não `verificador.ficou.vermelho`.
 2. Entrada no catálogo com a origem válida e a prioridade — M para a demonstração, S para depois.
 3. **Legenda em português no ficheiro de legendas**, escrita por quem tem o conteúdo. Sem legenda, o evento não aparece no Observatório em modo narrativo.
 4. `dados` com o mínimo necessário. Se duvidas de um campo, deixa-o de fora.

@@ -5,7 +5,7 @@
 ## 1. Princípios de experiência
 
 1. **Uma conversa por cima, o rigor por baixo.** A pessoa vê mensagens simples; a missão, o Cofre e a fonte estão a um toque.
-2. **Perguntar o mínimo.** Cada pergunta do Afonso tem de ser exigida pela ficha do serviço.
+2. **Perguntar o mínimo.** Cada pergunta do Henriques tem de ser exigida pela ficha do serviço.
 3. **Mostrar sempre a fonte.** Uma resposta sem fonte é uma falha de produto.
 4. **Nada acontece sem a pessoa saber.** Guardar, partilhar e agir pedem confirmação explícita.
 5. **Dizer quando não sabe.** «Não consigo confirmar isto» é uma resposta válida, seguida de onde se confirma.
@@ -32,13 +32,13 @@ Reutiliza a identidade «Palco e Bastidores» dos vídeos, do deck e do blueprin
 | Palco (fundo) | `#F4EFE6` | Mundo da pessoa |
 | Tinta | `#1D2430` | Texto principal |
 | Bastidores | `#0F1B2D` | Tecnologia, Consola, Porta |
-| Verde Afonso | `#5BCF8A` (escuro) / `#1A7040` (claro) | Afonso, resolução, ações |
+| Verde Henriques | `#5BCF8A` (escuro) / `#1A7040` (claro) | Henriques, resolução, ações |
 | Ouro Cofre | `#E8B44A` / `#8A6210` | Cofre e autorizações |
 | Ciano agentes | `#3FD0C9` / `#167A76` | Agentes e Porta |
 | Terracota | `#B4492A` | Alertas, bloqueios, dor |
 | Tipografia | Fraunces (títulos), Hanken Grotesk (texto), JetBrains Mono (dados técnicos) | — |
 
-Regras: o verde só aparece onde o Afonso age ou há resolução; a terracota só onde há alerta ou bloqueio. Não usar o logótipo nem o verde do WhatsApp, nem logótipos oficiais da Câmara.
+Regras: o verde só aparece onde o Henriques age ou há resolução; a terracota só onde há alerta ou bloqueio. Não usar o logótipo nem o verde do WhatsApp, nem logótipos oficiais da Câmara.
 
 <a id="formato"></a>
 ## 4. Formato das respostas
@@ -68,7 +68,7 @@ Cada resposta factual segue esta estrutura (as partes vazias omitem-se):
 >
 > Quer que trate disto por si?
 
-## 5. Voz do Afonso
+## 5. Voz do Henriques
 
 | É | Não é |
 |---|---|
@@ -82,7 +82,7 @@ Cada resposta factual segue esta estrutura (as partes vazias omitem-se):
 
 | Situação | Frase |
 |---|---|
-| Apresentação | «Olá, sou o Afonso, um assistente de inteligência artificial que trabalha para si. Pode pedir para falar com uma pessoa a qualquer momento.» |
+| Apresentação | «Olá, sou o Henriques, um assistente de inteligência artificial que trabalha para si. Pode pedir para falar com uma pessoa a qualquer momento.» |
 | Sem fonte | «Não consigo confirmar isto com uma fonte oficial. Pode confirmar em [canal]. Quer que passe o seu pedido a uma pessoa?» |
 | Fora de competência | «Isto não é tratado pela Câmara. É um serviço [da Administração Central], que pode pedir em [Espaço Cidadão / portal]. Fonte: […]» |
 | Juízo técnico | «Não posso dizer se pode ou não construir: isso é decidido pelo serviço de urbanismo. Posso explicar como pedir essa resposta formal.» |

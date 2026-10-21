@@ -32,7 +32,7 @@
 | Campo | Regra |
 |---|---|
 | `tipo` | `dominio.entidade.acao`, do catálogo abaixo |
-| `origem` | `canal`, `afonso`, `orquestrador`, `politica`, `cofre`, `mandatos`, `porta`, `su`, `tesouraria`, `consola`, `proatividade`, `intencoes`, `avaliacao` |
+| `origem` | `canal`, `henriques`, `orquestrador`, `politica`, `cofre`, `mandatos`, `porta`, `su`, `tesouraria`, `consola`, `proatividade`, `intencoes`, `avaliacao` |
 | `pessoa` | Pseudónimo; nunca nome, telefone ou id do Telegram |
 | `simulacao` | `true` quando o evento vem de um sistema ou ato simulado |
 | `dados` | **Nunca** conteúdo do Cofre em claro nem dados pessoais. Textos de conversa só em eventos `canal.*` |
@@ -58,14 +58,14 @@
 | `canal.mensagem.enviada` | `texto`, `fontes[]`, `botoes[]` | — (bolha no Palco) |
 | `canal.botao.carregado` | `botao` | «A Inês decidiu: {botao}.» |
 
-### Afonso e orquestração
+### Henriques e orquestração
 
 | Tipo | Dados | Legenda |
 |---|---|---|
-| `afonso.intencao.classificada` | `intencao`, `competencia`, `categoria`, `confianca` | «O Afonso percebeu o pedido: {intencao}.» |
-| `afonso.resposta.redigida` | `fontes[]`, `latencia_ms` | «Escreveu a resposta só com as fontes encontradas.» |
-| `afonso.resposta.verificada` | `citacoes_ok`, `numeros_sem_fonte` | «Verificou que cada afirmação tem fonte.» |
-| `afonso.resposta.abstencao` | `motivo` | «Sem fonte, não inventa.» |
+| `henriques.intencao.classificada` | `intencao`, `competencia`, `categoria`, `confianca` | «O Henriques percebeu o pedido: {intencao}.» |
+| `henriques.resposta.redigida` | `fontes[]`, `latencia_ms` | «Escreveu a resposta só com as fontes encontradas.» |
+| `henriques.resposta.verificada` | `citacoes_ok`, `numeros_sem_fonte` | «Verificou que cada afirmação tem fonte.» |
+| `henriques.resposta.abstencao` | `motivo` | «Sem fonte, não inventa.» |
 | `missao.criada` | `servico`, `objetivo` | «O pedido virou uma missão.» |
 | `missao.estado.alterado` | `de`, `para` | «A missão passou a {para}.» |
 | `missao.checklist.gerada` | `passos` | «Preparou os passos a partir da ficha oficial.» |

@@ -38,24 +38,24 @@ prototipo/data/cenarios_simulados/
 
 1. **Início:**
    - Cidadão envia: `Quero preparar a esplanada` *(ou clica no botão do menu `/start`)*.
-   - **Afonso responde:** Explica que ativou o Mandato D2 e pergunta o nome e morada do estabelecimento em Guimarães.
+   - **Henriques responde:** Explica que ativou o Mandato D2 e pergunta o nome e morada do estabelecimento em Guimarães.
 
 2. **Passo 1 (Localização & Validação de Freguesia):**
-   - *Teste de Sanidade:* Se o utilizador escrever `Rua de Santa Catarina, Porto`, o Afonso recusa educadamente indicando que a localidade pertence a outro concelho.
+   - *Teste de Sanidade:* Se o utilizador escrever `Rua de Santa Catarina, Porto`, o Henriques recusa educadamente indicando que a localidade pertence a outro concelho.
    - *Sucesso:* O utilizador escreve `Casa Joaquim, Largo da Oliveira 12` *(ou clica no botão rápido)*.
-   - O Afonso valida contra as 48 freguesias oficiais e guarda o item no Cofre Digital.
+   - O Henriques valida contra as 48 freguesias oficiais e guarda o item no Cofre Digital.
 
 3. **Passo 2 (Dimensões & Mesas):**
-   - O Afonso pergunta quantas mesas e cadeiras planeia colocar.
+   - O Henriques pergunta quantas mesas e cadeiras planeia colocar.
    - O utilizador escreve `4 mesas` *(ou clica em `[4 Mesas (~10m²)]`)*.
-   - O Afonso calcula a área e guarda as dimensões.
+   - O Henriques calcula a área e guarda as dimensões.
 
 4. **Passo 3 (Verificação Regulamentar — Art. 8.º):**
-   - O Afonso cita o requisito regulamentar: corredor pedonal livre de pelo menos 2,00 metros.
+   - O Henriques cita o requisito regulamentar: corredor pedonal livre de pelo menos 2,00 metros.
    - O utilizador clica em `[📐 Sim, confirmo: 2,10m livres]`.
 
 5. **Apresentação da Minuta & Assinatura Digital (D3):**
-   - O Afonso compõe e apresenta a **Minuta Oficial OVP-SO**.
+   - O Henriques compõe e apresenta a **Minuta Oficial OVP-SO**.
    - Mostra que dados fiscais e bancários estão omitidos do pacote `PAC-0001`.
    - O utilizador clica em `[✍️ Assinar e Submeter com Chave Móvel Digital]`.
    - **Resultado:** O processo entra na fila dos Serviços Urbanos com código `OEP/2026/0001` (Simulação).
@@ -72,18 +72,18 @@ prototipo/data/cenarios_simulados/
 
 1. **Início:**
    - Cidadão envia: `Quero saber se posso construir num terreno` *(ou clica em `[🏡 Iniciar: PDM Silvares]`)*.
-   - **Afonso responde:** Explica os requisitos do Art. 14.º do RJUE (Localização e Caderneta Predial).
+   - **Henriques responde:** Explica os requisitos do Art. 14.º do RJUE (Localização e Caderneta Predial).
 
 2. **Envio da Localização:**
    - Cidadão envia o link do Google Maps ou coordenadas: `https://maps.google.com/?q=41.4425,-8.2918 (Silvares)`.
-   - O Afonso georreferencia no PDM: identifica **Solo Urbano — Espaço Residencial Nível 2** (Índice máx. 0.60, cércea 3 pisos, sem RAN nem REN).
+   - O Henriques georreferencia no PDM: identifica **Solo Urbano — Espaço Residencial Nível 2** (Índice máx. 0.60, cércea 3 pisos, sem RAN nem REN).
 
 3. **Envio do Documento (Caderneta Predial):**
    - Cidadão envia o ficheiro PDF da caderneta predial ou clica em `[📑 Simular Envio: Caderneta Predial]`.
-   - O Afonso calcula o resumo criptográfico SHA-256 e cifra o documento com AES-256-GCM no Cofre Digital.
+   - O Henriques calcula o resumo criptográfico SHA-256 e cifra o documento com AES-256-GCM no Cofre Digital.
 
 4. **Minuta & Submissão CMD:**
-   - O Afonso monta o pacote `PAC-0002` com os dados urbanísticos mínimos.
+   - O Henriques monta o pacote `PAC-0002` com os dados urbanísticos mínimos.
    - Apresenta a minuta do pedido vinculativo.
    - Cidadão assina com a Chave Móvel Digital. Processo `PIP/2026/0002` criado na Divisão de Gestão Urbanística.
 
@@ -99,14 +99,14 @@ prototipo/data/cenarios_simulados/
 
 1. **Início:**
    - Cidadão envia: `Quero organizar uma prova de corrida, o que preciso?`
-   - O Afonso responde curto e direto: indica a necessidade de plano de percurso, seguro e parecer policial, perguntando qual o percurso/zona.
+   - O Henriques responde curto e direto: indica a necessidade de plano de percurso, seguro e parecer policial, perguntando qual o percurso/zona.
 
 2. **Definição da Freguesia e Data:**
    - Cidadão responde: `Uma prova de corrida na freguesia de Azurém para 15 de Outubro`.
-   - O Afonso valida que Azurém pertence a Guimarães, anota a data e questiona sobre a apólice de seguro e o percurso.
+   - O Henriques valida que Azurém pertence a Guimarães, anota a data e questiona sobre a apólice de seguro e o percurso.
 
 3. **Minuta e Parecer das Forças de Segurança:**
-   - O Afonso gera a minuta de requerimento de policiamento (PSP/GNR) e termo de responsabilidade.
+   - O Henriques gera a minuta de requerimento de policiamento (PSP/GNR) e termo de responsabilidade.
    - Pede confirmação antes da submissão com Chave Móvel Digital.
 
 ---

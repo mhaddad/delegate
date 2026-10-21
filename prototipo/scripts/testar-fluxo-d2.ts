@@ -1,5 +1,5 @@
 /**
- * Teste e Prova do Fluxo Conversacional D2 do Afonso (Preparação Passo-a-Passo)
+ * Teste e Prova do Fluxo Conversacional D2 do Henriques (Preparação Passo-a-Passo)
  *
  * Simula a conversa de um cidadão no Telegram com o GestorFluxoD2:
  * 1. Cidadão: "Quero preparar a esplanada para o meu café"
@@ -18,7 +18,7 @@ import { GestorFluxoD2 } from '../apps/api/src/nucleo/orquestrador/fluxo-convers
 import type { CanalGrammy } from '../apps/api/src/nucleo/canal.ts';
 
 async function main() {
-  console.log('=== TESTE DO FLUXO CONVERSACIONAL D2 (AFONSO) ===\n');
+  console.log('=== TESTE DO FLUXO CONVERSACIONAL D2 (HENRIQUES) ===\n');
 
   const clientePg = new pg.Client({
     host: '127.0.0.1',
@@ -38,8 +38,8 @@ async function main() {
 
   const canalFalso: Partial<CanalGrammy> = {
     async enviar(conversa: string, texto: string, botoes?: any[]) {
-      historicoMensagens.push({ de: 'Afonso', texto, botoes });
-      console.log(`🤖 Afonso:\n${texto.replace(/<[^>]+>/g, '')}\n`);
+      historicoMensagens.push({ de: 'Henriques', texto, botoes });
+      console.log(`🤖 Henriques:\n${texto.replace(/<[^>]+>/g, '')}\n`);
       if (botoes && botoes.length > 0) {
         console.log(`[Botões Inline]: ${botoes.flat().map((b: any) => `[${b.texto}]`).join('  ')}\n`);
       }

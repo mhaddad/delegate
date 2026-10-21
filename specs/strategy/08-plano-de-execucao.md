@@ -18,11 +18,11 @@ A partir daí, cada dia engrossa o fio sem o partir. O risco maior desta propost
 
 | Frente | Âmbito | Pessoa |
 |---|---|---|
-| **F1 · Afonso e orquestração** | Classificação, redator, verificador, abstenção, máquina de estados da missão, motor de política | [nome] |
+| **F1 · Henriques e orquestração** | Classificação, redator, verificador, abstenção, máquina de estados da missão, motor de política | [nome] |
 | **F2 · Canal, Cofre e Mandatos** | Bot Telegram, botões, comandos, Mini App, Cofre (cifra e serviço de chaves), mandatos | [nome] |
 | **F3 · Porta, sistemas e eventos** | Monorepositório, contrato de eventos, base de dados, SSE, servidor MCP, sistemas simulados, auditoria, alojamento | [nome] |
 | **F4 · Observatório e Consola** | Interface web: Observatório, Consola, Mapa de Intenções, página da Porta | [nome] |
-| **F5 · Conteúdo, avaliação e pitch** | Registo Canónico, conjunto de avaliação, legendas, textos do Afonso, ligação ao mentor, submissão, pitch | [nome] |
+| **F5 · Conteúdo, avaliação e pitch** | Registo Canónico, conjunto de avaliação, legendas, textos do Henriques, ligação ao mentor, submissão, pitch | [nome] |
 
 **Com 4 pessoas:** F2 divide-se entre F1 (mandatos) e F3 (bot e Cofre). **Com 3 pessoas:** F1+F2, F3+F4 (Consola simplificada), F5.
 
@@ -73,7 +73,7 @@ Regra: nada se integra depois das 17h00 sem passar no fio completo.
 | F2 | Mini App (pacote mínimo, mandato, confirmação CMD simulada, token); `/dados`; ajuda F4 na Consola à tarde |
 | F3 | `submeter_comunicacao_previa`, `responder_pedido_elementos`, `consultar_estado_processo`; Tesouraria simulada e `obter_referencia_pagamento` |
 | F4 | Consola: fila, detalhe, decisão; ciclo Consola → Telegram; painel Mandatos e Auditoria |
-| F5 | Conjunto v2 (≥ 42, com adversariais); correções de conteúdo; textos finais do Afonso |
+| F5 | Conjunto v2 (≥ 42, com adversariais); correções de conteúdo; textos finais do Henriques |
 
 **Pronto às 17h00:** J1 completa, com pedido de elemento e aceitação a voltarem ao Telegram.
 
@@ -120,7 +120,7 @@ Se faltar tempo, cortar por esta ordem (do primeiro ao último):
 
 - respostas com fonte e avaliação;
 - Telegram → Observatório ao vivo;
-- Afonso como cliente MCP da Porta;
+- Henriques como cliente MCP da Porta;
 - ciclo de decisão Consola → Telegram;
 - etiquetas «Simulação».
 

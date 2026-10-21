@@ -1,6 +1,6 @@
 # A ficha mais honesta das cinco: existe no plano, mas o corpus municipal não
 # tem bloco de PDM nem de Urbanismo. Fica em rascunho até alguém ir buscar a
-# fonte, e o Afonso tem de abster-se neste serviço.
+# fonte, e o Henriques tem de abster-se neste serviço.
 id: pedido-informacao-previa-urbanismo
 versao: 2026-10-18.1
 estado: rascunho
@@ -28,9 +28,9 @@ dados_minimos: [localizacao, area_do_terreno, uso pretendido]
 nivel_risco: alto
 escalonamento: >-
   Qualquer pergunta sobre o que é possível num terreno real passa para um
-  técnico habilitado. O Afonso nunca afirma que pode ou não pode construir.
+  técnico habilitado. O Henriques nunca afirma que pode ou não pode construir.
 limites: >-
-  O Afonso não emite juízo de viabilidade urbanística. Explica o PDM em vigor e
+  O Henriques não emite juízo de viabilidade urbanística. Explica o PDM em vigor e
   a revisão em curso, com fonte, e diz quando é preciso um técnico.
 fontes:
   - id: pdm-guimaraes-aviso-23214-2020
@@ -58,7 +58,7 @@ curadoria:
   por: por curar
   em: 2026-10-18
   notas: >-
-    FICA EM RASCUNHO DE PROPÓSITO. Enquanto não houver fonte, o Afonso
+    FICA EM RASCUNHO DE PROPÓSITO. Enquanto não houver fonte, o Henriques
     abste-se neste serviço e diz onde confirmar. Preencher com um número ou uma
     condição aqui seria inventar, e é o que esta arquitectura existe para
     impedir.

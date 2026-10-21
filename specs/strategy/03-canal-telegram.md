@@ -20,7 +20,7 @@ Nenhum dado real. A primeira mensagem diz-o.
 
 | Comando | Faz |
 |---|---|
-| `/start` | Apresentação: «Sou o Afonso, um assistente de inteligência artificial que trabalha para si…»; ligação para a Carta de Lealdade; aviso de demonstração |
+| `/start` | Apresentação: «Sou o Henriques, um assistente de inteligência artificial que trabalha para si…»; ligação para a Carta de Lealdade; aviso de demonstração |
 | `/cofre` | Lista os itens do Cofre (título, finalidade, validade) com botão «Apagar» |
 | `/mandatos` | Lista os mandatos ativos com botão «Revogar» |
 | `/missoes` | Lista as missões e os seus estados |
@@ -66,9 +66,9 @@ Se a Mini App falhar, os mesmos passos fazem-se com botões inline (ordem de cor
 | Mensagem de voz | C | Transcrição → texto; transcrição visível na conversa |
 | Localização | C | Só se a ficha do serviço a pedir |
 
-## 8. Mensagens iniciadas pelo Afonso
+## 8. Mensagens iniciadas pelo Henriques
 
-O Afonso só escreve sem ser chamado em três casos: resposta da Câmara a uma missão, alerta autorizado, ou pedido de elemento. Cada mensagem diz porquê («Recebe este aviso porque o autorizou em 21/10»).
+O Henriques só escreve sem ser chamado em três casos: resposta da Câmara a uma missão, alerta autorizado, ou pedido de elemento. Cada mensagem diz porquê («Recebe este aviso porque o autorizou em 21/10»).
 
 ## 9. Limites e cuidados
 

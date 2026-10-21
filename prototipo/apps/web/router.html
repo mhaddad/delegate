@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Delegate · Router Agêntico e Base de Conhecimento Municipal</title>
-  <meta name="description" content="Painel de controlo do Router Agêntico Afonso: Base de Conhecimento Oficial (224 procedimentos e taxas), desambiguação proativa e contratos padronizados MCP/OpenAPI.">
+  <meta name="description" content="Painel de controlo do Router Agêntico Henriques: Base de Conhecimento Oficial (224 procedimentos e taxas), desambiguação proativa e contratos padronizados MCP/OpenAPI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -472,7 +472,7 @@
       font-weight: 700;
       color: var(--primary);
     }
-    .msg-author.afonso {
+    .msg-author.henriques {
       color: var(--emerald);
     }
     .msg-text-body {
@@ -807,11 +807,11 @@
           <div class="stream-feed" id="telegram-feed">
             <div class="msg-balloon">
               <div class="msg-meta">
-                <span class="msg-author afonso">🤖 Afonso (Sistema)</span>
+                <span class="msg-author henriques">🤖 Henriques (Sistema)</span>
                 <span>Agora</span>
               </div>
               <div class="msg-text-body">
-                Canal Telegram conectado e sincronizado. Todas as perguntas enviadas pelos cidadãos e as respostas do Afonso surgirão aqui em tempo real.
+                Canal Telegram conectado e sincronizado. Todas as perguntas enviadas pelos cidadãos e as respostas do Henriques surgirão aqui em tempo real.
               </div>
             </div>
           </div>
@@ -844,7 +844,7 @@
 
             <div class="contract-card">
               <div class="contract-op-id">consultar_estado_processo</div>
-              <div class="contract-desc">Permite ao Afonso consultar e notificar o munícipe sobre a evolução do seu processo.</div>
+              <div class="contract-desc">Permite ao Henriques consultar e notificar o munícipe sobre a evolução do seu processo.</div>
               <div class="contract-endpoint">GET /api/v1/processos/{id}/estado</div>
             </div>
 
@@ -1129,15 +1129,15 @@
       sse.onmessage = (e) => {
         try {
           const ev = JSON.parse(e.data);
-          if (ev.tipo === 'canal.mensagem.recebida' || ev.tipo === 'canal.mensagem.enviada' || ev.tipo === 'afonso.esclarecimento.solicitado') {
+          if (ev.tipo === 'canal.mensagem.recebida' || ev.tipo === 'canal.mensagem.enviada' || ev.tipo === 'henriques.esclarecimento.solicitado') {
             const balao = document.createElement('div');
             balao.className = 'msg-balloon';
 
             const ehMunicipe = ev.tipo === 'canal.mensagem.recebida';
-            const ehAmbiguidade = ev.tipo === 'afonso.esclarecimento.solicitado';
+            const ehAmbiguidade = ev.tipo === 'henriques.esclarecimento.solicitado';
 
-            const autor = ehMunicipe ? '👤 Munícipe (Telegram)' : ehAmbiguidade ? '🤔 Afonso (Router de Desambiguação)' : '🤖 Afonso (Resposta)';
-            const autorClass = ehMunicipe ? '' : 'afonso';
+            const autor = ehMunicipe ? '👤 Munícipe (Telegram)' : ehAmbiguidade ? '🤔 Henriques (Router de Desambiguação)' : '🤖 Henriques (Resposta)';
+            const autorClass = ehMunicipe ? '' : 'henriques';
 
             let texto = ev.dados?.texto || ev.dados?.pergunta_original;
             if (!texto && ev.dados?.comando) texto = `Executou comando: <code>${ev.dados.comando}</code>`;
@@ -1245,10 +1245,10 @@
           const card = document.createElement('div');
           card.className = 'decision-tree-card';
 
-          const ehJev = ev.tipo === 'afonso.intencao.classificada';
+          const ehJev = ev.tipo === 'henriques.intencao.classificada';
           const ehMsgRecebida = ev.tipo === 'canal.mensagem.recebida';
           const ehMsgEnviada = ev.tipo === 'canal.mensagem.enviada';
-          const ehAbstencao = ev.tipo === 'afonso.resposta.abstencao';
+          const ehAbstencao = ev.tipo === 'henriques.resposta.abstencao';
 
           const tempo = new Date(ev.ts).toLocaleTimeString();
           const dataStr = new Date(ev.ts).toLocaleDateString('pt-PT');
@@ -1333,7 +1333,7 @@
             `;
           } else {
             const badgeTipo = ehMsgRecebida ? '<span class="score-badge" style="background: rgba(56,189,248,0.15); color: #38bdf8;">👤 Entrada Cidadão</span>'
-              : ehMsgEnviada ? '<span class="score-badge score-high" style="background: rgba(16,185,129,0.15); color: var(--emerald);">🤖 Resposta Afonso</span>'
+              : ehMsgEnviada ? '<span class="score-badge score-high" style="background: rgba(16,185,129,0.15); color: var(--emerald);">🤖 Resposta Henriques</span>'
               : '<span class="score-badge score-med">🛡️ Abstenção Oficial</span>';
 
             card.innerHTML = `

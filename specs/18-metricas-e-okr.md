@@ -36,7 +36,7 @@ Todas medidas contra uma **linha de base** recolhida na fase de descoberta.
 | MET-06 | Tempo de triagem | Tempo do técnico até ao primeiro despacho | Consola | ↓ |
 | MET-07 | Encaminhamento correto | % de casos que chegam à unidade certa à primeira | Consola | ↑ |
 | MET-08 | Equidade | Diferença de MET-01, MET-02 e MET-05 entre canais, idades e perfis | Missões + inquérito | → 0 |
-| MET-09 | Confiança | Escala de confiança no Afonso e na Câmara | Inquérito | ↑ |
+| MET-09 | Confiança | Escala de confiança no Henriques e na Câmara | Inquérito | ↑ |
 | MET-10 | Missões verdes concluídas | Contagem | Missões | ↑ |
 
 ### Contra-métricas (não otimizar)

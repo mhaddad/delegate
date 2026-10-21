@@ -1,5 +1,5 @@
 /**
- * Afonso · Representante Digital Leal do Cidadão
+ * Henriques · Representante Digital Leal do Cidadão
  *
  * Princípios de Lealdade e Regras de Ouro:
  * 1. Responde com fonte regulamentar única e comprovada à vista em todo o número;
@@ -26,10 +26,10 @@ import type { Botoes } from '../canal.ts';
 export interface MemoriaConversa {
   ultimoServicoId?: string;
   ultimoServicoTitulo?: string;
-  historico?: Array<{ autor: 'pessoa' | 'afonso'; texto: string }>;
+  historico?: Array<{ autor: 'pessoa' | 'henriques'; texto: string }>;
 }
 
-export interface RespostaAfonso {
+export interface RespostaHenriques {
   texto: string;
   botoes?: Botoes;
   servicoId?: string;
@@ -49,7 +49,7 @@ export interface RespostaAfonso {
 
 import { GestorContextoConversa } from './gestor-contexto.ts';
 
-export class Afonso {
+export class Henriques {
   readonly #registo: Registo;
   readonly #porta: ClientePortaMcp;
   readonly #sessao: string;
@@ -82,7 +82,7 @@ export class Afonso {
   }
 
   /** Trata uma mensagem de texto recebida no canal com acompanhamento de continuidade de serviço. */
-  async responder(pessoa: string, texto: string, contextoExterno: ContextoDecisao = {}): Promise<RespostaAfonso> {
+  async responder(pessoa: string, texto: string, contextoExterno: ContextoDecisao = {}): Promise<RespostaHenriques> {
     const limpo = texto.trim();
     const contextoDecisao = this.#gestorContexto.prepararContextoDecisao(pessoa, contextoExterno);
 
@@ -109,13 +109,13 @@ export class Afonso {
     this.#gestorContexto.limparTudo(pessoa);
   }
 
-  async #tratarMensagem(pessoa: string, limpo: string, contextoDecisao: ContextoDecisao): Promise<RespostaAfonso> {
+  async #tratarMensagem(pessoa: string, limpo: string, contextoDecisao: ContextoDecisao): Promise<RespostaHenriques> {
     const decisaoJev = await this.#motorDecisao.decidir(limpo, contextoDecisao);
 
     // Registar imediatamente o evento de decisão com métricas TypeSafe/Jev
     await this.#registo.registar({
-      tipo: 'afonso.intencao.classificada',
-      origem: 'afonso',
+      tipo: 'henriques.intencao.classificada',
+      origem: 'henriques',
       sessao: this.#sessao,
       pessoa,
       missao: contextoDecisao.missaoId ?? null,
@@ -144,8 +144,8 @@ export class Afonso {
     // 0. Saudações e Acolhimento Geral (sem disparar RAG nem citar regulamentos irrelevantes)
     if (decisaoJev.categoria === 'geral') {
       await this.#registo.registar({
-        tipo: 'afonso.resposta.verificada',
-        origem: 'afonso',
+        tipo: 'henriques.resposta.verificada',
+        origem: 'henriques',
         sessao: this.#sessao,
         pessoa,
         missao: contextoDecisao.missaoId ?? null,
@@ -159,7 +159,7 @@ export class Afonso {
 
       return {
         texto: [
-          'Olá! Sou o <b>Afonso</b>, o seu representante digital.',
+          'Olá! Sou o <b>Henriques</b>, o seu representante digital.',
           '',
           'Estou aqui para o ajudar a tratar de assuntos com a Câmara Municipal de Guimarães sem burocracia.',
           '',
@@ -198,8 +198,8 @@ export class Afonso {
       const matchRAG = await this.#buscador.buscarComJev(limpo);
       if (matchRAG && matchRAG.pontuacao >= 7) {
         await this.#registo.registar({
-          tipo: 'afonso.resposta.verificada',
-          origem: 'afonso',
+          tipo: 'henriques.resposta.verificada',
+          origem: 'henriques',
           sessao: this.#sessao,
           pessoa,
           missao: contextoDecisao.missaoId ?? null,

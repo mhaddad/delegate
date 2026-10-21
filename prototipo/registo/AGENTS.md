@@ -6,7 +6,7 @@
 
 ## O que é
 
-Uma ficha por serviço, no esquema do [modelo de dados §2](../../specs/11-modelo-de-dados.md), validada por esquema. É a fonte de verdade de tudo o que o Afonso diz: sem registo, não há resposta.
+Uma ficha por serviço, no esquema do [modelo de dados §2](../../specs/11-modelo-de-dados.md), validada por esquema. É a fonte de verdade de tudo o que o Henriques diz: sem registo, não há resposta.
 
 > As fichas são YAML, validadas por esquema Zod v4. Ver a [secção Stack](../AGENTS.md#stack). O esquema em si é anterior à escolha de ferramenta.
 
@@ -26,7 +26,7 @@ Uma ficha por serviço, no esquema do [modelo de dados §2](../../specs/11-model
 2. Guardar a data da consulta e o hash do conteúdo.
 3. Copiar os requisitos e as condições **tal como estão**.
 4. Extrair documentos e prazos com a fonte ao lado.
-5. Taxa: só com a fonte que a dá. Se a fonte não der, fica `null` e o Afonso abstém-se — que é a resposta certa, não uma falha.
+5. Taxa: só com a fonte que a dá. Se a fonte não der, fica `null` e o Henriques abstém-se — que é a resposta certa, não uma falha.
 
 ## O `data/` como chave de verificação
 

@@ -47,7 +47,7 @@ export class MotorDecisaoTypeSafe {
 
     // 0. Triagem Rápida (Nível 0): Saudações e cumprimentos gerais não devem acionar o Jev para inferir procedimentos canónicos
     const tMinusculo = texto.toLowerCase();
-    const ehSaudacao = /^(ol[aá]|bom dia|boa tarde|boa noite|boas|viva|oi|hey|hello|como est[aá]s?|tudo bem)(\s+afonso)?[\s!.?]*$/i.test(tMinusculo);
+    const ehSaudacao = /^(ol[aá]|bom dia|boa tarde|boa noite|boas|viva|oi|hey|hello|como est[aá]s?|tudo bem)(\s+henriques)?[\s!.?]*$/i.test(tMinusculo);
     if (ehSaudacao) {
       return AvaliadorLocal.decidir(texto, contexto, inicio);
     }

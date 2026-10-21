@@ -9,7 +9,7 @@ Decisões e Adverse estão em [ADR-021](../../../../../docs/21-registo-de-deciso
 ## Antes de começar: o token
 
 1. No Telegram, abre **@BotFather** e manda `/newbot`.
-2. **Nome** — o que a pessoa vê. Ex.: `Afonso Câmara`.
+2. **Nome** — o que a pessoa vê. Ex.: `Henriques Câmara`.
 3. **Username** — obrigatório, 5 a 32 caracteres, tem de terminar em `bot`, e **não pode mudar depois**. Ex.: `afonso_cm_bot`.
 4. Guarda o token num ficheiro `.env`, nunca no código. `.env` está ignorado pelo git.
 
@@ -96,7 +96,7 @@ Se o núcleo falhar, mostra uma mensagem de erro — uma falha silenciosa a meio
 
 O canal fica por trás de uma interface de cinco métodos: **receber actualizações, enviar, editar, responder a um clique, indicar actividade.** Duas implementações: a real, e uma falsa para testes.
 
-É a peça que permite escrever e testar toda a lógica do Afonso — responder, citar a fonte, abstain — **sem token e sem telemóvel**, em milissegundos.
+É a peça que permite escrever e testar toda a lógica do Henriques — responder, citar a fonte, abstain — **sem token e sem telemóvel**, em milissegundos.
 
 ---
 

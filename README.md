@@ -1,8 +1,8 @@
 # Delegate
 
-**Diga o que precisa. O Afonso trata do resto.**
+**Diga o que precisa. O Henriques trata do resto.**
 
-O Delegate dá a cada pessoa e a cada negócio de Guimarães um Representante Digital Pessoal (em Guimarães, o **Afonso**) que trata da burocracia municipal em seu nome, com mandato, fontes oficiais e decisão humana onde ela é devida. Dá também à Câmara uma Porta Agêntica aberta e governada, uma Consola para os técnicos e um Mapa de Intenções da cidade.
+O Delegate dá a cada pessoa e a cada negócio de Guimarães um Representante Digital Pessoal (em Guimarães, o **Henriques**) que trata da burocracia municipal em seu nome, com mandato, fontes oficiais e decisão humana onde ela é devida. Dá também à Câmara uma Porta Agêntica aberta e governada, uma Consola para os técnicos e um Mapa de Intenções da cidade.
 
 Projeto apresentado no **Hack4Guimarães 2035**, desafio «Falar com a Câmara sem Burocracia».
 

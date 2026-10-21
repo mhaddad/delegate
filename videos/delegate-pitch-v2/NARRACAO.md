@@ -13,11 +13,11 @@
 | 1 | 0:02 – 0:14 | Gancho | Esta é a Inês. Do avô, herdou um terreno em Ponte, aqui em Guimarães. E, com ele, um plano: construir ali a sua casa. Cento e cinquenta metros quadrados. | 28 |
 | 2 | 0:14 – 0:33 | Conflito | Mas Guimarães acaba de aprovar um novo Plano Diretor Municipal. E uma pergunta simples deixa de o ser: ainda posso construir? Regulamentos, plantas, condicionantes, balcões, telefonemas… Para ter uma resposta, a Inês teria de se tornar especialista em urbanismo. | 41 |
 | 3 | 0:33 – 0:44 | Problema | A burocracia existe por boas razões: protege o interesse público e deixa prova de cada decisão. O problema é outro. Hoje, quem carrega essa complexidade é o cidadão. | 28 |
-| 4 | 0:44 – 0:57 | Solução | E se fosse ao contrário? Este é o Delegate. Cada munícipe passa a ter um representante digital pessoal. Em Guimarães, chama-se Afonso. Um nome que, aqui, dispensa apresentações. | 29 |
-| 5 | 0:57 – 1:07 | O pedido | A Inês abre o WhatsApp e escreve ao Afonso, como escreveria a um amigo. *(pausa — a mensagem aparece no ecrã)* É tudo o que precisa de fazer. | 21 |
-| 6 | 1:07 – 1:23 | Cofre | Do outro lado, começa o trabalho invisível. O Afonso abre o Cofre Digital Pessoal da Inês — cifrado, e controlado só por ela. Retira apenas o essencial: o terreno, a pretensão, a planta. Mais nada sai do cofre. | 39 |
+| 4 | 0:44 – 0:57 | Solução | E se fosse ao contrário? Este é o Delegate. Cada munícipe passa a ter um representante digital pessoal. Em Guimarães, chama-se Henriques. Um nome que, aqui, dispensa apresentações. | 29 |
+| 5 | 0:57 – 1:07 | O pedido | A Inês abre o WhatsApp e escreve ao Henriques, como escreveria a um amigo. *(pausa — a mensagem aparece no ecrã)* É tudo o que precisa de fazer. | 21 |
+| 6 | 1:07 – 1:23 | Cofre | Do outro lado, começa o trabalho invisível. O Henriques abre o Cofre Digital Pessoal da Inês — cifrado, e controlado só por ela. Retira apenas o essencial: o terreno, a pretensão, a planta. Mais nada sai do cofre. | 39 |
 | 7 | 1:23 – 1:44 | Agentes | Em seguida, entram em ação agentes de inteligência artificial especializados. Um lê o novo PDM, na versão oficial. Outro cruza o terreno com as plantas e as condicionantes. Um terceiro prepara o processo. E um supervisor garante que nenhum passa dos limites: cada acesso aos sistemas da Câmara tem finalidade, autorização e registo. | 52 |
-| 8 | 1:44 – 1:56 | Confirmação | Minutos depois, o Afonso responde: a análise preliminar é favorável. Para ter certeza formal, já preparou o Pedido de Informação Prévia. A Inês confirma com a Chave Móvel Digital. | 29 |
+| 8 | 1:44 – 1:56 | Confirmação | Minutos depois, o Henriques responde: a análise preliminar é favorável. Para ter certeza formal, já preparou o Pedido de Informação Prévia. A Inês confirma com a Chave Móvel Digital. | 29 |
 | 9 | 1:56 – 2:09 | Pessoas | Onde é preciso juízo técnico, decide uma pessoa. A arquiteta Marta recebe o caso completo, com fontes e apenas os dados necessários. Analisa, valida e propõe a decisão. Tudo fica registado. | 32 |
 | 10 | 2:09 – 2:17 | Resolução | Dias depois, a resposta chega ao telemóvel da Inês: pode avançar. Com fonte, recibo e próximos passos. | 18 |
 | 11 | 2:17 – 2:29 | Magia × rigor | Para a Inês, foram quatro mensagens. Para a Câmara, foi todo o rigor de sempre. Parece magia, mas é método: simplicidade para o cidadão, controlo para a Administração. | 28 |
@@ -35,15 +35,15 @@
 >
 > A burocracia existe por boas razões: protege o interesse público e deixa prova de cada decisão. O problema é outro. Hoje, quem carrega essa complexidade é o cidadão.
 >
-> E se fosse ao contrário? Este é o Delegate. Cada munícipe passa a ter um representante digital pessoal. Em Guimarães, chama-se Afonso. Um nome que, aqui, dispensa apresentações.
+> E se fosse ao contrário? Este é o Delegate. Cada munícipe passa a ter um representante digital pessoal. Em Guimarães, chama-se Henriques. Um nome que, aqui, dispensa apresentações.
 >
-> A Inês abre o WhatsApp e escreve ao Afonso, como escreveria a um amigo. … É tudo o que precisa de fazer.
+> A Inês abre o WhatsApp e escreve ao Henriques, como escreveria a um amigo. … É tudo o que precisa de fazer.
 >
-> Do outro lado, começa o trabalho invisível. O Afonso abre o Cofre Digital Pessoal da Inês — cifrado, e controlado só por ela. Retira apenas o essencial: o terreno, a pretensão, a planta. Mais nada sai do cofre.
+> Do outro lado, começa o trabalho invisível. O Henriques abre o Cofre Digital Pessoal da Inês — cifrado, e controlado só por ela. Retira apenas o essencial: o terreno, a pretensão, a planta. Mais nada sai do cofre.
 >
 > Em seguida, entram em ação agentes de inteligência artificial especializados. Um lê o novo PDM, na versão oficial. Outro cruza o terreno com as plantas e as condicionantes. Um terceiro prepara o processo. E um supervisor garante que nenhum passa dos limites: cada acesso aos sistemas da Câmara tem finalidade, autorização e registo.
 >
-> Minutos depois, o Afonso responde: a análise preliminar é favorável. Para ter certeza formal, já preparou o Pedido de Informação Prévia. A Inês confirma com a Chave Móvel Digital.
+> Minutos depois, o Henriques responde: a análise preliminar é favorável. Para ter certeza formal, já preparou o Pedido de Informação Prévia. A Inês confirma com a Chave Móvel Digital.
 >
 > Onde é preciso juízo técnico, decide uma pessoa. A arquiteta Marta recebe o caso completo, com fontes e apenas os dados necessários. Analisa, valida e propõe a decisão. Tudo fica registado.
 >
@@ -65,7 +65,7 @@
 - **IA** → "i-á".
 - **Delegate** → pronúncia inglesa ("DÉ-li-gât"). Se a voz sintética falhar, escrever foneticamente no TTS.
 - **WhatsApp** → "uótsáp".
-- **Afonso** → leve ênfase e pausa curta antes de "Um nome que, aqui, dispensa apresentações" (referência a D. Afonso Henriques; a plateia de Guimarães apanha logo).
+- **Henriques** → leve ênfase e pausa curta antes de "Um nome que, aqui, dispensa apresentações" (referência a D. Afonso Henriques; a plateia de Guimarães apanha logo).
 - Pausas marcadas com "…" e "—" são intencionais: dão tempo ao ecrã.
 - Bloco 5: deixar ~3 s de silêncio de voz enquanto a mensagem da Inês é "escrita" no ecrã.
 - Bloco 14: abrandar. É a frase que a plateia deve levar para casa.

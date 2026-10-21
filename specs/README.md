@@ -3,7 +3,7 @@
 > **Estado:** versão de trabalho 0.1 · **Última atualização:** 18/10/2026 · **Dono do documento:** [nome]
 > **Contexto:** projeto a apresentar no **Hack4Guimarães 2035**, desafio **3.4 «Falar com a Câmara sem Burocracia»** (proposta, a confirmar pela equipa).
 
-O Delegate dá a cada pessoa e a cada negócio de Guimarães um **Representante Digital Pessoal** (em Guimarães, o **Afonso**) que trata da burocracia municipal em seu nome, com mandato, fontes oficiais e decisão humana onde ela é devida. Dá também à Câmara uma **Porta Agêntica** aberta e governada, uma **Consola** para os técnicos e um **Mapa de Intenções** da cidade.
+O Delegate dá a cada pessoa e a cada negócio de Guimarães um **Representante Digital Pessoal** (em Guimarães, o **Henriques**) que trata da burocracia municipal em seu nome, com mandato, fontes oficiais e decisão humana onde ela é devida. Dá também à Câmara uma **Porta Agêntica** aberta e governada, uma **Consola** para os técnicos e um **Mapa de Intenções** da cidade.
 
 Esta pasta é a fonte de verdade do projeto. Os vídeos, o deck e o blueprint HTML derivam daqui.
 
@@ -30,7 +30,7 @@ Esta pasta é a fonte de verdade do projeto. Os vídeos, o deck e o blueprint HT
 | 07 | [Requisitos funcionais](07-requisitos-funcionais.md) | Requisitos por módulo, com ID, prioridade e release | Desenvolvimento |
 | 08 | [Histórias de utilizador](08-historias-de-utilizador.md) | Épicos, histórias e critérios de aceitação | Desenvolvimento, QA |
 | 09 | [Requisitos não funcionais](09-requisitos-nao-funcionais.md) | Qualidade, desempenho, acessibilidade, segurança | Desenvolvimento |
-| 15 | [UX, conteúdo e tom de voz](15-ux-conteudo-e-tom.md) | Princípios de experiência, formato das respostas, voz do Afonso | Design, conteúdo |
+| 15 | [UX, conteúdo e tom de voz](15-ux-conteudo-e-tom.md) | Princípios de experiência, formato das respostas, voz do Henriques | Design, conteúdo |
 
 ### Parte C — Solução técnica
 

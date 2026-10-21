@@ -32,7 +32,7 @@ Equipa de 1 a 5 elementos. Com menos pessoas, acumular papéis pela ordem da tab
 | Entregável | Produto | IA/backend | Interface | Conteúdo | Porta/infra |
 |---|---|---|---|---|---|
 | Registo Canónico | C | C | I | **R/A** | I |
-| Afonso com fonte (HU-01..05) | A | **R** | C | C | I |
+| Henriques com fonte (HU-01..05) | A | **R** | C | C | I |
 | Missão, Cofre, Mandato (HU-06..10) | A | **R** | **R** | I | I |
 | Conjunto e painel de avaliação | A | R | R | **R** | I |
 | Consola (HU-12) | A | C | **R** | I | I |

@@ -13,7 +13,7 @@
 | R-02 | O júri ver «mais um chatbot» e o desafio 3.4 ter muitas equipas com o caminho óbvio | 3 | 3 | 9 | Mostrar em segundos o que só nós temos: fonte e versão, missão com mandato, Porta usada por agente externo, avaliação medida | Produto |
 | R-03 | Respostas erradas durante a demo ao vivo | 2 | 3 | 6 | Avaliação, verificador, perguntas da demo testadas; vídeo de plano B | IA/backend |
 | R-04 | Curadoria do registo mais lenta do que o previsto | 3 | 2 | 6 | Começar pelos 5 serviços M; esquema simples; cortar para 10 serviços | Conteúdo |
-| R-05 | Fontes oficiais incompletas ou contraditórias (ex.: canal da esplanada) | 2 | 2 | 4 | Registar a dúvida, marcar «a confirmar», perguntar ao mentor; o Afonso abstém-se | Conteúdo |
+| R-05 | Fontes oficiais incompletas ou contraditórias (ex.: canal da esplanada) | 2 | 2 | 4 | Registar a dúvida, marcar «a confirmar», perguntar ao mentor; o Henriques abstém-se | Conteúdo |
 | R-06 | Falha de rede ou do fornecedor de IA no pitch | 2 | 3 | 6 | Versão local, vídeo gravado, respostas da demo em cache como último recurso, declarado | Porta/infra |
 | R-07 | Âmbito demasiado grande para 5 dias | 3 | 2 | 6 | MoSCoW, congelamento a 22/10, ordem de corte | Produto |
 | R-08 | Melindrar a Câmara ao comparar com o atendedor existente | 2 | 2 | 4 | Posicionar como complemento e consumidor da Porta ([ADR-011](21-registo-de-decisoes.md#adr-011)) | Produto |

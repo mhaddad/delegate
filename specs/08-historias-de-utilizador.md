@@ -27,7 +27,7 @@
 
 - **Dado** que o serviço de ocupação do espaço público com esplanada está no Registo Canónico
 - **Quando** a Inês escreve «Quero pôr uma esplanada à porta do meu restaurante, o que preciso?»
-- **Então** o Afonso identifica o procedimento, responde em linguagem simples em menos de 8 segundos
+- **Então** o Henriques identifica o procedimento, responde em linguagem simples em menos de 8 segundos
 - **E** mostra a fonte com título, ligação e data de consulta
 - **E** a resposta não contém nenhum valor (taxa, prazo, medida) que não esteja na fonte.
 
@@ -39,17 +39,17 @@ Requisitos: RF-RES-01, RF-RES-02, RF-RES-04, RF-RES-08 · Pontos: 5
 
 - **Dado** que o formulário «Inspeção ou Reinspeção de Ascensores» está no registo
 - **Quando** a Rita pergunta «O elevador chumbou na inspeção, e agora?»
-- **Então** o Afonso distingue reinspeção de inspeção periódica e indica o procedimento certo, com fonte.
+- **Então** o Henriques distingue reinspeção de inspeção periódica e indica o procedimento certo, com fonte.
 
 Requisitos: RF-RES-01, RF-RES-02 · Pontos: 2
 
 ### HU-03 · Abstenção quando não há fonte
 
-**Como** munícipe, **quero** que o Afonso me diga quando não sabe, **para** não agir com informação errada.
+**Como** munícipe, **quero** que o Henriques me diga quando não sabe, **para** não agir com informação errada.
 
 - **Dado** que a taxa da esplanada não consta de nenhuma fonte no registo
 - **Quando** a Inês pergunta «Quanto vou pagar?»
-- **Então** o Afonso diz que a taxa é calculada pela Câmara, que não a consegue confirmar, e indica onde se confirma
+- **Então** o Henriques diz que a taxa é calculada pela Câmara, que não a consegue confirmar, e indica onde se confirma
 - **E** oferece passar a uma pessoa.
 
 Requisitos: RF-RES-03, RF-RES-04 · Pontos: 2
@@ -59,7 +59,7 @@ Requisitos: RF-RES-03, RF-RES-04 · Pontos: 2
 **Como** Sr. Albano (P2), **quero** saber onde renovo o Cartão de Cidadão, **para** não ir ao sítio errado.
 
 - **Quando** pergunta «Como renovo o Cartão de Cidadão?»
-- **Então** o Afonso explica que é um serviço da Administração Central, indica o Espaço Cidadão e a fonte nacional
+- **Então** o Henriques explica que é um serviço da Administração Central, indica o Espaço Cidadão e a fonte nacional
 - **E** não descreve procedimentos que não estão no registo.
 
 Requisitos: RF-RES-05, RF-REG-04 · Pontos: 2
@@ -69,7 +69,7 @@ Requisitos: RF-RES-05, RF-REG-04 · Pontos: 2
 **Como** Inês, **quero** perceber se posso construir no terreno, **para** decidir o próximo passo.
 
 - **Quando** pergunta «Posso construir uma casa de 150 m² no terreno do meu avô?»
-- **Então** o Afonso não afirma que pode ou não pode
+- **Então** o Henriques não afirma que pode ou não pode
 - **E** explica o PDM em vigor e a revisão em curso, com fonte
 - **E** explica o pedido de informação prévia e quando é preciso um técnico habilitado.
 
@@ -91,16 +91,16 @@ Requisitos: RF-MIS-01..03 · Pontos: 3
 ### HU-07 · Perguntas mínimas
 
 - **Dado** uma missão de esplanada em `a verificar`
-- **Quando** o Afonso precisa de dados
+- **Quando** o Henriques precisa de dados
 - **Então** pede apenas número de mesas, meses e fotografia do passeio, e nada mais.
 
 Requisitos: RF-RES-07 · Pontos: 2
 
 ### HU-08 · Guardar no Cofre com autorização
 
-**Como** Inês, **quero** decidir o que o Afonso guarda, **para** controlar os meus dados.
+**Como** Inês, **quero** decidir o que o Henriques guarda, **para** controlar os meus dados.
 
-- **Quando** o Afonso sugere guardar a esplanada no Cofre
+- **Quando** o Henriques sugere guardar a esplanada no Cofre
 - **Então** só guarda se a Inês aceitar
 - **E** o item mostra origem, finalidade, validade e permissões
 - **E** a Inês consegue apagá-lo.
@@ -109,7 +109,7 @@ Requisitos: RF-COF-01..03 · Pontos: 3
 
 ### HU-09 · Conceder e revogar mandato
 
-**Como** Inês, **quero** autorizar o Afonso a preparar e submeter com a minha confirmação, **para** não ter de tratar eu.
+**Como** Inês, **quero** autorizar o Henriques a preparar e submeter com a minha confirmação, **para** não ter de tratar eu.
 
 - **Quando** aceita o mandato
 - **Então** vê um cartão com âmbito «ocupação do espaço público», entidade, nível D3, validade e botão de revogação
@@ -177,7 +177,7 @@ Requisitos: RF-POR-01, RF-POR-02, RF-POR-05 · Pontos: 5
 
 ### HU-14 · Painel de avaliação
 
-**Como** equipa e como júri, **queremos** ver a qualidade medida, **para** confiar no Afonso.
+**Como** equipa e como júri, **queremos** ver a qualidade medida, **para** confiar no Henriques.
 
 - **Dado** o conjunto de avaliação com ≥ 40 perguntas
 - **Quando** o executor corre

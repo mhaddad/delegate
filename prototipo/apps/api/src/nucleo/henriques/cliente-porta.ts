@@ -1,7 +1,7 @@
 /**
- * Cliente MCP para o Afonso consumir a Porta Agêntica pela rede.
+ * Cliente MCP para o Henriques consumir a Porta Agêntica pela rede.
  *
- * O Afonso é cliente da Porta, não dono dela: nunca importa código da Porta
+ * O Henriques é cliente da Porta, não dono dela: nunca importa código da Porta
  * nem acede aos sistemas em memória. Fala com a Porta por HTTP usando o SDK v2.
  */
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
@@ -18,7 +18,7 @@ export class ClientePortaMcp {
 
   async conectar(): Promise<void> {
     if (this.#cliente) return;
-    const cliente = new Client({ name: 'afonso-nucleo', version: '1.0.0' });
+    const cliente = new Client({ name: 'henriques-nucleo', version: '1.0.0' });
     const transport = new StreamableHTTPClientTransport(new URL(this.#url));
     await cliente.connect(transport);
     this.#cliente = cliente;
@@ -39,7 +39,7 @@ export class ClientePortaMcp {
     await this.conectar();
     const res = await this.#cliente!.callTool({
       name: 'procurar_servicos',
-      arguments: { consulta, limite, cliente: 'afonso' },
+      arguments: { consulta, limite, cliente: 'henriques' },
     });
 
     if (res.isError) {
@@ -55,7 +55,7 @@ export class ClientePortaMcp {
     await this.conectar();
     const res = await this.#cliente!.callTool({
       name: 'obter_servico',
-      arguments: { id, cliente: 'afonso' },
+      arguments: { id, cliente: 'henriques' },
     });
 
     if (res.isError) {
@@ -82,7 +82,7 @@ export class ClientePortaMcp {
     await this.conectar();
     const res = await this.#cliente!.callTool({
       name: 'criar_rascunho_ocupacao',
-      arguments: { ...dados, cliente: 'afonso' },
+      arguments: { ...dados, cliente: 'henriques' },
     });
 
     if (res.isError) {
@@ -115,7 +115,7 @@ export class ClientePortaMcp {
     await this.conectar();
     const res = await this.#cliente!.callTool({
       name: nome,
-      arguments: { ...argumentos, cliente: 'afonso' },
+      arguments: { ...argumentos, cliente: 'henriques' },
     });
 
     if (res.isError) {

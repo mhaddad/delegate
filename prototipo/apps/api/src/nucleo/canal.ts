@@ -1,7 +1,7 @@
 /**
  * O canal: a única coisa do protótipo que fala com o Telegram.
  *
- * Por baixo de uma interface de cinco métodos, para que a lógica do Afonso
+ * Por baixo de uma interface de cinco métodos, para que a lógica do Henriques
  * nunca saiba com quem está a falar. É isto que permite escrever e testar as
  * respostas sem token e sem telemóvel.
  *
@@ -36,7 +36,7 @@ export interface MensagemRecebida {
 /** Um botão de decisão. */
 export interface Botao {
   texto: string;
-  /** O que devolve ao Afonso. Tem de caber em 64 bytes. */
+  /** O que devolve ao Henriques. Tem de caber em 64 bytes. */
   dados?: string;
   ligacao?: string;
 }
@@ -57,7 +57,7 @@ export interface Canal {
 
 /**
  * O Telegram manda HTML, e um `>` por extenso rejeita a mensagem inteira.
- * Como o Afonso interpola texto que veio da pessoa, isto não é opcional.
+ * Como o Henriques interpola texto que veio da pessoa, isto não é opcional.
  */
 export function escapar(texto: string): string {
   return texto.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
