@@ -87,7 +87,7 @@ Todo o dado manipulado pelo nosso motor tem de possuir âncora verificável numa
 | **19 Out (seg)** | **Arranque** | Apresentação oficial dos desafios no CIAJG (09h30). Primeiro commit do repositório (`git init`). |
 | **19–23 Out** | **Semana de Trabalho** | Desenvolvimento híbrido/presencial no CIAJG. Execução faseada (Fase 1 a 4). |
 | **23 Out 17h30** | **Fecho de Submissão** | Encerramento rígido na plataforma Taikai. Submeter até às **15h00** (margem de segurança). |
-| **26 Out 14h30** | **Pitches ao Júri** | Demonstração presencial de **3 minutos** perante júri de especialistas (sem votação popular). |
+| **26 Out 14h30** | **Pitches ao Júri** | Pitch presencial de **4 minutos + 1 minuto de perguntas** perante júri de especialistas (sem votação popular). Guião: [Anexo C](../specs/anexos/C-guiao-da-demonstracao.md). |
 | **26–27 Out** | **Avaliação** | Deliberação técnica do júri. |
 | **28 Out** | **Cerimónia de Prémios** | Anúncio dos vencedores (20.000 € em prémios globais). |
 
