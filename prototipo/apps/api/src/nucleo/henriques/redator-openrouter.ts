@@ -82,8 +82,12 @@ export class RedatorOpenRouter {
       '5. PRIVACIDADE E LINGUAGEM: NUNCA uses a palavra "munícipe". Usa "cidadão" ou "você/consigo". NUNCA menciones códigos ou nomes técnicos de sistema.',
       '6. NUNCA escrevas a linha de fonte ("📄 Fonte:") no teu texto, o sistema anexa-a automaticamente no final.',
       '7. MEMÓRIA DE FACTOS E DOCUMENTOS:',
-      '   - Se o cidadão confirmar ou pedir uma hiperligação para um formulário/documento oficial que consta nos Factos, FORNECE IMEDIATAMENTE a hiperligação.',
+      '   - Se o cidadão pedir um formulário, minuta, modelo ou termo, confirma que estás a entregar o documento diretamente no chat e no Cofre Digital. NUNCA digas para ir descarregar a links genéricos como "https://www.cm-guimaraes.pt/servicos-online".',
       '   - NUNCA voltes a perguntar dados que o cidadão já respondeu no histórico ou que constem em "Dados já confirmados". Avança sempre para o passo seguinte!',
+      '8. SAUDAÇÕES: NUNCA digas "Olá!", "Bom dia" ou "Olá novamente" a meio de uma conversa em curso! Só se saúda no primeiro contacto absoluto ou se o cidadão tiver acabado de te cumprimentar explicitamente nesta mensagem. A meio da conversa, responde DIRETAMENTE sem saudações redundantes.',
+      '9. ARTICULAÇÃO ENTRE INFORMATIVO E PROCESSO (D0 vs D2):',
+      '   - Se o cidadão faz perguntas gerais/informativas («como abrir esplanada», «o que preciso fazer?») em modo D0: explica os requisitos (mera comunicação prévia, contígua à fachada, corredor pedonal >= 2,00m) e CONVIDA o cidadão a iniciar o processo no Cofre Digital (ex.: «Se quiser, posso tratar disto por si e organizar o processo no seu Cofre Digital. Quer avançar?»).',
+      '   - NUNCA comeces a pedir moradas, áreas ou dados de formulário por tua conta em texto livre no modo informativo se o processo D2 ainda não foi formalmente ativado.',
       '',
       'Formatação: usa apenas <b> e <i> quando estritamente útil.',
     ].join('\n');
@@ -103,7 +107,7 @@ export class RedatorOpenRouter {
       try {
         console.log(`[OpenRouter] A redigir resposta com modelo ${modelo}...`);
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3500);
+        const timeoutId = setTimeout(() => controller.abort(), 8500);
 
         const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
@@ -141,16 +145,26 @@ export class RedatorOpenRouter {
             .replace(/\bmunícipes\b/gi, 'cidadãos')
             .replace(/\bmunícipe\b/gi, 'cidadão')
             .replace(/\bsubmeter_pdm_chat\b/g, '')
-            .replace(/\bsimular_[a-z0-9_]+\b/g, '')
+            .replace(/\bsimular_[a-z0-9_]+\b/g, '');
+
+          // Se a conversa já tem histórico e o cidadão não saudou nesta mensagem, remover saudações redundantes
+          const cidadaoSaudou = /^(ol[aá]|bom dia|boa tarde|boas|viva|oi)\b/i.test(params.pergunta.trim());
+          if (params.historicoConversa && params.historicoConversa.length > 0 && !cidadaoSaudou) {
+            textoLimpo = textoLimpo.replace(/^(ol[aá][!,.]*|bom dia[!,.]*|boa tarde[!,.]*|boas[!,.]*)\s*(novamente|de novo)?\s*[!,.]*\s*/i, '');
+          }
+
           // Remover qualquer linha de fonte que o LLM tenha tentado colocar para evitar duplicações
           textoLimpo = textoLimpo.replace(/📄\s*Fonte:?[^\n]*/gi, '').trim();
           textoLimpo = `${textoLimpo}\n\n📄 Fonte: <i>${params.fonteOficial}</i>`;
 
           // Validação por Regra: garantir que nenhum número ou grandeza foi inventado
+          // Inclui a pergunta e histórico do cidadão para permitir números informados pelo próprio utilizador
           const validacao = VerificadorRegra.verificar(textoLimpo, [
             params.contextoFactos,
             params.textoReferencia,
             params.fonteOficial,
+            params.pergunta,
+            params.historicoConversa?.map((h) => h.texto).join(' ') ?? '',
           ]);
 
           if (validacao.valido) {

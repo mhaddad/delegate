@@ -81,6 +81,16 @@ const STOPWORDS_MUNICIPAIS = new Set([
   'para',
   'qual',
   'quais',
+  'sim',
+  'nao',
+  'ola',
+  'obrigado',
+  'obrigada',
+  'bom',
+  'boa',
+  'dias',
+  'tarde',
+  'noite',
 ]);
 
 function normalizar(texto: string): string[] {
@@ -174,6 +184,9 @@ export class BuscadorConhecimento {
 
     const tokensPergunta = normalizar(pergunta);
     if (tokensPergunta.length === 0) return [];
+
+    const tokensUteis = tokensPergunta.filter((t) => !STOPWORDS_MUNICIPAIS.has(t));
+    if (tokensUteis.length === 0) return [];
 
     const candidatos: ResultadoConhecimento[] = [];
 
@@ -409,23 +422,53 @@ export class BuscadorConhecimento {
     return candidatos[0];
   }
 
+  converterMarkdownParaTelegramHtml(markdown: string, tituloDoc?: string): string {
+    let limpo = markdown
+      // Remover blocos frontmatter
+      .replace(/^---[\s\S]*?---/m, '')
+      // Remover cabeçalhos de metadados internos de raspagem
+      .replace(/###\s*Área de Serviço Municipal:[^\n]*/gi, '')
+      .replace(/###\s*Informações Oficiais e Requisitos[^\n]*/gi, '')
+      .replace(/-\s*\*\*Entidade Competente:\*\*[^\n]*/gi, '')
+      .replace(/-\s*\*\*Área Administrativa:\*\*[^\n]*/gi, '')
+      .replace(/-\s*\*\*Código de Procedimento:\*\*[^\n]*/gi, '')
+      .replace(/-\s*\*\*Canal Oficial:\*\*[^\n]*/gi, '')
+      .replace(/\[Personalizar cookies\][\s\S]*?\[Top\][^\n]*/gi, '')
+      .replace(/\[Passar para o Conteúdo Principal\][^\n]*/gi, '');
+
+    // Se o título está repetido num cabeçalho no início, removemo-lo
+    if (tituloDoc) {
+      const esc = tituloDoc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regexTitulo = new RegExp(`^#{1,3}\\s*${esc}[^\\n]*`, 'im');
+      limpo = limpo.replace(regexTitulo, '');
+    }
+
+    // Converter sintaxe Markdown para Telegram HTML
+    limpo = limpo
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, '<a href="$2">$1</a>')
+      .replace(/^#{1,4}\s*(.+)$/gm, '<b>$1</b>')
+      .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+      .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<i>$1</i>')
+      .replace(/(?<!_)_([^_]+)_(?!_)/g, '<i>$1</i>')
+      .replace(/^[\*\-]\s+(.+)$/gm, '• $1')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+
+    return limpo;
+  }
+
   formatarResposta(resultado: ResultadoConhecimento): { texto: string; botoes?: Botao[][] } {
     const dataFormatada = resultado.consultadoEm;
-    const motorTag =
-      resultado.motorDecisao === 'typesafe-jev'
-        ? ` · Verificado por TypeSafe Jev (${resultado.modelo?.includes('system-one') ? 'System One Nativo' : 'OpenRouter'})`
-        : resultado.motorDecisao === 'hibrido-vetorial'
-          ? ' · Pesquisa Híbrida (Vetorial + Léxica)'
-          : '';
+    const excertoLimpo = this.converterMarkdownParaTelegramHtml(resultado.excerto, resultado.titulo);
 
     const linhas = [
       `🏛️ <b>${resultado.titulo}</b>`,
       '',
-      resultado.excerto,
+      excertoLimpo,
       '',
       '📌 <b>Evidência Oficial da Câmara Municipal de Guimarães:</b>',
-      `• <b>Fonte:</b> <a href="${resultado.url}">Portal Oficial (${resultado.url})</a>`,
-      `• <b>Data de Consulta:</b> ${dataFormatada} · SHA-256 verificado${motorTag}.`,
+      `• <b>Fonte:</b> <a href="${resultado.url}">Portal Oficial</a> (${resultado.url})`,
+      `• <b>Data de Consulta:</b> ${dataFormatada} · SHA-256 verificado.`,
     ];
 
     if (resultado.precisaEsclarecimento) {
@@ -433,15 +476,15 @@ export class BuscadorConhecimento {
         '',
         '💡 <i>Nota: Para lhe dar o valor ou requisito exato, poderá ser útil indicar mais pormenores sobre a sua situação específica.</i>',
       );
-    } else {
-      linhas.push(
-        '',
-        '<i>(Informação oficial em nível D0 · Se pretender apoio humano ou submissão assistida, selecione uma das opções abaixo.)</i>',
-      );
     }
 
-    const texto = linhas.join('\n');
-    return { texto };
+    const botoes: Botao[][] = [
+      ...(resultado.url && resultado.url.startsWith('http') ? [[{ texto: '🌐 Ver no Portal Oficial ↗', ligacao: resultado.url }]] : []),
+      [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
+    ];
+
+    const texto = linhas.filter((l) => l !== undefined).join('\n');
+    return { texto, botoes };
   }
 
   async #obterVetorPergunta(pergunta: string): Promise<number[] | null> {

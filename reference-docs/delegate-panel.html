@@ -488,7 +488,10 @@
 <div class="app" id="app" data-modo="vivo">
 
   <header class="topo">
-    <img class="logo" src="../design-system/logo/delegate-logo-horizontal-escuro.svg" alt="Delegate">
+    <div style="display:flex;align-items:center;gap:18px;">
+      <img class="logo" src="../design-system/logo/delegate-logo-horizontal-escuro.svg" alt="Delegate">
+      <a href="/consola" style="text-decoration:none;display:inline-flex;align-items:center;gap:7px;background:rgba(22,36,58,0.85);color:#b8ebc8;border:1px solid rgba(195,204,216,0.22);border-radius:99px;padding:4px 13px;font-size:13px;font-weight:700;">🏛️ Consola da Câmara ↗</a>
+    </div>
     <div class="estado-ligacao" id="estado-ligacao" data-estado="ligar" role="status" aria-live="polite">
       <span class="ponto"></span>
       <span id="estado-texto">A ligar ao núcleo…</span>
@@ -869,10 +872,15 @@ function aplicar(ev, animar) {
   const d = ev.dados ?? {};
   switch (ev.tipo) {
     case 'canal.mensagem.recebida': {
+      const eStart = (typeof d.texto === 'string' && d.texto.trim().startsWith('/start')) || d.comando === '/start';
+      if (eStart) {
+        reiniciarSessaoPessoa(ev.pessoa, true);
+      }
       const c = conversa(ev.pessoa);
       const msg = { lado: 'eu', ev, texto: d.texto ?? null, entrada: d.entrada ?? (d.tem_foto ? 'foto' : 'texto'), documento: d.documento ?? null };
       c.mensagens.push(msg);
-      c.aEscrever = true;
+      const recente = animar && (Date.now() - Date.parse(ev.ts) < 15000);
+      definirAEscrever(c, recente);
       const turno = abrirTurno(ev, 'mensagem', d.texto ?? (msg.entrada === 'foto' ? 'Fotografia' : 'Documento'));
       msg.turno = turno.id;
       if (ev.pessoa) tocarCofre(ev);
@@ -884,18 +892,19 @@ function aplicar(ev, animar) {
       const tecla = encontrarTecla(c, d.botao);
       if (tecla) tecla.carregada = true;
       abrirTurno(ev, 'botao', tecla?.texto ?? d.botao);
-      c.aEscrever = true;
+      const recente = animar && (Date.now() - Date.parse(ev.ts) < 15000);
+      definirAEscrever(c, recente);
       if (ev.pessoa === estado.pessoaVisivel) desenharConversaSeVisivel();
       break;
     }
     case 'canal.mensagem.enviada': {
       const turno = anexarAoTurno(ev);
       if (turno && turnoEmVista()?.id === turno.id) atualizarDesfecho(turno);
-      if (!d.entregue_no_canal) break;
       const c = conversa(ev.pessoa);
-      const msg = { lado: 'henriques', ev, texto: d.texto, botoes: (d.botoes ?? []).map((linha) => linha.map((b) => ({ ...b, carregada: false }))) };
+      definirAEscrever(c, false);
+      if (!d.entregue_no_canal) break;
+      const msg = { lado: 'henriques', ev, texto: d.texto, documento: d.documento ?? null, botoes: (d.botoes ?? []).map((linha) => linha.map((b) => ({ ...b, carregada: false }))) };
       c.mensagens.push(msg);
-      c.aEscrever = false;
       mostrarMensagem(ev.pessoa, msg, animar);
       break;
     }
@@ -909,6 +918,9 @@ function aplicar(ev, animar) {
       const turno = anexarAoTurno(ev);
       atualizarCofre(ev, animar);
       if (turno && turnoEmVista()?.id === turno.id) atualizarDesfecho(turno);
+      if (ev.pessoa && estado.conversas.has(ev.pessoa) && (ev.tipo.includes('resposta') || ev.tipo.includes('concluido') || ev.tipo.includes('recusada') || ev.tipo.includes('abstencao'))) {
+        definirAEscrever(estado.conversas.get(ev.pessoa), false);
+      }
     }
   }
   if (animar === false && ev.tipo.startsWith('canal.')) desenharConversaSeVisivel();
@@ -1014,6 +1026,9 @@ function noMensagem(m, animar, cauda) {
   } else if (m.lado === 'eu' && m.entrada === 'documento') {
     bolha.append(el('div', { class: 'anexo' }, el('span', { class: 'icone' }, 'PDF'), m.documento ?? m.texto ?? 'Documento'));
   } else if (m.lado === 'henriques') {
+    if (m.documento) {
+      bolha.append(el('div', { class: 'anexo' }, el('span', { class: 'icone' }, '📄'), m.documento?.nome ?? m.documento ?? 'Documento Oficial'));
+    }
     bolha.append(htmlTelegram(m.texto));
   } else {
     bolha.append(m.texto ?? '');
@@ -1044,9 +1059,75 @@ function noMensagem(m, animar, cauda) {
   return no;
 }
 
+function definirAEscrever(c, sim) {
+  if (!c) return;
+  if (c.temporizadorEscrever) {
+    clearTimeout(c.temporizadorEscrever);
+    c.temporizadorEscrever = null;
+  }
+  c.aEscrever = Boolean(sim);
+  if (c.aEscrever) {
+    c.temporizadorEscrever = setTimeout(() => {
+      c.aEscrever = false;
+      c.temporizadorEscrever = null;
+      if (c.pessoa === estado.pessoaVisivel) {
+        mostrarAEscrever(false);
+      }
+    }, 7000);
+  }
+  if (c.pessoa === estado.pessoaVisivel) {
+    mostrarAEscrever(c.aEscrever);
+  }
+}
+
 function mostrarAEscrever(sim) {
   $('a-escrever')?.classList.toggle('visivel', Boolean(sim));
   $('wa-sub').textContent = sim ? 'a escrever…' : 'Seu Representante Pessoal Digital';
+}
+
+function reiniciarSessaoPessoa(pessoa, manterCofres = true) {
+  if (pessoa) {
+    const c = estado.conversas.get(pessoa);
+    if (c) {
+      c.mensagens = [];
+      definirAEscrever(c, false);
+    }
+    estado.turnos = estado.turnos.filter((t) => t.pessoa !== pessoa);
+    estado.turnoAberto.delete(pessoa);
+    if (estado.turnoVisivel && !estado.turnos.some((t) => t.id === estado.turnoVisivel)) {
+      estado.turnoVisivel = null;
+      estado.arvoreEmVista = null;
+    }
+  } else {
+    for (const c of estado.conversas.values()) {
+      c.mensagens = [];
+      definirAEscrever(c, false);
+    }
+    estado.turnos = [];
+    estado.turnoAberto.clear();
+    estado.turnoVisivel = null;
+    estado.arvoreEmVista = null;
+  }
+
+  if (!manterCofres) {
+    if (pessoa) {
+      estado.cofres.delete(pessoa);
+      estado.cofresAbertos.delete(pessoa);
+      estado.abaCofre.delete(pessoa);
+    } else {
+      estado.cofres.clear();
+      estado.cofresAbertos.clear();
+      estado.abaCofre.clear();
+    }
+  }
+
+  if (pessoa === estado.pessoaVisivel || !pessoa) {
+    desenharConversa();
+    $('motor').hidden = true;
+    $('tempo').hidden = true;
+    $('avaliacao-corpo').replaceChildren(el('div', { class: 'vazio' }, 'Sessão reiniciada com /start. Envie uma mensagem ao Henriques.'));
+  }
+  desenharCofres();
 }
 
 /* ── Turnos: uma mensagem ou um botão, e tudo o que provocou ──────────── */

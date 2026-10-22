@@ -339,6 +339,8 @@ export async function criarServidorPorta(opcoes: OpcoesPorta = {}): Promise<{
           pretensao: 'Construção de Moradia Unifamiliar',
           documentos: ['caderneta_predial_silvares.pdf'],
         });
+      } else if (!p) {
+        p = servicosUrbanos.obterOuCriar(args.processo, { sessao });
       }
 
       p = servicosUrbanos.submeter(args.processo);

@@ -40,15 +40,19 @@ const MIMES: Record<string, string> = {
 };
 
 const ESTATICOS: Record<string, { ficheiro: string; tipo: string }> = {
-  '/': { ficheiro: 'router.html', tipo: 'text/html; charset=utf-8' },
+  '/': { ficheiro: '../../../reference-docs/delegate-panel.html', tipo: 'text/html; charset=utf-8' },
+  '/painel': { ficheiro: '../../../reference-docs/delegate-panel.html', tipo: 'text/html; charset=utf-8' },
+  '/painel.html': { ficheiro: '../../../reference-docs/delegate-panel.html', tipo: 'text/html; charset=utf-8' },
+  '/consola': { ficheiro: '../../../reference-docs/delegate-consola-camara.html', tipo: 'text/html; charset=utf-8' },
+  '/consola.html': { ficheiro: '../../../reference-docs/delegate-consola-camara.html', tipo: 'text/html; charset=utf-8' },
+  '/consola-camara': { ficheiro: '../../../reference-docs/delegate-consola-camara.html', tipo: 'text/html; charset=utf-8' },
+  '/consola-camara.html': { ficheiro: '../../../reference-docs/delegate-consola-camara.html', tipo: 'text/html; charset=utf-8' },
   '/router': { ficheiro: 'router.html', tipo: 'text/html; charset=utf-8' },
   '/router.html': { ficheiro: 'router.html', tipo: 'text/html; charset=utf-8' },
   '/arvore': { ficheiro: 'arvore.html', tipo: 'text/html; charset=utf-8' },
   '/arvore.html': { ficheiro: 'arvore.html', tipo: 'text/html; charset=utf-8' },
   '/observatorio': { ficheiro: 'index.html', tipo: 'text/html; charset=utf-8' },
   '/index.html': { ficheiro: 'index.html', tipo: 'text/html; charset=utf-8' },
-  '/consola': { ficheiro: 'consola.html', tipo: 'text/html; charset=utf-8' },
-  '/consola.html': { ficheiro: 'consola.html', tipo: 'text/html; charset=utf-8' },
   '/porta': { ficheiro: 'delegate.html', tipo: 'text/html; charset=utf-8' },
   '/porta.html': { ficheiro: 'delegate.html', tipo: 'text/html; charset=utf-8' },
   '/delegate': { ficheiro: 'delegate.html', tipo: 'text/html; charset=utf-8' },
@@ -60,8 +64,6 @@ const ESTATICOS: Record<string, { ficheiro: string; tipo: string }> = {
   '/autenticacao': { ficheiro: 'cmd.html', tipo: 'text/html; charset=utf-8' },
   '/cofre': { ficheiro: 'cofre.html', tipo: 'text/html; charset=utf-8' },
   '/cofre.html': { ficheiro: 'cofre.html', tipo: 'text/html; charset=utf-8' },
-  '/painel': { ficheiro: '../../../reference-docs/delegate-panel.html', tipo: 'text/html; charset=utf-8' },
-  '/painel.html': { ficheiro: '../../../reference-docs/delegate-panel.html', tipo: 'text/html; charset=utf-8' },
   '/legendas.json': { ficheiro: 'legendas.json', tipo: 'application/json; charset=utf-8' },
   '/favicon.ico': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
   '/favicon.png': { ficheiro: 'assets/favicon.png', tipo: 'image/png' },
@@ -83,6 +85,12 @@ export interface AcoesCofreServidor {
   simularCifra?: (texto: string, pessoa?: string) => any;
 }
 
+export interface AcaoConsolaServidor {
+  processo: string;
+  acao: string;
+  nota?: string;
+}
+
 export function criarServidorEventos(
   registro: Registo,
   abrirEscuta: () => Promise<pg.Client>,
@@ -91,6 +99,8 @@ export function criarServidorEventos(
   testarPerguntaRouter?: (pergunta: string) => Promise<any> | any,
   obterEstadoProcesso?: () => Promise<any> | any,
   acoesCofre?: AcoesCofreServidor,
+  aoAcaoConsola?: (dados: AcaoConsolaServidor) => Promise<void>,
+  obterPedidosConsola?: () => Promise<any> | any,
 ) {
   return createServer((req, res) => {
     void (async () => {
@@ -283,6 +293,42 @@ export function criarServidorEventos(
         return;
       }
 
+      // 1.1 Ação da Consola Municipal da Câmara (POST /api/consola/acao)
+      if (caminho === '/api/consola/acao' && req.method === 'POST') {
+        let corpo = '';
+        for await (const pedaco of req) corpo += pedaco;
+        try {
+          const body = JSON.parse(corpo);
+          if (aoAcaoConsola) {
+            await aoAcaoConsola(body);
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ ok: true, processo: body.processo, acao: body.acao }));
+          return;
+        } catch (err) {
+          res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
+      // 1.2 Listar Pedidos da Consola Municipal (GET /api/consola/pedidos)
+      if (caminho === '/api/consola/pedidos' && req.method === 'GET') {
+        try {
+          let lista = [];
+          if (obterPedidosConsola) {
+            lista = await obterPedidosConsola();
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify(lista));
+          return;
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ erro: (err as Error).message }));
+          return;
+        }
+      }
+
       // 2. Ficheiros estáticos mapeados
       const estatico = ESTATICOS[caminho];
       if (estatico) {
@@ -370,8 +416,15 @@ export function criarServidorEventos(
       const sessao = pergunta.get('sessao') ?? undefined;
 
       // Primeiro o que se perdeu, depois o que chega.
-      for (const evento of await registro.desde(desde, 200, sessao)) {
-        res.write(`id: ${evento.seq}\ndata: ${JSON.stringify(evento)}\n\n`);
+      let cursor = desde;
+      while (true) {
+        const lote = await registro.desde(cursor, 500, sessao);
+        if (lote.length === 0) break;
+        for (const evento of lote) {
+          res.write(`id: ${evento.seq}\ndata: ${JSON.stringify(evento)}\n\n`);
+          cursor = evento.seq;
+        }
+        if (lote.length < 500) break;
       }
 
       // Uma ligação só para escutar. Nunca uma do pool de consultas: o pool

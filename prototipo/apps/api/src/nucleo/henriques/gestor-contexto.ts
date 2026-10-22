@@ -79,6 +79,20 @@ export class GestorContextoConversa {
       texto: h.texto,
     }));
 
+    // Integrar itens existentes no cofre como factos estruturados em memória
+    if (contextoExterno.itensCofre && contextoExterno.itensCofre.length > 0) {
+      for (const item of contextoExterno.itensCofre) {
+        if (item.tipo && !sessao.factosValidados.has(`cofre_${item.tipo}`)) {
+          sessao.factosValidados.set(`cofre_${item.tipo}`, {
+            campo: `cofre_${item.tipo}`,
+            valor: item.titulo ?? item.tipo,
+            confianca: 1.0,
+            atualizadoEm: Date.now(),
+          });
+        }
+      }
+    }
+
     return {
       pessoa,
       servicoAtivo: contextoExterno.servicoAtivo ?? sessao.servicoAtivoId,
@@ -194,7 +208,25 @@ export class GestorContextoConversa {
   }
 
   /**
-   * Reinicia e invalida completamente o contexto de uma pessoa (usado por /start ou pedido do utilizador).
+   * Reinicia a conversa ativa (usado por /start): limpa o histórico textual integral,
+   * mas PRESERVA os factos estruturados da memória (factosValidados) para que não interfira
+   * com as tomadas de decisão nem obrigue o cidadão a reintroduzir dados já confirmados.
+   */
+  reiniciarConversa(pessoa: string): void {
+    const sessao = this.#sessoes.get(pessoa);
+    if (sessao) {
+      sessao.historicoRecente = [];
+      sessao.servicoAtivoId = undefined;
+      sessao.servicoAtivoTitulo = undefined;
+      sessao.missaoAtivaId = undefined;
+      sessao.estadoProcesso = undefined;
+      sessao.ultimoContactoEm = Date.now();
+      // Factos validados em sessao.factosValidados são preservados!
+    }
+  }
+
+  /**
+   * Invalidação total de sessão e factos (quando expressamente exigido).
    */
   limparTudo(pessoa: string): void {
     this.#sessoes.delete(pessoa);

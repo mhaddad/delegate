@@ -14,23 +14,24 @@ const PORTA_HTTP = Number(process.env.PORTA_HTTP_PORT ?? PORTA_HTTP_PADRAO);
 const BD_PORTA = Number(process.env.PGPORT ?? 5433);
 
 console.log('a ligar a Porta à base de eventos…');
-const client = new pg.Client({
+const pool = new pg.Pool({
   host: '127.0.0.1',
   port: BD_PORTA,
   user: 'postgres',
   password: 'delegado',
   database: 'delegado',
+  max: 5,
 });
-client.on('error', (err: Error) => {
+pool.on('error', (err: Error) => {
   console.warn('⚠ aviso na ligação pg da Porta:', err.message);
 });
 
 let registoEventos: Registo | undefined;
 
 try {
-  await client.connect();
-  registoEventos = new Registo(client);
-  console.log('✓ base ligada para auditoria da Porta');
+  await pool.query('SELECT 1');
+  registoEventos = new Registo(pool);
+  console.log('✓ base ligada para auditoria da Porta (Pool)');
 } catch {
   console.warn('⚠ base não encontrada em localhost:5433 — a Porta arranca sem emitir eventos');
 }
@@ -50,6 +51,6 @@ process.once('SIGTERM', () => void encerrar());
 async function encerrar() {
   console.log('\na encerrar a Porta…');
   await portaInstancia.fechar();
-  await client.end().catch(() => {});
+  await pool.end().catch(() => {});
   process.exit(0);
 }

@@ -63,6 +63,7 @@ export class MotorDecisaoTypeSafe {
                 : null,
               historico_recente: contexto.historicoRecente ?? [],
               itens_no_cofre_digital: contexto.itensCofre ?? [],
+              factos_validados_memoria: contexto.factosValidados ?? {},
             },
             base_intencoes_catalogo: BASE_INTENCOES_MUNICIPAIS,
             fronteiras_e_salvaguardas: FRONTEIRAS_E_SALVAGUARDAS,

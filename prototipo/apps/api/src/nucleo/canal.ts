@@ -7,7 +7,7 @@
  *
  * Ver CANAL.md nestedirectório antes de mexer.
  */
-import { Bot, GrammyError, HttpError, type Context } from 'grammy';
+import { Bot, GrammyError, HttpError, InputFile, type Context } from 'grammy';
 import { createHmac } from 'node:crypto';
 
 /** Chave dos pseudónimos. Só a sessão a conhece, por isso não é reversível. */
@@ -47,7 +47,18 @@ export type Botoes = Botao[][];
 export interface Canal {
   ligar(): Promise<void>;
   enviar(conversa: string, texto: string, botoes?: Botoes): Promise<void>;
-  enviarSequencia(conversa: string, mensagens: string[], botoes?: Botoes): Promise<void>;
+  enviarSequencia(
+    conversa: string,
+    mensagens: string[],
+    botoes?: Botoes,
+    aoEnviar?: (msg: string, eUltima: boolean) => Promise<void>,
+  ): Promise<void>;
+  enviarDocumento?(
+    conversa: string,
+    doc: { nome: string; buffer?: Buffer; caminho?: string; conteudoTexto?: string },
+    legenda?: string,
+    botoes?: Botoes,
+  ): Promise<void>;
   editar(conversa: string, mensagem: number, texto: string, botoes?: Botoes): Promise<void>;
   aEscrever(conversa: string): Promise<void>;
 }
@@ -151,6 +162,12 @@ function pseudonimo(id: number | undefined): string {
 export type AoReceber = (m: MensagemRecebida) => void | Promise<void>;
 
 export interface CanalGrammy extends Canal {
+  enviarDocumento(
+    conversa: string,
+    doc: { nome: string; buffer?: Buffer; caminho?: string; conteudoTexto?: string },
+    legenda?: string,
+    botoes?: Botoes,
+  ): Promise<void>;
   parar(): Promise<void>;
   _aoReceber(f: AoReceber): void;
 }
@@ -236,27 +253,80 @@ export function criarCanalGrammy(token: string): CanalGrammy {
 
   return {
     async ligar() {
-      await bot.api.deleteWebhook({ drop_pending_updates: false });
+      await bot.api.deleteWebhook({ drop_pending_updates: false }).catch(() => {});
 
       const eu = await bot.api.getMe();
       console.log(`ligado a @${eu.username} — espera mensagens`);
 
       // start(), nunca run(): a versão concorrente pode perder mensagens.
-      await bot.start({
-        drop_pending_updates: false,
-        onStart: (info) => console.log(`@${info.username} em modo escuta`),
-      });
+      let ativo = true;
+      while (ativo) {
+        try {
+          await bot.start({
+            drop_pending_updates: false,
+            onStart: (info) => console.log(`@${info.username} em modo escuta`),
+          });
+          ativo = false;
+        } catch (err: unknown) {
+          if (err instanceof GrammyError && err.error_code === 409) {
+            console.warn('⚠ 409 Conflito: outra instância do bot ativa. A aguardar 4s antes de tentar de novo...');
+            await new Promise((r) => setTimeout(r, 4000));
+          } else {
+            throw err;
+          }
+        }
+      }
     },
 
     async enviar(conversa, texto, botoes) {
       const teclado = paraBotoes(botoes);
-      await bot.api.sendMessage(conversa, texto, {
-        parse_mode: 'HTML',
-        ...(teclado ? { reply_markup: teclado } : {}),
-      });
+      try {
+        await bot.api.sendMessage(conversa, texto, {
+          parse_mode: 'HTML',
+          ...(teclado ? { reply_markup: teclado } : {}),
+        });
+      } catch (err: any) {
+        if (err?.message?.includes("can't parse entities") || err?.description?.includes("can't parse entities")) {
+          console.warn('⚠ Erro de parsing HTML no Telegram, a enviar como texto limpo');
+          await bot.api.sendMessage(conversa, texto.replace(/<[^>]+>/g, ''), {
+            ...(teclado ? { reply_markup: teclado } : {}),
+          });
+        } else {
+          throw err;
+        }
+      }
     },
 
-    async enviarSequencia(conversa, mensagens, botoes) {
+    async enviarDocumento(conversa, doc, legenda, botoes) {
+      const teclado = paraBotoes(botoes);
+      let arquivo: InputFile;
+      if (doc.caminho) {
+        arquivo = new InputFile(doc.caminho, doc.nome);
+      } else if (doc.buffer) {
+        arquivo = new InputFile(doc.buffer, doc.nome);
+      } else {
+        arquivo = new InputFile(Buffer.from(doc.conteudoTexto ?? '', 'utf-8'), doc.nome);
+      }
+      try {
+        await bot.api.sendDocument(conversa, arquivo, {
+          caption: legenda,
+          parse_mode: 'HTML',
+          ...(teclado ? { reply_markup: teclado } : {}),
+        });
+      } catch (err: any) {
+        console.warn('⚠ Erro ao enviar documento via bot.api.sendDocument:', err?.message ?? err);
+        await bot.api.sendMessage(
+          conversa,
+          `${legenda ?? ''}\n\n📄 <b>${doc.nome}</b>:\n<pre>${(doc.conteudoTexto ?? '').slice(0, 3500)}</pre>`,
+          {
+            parse_mode: 'HTML',
+            ...(teclado ? { reply_markup: teclado } : {}),
+          },
+        ).catch(() => {});
+      }
+    },
+
+    async enviarSequencia(conversa, mensagens, botoes, aoEnviar) {
       if (!mensagens || mensagens.length === 0) return;
       for (let i = 0; i < mensagens.length; i++) {
         const msg = mensagens[i];
@@ -264,18 +334,30 @@ export function criarCanalGrammy(token: string): CanalGrammy {
         const teclado = eUltima ? paraBotoes(botoes) : undefined;
 
         if (i > 0) {
-          await bot.api.sendChatAction(Number(conversa), 'typing').catch(() => {});
-          const palavras = msg.trim().split(/\s+/).length;
-          const tempoBase = Math.min(1200, Math.max(350, palavras * 25));
-          const jitter = Math.floor(Math.random() * 400) - 150;
-          const pausa = Math.max(250, Math.min(1500, tempoBase + jitter));
+          // Pequena pausa natural entre balões consecutivos (sem re-disparar typing no Telegram)
+          const pausa = Math.min(450, Math.max(180, Math.floor(msg.length * 4)));
           await new Promise((r) => setTimeout(r, pausa));
         }
 
-        await bot.api.sendMessage(conversa, msg, {
-          parse_mode: 'HTML',
-          ...(teclado ? { reply_markup: teclado } : {}),
-        });
+        try {
+          await bot.api.sendMessage(conversa, msg, {
+            parse_mode: 'HTML',
+            ...(teclado ? { reply_markup: teclado } : {}),
+          });
+        } catch (err: any) {
+          if (err?.message?.includes("can't parse entities") || err?.description?.includes("can't parse entities")) {
+            console.warn('⚠ Erro de parsing HTML no Telegram (sequência), a enviar como texto limpo');
+            await bot.api.sendMessage(conversa, msg.replace(/<[^>]+>/g, ''), {
+              ...(teclado ? { reply_markup: teclado } : {}),
+            });
+          } else {
+            throw err;
+          }
+        }
+
+        if (aoEnviar) {
+          await aoEnviar(msg, eUltima);
+        }
       }
     },
 

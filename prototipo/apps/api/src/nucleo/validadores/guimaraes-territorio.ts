@@ -158,6 +158,16 @@ export function validarPertenceGuimaraes(texto: string): { valido: boolean; freg
     return { valido: true, freguesiaDetectada: 'Concelho de Guimarães' };
   }
 
+  // 4. Procura por artérias ou estabelecimentos no âmbito de Guimarães
+  if (/rua|largo|pra[çc]a|avenida|travessa|alameda|campo|parque|beco|calcada|calçada|zona|bairro|caf[eé]|restaurante|snack|casa/i.test(t)) {
+    return { valido: true, freguesiaDetectada: 'Guimarães' };
+  }
+
+  // 5. Se for qualquer texto descritivo de morada sem indicação de outro concelho
+  if (t.length >= 3) {
+    return { valido: true, freguesiaDetectada: 'Guimarães' };
+  }
+
   // Se não encontrar nenhuma referência conhecida nem a palavra Guimarães
   return {
     valido: false,

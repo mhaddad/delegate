@@ -125,9 +125,9 @@ export class Henriques {
     return resposta;
   }
 
-  /** Reinicia a memória conversacional e o contexto de serviço ativo para uma pessoa. */
+  /** Reinicia a memória conversacional preservando factos validados essenciais para decisões. */
   reiniciarConversa(pessoa: string): void {
-    this.#gestorContexto.limparTudo(pessoa);
+    this.#gestorContexto.reiniciarConversa(pessoa);
   }
 
   async #tratarMensagem(pessoa: string, limpo: string, contextoDecisao: ContextoDecisao): Promise<RespostaHenriques> {
@@ -214,10 +214,11 @@ export class Henriques {
     if (respSemFonte) return respSemFonte;
 
     // 5. Base de Conhecimento RAG D0 (Site e Diretório de Guimarães via Cloudflare /markdown)
-    const pediuEsplanadaExplicitamente = /esplanada|mesas na rua|abrir esplanada|restaurante|toldo|estrado/i.test(limpo);
-    const temServicoExplicito =
-      decisaoJev.servicoId && (decisaoJev.servicoId !== 'ocupacao-espaco-publico-esplanada' || pediuEsplanadaExplicitamente);
-    if (!temServicoExplicito || decisaoJev.categoria === 'conhecimento_d0') {
+    const servicoEmCurso = decisaoJev.servicoId ?? contextoDecisao.servicoAtivo;
+    const temServicoExplicito = Boolean(servicoEmCurso && servicoEmCurso !== 'desconhecido');
+    const eRespostaCurtaContextual = Boolean(servicoEmCurso && limpo.length < 30 && !/\?/.test(limpo));
+
+    if ((!temServicoExplicito || decisaoJev.categoria === 'conhecimento_d0') && !eRespostaCurtaContextual) {
       const matchRAG = await this.#buscador.buscarComJev(limpo);
       if (matchRAG && matchRAG.pontuacao >= 5) {
         await this.#registo.registar({
@@ -241,8 +242,40 @@ export class Henriques {
         });
 
         const respFormatada = this.#buscador.formatarResposta(matchRAG);
+        const excertoLimpo = this.#buscador.converterMarkdownParaTelegramHtml(matchRAG.excerto, matchRAG.titulo);
+
+        let textoFinal = respFormatada.texto;
+        try {
+          const redacao = await this.#redator.redigir({
+            pergunta: limpo,
+            servicoId: matchRAG.id,
+            categoria: 'conhecimento_d0',
+            comportamento: 'responder',
+            contextoFactos: [
+              `Assunto Municipal: ${matchRAG.titulo}`,
+              `Informação Oficial Extraída:`,
+              excertoLimpo,
+            ].join('\n'),
+            fonteOficial: matchRAG.url,
+            textoReferencia: excertoLimpo,
+            historicoConversa: contextoDecisao.historicoRecente,
+          });
+
+          if (redacao.geradoPorLlm && redacao.texto && redacao.texto.length > 15) {
+            textoFinal = [
+              redacao.texto.trim(),
+              '',
+              '📌 <b>Evidência Oficial da Câmara Municipal de Guimarães:</b>',
+              `• <b>Fonte:</b> <a href="${matchRAG.url}">Portal Oficial</a> (${matchRAG.url})`,
+              `• <b>Data de Consulta:</b> ${matchRAG.consultadoEm} · SHA-256 verificado.`,
+            ].join('\n');
+          }
+        } catch (err) {
+          console.warn('[Henriques] Alternativa ao redigir RAG com LLM:', (err as Error)?.message);
+        }
+
         return {
-          texto: respFormatada.texto,
+          texto: textoFinal,
           botoes: respFormatada.botoes,
           servicoId: matchRAG.id,
           servicoTitulo: matchRAG.titulo,
@@ -264,8 +297,8 @@ export class Henriques {
     if (!servicoId) {
       // Se o Jev classificou explicitamente como sem_fonte ou se realmente não há catálogo nem RAG
       await this.#registo.registar({
-        tipo: 'afonso.resposta.abstencao',
-        origem: 'afonso',
+        tipo: 'henriques.resposta.abstencao',
+        origem: 'henriques',
         sessao: this.#sessao,
         pessoa,
         missao: contextoDecisao.missaoId ?? null,
@@ -277,14 +310,20 @@ export class Henriques {
         },
       });
 
+      const ehOutroMunicipio = /porto|lisboa|braga|famalic[aã]o|barcelos|coimbra|aveiro|vila\s+nova/i.test(limpo);
+      let explicacao = 'Não encontrei um procedimento autárquico ou norma regulamentar oficial de Guimarães que corresponda diretamente a esta pergunta.';
+      if (ehOutroMunicipio) {
+        explicacao = 'Sou o Henriques, o representante digital para os serviços da <b>Câmara Municipal de Guimarães</b>.\n\nNão disponho de competência nem regulamentos sobre outros municípios (como o Porto), pelo que não posso prestar informações oficiais fora de Guimarães.';
+      }
+
       return {
         texto: [
-          'Não encontrei um procedimento autárquico ou norma regulamentar oficial que corresponda diretamente a esta pergunta.',
+          explicacao,
           '',
-          'Por princípio de lealdade e transparência com o cidadão, o Afonso não fornece respostas estimadas nem inventa requisitos.',
+          'Por princípio de lealdade e transparência com o cidadão, o Henriques não fornece respostas estimadas nem inventa requisitos.',
           '',
           '<b>O que pode fazer:</b>',
-          '• Indicar especificamente o serviço que pretende (por exemplo: <i>esplanada</i>, <i>viabilidade urbanística PIP</i>, <i>isenção de licença de utilização</i> ou <i>cartão sénior</i>);',
+          '• Indicar especificamente o serviço que pretende em <b>Guimarães</b> (por exemplo: <i>esplanadas</i>, <i>viabilidade urbanística PIP</i>, <i>recolha de resíduos</i> ou <i>provas desportivas</i>);',
           '• Ou solicitar atendimento com um técnico do Balcão Único da Câmara.',
         ].join('\n'),
         comportamento: 'abster',

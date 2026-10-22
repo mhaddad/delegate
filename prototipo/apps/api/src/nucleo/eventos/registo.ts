@@ -39,9 +39,9 @@ function linhaParaEvento(linha: Record<string, unknown>): Envelope {
 }
 
 export class Registo {
-  readonly #escrita: pg.Client;
+  readonly #escrita: pg.Client | pg.Pool;
 
-  constructor(escrita: pg.Client) {
+  constructor(escrita: pg.Client | pg.Pool) {
     this.#escrita = escrita;
   }
 
@@ -107,6 +107,20 @@ export class Registo {
   /** Lista os eventos a partir de uma sequência ou por filtro. */
   async listar(filtros: { sessao?: string; limite?: number } = {}): Promise<EventoGuardado[]> {
     return this.desde(0, filtros.limite ?? 100, filtros.sessao);
+  }
+
+  /** Devolve a lista de processos municipais conhecidos a partir dos eventos gravados. */
+  async listarProcessosMunicipais(): Promise<Array<{ processo: string; dados: any; seq: number }>> {
+    const { rows } = await this.#escrita.query(
+      `SELECT seq, dados FROM nucleo.eventos
+       WHERE tipo = 'consola.caso.criado' OR tipo = 'su.processo.criado'
+       ORDER BY seq ASC`,
+    );
+    return rows.map((r: any) => ({
+      processo: r.dados?.processo || 'OEP/2026/0001',
+      dados: r.dados,
+      seq: Number(r.seq),
+    }));
   }
 
   /** Lista o histórico completo de decisões classificadas do Henriques / TypeSafe Jev. */

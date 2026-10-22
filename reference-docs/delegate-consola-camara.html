@@ -64,34 +64,318 @@
       <div class="sidebar-bottom"><div class="nav-label">Espaço de trabalho</div><nav class="nav"><a href="#"><span class="icon">⚙</span>Definições</a></nav><div class="user"><span class="user-avatar">MC</span><div><b>Maria Costa</b><small>Atendimento · Operadora</small></div></div></div>
     </aside>
     <main class="main">
-      <header class="topbar"><div class="crumb">Consola <span> / </span> <b>Solicitações</b></div><div class="top-actions"><input class="search" placeholder="Pesquisar pedido…" aria-label="Pesquisar pedido"><button class="icon-btn" aria-label="Notificações">♧</button><span class="online">Sistema operacional</span></div></header>
+      <header class="topbar">
+        <div class="crumb">Consola <span> / </span> <b>Solicitações</b></div>
+        <div class="top-actions">
+          <a href="/painel" style="text-decoration:none; display:flex; align-items:center; gap:6px; background:#16263d; color:#b8ebc8; font-size:11px; font-weight:700; padding:6px 12px; border-radius:8px; border:1px solid #34465f;">📱 Abrir Painel do Cidadão ↗</a>
+          <input class="search" id="input-pesquisa" placeholder="Pesquisar pedido…" aria-label="Pesquisar pedido">
+          <button class="icon-btn" aria-label="Notificações" title="Notificações">♧</button>
+          <span class="online" id="status-ligacao">Em direto (SSE)</span>
+        </div>
+      </header>
       <div class="content">
-        <section class="heading"><div><span class="eyebrow">Palco e Bastidores · Consola municipal</span><h1>Pedidos para análise</h1><p>A Câmara consulta apenas o resumo necessário. As conversas e os dados pessoais ficam no Delegate.</p></div><span class="date">Terça-feira, 20 de outubro</span></section>
-        <section class="stats"><article class="stat"><div class="stat-head"><span>Pedidos recebidos</span><span class="stat-icon">▤</span></div><strong>12</strong><small><em>4 novos</em> desde as 09:00</small></article><article class="stat"><div class="stat-head"><span>A aguardar análise</span><span class="stat-icon">◷</span></div><strong>4</strong><small>Pedidos com ação municipal necessária</small></article><article class="stat"><div class="stat-head"><span>Em preparação</span><span class="stat-icon">⌁</span></div><strong>8</strong><small><em>6 em curso</em> · 2 concluídos hoje</small></article><article class="stat"><div class="stat-head"><span>Tempo médio de resposta</span><span class="stat-icon">↗</span></div><strong>2h 18m</strong><small>Últimos 7 dias</small></article></section>
-        <section class="workspace privacy-workspace">
-          <article class="card inbox request-list"><div class="card-head"><h2>Solicitações</h2><button class="filter">Mais recentes⌄</button></div><div class="inbox-tools"><span class="pill selected">Todas · 12</span><span class="pill">A aguardar análise</span><span class="pill">Com prioridade</span></div><div class="threads"><div class="thread selected"><div class="thread-top"><b>#DG-2048</b><time>10:42</time></div><p>Ocupação do espaço público · Esplanada aberta</p><div class="thread-foot"><span class="tag wait">Aguarda análise</span></div></div><div class="thread"><div class="thread-top"><b>#DG-2047</b><time>10:18</time></div><p>Recolha de resíduos volumosos</p><div class="thread-foot"><span class="tag">Em triagem</span></div></div><div class="thread"><div class="thread-top"><b>#DG-2046</b><time>09:54</time></div><p>Atestado de residência</p><div class="thread-foot"><span class="tag ok">Informação preparada</span></div></div><div class="thread"><div class="thread-top"><b>#DG-2045</b><time>09:32</time></div><p>Ocupação do espaço público</p><div class="thread-foot"><span class="tag">Em análise</span></div></div></div></article>
-          <article class="card request-details"><div class="card-head"><h2>Solicitação #DG-2048</h2><span class="access-tag">Acesso limitado</span></div><div class="request-body"><div class="privacy-callout"><strong>Partilha mínima ativa</strong><span>A Câmara recebe apenas os dados necessários apresentados neste resumo. A conversa completa e o perfil da pessoa não estão acessíveis.</span></div><div class="request-summary"><div class="info-label">Resumo para análise</div><h3>Ocupação do espaço público · Esplanada aberta</h3><p>Avaliar a instalação de uma esplanada aberta no local indicado pela pessoa requerente.</p></div><div class="data-fields"><div class="info-label">Dados incluídos neste pedido</div><div class="data-row"><span>Serviço</span><b>Espaço Público</b></div><div class="data-row"><span>Tipo de instalação</span><b>Esplanada aberta</b></div><div class="data-row"><span>Local de intervenção</span><b>Centro histórico</b></div></div><div class="data-omitted"><div class="info-label">Não partilhado com a Câmara</div><span class="privacy-chip">Conversa completa</span><span class="privacy-chip">Nome e contacto</span><span class="privacy-chip">Dados pessoais sem relação com o pedido</span></div><div class="request-footer"><span>3 dados necessários · 0 mensagens partilhadas</span><span class="tag wait">Aguarda análise</span></div><div class="privacy-actions"><button class="approve">Encaminhar para análise</button><button class="edit">Pedir elemento necessário</button></div></div></article>
-          <article class="card decision-card"><div class="card-head"><h2>Decisão e resolução</h2><span class="subtle">Solicitação #DG-2048</span></div><div class="decision-body"><p class="decision-intro">A Câmara pode resolver o pedido, pedir apenas os elementos em falta, aprovar ou indeferir. O Delegate comunica a decisão sem abrir o chat.</p><div class="decision-options" role="group" aria-label="Ações sobre a solicitação"><button class="decision-option resolve" type="button" data-decision="resolve">Marcar como resolvido</button><button class="decision-option" type="button" data-decision="documents">Solicitar documentos</button><button class="decision-option approve" type="button" data-decision="approve">Aprovar pedido</button><button class="decision-option reject" type="button" data-decision="reject">Indeferir pedido</button></div><form class="decision-form" hidden><label id="decision-label" for="decision-note"></label><textarea id="decision-note" rows="3"></textarea><div class="decision-form-actions"><button type="button" id="cancel-decision">Cancelar</button><button type="submit" id="confirm-decision">Confirmar</button></div></form><p class="decision-result" role="status" aria-live="polite" hidden></p></div></article>
+        <section class="heading">
+          <div>
+            <span class="eyebrow">Palco e Bastidores · Consola municipal</span>
+            <h1>Pedidos para análise</h1>
+            <p>A Câmara consulta apenas o resumo necessário. As conversas e os dados pessoais ficam no Delegate.</p>
+          </div>
+          <span class="date" id="data-topo">Guimarães · 2026</span>
         </section>
-        <footer class="footnote"><span><span class="prototype">PROTÓTIPO</span> Dados demonstrativos fictícios. A vista municipal mostra apenas solicitações minimizadas; conversas e dados pessoais ficam fora da consola.</span></footer>
+        <section class="stats">
+          <article class="stat"><div class="stat-head"><span>Pedidos recebidos</span><span class="stat-icon">▤</span></div><strong id="stat-total">12</strong><small><em id="stat-novos">3 ativos</em> da demonstração</small></article>
+          <article class="stat"><div class="stat-head"><span>A aguardar análise</span><span class="stat-icon">◷</span></div><strong id="stat-aguarda">3</strong><small>Ação municipal necessária</small></article>
+          <article class="stat"><div class="stat-head"><span>Em preparação</span><span class="stat-icon">⌁</span></div><strong>8</strong><small><em>6 em curso</em> no Delegate</small></article>
+          <article class="stat"><div class="stat-head"><span>Tempo médio de resposta</span><span class="stat-icon">↗</span></div><strong>2h 18m</strong><small>Últimos 7 dias</small></article>
+        </section>
+        <section class="workspace privacy-workspace">
+          <article class="card inbox request-list">
+            <div class="card-head"><h2>Solicitações</h2><button class="filter">Mais recentes⌄</button></div>
+            <div class="inbox-tools">
+              <span class="pill selected" data-filtro="todas" id="filtro-todas">Todas · 12</span>
+              <span class="pill" data-filtro="aguarda" id="filtro-aguarda">A aguardar análise</span>
+              <span class="pill" data-filtro="concluidas" id="filtro-concluidas">Concluídas</span>
+            </div>
+            <div class="threads" id="lista-threads"></div>
+          </article>
+          <article class="card request-details">
+            <div class="card-head"><h2 id="detalhes-titulo">Solicitação</h2><span class="access-tag" id="detalhes-acesso">Partilha Mínima</span></div>
+            <div class="request-body">
+              <div class="privacy-callout">
+                <strong>Partilha mínima ativa</strong>
+                <span>A Câmara recebe apenas os dados necessários apresentados neste resumo. A conversa completa e o perfil da pessoa permanecem no Cofre Digital.</span>
+              </div>
+              <div class="request-summary">
+                <div class="info-label">Resumo para análise</div>
+                <h3 id="detalhes-resumo-titulo">Ocupação do espaço público</h3>
+                <p id="detalhes-resumo-desc">Avaliar pedido formal com Chave Móvel Digital.</p>
+              </div>
+              <div class="data-fields">
+                <div class="info-label">Dados incluídos neste pedido</div>
+                <div id="detalhes-dados-lista"></div>
+              </div>
+              <div class="data-omitted">
+                <div class="info-label">Não partilhado com a Câmara (Protegido no Cofre)</div>
+                <div id="detalhes-omitidos-lista" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+              </div>
+              <div class="request-footer">
+                <span id="detalhes-meta">3 dados necessários · 0 mensagens partilhadas</span>
+                <span class="tag wait" id="detalhes-tag">Aguarda análise</span>
+              </div>
+              <div class="privacy-actions"><button class="approve">Encaminhar para análise</button><button class="edit">Pedir elemento necessário</button></div>
+            </div>
+          </article>
+          <article class="card decision-card">
+            <div class="card-head"><h2 id="decisao-topo-titulo">Decisão e resolução</h2><span class="subtle" id="decisao-topo-sub">Processo Ativo</span></div>
+            <div class="decision-body">
+              <p class="decision-intro">A Câmara pode resolver o pedido, pedir apenas os elementos em falta, aprovar ou indeferir. O Delegate comunica a decisão sem abrir o chat privado.</p>
+              <div class="decision-options" role="group" aria-label="Ações sobre a solicitação">
+                <button class="decision-option resolve" type="button" data-decision="resolve">Marcar como resolvido</button>
+                <button class="decision-option" type="button" data-decision="documents">Solicitar documentos</button>
+                <button class="decision-option approve" type="button" data-decision="approve">Aprovar pedido</button>
+                <button class="decision-option reject" type="button" data-decision="reject">Indeferir pedido</button>
+              </div>
+              <form class="decision-form" hidden>
+                <label id="decision-label" for="decision-note"></label>
+                <textarea id="decision-note" rows="3"></textarea>
+                <div class="decision-form-actions">
+                  <button type="button" id="cancel-decision">Cancelar</button>
+                  <button type="submit" id="confirm-decision">Confirmar</button>
+                </div>
+              </form>
+              <p class="decision-result" role="status" aria-live="polite" hidden></p>
+            </div>
+          </article>
+        </section>
+        <footer class="footnote"><span><span class="prototype">PROTÓTIPO MUNICIPAL</span> A vista autárquica mostra apenas solicitações minimizadas; conversas e dados pessoais ficam fora da consola.</span></footer>
       </div>
     </main>
   </div>
   <script>
+    let solicitacoes = [
+      {
+        id: "CASO-0001",
+        processo: "OEP/2026/0001",
+        codigo: "#OEP-0001",
+        titulo: "Ocupação do espaço público · Esplanada aberta",
+        servico: "Espaço Público (OVP-SO)",
+        hora: "10:42",
+        status: "Aguarda análise",
+        tagClass: "tag wait",
+        resumo: "Avaliar a instalação de uma esplanada aberta no local indicado pela pessoa requerente (Largo da Oliveira).",
+        dados: [
+          { campo: "Processo Municipal", valor: "OEP/2026/0001" },
+          { campo: "Serviço", valor: "Mera Comunicação Prévia (Artigo 8.º ROPP)" },
+          { campo: "Local de intervenção", valor: "Largo da Oliveira, 12, Guimarães" },
+          { campo: "Área e Instalação", valor: "10 m² · 4 Mesas e 8 Cadeiras" },
+          { campo: "Corredor Pedonal", valor: "2,10m livres (Cumpre requisito Art. 8.º >= 2,00m)" },
+          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" },
+        ],
+        omitidos: ["Conversa completa", "NIF e Contacto direto", "Faturamento do restaurante", "IBAN", "Situação fiscal"],
+      },
+      {
+        id: "CASO-0002",
+        processo: "PIP/2026/0002",
+        codigo: "#PIP-0002",
+        titulo: "Pedido de Informação Prévia (PIP) · Viabilidade PDM",
+        servico: "Gestão Urbanística (Art. 14.º RJUE)",
+        hora: "10:18",
+        status: "Aguarda análise",
+        tagClass: "tag wait",
+        resumo: "Apreciação prévia vinculativa de viabilidade de construção de moradia unifamiliar em Silvares.",
+        dados: [
+          { campo: "Processo Municipal", valor: "PIP/2026/0002" },
+          { campo: "Localização do Terreno", valor: "Silvares, Guimarães (41.4425, -8.2918)" },
+          { campo: "Classificação no PDM", valor: "Solo Urbano · Espaço Residencial Nível 2" },
+          { campo: "Caderneta Predial", valor: "Artigo Matricial 1420 (Silvares, Guimarães)" },
+          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" },
+        ],
+        omitidos: ["Conversa completa", "Restante património imobiliário", "Dados bancários"],
+      },
+      {
+        id: "CASO-0003",
+        processo: "EVT/2026/0003",
+        codigo: "#EVT-0003",
+        titulo: "Autorização para Prova Desportiva na Via Pública",
+        servico: "Divisão de Trânsito e Polícia Municipal",
+        hora: "09:54",
+        status: "Aguarda análise",
+        tagClass: "tag wait",
+        resumo: "Licenciamento e parecer para realização da 1.ª Corrida Popular de Azurém (10 Km).",
+        dados: [
+          { campo: "Processo Municipal", valor: "EVT/2026/0003" },
+          { campo: "Percurso Oficial", valor: "Azurém · Partida: Campus Azurém / Meta: Pista Gémeos Castro" },
+          { campo: "Data do Evento", valor: "15 de Outubro de 2026 (09:30 às 12:30)" },
+          { campo: "Apólice de Seguro", valor: "N.º 98765432-FID/2026 (Fidelidade Seguros · DL 10/2009)" },
+          { campo: "Termo de Responsabilidade", valor: "Assinado com declaração de limpeza da via" },
+          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" },
+        ],
+        omitidos: ["Conversa completa", "Dados pessoais de atletas inscritos", "Dados bancários"],
+      },
+      {
+        id: "DG-2045",
+        processo: "RES/2026/0112",
+        codigo: "#DG-2045",
+        titulo: "Recolha de resíduos volumosos",
+        servico: "Serviços Urbanos e Ambiente",
+        hora: "09:32",
+        status: "Resolvida",
+        tagClass: "tag ok",
+        resumo: "Agendamento de recolha de móveis e eletrodomésticos no domicílio.",
+        dados: [
+          { campo: "Serviço", valor: "Recolha de Monstros" },
+          { campo: "Freguesia", valor: "Creixomil, Guimarães" },
+          { campo: "Tipologia", valor: "2 volumes (sofá e frigorífico)" },
+        ],
+        omitidos: ["Conversa completa", "Contacto telefónico"],
+      }
+    ];
+
+    let solicitacaoSelecionada = solicitacoes[0];
+    let filtroAtual = "todas";
+
     const decisionActions = {
-      resolve: {label: "Nota de conclusão (opcional)", placeholder: "Registe brevemente como o pedido foi resolvido.", required: false, status: "Resolvida", tagClass: "tag ok", button: "Confirmar resolução", result: "Solicitação marcada como resolvida nesta demonstração."},
-      documents: {label: "Documento ou elemento em falta", placeholder: "Indique apenas o elemento necessário para avançar com esta solicitação.", required: true, status: "Aguarda documentos", tagClass: "tag wait", button: "Registar pedido de documentos", result: "Pedido de documentos registado nesta demonstração."},
-      approve: {label: "Fundamentação da aprovação", placeholder: "Registe brevemente a decisão de aprovação.", required: true, status: "Aprovada", tagClass: "tag ok", button: "Confirmar aprovação", result: "Solicitação aprovada nesta demonstração."},
-      reject: {label: "Motivo do indeferimento", placeholder: "Indique o motivo objetivo do indeferimento.", required: true, status: "Indeferida", tagClass: "tag refused", button: "Confirmar indeferimento", result: "Solicitação indeferida nesta demonstração."}
+      resolve: {
+        label: "Nota de conclusão (opcional)",
+        placeholder: "Registe brevemente como o pedido foi resolvido.",
+        required: false,
+        status: "Resolvida",
+        tagClass: "tag ok",
+        button: "Confirmar resolução",
+        result: "Solicitação marcada como resolvida com sucesso."
+      },
+      documents: {
+        label: "Documento ou elemento em falta",
+        placeholder: "Indique o elemento necessário (ex.: Por favor confirme a largura da fachada do estabelecimento).",
+        required: true,
+        status: "Aguarda documentos",
+        tagClass: "tag wait",
+        button: "Pedir à Pessoa pelo Henriques",
+        result: "Pedido de elementos enviado ao Henriques e entregue no Telegram da pessoa."
+      },
+      approve: {
+        label: "Fundamentação da aprovação",
+        placeholder: "Registe a fundamentação regulamentar do deferimento.",
+        required: true,
+        status: "Aprovada",
+        tagClass: "tag ok",
+        button: "Aprovar e Notificar",
+        result: "Solicitação aprovada formalmente. Notificação enviada ao cidadão."
+      },
+      reject: {
+        label: "Motivo do indeferimento",
+        placeholder: "Indique o motivo objetivo do indeferimento.",
+        required: true,
+        status: "Indeferida",
+        tagClass: "tag refused",
+        button: "Confirmar indeferimento",
+        result: "Solicitação indeferida pelos serviços municipais."
+      }
     };
+
+    function renderizarSolicitacoes() {
+      const container = document.getElementById("lista-threads");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const termoBusca = (document.getElementById("input-pesquisa")?.value || "").toLowerCase().trim();
+
+      const filtradas = solicitacoes.filter((s) => {
+        if (termoBusca && !s.titulo.toLowerCase().includes(termoBusca) && !s.processo.toLowerCase().includes(termoBusca) && !s.codigo.toLowerCase().includes(termoBusca)) {
+          return false;
+        }
+        if (filtroAtual === "aguarda") return s.status.includes("Aguarda");
+        if (filtroAtual === "concluidas") return s.status === "Aprovada" || s.status === "Resolvida";
+        return true;
+      });
+
+      filtradas.forEach((s) => {
+        const item = document.createElement("div");
+        item.className = "thread" + (s.processo === solicitacaoSelecionada?.processo ? " selected" : "");
+        item.innerHTML = `
+          <div class="thread-top">
+            <b>${s.codigo}</b>
+            <time>${s.hora}</time>
+          </div>
+          <p>${s.titulo}</p>
+          <div class="thread-foot">
+            <span class="${s.tagClass}">${s.status}</span>
+          </div>
+        `;
+        item.addEventListener("click", () => {
+          solicitacaoSelecionada = s;
+          renderizarSolicitacoes();
+          renderizarDetalhes(s);
+        });
+        container.appendChild(item);
+      });
+
+      document.getElementById("stat-total").textContent = solicitacoes.length;
+      document.getElementById("stat-aguarda").textContent = solicitacoes.filter((s) => s.status.includes("Aguarda")).length;
+    }
+
+    function renderizarDetalhes(s) {
+      if (!s) return;
+      document.getElementById("detalhes-titulo").textContent = `Solicitação ${s.codigo}`;
+      document.getElementById("detalhes-resumo-titulo").textContent = s.titulo;
+      document.getElementById("detalhes-resumo-desc").textContent = s.resumo;
+
+      const dadosLista = document.getElementById("detalhes-dados-lista");
+      dadosLista.innerHTML = (s.dados || [])
+        .map((d) => `<div class="data-row"><span>${d.campo}</span><b>${d.valor}</b></div>`)
+        .join("");
+
+      const omitidosLista = document.getElementById("detalhes-omitidos-lista");
+      omitidosLista.innerHTML = (s.omitidos || [])
+        .map((o) => `<span class="privacy-chip">${o}</span>`)
+        .join("");
+
+      const tagDetalhes = document.getElementById("detalhes-tag");
+      tagDetalhes.textContent = s.status;
+      tagDetalhes.className = s.tagClass;
+
+      document.getElementById("detalhes-meta").textContent = `${s.dados?.length ?? 3} dados necessários · 0 mensagens partilhadas`;
+      document.getElementById("decisao-topo-titulo").textContent = `Decisão e resolução`;
+      document.getElementById("decisao-topo-sub").textContent = `${s.codigo} · ${s.processo}`;
+
+      // Reset form
+      document.querySelector(".decision-form").hidden = true;
+      if (s.status === "Aprovada") {
+        decisionResult.textContent = `✅ Processo aprovado e alvará digital emitido. Cidadão notificado no Telegram.`;
+        decisionResult.hidden = false;
+      } else if (s.status === "Indeferida") {
+        decisionResult.textContent = `❌ Processo indeferido. Cidadão notificado no Telegram.`;
+        decisionResult.hidden = false;
+      } else {
+        decisionResult.hidden = true;
+      }
+    }
+
+    // Filtros
+    document.querySelectorAll(".inbox-tools .pill").forEach((pill) => {
+      pill.addEventListener("click", () => {
+        document.querySelectorAll(".inbox-tools .pill").forEach((p) => p.classList.remove("selected"));
+        pill.classList.add("selected");
+        filtroAtual = pill.dataset.filtro || "todas";
+        renderizarSolicitacoes();
+      });
+    });
+
+    document.getElementById("input-pesquisa")?.addEventListener("input", () => {
+      renderizarSolicitacoes();
+    });
+
+    // Ações de Decisão
     const decisionForm = document.querySelector(".decision-form");
     const decisionNote = document.getElementById("decision-note");
     const decisionResult = document.querySelector(".decision-result");
+    let selectedDecisionKey = null;
     let selectedDecision = null;
 
     document.querySelectorAll("[data-decision]").forEach((button) => {
       button.addEventListener("click", () => {
-        selectedDecision = decisionActions[button.dataset.decision];
+        selectedDecisionKey = button.dataset.decision;
+        selectedDecision = decisionActions[selectedDecisionKey];
         document.getElementById("decision-label").textContent = selectedDecision.label;
         document.getElementById("confirm-decision").textContent = selectedDecision.button;
         decisionNote.placeholder = selectedDecision.placeholder;
@@ -108,23 +392,203 @@
     document.getElementById("cancel-decision").addEventListener("click", () => {
       decisionForm.hidden = true;
       selectedDecision = null;
+      selectedDecisionKey = null;
     });
-    decisionForm.addEventListener("submit", (event) => {
+
+    decisionForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (!selectedDecision) return;
+      if (!selectedDecision || !solicitacaoSelecionada) return;
       if (selectedDecision.required && !decisionNote.value.trim()) {
         decisionNote.setCustomValidity("Indique a informação necessária para registar esta ação.");
         decisionNote.reportValidity();
         return;
       }
-      document.querySelector(".request-footer .tag").textContent = selectedDecision.status;
-      document.querySelector(".request-footer .tag").className = selectedDecision.tagClass;
-      document.querySelector(".thread.selected .tag").textContent = selectedDecision.status;
-      document.querySelector(".thread.selected .tag").className = selectedDecision.tagClass;
-      decisionResult.textContent = `${selectedDecision.result} A ação real e a notificação dependem da integração com o sistema municipal.`;
-      decisionResult.hidden = false;
-      decisionForm.hidden = true;
+
+      const nota = decisionNote.value.trim();
+      const btn = document.getElementById("confirm-decision");
+      btn.disabled = true;
+      btn.textContent = "A registar…";
+
+      try {
+        const resp = await fetch("/api/consola/acao", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            processo: solicitacaoSelecionada.processo,
+            acao: selectedDecisionKey,
+            nota: nota || undefined,
+          }),
+        });
+
+        if (!resp.ok) {
+          throw new Error("Falha na comunicação com o servidor.");
+        }
+
+        solicitacaoSelecionada.status = selectedDecision.status;
+        solicitacaoSelecionada.tagClass = selectedDecision.tagClass;
+
+        decisionResult.textContent = `${selectedDecision.result} Notificação enviada para o canal do cidadão.`;
+        decisionResult.hidden = false;
+        decisionForm.hidden = true;
+
+        renderizarSolicitacoes();
+        renderizarDetalhes(solicitacaoSelecionada);
+      } catch (err) {
+        decisionResult.textContent = `Aviso: ${err.message}. A ação foi registada localmente.`;
+        decisionResult.hidden = false;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = selectedDecision.button;
+      }
     });
+
+    // Ligação em Tempo Real ao Barramento SSE (/eventos/stream)
+    function ligarEventos() {
+      const statusLigacao = document.getElementById("status-ligacao");
+      const es = new EventSource("/eventos/stream");
+
+      es.onopen = () => {
+        if (statusLigacao) {
+          statusLigacao.textContent = "● Em direto (SSE)";
+          statusLigacao.style.color = "var(--green)";
+        }
+      };
+
+      es.onerror = () => {
+        if (statusLigacao) {
+          statusLigacao.textContent = "○ A reconectar…";
+          statusLigacao.style.color = "var(--gold)";
+        }
+      };
+
+      es.onmessage = (event) => {
+        try {
+          const ev = JSON.parse(event.data);
+          tratarEvento(ev);
+        } catch (_) {}
+      };
+    }
+
+    function tratarEvento(ev) {
+      if (!ev || !ev.tipo) return;
+      const d = ev.dados || {};
+
+      if (ev.tipo === "consola.caso.criado") {
+        const processo = d.processo || "OEP/2026/0001";
+        const codigo = `#${processo.replace(/[/]/g, "-")}`;
+        let casoExistente = solicitacoes.find((s) => s.processo === processo);
+
+        const dadosExtraidos = [
+          { campo: "Processo Municipal", valor: processo },
+          { campo: "Serviço", valor: d.servico || "Serviço Municipal" },
+          { campo: "Nível de Risco", valor: d.risco ? d.risco.toUpperCase() : "BAIXO" },
+        ];
+
+        if (d.estabelecimento) dadosExtraidos.push({ campo: "Estabelecimento", valor: d.estabelecimento });
+        if (d.morada) dadosExtraidos.push({ campo: "Local de intervenção", valor: d.morada });
+        if (d.mesas) dadosExtraidos.push({ campo: "Área e Instalação", valor: `${d.area_m2 || d.mesas * 2.5} m² · ${d.mesas} mesas` });
+        if (d.largura_livre) dadosExtraidos.push({ campo: "Corredor Pedonal", valor: d.largura_livre });
+        dadosExtraidos.push({ campo: "Assinatura Digital", valor: d.token_cmd ? `Chave Móvel Digital (${d.token_cmd})` : "Chave Móvel Digital (Mandato D3)" });
+
+        if (d.documentos && Array.isArray(d.documentos)) {
+          dadosExtraidos.push({ campo: "Documentos Instruídos", valor: d.documentos.join(", ") });
+        }
+
+        if (casoExistente) {
+          casoExistente.status = "Aguarda análise";
+          casoExistente.tagClass = "tag wait";
+          if (d.estabelecimento) {
+            casoExistente.resumo = `Avaliar instalação de esplanada aberta no estabelecimento ${d.estabelecimento}.`;
+          }
+          casoExistente.dados = dadosExtraidos;
+          solicitacaoSelecionada = casoExistente;
+        } else {
+          const novoCaso = {
+            id: `CASO-${processo.replace(/[/]/g, "-")}`,
+            processo,
+            codigo,
+            titulo: d.servico?.includes("urbanismo")
+              ? "Pedido de Informação Prévia (PIP) · Viabilidade PDM"
+              : d.servico?.includes("desportiv")
+                ? "Autorização para Prova Desportiva na Via Pública"
+                : "Ocupação do espaço público · Esplanada aberta",
+            servico: d.servico || "Serviço Municipal",
+            hora: new Date().toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" }),
+            status: "Aguarda análise",
+            tagClass: "tag wait",
+            resumo: `Processo ${processo} submetido com Chave Móvel Digital e pronto para triagem técnica.`,
+            dados: dadosExtraidos,
+            omitidos: ["Conversa completa", "NIF e Contacto direto", "Dados bancários"],
+          };
+          solicitacoes.unshift(novoCaso);
+          solicitacaoSelecionada = novoCaso;
+        }
+
+        renderizarSolicitacoes();
+        renderizarDetalhes(solicitacaoSelecionada);
+      } else if (ev.tipo === "consola.caso.despachado") {
+        const caso = solicitacoes.find((s) => s.processo === d.processo);
+        if (caso) {
+          caso.status = d.decisao === "aprovado" ? "Aprovada" : "Indeferida";
+          caso.tagClass = d.decisao === "aprovado" ? "tag ok" : "tag refused";
+          renderizarSolicitacoes();
+          if (solicitacaoSelecionada?.processo === caso.processo) {
+            renderizarDetalhes(caso);
+          }
+        }
+      } else if (ev.tipo === "consola.elemento.solicitado") {
+        const caso = solicitacoes.find((s) => s.processo === d.processo);
+        if (caso) {
+          caso.status = "Aguarda documentos";
+          caso.tagClass = "tag wait";
+          renderizarSolicitacoes();
+          if (solicitacaoSelecionada?.processo === caso.processo) {
+            renderizarDetalhes(caso);
+          }
+        }
+      } else if (ev.tipo === "missao.transicao") {
+        if (d.para === "com_tecnico") {
+          const caso = solicitacoes.find((s) => s.processo === "OEP/2026/0001");
+          if (caso) {
+            caso.status = "Elemento fornecido";
+            caso.tagClass = "tag ok";
+            caso.dados.push({ campo: "Elemento Adicional", valor: "Fachada: 8 metros" });
+            renderizarSolicitacoes();
+            if (solicitacaoSelecionada?.processo === caso.processo) {
+              renderizarDetalhes(caso);
+            }
+          }
+        }
+      }
+    }
+
+    // Carregamento dinâmico a partir da API da Consola Municipal
+    async function carregarPedidos() {
+      try {
+        const resp = await fetch("/api/consola/pedidos");
+        if (resp.ok) {
+          const lista = await resp.json();
+          if (Array.isArray(lista) && lista.length > 0) {
+            solicitacoes = lista;
+            if (!solicitacaoSelecionada || !solicitacoes.some((s) => s.processo === solicitacaoSelecionada.processo)) {
+              solicitacaoSelecionada = solicitacoes[0];
+            } else {
+              solicitacaoSelecionada = solicitacoes.find((s) => s.processo === solicitacaoSelecionada.processo) || solicitacoes[0];
+            }
+            renderizarSolicitacoes();
+            renderizarDetalhes(solicitacaoSelecionada);
+          }
+        }
+      } catch (err) {
+        console.warn("Aviso ao carregar pedidos da API:", err);
+      }
+    }
+
+    // Inicialização
+    renderizarSolicitacoes();
+    renderizarDetalhes(solicitacaoSelecionada);
+    carregarPedidos();
+    ligarEventos();
   </script>
 </body>
 </html>

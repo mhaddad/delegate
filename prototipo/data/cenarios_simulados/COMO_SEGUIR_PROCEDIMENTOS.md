@@ -111,9 +111,36 @@ prototipo/data/cenarios_simulados/
 
 ---
 
-## 🔍 Como Acompanhar os Eventos em Tempo Real
+## 🔍 As Duas Consolas Oficiais em Tempo Real
 
-A qualquer momento durante o teste:
-* **Consola do Router:** Abra `http://localhost:4000/` para ver o tráfego dos eventos em direto.
-* **Fluxo SSE:** `http://localhost:4000/eventos/stream`
-* **Contratos MCP da Porta:** `http://localhost:4001/mcp`
+O sistema foca-se exclusivamente nas duas consolas padronizadas:
+
+* **📱 1. Painel Integrado do Cidadão (Demonstrador Principal):**  
+  👉 **`http://localhost:4000/painel`** (ou `http://localhost:4000/`)  
+  *(Simulador do telemóvel Telegram do cidadão com o Henriques, árvore de decisão TypeSafe Jev, Cofre Digital pessoal, cliente MCP e terminal de auditoria SSE em tempo real).*
+
+* **🏛️ 2. Consola Municipal da Câmara:**  
+  👉 **`http://localhost:4000/consola`**  
+  *(Consola do técnico municipal da autarquia: lista minimizada de pedidos, apreciação do processo OEP/2026/0001 da Esplanada, solicitar elementos/fachada, deferir ou indeferir).*
+
+---
+
+## 📂 Documentos Disponíveis para Simular a Esplanada (`01_esplanada/`)
+
+Para simular o pedido da esplanada de forma realista no Telegram ou no Painel, estão disponíveis os seguintes ficheiros em `prototipo/data/cenarios_simulados/01_esplanada/`:
+
+1. **`planta_cotada_esplanada_oliveira.md`** — *Planta de Implantação e Croquis Cotado*  
+   Memória descritiva e desenho cotado: frente de fachada de 8m, ocupação de 5m x 2m (10 m²), 4 mesas e corredor pedonal livre de **2,10m** (cumpre o Artigo 8.º >= 2,00m).
+2. **`certidao_comercial_casa_joaquim.md`** — *Certidão Comercial Permanente*  
+   Comprova a titularidade do estabelecimento "Casa Joaquim, Lda" (CAE 56101 - Restauração) no Largo da Oliveira 12.
+3. **`medicao_fachada_8m.md`** — *Declaração de Medição da Fachada (8 Metros)*  
+   Documento para responder à solicitação da Consola Municipal quando o técnico pede elementos adicionais de fachada.
+4. **`termo_conformidade_mobiliario.md`** — *Termo de Responsabilidade do Mobiliário*  
+   Garante mobiliário 100% amovível, sem perfurações no granito histórico e em harmonia com o património UNESCO.
+5. **`minuta_modelo_ovp_so.md`** — *Requerimento Oficial Modelo OVP-SO*  
+   Minuta formal gerada pelo Henriques para submissão com Chave Móvel Digital.
+
+### Como usar os documentos na conversa:
+* **Pedir documento:** Escreva no chat `«Dá-me o documento da esplanada»` ou `«Envia a planta»` ou `«Quero a certidão»` — o Henriques envia o ficheiro diretamente na conversa com botões de instrução.
+* **Enviar documento:** Anexe qualquer um destes ficheiros através do clipe 📎 do Telegram (ou clique em `[📑 Simular Envio: Planta no Pedido]`) — o Henriques calcula o hash SHA-256, arquiva no Cofre e integra no pedido oficial à Câmara.
+

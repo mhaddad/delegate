@@ -217,6 +217,14 @@ export class OrquestradorMissoes {
     return this.#missoes.get(missaoId);
   }
 
+  listarTodas(): Missao[] {
+    return Array.from(this.#missoes.values());
+  }
+
+  listar(): Missao[] {
+    return this.listarTodas();
+  }
+
   listarPorPessoa(pessoa: string): Missao[] {
     return Array.from(this.#missoes.values()).filter((m) => m.pessoa === pessoa);
   }

@@ -67,7 +67,7 @@ export class TratadorComandos {
       }
       await this.#orquestrador.cancelarTodasPorPessoa(m.pessoa, 'reinicio_comando_start');
       await this.#mandatos.revogarTodosPorPessoa(m.pessoa);
-      await this.#cofre.removerTodosPorPessoa(m.pessoa);
+      // Os cofres digitais do cidadão persistem entre reinícios de sessão (menos os cofres)
 
       const persona = textoLimpo.replace('/start', '').trim() || 'ines-demo';
       await this.#canal.enviar(
@@ -86,22 +86,10 @@ export class TratadorComandos {
           '• /dados — Quem consultou os meus dados',
           '• /pessoa — Pedir atendimento humano na Câmara',
           '',
-          '<b>Iniciar Casos de Teste da Demonstração:</b>',
-          '• ☕ <b>Esplanada:</b> Preparar ocupação de espaço público (D2 -> D3)',
-          '• 🏡 <b>PDM Silvares:</b> Pedido de Informação Prévia (Maps + Caderneta)',
-          '',
           'Pode falar com uma pessoa a qualquer momento.',
+          '',
+          'Diga o que precisa. O Henriques trata do resto.',
         ].join('\n'),
-        [
-          [
-            { texto: '☕ Iniciar: Esplanada (D2)', dados: 'iniciar_esplanada' },
-            { texto: '🏡 Iniciar: PDM Silvares (D2)', dados: 'iniciar_pdm' },
-          ],
-          [
-            { texto: '📜 Carta de Lealdade', dados: 'cmd_carta' },
-            { texto: '👤 Falar com uma pessoa', dados: 'pessoa' },
-          ],
-        ],
       );
       await this.#registar(m, { comando: '/start' });
       return true;

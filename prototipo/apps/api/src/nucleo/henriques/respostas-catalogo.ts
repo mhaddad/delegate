@@ -131,8 +131,8 @@ export async function gerarRespostaCatalogo(params: {
       mudancaServico: decisaoJev.mudancaServico,
       texto: prefixoMudanca + textoFinal,
       botoes: [
+        [{ texto: '🚀 Ajuda-me a tratar (Iniciar D2 no Cofre)', dados: 'iniciar_esplanada' }],
         [{ texto: '📥 Abrir Formulário OVP-SO ↗', ligacao: 'https://www.cm-guimaraes.pt/servicos-online/formularios/detalhe-de-procedimento?procedure_id=QVRFI09WUC1TTyNPVlAtU08=' }],
-        [{ texto: '🚀 Ajuda-me a tratar (Cofre D2)', dados: 'iniciar_esplanada' }],
         [{ texto: '📜 Ver Fundamentação Oficial', dados: `ver_fontes:${servicoId}` }],
         [{ texto: '👤 Falar com uma pessoa', dados: 'pessoa' }],
       ],
@@ -409,8 +409,12 @@ export async function gerarRespostaCatalogo(params: {
   }
 
   // 5. Outros Serviços Curados do Catálogo Oficial
-  const tituloOficial = ficha?.titulo_oficial ?? servicoId;
-  const tituloSimples = ficha?.titulo_simples ?? tituloOficial;
+  const tituloBruto = ficha?.titulo_simples ?? ficha?.titulo_oficial ?? servicoId;
+  const tituloOficial = tituloBruto
+    .replace(/^DOC-(?:PROC|DIRETORIO|REG)-\d*-[a-z0-9_-]+\s*[-–:]*\s*/i, '')
+    .replace(/^DOC-[A-Z0-9_-]+\s*[-–:]*\s*/i, '')
+    .trim() || 'Procedimento Municipal';
+  const tituloSimples = tituloOficial;
   const versao = ficha?.versao ?? '2026-10-18.1';
   const diploma = ficha?.fontes?.[0]?.titulo ?? 'Portal do Município de Guimarães · Catálogo de Serviços';
   const fonte = `${diploma} · consultado a 18/10/2026 (v${versao})`;

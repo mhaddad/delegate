@@ -143,6 +143,48 @@ export class ArmazenamentoSU {
     return Array.from(this.#processos.values()).find((p) => p.caso === caso);
   }
 
+  obterOuCriar(
+    numero: string,
+    dados?: Partial<ProcessoSU['dados']> & { pessoa?: string; sessao?: string; missao?: string },
+  ): ProcessoSU {
+    let p = this.#processos.get(numero);
+    if (!p) {
+      const agora = new Date().toISOString();
+      p = {
+        numero,
+        caso: `CASO-${numero.replace(/[/]/g, '-')}`,
+        servico: 'ocupacao-espaco-publico-esplanada',
+        servicoTitulo: 'Ocupação do Espaço Público — Esplanada Aberta',
+        estado: 'rascunho',
+        pessoa: dados?.pessoa ?? 'requerente',
+        sessao: dados?.sessao ?? 'demo',
+        missao: dados?.missao ?? 'MIS-0001',
+        dados: {
+          localizacao: dados?.localizacao ?? 'Guimarães',
+          area_m2: dados?.area_m2 ?? 10,
+          numero_mesas: dados?.numero_mesas ?? 4,
+          periodo: dados?.periodo ?? 'Anual (2026)',
+          largura_corredor_m: dados?.largura_corredor_m ?? 2.1,
+        },
+        elementos_pedidos: [],
+        proposta_ia: 'Rascunho preparado pelo Henriques.',
+        fontes: [
+          {
+            id: 'cm-licenciamento-zero',
+            titulo: 'Balcão do Empreendedor — Licenciamento Zero',
+            versao: '2026-10-18.1',
+          },
+        ],
+        historico: [],
+        criadoEm: agora,
+        atualizadoEm: agora,
+        simulacao: true,
+      };
+      this.#processos.set(numero, p);
+    }
+    return p;
+  }
+
   criarRascunho(
     dados: Partial<ProcessoSU['dados']> & { pessoa: string; sessao: string; missao: string },
   ): ProcessoSU {
