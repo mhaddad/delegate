@@ -112,14 +112,6 @@ const canal: CanalGrammy = {
     await canalTelegram.enviar(conversa, texto, botoes);
     await registarEntrega(conversa, texto, botoes);
   },
-  // As respostas do Henriques saem em vários balões: cada um fica no registo,
-  // com os botões no último, tal como o Telegram os mostra.
-  async enviarSequencia(conversa, mensagens, botoes) {
-    await canalTelegram.enviarSequencia(conversa, mensagens, botoes);
-    for (const [i, texto] of (mensagens ?? []).entries()) {
-      await registarEntrega(conversa, texto, i === mensagens.length - 1 ? botoes : undefined);
-    }
-  },
   async enviarSequencia(conversa, mensagens, botoes) {
     const pessoa = [...conversasPorPessoa].find(([, c]) => c === conversa)?.[0] ?? null;
     await canalTelegram.enviarSequencia(conversa, mensagens, botoes, async (msg, eUltima) => {
