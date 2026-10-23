@@ -34,3 +34,6 @@ videos/**/.hyperframes/
 __pycache__/
 *.pyc
 *.webm
+
+# Darkside: artefactos locais do assistente (scan, agentes, manifestos)
+.darkside/
