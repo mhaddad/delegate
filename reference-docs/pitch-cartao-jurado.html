@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delegate · Cartão do jurado</title>
+<link rel="icon" href="../design-system/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<!--
+  Cartão entregue ao membro do júri na demo do pitch (26/10/2026).
+  Guião completo: specs/anexos/C-guiao-da-demonstracao.md, secção 4.
+
+  Imprimir em A6 (105 × 148 mm), sem margens e com gráficos de fundo.
+  Numa folha A4, imprimir com «4 páginas por folha» e cortar.
+  Os textos dos botões têm de coincidir com os do bot
+  (henriques/respostas-catalogo.ts e orquestrador/fluxo-conversa-d2.ts).
+-->
+<style>
+  @page { size: A6 portrait; margin: 0; }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    background: var(--dlg-bastidores);
+    font-family: var(--dlg-fonte);
+    color: var(--dlg-tinta);
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 24px 16px;
+  }
+
+  .cartao {
+    width: 105mm;
+    height: 148mm;
+    background: var(--dlg-palco);
+    border-radius: 4mm;
+    padding: 7mm 7mm 6mm;
+    display: flex;
+    flex-direction: column;
+    gap: 3.2mm;
+    overflow: hidden;
+  }
+
+  .topo { display: flex; justify-content: space-between; align-items: center; }
+  .topo img { height: 6mm; }
+  .topo span {
+    font-size: 6.5pt;
+    font-weight: var(--dlg-peso-forte);
+    letter-spacing: var(--dlg-tracking-etiqueta);
+    text-transform: uppercase;
+    color: var(--dlg-dourado);
+  }
+
+  h1 {
+    font-size: 17pt;
+    font-weight: var(--dlg-peso-extra);
+    letter-spacing: var(--dlg-tracking-titulo);
+    line-height: 1.05;
+  }
+
+  .lead { font-size: 8.5pt; line-height: 1.35; color: var(--dlg-cinza); font-weight: var(--dlg-peso-medio); }
+
+  ol { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 2.1mm; }
+
+  li { display: grid; grid-template-columns: 6mm 1fr; gap: 2.4mm; align-items: start; }
+
+  .n {
+    width: 6mm; height: 6mm; border-radius: 50%;
+    background: var(--dlg-verde); color: var(--dlg-branco);
+    display: grid; place-items: center;
+    font-size: 8pt; font-weight: var(--dlg-peso-forte);
+  }
+
+  .verbo {
+    display: block;
+    font-size: 6.5pt;
+    font-weight: var(--dlg-peso-forte);
+    letter-spacing: var(--dlg-tracking-etiqueta);
+    text-transform: uppercase;
+    color: var(--dlg-cinza);
+    margin-bottom: 0.6mm;
+  }
+
+  .escreva {
+    display: block;
+    background: var(--dlg-branco);
+    border: 0.3mm solid var(--dlg-linha);
+    border-radius: 2.4mm;
+    padding: 1.4mm 2.4mm;
+    font-size: 9.5pt;
+    font-weight: var(--dlg-peso-semi);
+    line-height: 1.3;
+  }
+
+  .toque {
+    display: inline-block;
+    background: var(--dlg-verde-suave);
+    border: 0.3mm solid #b9dcc4;
+    color: var(--dlg-verde);
+    border-radius: 2.4mm;
+    padding: 1.2mm 2.4mm;
+    font-size: 9pt;
+    font-weight: var(--dlg-peso-forte);
+    line-height: 1.25;
+  }
+
+  .rodape {
+    margin-top: auto;
+    border-top: 0.3mm solid var(--dlg-linha);
+    padding-top: 2.2mm;
+    font-size: 6.5pt;
+    line-height: 1.4;
+    color: var(--dlg-cinza);
+  }
+  .rodape b { color: var(--dlg-terracota); }
+
+  @media print {
+    body { background: none; padding: 0; min-height: 0; display: block; }
+    .cartao { border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<main class="cartao">
+  <div class="topo">
+    <img src="../design-system/logo/delegate-logo-horizontal-claro.svg" alt="Delegate">
+    <span>Demo ao vivo</span>
+  </div>
+
+  <h1>Fale com o Henriques</h1>
+  <p class="lead">A conversa já está aberta no telemóvel. Siga os passos; a Daiana está ao seu lado. O que fizer aparece no ecrã da sala.</p>
+
+  <ol>
+    <li>
+      <span class="n">1</span>
+      <div><span class="verbo">Escreva</span><span class="escreva">Quero pôr uma esplanada à porta do meu café. O que preciso?</span></div>
+    </li>
+    <li>
+      <span class="n">2</span>
+      <div><span class="verbo">Toque em</span><span class="toque">🚀 Ajuda-me a tratar</span></div>
+    </li>
+    <li>
+      <span class="n">3</span>
+      <div><span class="verbo">Toque em</span><span class="toque">📍 Exemplo: Casa Joaquim</span></div>
+    </li>
+    <li>
+      <span class="n">4</span>
+      <div><span class="verbo">Escreva</span><span class="escreva">4 mesas</span></div>
+    </li>
+    <li>
+      <span class="n">5</span>
+      <div><span class="verbo">Escreva</span><span class="escreva">Sim</span></div>
+    </li>
+    <li>
+      <span class="n">6</span>
+      <div><span class="verbo">Toque em</span><span class="toque">✍️ Autenticar com Chave Móvel Digital</span></div>
+    </li>
+  </ol>
+
+  <p class="rodape"><b>Simulação:</b> dados fictícios; a Chave Móvel Digital e o processo da Câmara são simulados. As respostas do Henriques são geradas ao vivo, com as fontes oficiais do Município.</p>
+</main>
+</body>
+</html>

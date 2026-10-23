@@ -2,6 +2,7 @@
 
 > Estado: proposta para discussão · Atualizado: 18/10/2026 · [Estratégia](README.md)
 > Substitui a secção 2 de [Anexo C · Guião da demonstração](../anexos/C-guiao-da-demonstracao.md). A estrutura do pitch desse anexo mantém-se.
+> **Para o pitch de 26/10 (4 + 1 minutos), manda o [Anexo C](../anexos/C-guiao-da-demonstracao.md), revisto a 22/10:** a demo passa a ser feita por um membro do júri no Telegram, com o Painel ao vivo projetado. As secções 5 e 6 deste documento continuam a valer como montagem técnica.
 
 ## 1. Montagem
 
