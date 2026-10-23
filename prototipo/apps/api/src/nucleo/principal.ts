@@ -87,27 +87,38 @@ let aguardaFachada = false;
 // sem adivinhar. A marca `entregue_no_canal` distingue-a dos eventos `enviada`
 // que alguns módulos já registam por conta própria, sem texto ou em duplicado.
 const canalTelegram: CanalGrammy = criarCanalGrammy(token);
+async function registarEntrega(conversa: string, texto: string, botoes: Parameters<CanalGrammy['enviar']>[2]): Promise<void> {
+  const pessoa = [...conversasPorPessoa].find(([, c]) => c === conversa)?.[0] ?? null;
+  await registro
+    .registar({
+      tipo: 'canal.mensagem.enviada',
+      origem: 'canal',
+      sessao: SESSAO,
+      pessoa,
+      missao: null,
+      ator: 'agente:henriques',
+      simulacao: false,
+      dados: {
+        texto,
+        botoes: botoes?.map((linha) => linha.map((b) => ({ texto: b.texto, dados: b.dados ?? null }))) ?? [],
+        entregue_no_canal: true,
+      },
+    })
+    .catch((err: unknown) => console.warn('⚠ envio sem registo:', err));
+}
 const canal: CanalGrammy = {
   ...canalTelegram,
   async enviar(conversa, texto, botoes) {
     await canalTelegram.enviar(conversa, texto, botoes);
-    const pessoa = [...conversasPorPessoa].find(([, c]) => c === conversa)?.[0] ?? null;
-    await registro
-      .registar({
-        tipo: 'canal.mensagem.enviada',
-        origem: 'canal',
-        sessao: SESSAO,
-        pessoa,
-        missao: null,
-        ator: 'agente:henriques',
-        simulacao: false,
-        dados: {
-          texto,
-          botoes: botoes?.map((linha) => linha.map((b) => ({ texto: b.texto, dados: b.dados ?? null }))) ?? [],
-          entregue_no_canal: true,
-        },
-      })
-      .catch((err: unknown) => console.warn('⚠ envio sem registo:', err));
+    await registarEntrega(conversa, texto, botoes);
+  },
+  // As respostas do Henriques saem em vários balões: cada um fica no registo,
+  // com os botões no último, tal como o Telegram os mostra.
+  async enviarSequencia(conversa, mensagens, botoes) {
+    await canalTelegram.enviarSequencia(conversa, mensagens, botoes);
+    for (const [i, texto] of (mensagens ?? []).entries()) {
+      await registarEntrega(conversa, texto, i === mensagens.length - 1 ? botoes : undefined);
+    }
   },
   async enviarSequencia(conversa, mensagens, botoes) {
     const pessoa = [...conversasPorPessoa].find(([, c]) => c === conversa)?.[0] ?? null;
