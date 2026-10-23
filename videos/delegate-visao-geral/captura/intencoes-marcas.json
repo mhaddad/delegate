@@ -1,0 +1,26 @@
+[
+ {
+  "t": 0,
+  "nome": "inicio"
+ },
+ {
+  "t": 1.23,
+  "nome": "garantias"
+ },
+ {
+  "t": 2.26,
+  "nome": "destaques"
+ },
+ {
+  "t": 4.73,
+  "nome": "mapa"
+ },
+ {
+  "t": 8.37,
+  "nome": "motivacoes"
+ },
+ {
+  "t": 12.35,
+  "nome": "fim"
+ }
+]

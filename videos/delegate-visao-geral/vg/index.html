@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>Delegate — visão geral</title>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/fonts.css">
+<style>
+  :root { --palco:#F4EFE6; --branco:#FFFEFA; --tinta:#1D2430; --cinza:#647080; --linha:#E6E2DA; --bast:#0F1B2D; --bast2:#15243B; --bast3:#2C3D57; --btxt:#C3CCD8;
+          --verde:#1A7040; --verde-s:#DCEFE2; --dourado:#8A6210; --dourado-s:#F6EDCF; --terra:#B4492A; --terra-s:#F6E2DC; --mverde:#7BCC90; --mdourado:#E0B65D; }
+  #stage { font-family: "Manrope", Arial, sans-serif; background: var(--palco); color: var(--tinta); }
+  .t-eti { font-size: 24px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .t-tit { font-size: 76px; font-weight: 800; line-height: 1.06; letter-spacing: -0.045em; }
+  .t-lead { font-size: 34px; line-height: 1.4; }
+  .cartao { position: absolute; border-radius: 18px; background: var(--branco); border: 1px solid var(--linha); box-shadow: 0 22px 60px #17203318; }
+  .cartao-b { position: absolute; border-radius: 18px; background: var(--bast2); border: 1px solid var(--bast3); }
+  .pil { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; font-size: 24px; font-weight: 700; white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div id="stage"><div class="badge-demo" id="badge">SESSÃO REAL · REPRODUZIDA</div></div>
+<div id="scrub"></div>
+<script src="audio/timeline.js"></script>
+<script src="../shared/core.js"></script>
+<script src="scenes.js"></script>
+<script src="../shared/main.js"></script>
+<script>
+  // espera que cada <video> tenha o fotograma pedido antes de cada captura
+  const seekBase = window.seekTo;
+  window.seekTo = async (t) => {
+    window.__pend = [];
+    seekBase(t);
+    await Promise.all(window.__pend);
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    return true;
+  };
+  const vids = [...document.querySelectorAll("video")];
+  window.ready = Promise.all([document.fonts.ready, ...vids.map((v) => (v.readyState >= 2 ? 1 : new Promise((r) => v.addEventListener("loadeddata", r, { once: true }))))]).then(() => true);
+</script>
+</body>
+</html>

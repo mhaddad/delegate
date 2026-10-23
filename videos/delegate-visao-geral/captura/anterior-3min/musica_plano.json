@@ -1,0 +1,93 @@
+{
+ "positive_global_styles": [
+  "cinematic underscore for a civic technology product film",
+  "instrumental",
+  "warm",
+  "confident",
+  "modern and clean",
+  "leaves space for a voice-over",
+  "high production value"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "choir",
+  "rap",
+  "spoken word",
+  "heavy drums",
+  "distorted guitar",
+  "EDM drop",
+  "lo-fi hiss",
+  "sad",
+  "dark",
+  "aggressive",
+  "cheesy corporate ukulele"
+ ],
+ "sections": [
+  {
+   "section_name": "Abertura",
+   "positive_local_styles": [
+    "calm and slightly suspended",
+    "soft felt piano",
+    "light strings",
+    "an open question",
+    "gentle"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 28071,
+   "lines": []
+  },
+  {
+   "section_name": "O Henriques",
+   "positive_local_styles": [
+    "the melody opens up",
+    "warm and confident",
+    "Portuguese guitar (guitarra portuguesa) gentle motif",
+    "hopeful",
+    "light percussion enters"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 16974,
+   "lines": []
+  },
+  {
+   "section_name": "Demonstração",
+   "positive_local_styles": [
+    "light modern pulse",
+    "plucked strings and soft marimba",
+    "steady rhythm that follows a conversation",
+    "curious",
+    "positive"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 46530,
+   "lines": []
+  },
+  {
+   "section_name": "Bastidores",
+   "positive_local_styles": [
+    "precise piano and synth arpeggios",
+    "clean electronic texture",
+    "intelligent",
+    "building complexity",
+    "focused"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 50107,
+   "lines": []
+  },
+  {
+   "section_name": "Impacto e fecho",
+   "positive_local_styles": [
+    "crescendo",
+    "full warm strings over the arpeggios",
+    "inspiring",
+    "luminous resolution",
+    "proud final chord that rings out"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 38318,
+   "lines": []
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+104 marcas
+1.24 inicio-reproducao 
+1.27 conversa À espera da primeira mensagem.
+1.27 arvore Envie uma mensagem ao Henriques. A árvore de decisão aparece aqui no instante em que o mot
+1.27 cofre Ainda não há cofres. Cada pessoa que falar com o Henriques ganha o seu, aqui.
+1.29 conversa À espera da primeira mensagem.
+1.29 conversa HOJE
+1.29 conversa 🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe
+1.29 conversa /start 15:58✓✓
+1.29 conversa 
+1.29 arvore “ /start
+1.29 arvore 
+1.31 arvore 
+1.32 arvore 
+2.01 conversa Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst
+2.01 arvore 
+3.41 conversa O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓
+3.41 arvore “ O que preciso para ter uma esplanada à porta do meu café?
+3.41 arvore 
+3.42 arvore 
+3.42 arvore 
+4.11 arvore “ O que preciso para ter uma esplanada à porta do meu café?
+4.11 arvore 
+4.14 arvore 
+7.27 arvore 
+8.26 conversa Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá
+9 conversa 📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º
+10.41 arvore “ 🚀 Ajuda-me a tratar (Cofre D2)
+10.41 arvore 
+10.41 arvore 
+10.42 conversa HOJE
+10.42 conversa 🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe
+10.42 conversa /start 15:58✓✓
+10.42 conversa Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst
+10.42 conversa O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓
+10.42 conversa Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá
+10.42 conversa 📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º
+10.42 conversa 
+10.43 arvore 
+11.11 arvore 
+12.8 conversa Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2). 📋 
+14.2 arvore “ 📍 Exemplo: Casa Joaquim (Largo da Oliveira)
+14.2 arvore 
+14.2 arvore 
+14.21 conversa HOJE
+14.21 conversa 🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe
+14.21 conversa /start 15:58✓✓
+14.21 conversa Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst
+14.21 conversa O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓
+14.22 conversa Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá
+14.22 conversa 📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º
+14.22 conversa Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2). 📋 
+14.22 conversa 
+14.22 arvore 
+14.9 arvore 
+15.61 conversa Perfeito, registei Casa Joaquim, Largo da Oliveira, 12, Guimarães. Quantas mesas e cadeira
+17.01 conversa 4 mesas 15:59✓✓
+17.01 arvore “ 4 mesas
+17.01 arvore 
+17.02 arvore 
+17.03 arvore 
+17.71 arvore 
+18.42 conversa Anotado: 4 mesas (~10 m²). Segundo o Artigo 8.º do Regulamento Municipal, é obrigatório sa
+20.52 conversa Sim 15:59✓✓
+20.52 arvore “ Sim
+20.52 arvore 
+20.53 arvore 
+20.54 arvore 
+21.23 arvore 
+22.21 conversa 📄 MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO) ━━━━━━━━━━━━━━━━━━━━ • Requerente: Identifica
+24.32 arvore “ ✍️ Autenticar com Chave Móvel Digital (Simulação)
+24.32 arvore 
+24.33 arvore 
+24.34 conversa HOJE
+24.34 conversa 🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe
+24.34 conversa /start 15:58✓✓
+24.34 conversa Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst
+24.34 conversa O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓
+24.34 conversa Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá
+24.34 conversa 📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º
+24.34 conversa Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2). 📋 
+24.34 conversa Perfeito, registei Casa Joaquim, Largo da Oliveira, 12, Guimarães. Quantas mesas e cadeira
+24.34 conversa 4 mesas 15:59✓✓
+24.34 conversa Anotado: 4 mesas (~10 m²). Segundo o Artigo 8.º do Regulamento Municipal, é obrigatório sa
+24.34 conversa Sim 15:59✓✓
+24.34 conversa 📄 MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO) ━━━━━━━━━━━━━━━━━━━━ • Requerente: Identifica
+24.34 conversa 
+24.34 arvore 
+25.03 arvore 
+28.4 conversa ✅ Comunicação Prévia Submetida com Sucesso! A sua assinatura digital com Chave Móvel Digit

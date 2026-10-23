@@ -1,0 +1,422 @@
+retry: 1000
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+id: 258
+data: {"v":1,"id":"adde10e4-8ecf-4129-a74a-a5c121fd2594","ts":"2026-10-22T14:20:48.797Z","tipo":"canal.mensagem.recebida","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"Quero pôr uma esplanada à porta do meu café. O que preciso?","entrada":"texto"},"hash_anterior":"d963a757c85a8fb1fcdda78e319479449586c0a0b407956916a11f0431d67a7a","hash":"61305966d4f60c209e8a9bbef16448833b53dd4d489b36d8ac5f1c4306bd062c","seq":258}
+
+id: 259
+data: {"v":1,"id":"1bf774ff-15c9-4777-ad33-60fab6cd2f96","ts":"2026-10-22T14:20:48.819Z","tipo":"mandato.concedido","origem":"mandatos","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"MAN-2026-0001","nivel":"D2","ambito":"ocupacao-espaco-publico","objeto":"Instrução de Esplanada","entidade":"Câmara Municipal de Guimarães","valido_ate":"2027-04-20"},"hash_anterior":"61305966d4f60c209e8a9bbef16448833b53dd4d489b36d8ac5f1c4306bd062c","hash":"3711d09effeb6fcc12e6affaaf85f1bb7748bfe40bca723ae67a7e6f0051d523","seq":259}
+
+id: 260
+data: {"v":1,"id":"12775bdb-f925-48e5-add0-5da553f958b9","ts":"2026-10-22T14:20:48.821Z","tipo":"missao.criada","origem":"orquestrador","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"mandato":"MAN-2026-0001","servico":"ocupacao-espaco-publico-esplanada","objetivo":"Preparar pacote instrutório mínimo para Mera Comunicação Prévia","servico_titulo":"Ocupação do Espaço Público — Esplanada Aberta"},"hash_anterior":"3711d09effeb6fcc12e6affaaf85f1bb7748bfe40bca723ae67a7e6f0051d523","hash":"9a0342382480048f2b1a753bfac2e354a58b55d5c3a5497e27971e4fc22a1d59","seq":260}
+
+id: 261
+data: {"v":1,"id":"8d63826d-2841-48ef-a94c-597280323bda","ts":"2026-10-22T14:20:48.823Z","tipo":"missao.checklist.gerada","origem":"orquestrador","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"passos":[{"feito":true,"passo":"Identificar estabelecimento e localização em Guimarães"},{"feito":false,"passo":"Definir dimensões e número de mesas"},{"feito":false,"passo":"Validar corredor pedonal livre (>= 2,00 m)"},{"feito":false,"passo":"Submissão formal com Chave Móvel Digital (D3)"}]},"hash_anterior":"9a0342382480048f2b1a753bfac2e354a58b55d5c3a5497e27971e4fc22a1d59","hash":"0fe7568905e930377d88b3cfd58beec42ff86cc4992cb5fdf7c0eb0594ffe297","seq":261}
+
+id: 262
+data: {"v":1,"id":"29ac33e6-ba8b-4c1a-9ddf-de7bbdedcfa8","ts":"2026-10-22T14:20:48.824Z","tipo":"henriques.missao_iniciada","origem":"henriques","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"mandato":"MAN-2026-0001","servico":"ocupacao-espaco-publico-esplanada"},"hash_anterior":"0fe7568905e930377d88b3cfd58beec42ff86cc4992cb5fdf7c0eb0594ffe297","hash":"b9f6934b753f11cd500b377f00d758a621ba653b35354701e272b4f7f9fa40dd","seq":262}
+
+id: 263
+data: {"v":1,"id":"2a9b0123-c78c-407e-b086-b03a4f5669ab","ts":"2026-10-22T14:20:49.028Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2).\n\n📋 <b>Documentos Necessários para a Instrução:</b>\n1. Formulário Modelo OVP-SO (preenchido com estes dados);\n2. Planta de localização ou fotografia com corredor livre ≥ 2,00m;\n3. Certidão Permanente da empresa (ou início de atividade);\n4. Apólice de Seguro de Responsabilidade Civil.\n\nPara começarmos a instrução: qual é o <b>nome</b> e a <b>morada</b> do estabelecimento aqui em Guimarães?","botoes":[[{"dados":"d2_morada_joaquim","texto":"📍 Exemplo: Casa Joaquim (Largo da Oliveira)"}],[{"dados":"pessoa","texto":"👤 Falar com uma pessoa"}]],"entregue_no_canal":true},"hash_anterior":"b9f6934b753f11cd500b377f00d758a621ba653b35354701e272b4f7f9fa40dd","hash":"73d6ee9cb9eff3e690ec280a5f2d47c85dbe54eb6d473b2e2a623b60f19abaee","seq":263}
+
+id: 264
+data: {"v":1,"id":"0f5360a0-0ee5-4888-b4af-d31de87f15c6","ts":"2026-10-22T14:20:49.030Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2).\n\n📋 <b>Documentos Necessários para a Instrução:</b>\n1. Formulário Modelo OVP-SO (preenchido com estes dados);\n2. Planta de localização ou fotografia com corredor livre ≥ 2,00m;\n3. Certidão Permanente da empresa (ou início de atividade);\n4. Apólice de Seguro de Responsabilidade Civil.\n\nPara começarmos a instrução: qual é o <b>nome</b> e a <b>morada</b> do estabelecimento aqui em Guimarães?"},"hash_anterior":"73d6ee9cb9eff3e690ec280a5f2d47c85dbe54eb6d473b2e2a623b60f19abaee","hash":"a38439d9902d1ac6abcd975d7926422d072365f8d3f5c650184342f0be13754e","seq":264}
+
+id: 265
+data: {"v":1,"id":"6b55b10d-5f40-4ea4-b637-5c4282fcda09","ts":"2026-10-22T14:20:49.033Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"tipo":"d2_esplanada_iniciada"},"hash_anterior":"a38439d9902d1ac6abcd975d7926422d072365f8d3f5c650184342f0be13754e","hash":"211dadb3a72d676a8c4222f3172687c83259f04d4015b6efb0d1d0c99d407ab6","seq":265}
+
+: ping
+
+id: 266
+data: {"v":1,"id":"58c540b3-1c5e-44bf-9cea-d4ebcb211ab9","ts":"2026-10-22T14:21:04.861Z","tipo":"canal.botao.carregado","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"botao":"d2_morada_joaquim"},"hash_anterior":"211dadb3a72d676a8c4222f3172687c83259f04d4015b6efb0d1d0c99d407ab6","hash":"5caef8fffc2ce24efbc81df7921d4e02c83a9d8745e35af40e2c421b4a45b3d9","seq":266}
+
+id: 267
+data: {"v":1,"id":"94031759-d7b4-4f02-beb4-3c31120bdba1","ts":"2026-10-22T14:21:04.925Z","tipo":"cofre.item.guardado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"COF-0001","tipo":"intencao_negocio","camada":"intencoes","titulo":"Esplanada Casa Joaquim","finalidade":"Licenciamento de ocupação de espaço público","sensibilidade":"normal"},"hash_anterior":"5caef8fffc2ce24efbc81df7921d4e02c83a9d8745e35af40e2c421b4a45b3d9","hash":"ecfc6ce254c726501b49432695dafaa976d31a4e5fdb1eac9bb0680fd32e920b","seq":267}
+
+id: 268
+data: {"v":1,"id":"bfe2b9cf-315c-4e5a-94b7-25949959d0e2","ts":"2026-10-22T14:21:05.119Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Perfeito, registei <b>Casa Joaquim, Largo da Oliveira, 12, Guimarães</b>.\n\nQuantas <b>mesas</b> e <b>cadeiras</b> planeia colocar no exterior?","botoes":[],"entregue_no_canal":true},"hash_anterior":"ecfc6ce254c726501b49432695dafaa976d31a4e5fdb1eac9bb0680fd32e920b","hash":"90cb03a1db1b79c084780d661f1b92ba0d6ffeb75a27e7424c5ece995a86dfd5","seq":268}
+
+id: 269
+data: {"v":1,"id":"6cd74ea7-2228-40f3-9468-9ed9a7458ab6","ts":"2026-10-22T14:21:05.121Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Perfeito, registei <b>Casa Joaquim, Largo da Oliveira, 12, Guimarães</b>.\n\nQuantas <b>mesas</b> e <b>cadeiras</b> planeia colocar no exterior?"},"hash_anterior":"90cb03a1db1b79c084780d661f1b92ba0d6ffeb75a27e7424c5ece995a86dfd5","hash":"fb7521373a4920cd0580f0dd23cacfdc4e1285d35f9c7953dd4c08528b5bde21","seq":269}
+
+: ping
+
+id: 270
+data: {"v":1,"id":"79c0b4ba-e621-4513-8b07-b76a35acda74","ts":"2026-10-22T14:21:18.509Z","tipo":"canal.mensagem.recebida","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"4 mesas e 16 cadeiras.","entrada":"texto"},"hash_anterior":"fb7521373a4920cd0580f0dd23cacfdc4e1285d35f9c7953dd4c08528b5bde21","hash":"89bdc6fbbcf75553ca17c443f524bbba01dc9ead59634dc78355a454371fb89d","seq":270}
+
+id: 271
+data: {"v":1,"id":"c4ab4c72-263d-4b4f-95a3-75c7ae469fae","ts":"2026-10-22T14:21:18.572Z","tipo":"cofre.item.guardado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"COF-0002","tipo":"dimensoes_esplanada","camada":"intencoes","titulo":"Dimensões da Esplanada","finalidade":"Aferição de taxas e corredor regulamentar","sensibilidade":"normal"},"hash_anterior":"89bdc6fbbcf75553ca17c443f524bbba01dc9ead59634dc78355a454371fb89d","hash":"b5c87832280436408949c9901c6a4f9713a6f6c4c3c9f783d7ac6d34d95ade10","seq":271}
+
+id: 272
+data: {"v":1,"id":"8c6e5e59-8d2e-450d-bf0f-e91f0d6de845","ts":"2026-10-22T14:21:18.892Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Anotado: <b>4 mesas (~10 m²)</b>.\n\nSegundo o <b>Artigo 8.º do Regulamento Municipal</b>, é obrigatório salvaguardar um <b>corredor pedonal livre de pelo menos 2,00 metros</b> para circulação de peões e carrinhos de bebé.\n\nO passeio em frente garante esta largura livre de 2,00 metros?","botoes":[],"entregue_no_canal":true},"hash_anterior":"b5c87832280436408949c9901c6a4f9713a6f6c4c3c9f783d7ac6d34d95ade10","hash":"f39d4a7281f956c5e5cdc2a90a179beb7a07e49c8e165a652c4d3aefe5ad1628","seq":272}
+
+id: 273
+data: {"v":1,"id":"6369d310-6de2-4725-82c7-771f51db4946","ts":"2026-10-22T14:21:18.894Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Anotado: <b>4 mesas (~10 m²)</b>.\n\nSegundo o <b>Artigo 8.º do Regulamento Municipal</b>, é obrigatório salvaguardar um <b>corredor pedonal livre de pelo menos 2,00 metros</b> para circulação de peões e carrinhos de bebé.\n\nO passeio em frente garante esta largura livre de 2,00 metros?"},"hash_anterior":"f39d4a7281f956c5e5cdc2a90a179beb7a07e49c8e165a652c4d3aefe5ad1628","hash":"832ebc07bcc6ca5ffe5b8340f28b6d2f9b32f963cebd1a08b517fa25a8dca544","seq":273}
+
+id: 274
+data: {"v":1,"id":"2fd141fc-693d-4039-ba11-a2129da1361f","ts":"2026-10-22T14:21:18.897Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"tipo":"d2_passo_processado","estado":"aguarda_passeio"},"hash_anterior":"832ebc07bcc6ca5ffe5b8340f28b6d2f9b32f963cebd1a08b517fa25a8dca544","hash":"50670f6c5b730acafd143d0aa66de64e1529e4784f214b21d41dbb2ffa566627","seq":274}
+
+id: 275
+data: {"v":1,"id":"082b9d18-a606-4f3f-8101-f2e0db7d6a3c","ts":"2026-10-22T14:21:23.975Z","tipo":"canal.mensagem.recebida","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"Sim","entrada":"texto"},"hash_anterior":"50670f6c5b730acafd143d0aa66de64e1529e4784f214b21d41dbb2ffa566627","hash":"88ec29a1b7ef437a8c3db940787674e811b01305cc61036dbfaf5c71e18f212b","seq":275}
+
+id: 276
+data: {"v":1,"id":"a1b53b79-0992-4d9a-88a8-7dc18d96ce0f","ts":"2026-10-22T14:21:23.978Z","tipo":"missao.estado.alterado","origem":"orquestrador","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"de":"entendido","para":"preparado","motivo":"Requisitos validados e pacote mínimo preparado"},"hash_anterior":"88ec29a1b7ef437a8c3db940787674e811b01305cc61036dbfaf5c71e18f212b","hash":"2fd884561e65c4892634d22c214ab2775a2b2369a950818a1278d7cf9cc9d0c9","seq":276}
+
+id: 277
+data: {"v":1,"id":"1cd819dc-756e-4bf6-a6f3-c1758f872b20","ts":"2026-10-22T14:21:23.985Z","tipo":"cofre.pacote.preparado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"campos":["estabelecimento","morada","area_m2","numero_mesas","periodo","corredor_pedonal_livre"],"pacote":"PAC-0001","expira_em":"2026-11-21","finalidade":"Mera Comunicação Prévia de Esplanada","destinatario":"Câmara Municipal de Guimarães — Gabinete de Serviços Urbanos","nao_partilha":["terreno_ponte","conversas_privadas","declaracoes_fiscais","dados_bancarios"]},"hash_anterior":"2fd884561e65c4892634d22c214ab2775a2b2369a950818a1278d7cf9cc9d0c9","hash":"c77f1e789bfaab3c31868dd948c303e83ef0789aaa662a8a81a5b38469119e86","seq":277}
+
+id: 278
+data: {"v":1,"id":"4510aa39-a4bb-46b7-adfc-8ce1b7f6231e","ts":"2026-10-22T14:21:23.987Z","tipo":"henriques.pacote_preparado","origem":"henriques","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"mesas":4,"morada":"Casa Joaquim, Largo da Oliveira, 12, Guimarães","pacote":"PAC-0001","area_m2":10,"estabelecimento":"Casa Joaquim","conformidade_passeio":"conforme_art8"},"hash_anterior":"c77f1e789bfaab3c31868dd948c303e83ef0789aaa662a8a81a5b38469119e86","hash":"afb2b0ad597c1ea53fd46a2ce02d0abbc9b60c3c0c350fe11a8901554cc48593","seq":278}
+
+id: 279
+data: {"v":1,"id":"fb53b7d7-be16-401b-b9c3-0668ed4dcec2","ts":"2026-10-22T14:21:24.177Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"📄 <b>MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO)</b>\n━━━━━━━━━━━━━━━━━━━━\n• <b>Requerente:</b> Identificado via Cofre Digital\n• <b>Estabelecimento:</b> Casa Joaquim\n• <b>Localização:</b> Casa Joaquim, Largo da Oliveira, 12, Guimarães\n• <b>Equipamento:</b> 4 mesas com cadeiras amovíveis\n• <b>Área Ocupada:</b> ~10 m² (contígua à fachada)\n• <b>Acessibilidade:</b> Corredor de 2,10m salvaguardado (conforme Art. 8.º >= 2,00m)\n• <b>Documentos:</b> Formulário OVP-SO e certidão reunidos no Pacote Mínimo (PAC-0001)\n━━━━━━━━━━━━━━━━━━━━\n\n🔒 <i>Princípio da Minimização RGPD: Dados bancários, fiscais e conversas privadas estão blindados no seu Cofre Pessoal e foram omitidos da Câmara.</i>\n\n<b>Tudo pronto.</b> Para dar entrada formal do pedido na Câmara Municipal com valor legal, confirme a sua autenticação:","botoes":[[{"dados":"assinar_com_chave_movel_digital","texto":"✍️ Autenticar com Chave Móvel Digital (Simulação)"}],[{"dados":"pessoa","texto":"👤 Falar com uma pessoa"}]],"entregue_no_canal":true},"hash_anterior":"afb2b0ad597c1ea53fd46a2ce02d0abbc9b60c3c0c350fe11a8901554cc48593","hash":"6647f0717840ab850eef0fdaa550e08a2753eaa75767ae9cbd06971ca7b6955a","seq":279}
+
+: ping
+
+id: 280
+data: {"v":1,"id":"89f06710-1f29-44a8-b852-231e498accdb","ts":"2026-10-22T14:21:24.179Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"📄 <b>MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO)</b>\n━━━━━━━━━━━━━━━━━━━━\n• <b>Requerente:</b> Identificado via Cofre Digital\n• <b>Estabelecimento:</b> Casa Joaquim\n• <b>Localização:</b> Casa Joaquim, Largo da Oliveira, 12, Guimarães\n• <b>Equipamento:</b> 4 mesas com cadeiras amovíveis\n• <b>Área Ocupada:</b> ~10 m² (contígua à fachada)\n• <b>Acessibilidade:</b> Corredor de 2,10m salvaguardado (conforme Art. 8.º >= 2,00m)\n• <b>Documentos:</b> Formulário OVP-SO e certidão reunidos no Pacote Mínimo (PAC-0001)\n━━━━━━━━━━━━━━━━━━━━\n\n🔒 <i>Princípio da Minimização RGPD: Dados bancários, fiscais e conversas privadas estão blindados no seu Cofre Pessoal e foram omitidos da Câmara.</i>\n\n<b>Tudo pronto.</b> Para dar entrada formal do pedido na Câmara Municipal com valor legal, confirme a sua autenticação:"},"hash_anterior":"6647f0717840ab850eef0fdaa550e08a2753eaa75767ae9cbd06971ca7b6955a","hash":"2d6f653750c048f6dcaff3e7853c5a9ee1bfeb3ede01a95dcbd4ca5186a7eb87","seq":280}
+
+id: 281
+data: {"v":1,"id":"3fb85b65-7e21-47cb-878c-a9ed78537529","ts":"2026-10-22T14:21:24.186Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"tipo":"d2_passo_processado","estado":"concluido"},"hash_anterior":"2d6f653750c048f6dcaff3e7853c5a9ee1bfeb3ede01a95dcbd4ca5186a7eb87","hash":"a7b2c289923e6b3545f9a8f544eb407af9033c7909310bb51ab8d7c208c2af4f","seq":281}
+
+id: 282
+data: {"v":1,"id":"a47f39a1-d49e-49d6-a561-0193cfc47453","ts":"2026-10-22T14:21:26.289Z","tipo":"canal.botao.carregado","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"botao":"assinar_com_chave_movel_digital"},"hash_anterior":"a7b2c289923e6b3545f9a8f544eb407af9033c7909310bb51ab8d7c208c2af4f","hash":"994e413eb8b18f2ead0e60ea0b69568eccde16f45eafe139e9d2c3f9c64dd40c","seq":282}
+
+id: 283
+data: {"v":1,"id":"50734dca-1732-49c0-8e1e-ad32ec3b8a80","ts":"2026-10-22T14:21:26.291Z","tipo":"mandato.concedido","origem":"mandatos","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"MAN-2026-0002","nivel":"D3","ambito":"ocupacao-espaco-publico","objeto":"Casa Joaquim (Largo da Oliveira)","entidade":"Câmara Municipal de Guimarães","valido_ate":"2027-04-20"},"hash_anterior":"994e413eb8b18f2ead0e60ea0b69568eccde16f45eafe139e9d2c3f9c64dd40c","hash":"c04f8619f358b5a78cadd97537a67879fe272e2f805ee8bfd4458c1a104debee","seq":283}
+
+id: 284
+data: {"v":1,"id":"98c30af1-4e90-4d9e-aa7c-3f842e437c77","ts":"2026-10-22T14:21:26.293Z","tipo":"cofre.pacote.aprovado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"campos":["estabelecimento","morada","area_m2","numero_mesas","periodo","corredor_pedonal_livre"],"pacote":"PAC-0001","aprovado_em":"2026-10-22T14:21:26.292Z","nao_partilha":["terreno_ponte","conversas_privadas","declaracoes_fiscais","dados_bancarios"]},"hash_anterior":"c04f8619f358b5a78cadd97537a67879fe272e2f805ee8bfd4458c1a104debee","hash":"9bce10ff6182a73395dc5aad829954653a6de0274ef0f60ace8025933f6aca36","seq":284}
+
+id: 285
+data: {"v":1,"id":"3fb376fd-2848-4d0c-8cb4-9065e6952aec","ts":"2026-10-22T14:21:26.296Z","tipo":"politica.decisao","origem":"politica","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"sistema","simulacao":true,"dados":{"acao":"submeter_comunicacao_previa","regra":"conformidade_estrita","motivo":"Ação autorizada ao abrigo do mandato MAN-2026-0002 (D3).","mandatoId":"MAN-2026-0002","resultado":"permitir","exige_confirmacao":false},"hash_anterior":"9bce10ff6182a73395dc5aad829954653a6de0274ef0f60ace8025933f6aca36","hash":"679ad97f0e55bd8f75a8afec4bbaeb28806c427e4f6b9341fd033c35f7b187d5","seq":285}
+
+id: 286
+data: {"v":1,"id":"d83cc3d0-c4ee-4d45-9b49-60a647052538","ts":"2026-10-22T14:21:26.354Z","tipo":"cofre.chave.libertada","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"sistema","simulacao":true,"dados":{"mandato":"MAN-2026-0002","expira_em":"2026-10-22T14:31:26.353Z","duracao_minutos":10},"hash_anterior":"679ad97f0e55bd8f75a8afec4bbaeb28806c427e4f6b9341fd033c35f7b187d5","hash":"4eeb297ef6adf3d0c1f93ef9e18f7d1e1fc66fa1237aef3d1d842ec2f71c5c38","seq":286}
+
+id: 287
+data: {"v":1,"id":"d50b8f9d-d6e6-480a-99bd-a81bd43deccf","ts":"2026-10-22T14:21:26.439Z","tipo":"porta.capacidade.chamada","origem":"porta","sessao":"demo","missao":null,"pessoa":null,"ator":"agente:porta","simulacao":true,"dados":{"fontes":["registo-oficial"],"cliente":"henriques","mandato":"MAN-2026-0002","resultado":"processo_submetido","simulacao":true,"capacidade":"submeter_comunicacao_previa"},"hash_anterior":"4eeb297ef6adf3d0c1f93ef9e18f7d1e1fc66fa1237aef3d1d842ec2f71c5c38","hash":"d08166f591cee2ef699110d1d73b2e4eb511459cae41e566b8441f2c529c3820","seq":287}
+
+id: 288
+data: {"v":1,"id":"ea9123cc-d4b3-4f29-8a6f-ec4d8e8102c2","ts":"2026-10-22T14:21:26.446Z","tipo":"su.processo.criado","origem":"su","sessao":"demo","missao":"MIS-0001","pessoa":"ines_guimaraes","ator":"sistema","simulacao":true,"dados":{"caso":"CASO-0001","estado":"submetido","servico":"ocupacao-espaco-publico-esplanada","processo":"OEP/2026/0001","servicoTitulo":"Ocupação do Espaço Público — Esplanada Aberta"},"hash_anterior":"d08166f591cee2ef699110d1d73b2e4eb511459cae41e566b8441f2c529c3820","hash":"5a94f3b058904eb93ce8d990b019dfdf75088ca9401825a045c4d27545abf530","seq":288}
+
+id: 289
+data: {"v":1,"id":"f41e6561-2f63-4738-9698-4fc16afd466c","ts":"2026-10-22T14:21:26.451Z","tipo":"missao.estado.alterado","origem":"orquestrador","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"de":"preparado","para":"submetido","motivo":"Submetido com mandato D3 e Chave Móvel Digital (CMD-TOKEN-217509)"},"hash_anterior":"5a94f3b058904eb93ce8d990b019dfdf75088ca9401825a045c4d27545abf530","hash":"a1ffb97c3ff2572d47f0662a61486dd5c54e414c4eea653d4e1ba3f3288d4adf","seq":289}
+
+id: 290
+data: {"v":1,"id":"8279f70c-e488-4507-9d1c-8858da45ec5c","ts":"2026-10-22T14:21:26.452Z","tipo":"consola.caso.criado","origem":"consola","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"sistema","simulacao":true,"dados":{"caso":"CASO-0001","risco":"baixo","servico":"ocupacao-espaco-publico-esplanada","processo":"OEP/2026/0001","token_cmd":"CMD-TOKEN-217509"},"hash_anterior":"a1ffb97c3ff2572d47f0662a61486dd5c54e414c4eea653d4e1ba3f3288d4adf","hash":"1aa8676a95ea77d1e1d2934a8ac91195ac6df677e0e216433de7efa95f3a190e","seq":290}
+
+id: 291
+data: {"v":1,"id":"870e89c2-2d38-4670-81c9-c595a0e4379e","ts":"2026-10-22T14:21:26.648Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"✅ <b>Comunicação Prévia Submetida com Sucesso!</b>\n\nA sua assinatura digital com <b>Chave Móvel Digital</b> foi validada com sucesso.\nToken de Assinatura: <code>CMD-TOKEN-217509</code>\nNível de Representação: <b>Mandato D3</b> (MAN-2026-0002)\n\n<b>Processo Municipal:</b> <code>OEP/2026/0001</code> (Simulação)\n<b>Estado:</b> Em apreciação técnica pelo Gabinete de Serviços Urbanos.\n\nAvisarei assim que a técnica validar o processo na Consola Municipal.","botoes":[],"entregue_no_canal":true},"hash_anterior":"1aa8676a95ea77d1e1d2934a8ac91195ac6df677e0e216433de7efa95f3a190e","hash":"222c84df28a86957a928ec7b92eadec407849610c6ec87dd76632ed3d048fd27","seq":291}
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+id: 292
+data: {"v":1,"id":"c9f3f49a-af0f-4a0c-a87a-ae19e983da47","ts":"2026-10-22T14:24:50.327Z","tipo":"canal.mensagem.recebida","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"/start","entrada":"comando"},"hash_anterior":"222c84df28a86957a928ec7b92eadec407849610c6ec87dd76632ed3d048fd27","hash":"c74d46630f8fadc0ecc75ad0f72be69604e2e3024621b4c9eae159285e2188f3","seq":292}
+
+id: 293
+data: {"v":1,"id":"c039f912-015a-4b75-b43d-f347dd5cc125","ts":"2026-10-22T14:24:50.333Z","tipo":"missao.estado.alterado","origem":"orquestrador","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"de":"submetido","para":"cancelado","motivo":"reinicio_comando_start"},"hash_anterior":"c74d46630f8fadc0ecc75ad0f72be69604e2e3024621b4c9eae159285e2188f3","hash":"b1a4c6e9395d6a5a220e62fc0f7b1c82552fb5c615fab3d91bc2629216d7805b","seq":293}
+
+id: 294
+data: {"v":1,"id":"6a6cd0ad-c10c-497f-a9fa-c2e7ce4834de","ts":"2026-10-22T14:24:50.531Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Olá, sou o <b>Henriques</b>, o seu representante digital que trabalha para si.\n\nEsta é uma <b>demonstração</b> com dados fictícios do desafio 3.4 (Hack4Guimarães 2035).\nPersona: <code>ines-demo</code>\n\n<b>Comandos úteis:</b>\n• /carta — Carta de Lealdade do Henriques\n• /cofre — Itens guardados no seu Cofre Digital\n• /mandatos — Mandatos de representação ativos\n• /missoes — Estado das suas missões em curso\n• /dados — Quem consultou os meus dados\n• /pessoa — Pedir atendimento humano na Câmara\n\n<b>Iniciar Casos de Teste da Demonstração:</b>\n• ☕ <b>Esplanada:</b> Preparar ocupação de espaço público (D2 -> D3)\n• 🏡 <b>PDM Silvares:</b> Pedido de Informação Prévia (Maps + Caderneta)\n\nPode falar com uma pessoa a qualquer momento.","botoes":[[{"dados":"iniciar_esplanada","texto":"☕ Iniciar: Esplanada (D2)"},{"dados":"iniciar_pdm","texto":"🏡 Iniciar: PDM Silvares (D2)"}],[{"dados":"cmd_carta","texto":"📜 Carta de Lealdade"},{"dados":"pessoa","texto":"👤 Falar com uma pessoa"}]],"entregue_no_canal":true},"hash_anterior":"b1a4c6e9395d6a5a220e62fc0f7b1c82552fb5c615fab3d91bc2629216d7805b","hash":"01c8bf2306fffd7373a4277178a41a3d525ce12aeea15d1941fb26fcb1a20029","seq":294}
+
+id: 295
+data: {"v":1,"id":"837197b9-aefe-4092-ba2c-368bf195723b","ts":"2026-10-22T14:24:50.533Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"comando":"/start"},"hash_anterior":"01c8bf2306fffd7373a4277178a41a3d525ce12aeea15d1941fb26fcb1a20029","hash":"ec599ce0800a8da224173a5d8d14d186013eefa2283079f0763721602bedc1f3","seq":295}
+
+: ping
+
+: ping
+
+id: 296
+data: {"v":1,"id":"276f250b-6d5c-4ca5-904b-bdf1ce314f24","ts":"2026-10-22T14:25:23.203Z","tipo":"canal.mensagem.recebida","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"O que preciso para ter uma esplanada à porta do meu café?","entrada":"texto"},"hash_anterior":"ec599ce0800a8da224173a5d8d14d186013eefa2283079f0763721602bedc1f3","hash":"e93820e56ee003a1f1da8a09cdaecd48cdf9895b823e53ff387c39ac08893c19","seq":296}
+
+: ping
+
+id: 297
+data: {"v":1,"id":"90dd6f8e-1e9d-48e4-a1b7-4c321334726d","ts":"2026-10-22T14:25:26.702Z","tipo":"henriques.intencao.classificada","origem":"henriques","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:jev","simulacao":false,"dados":{"motor":"typesafe-jev","modelo":"deepseek/deepseek-v4.1-flash-1017","servico":"ocupacao-espaco-publico-esplanada","intencao":"ocupacao-espaco-publico-esplanada","percurso":[{"noId":"no-raiz","nome":"Mensagem Recebida","nivel":0,"estado":"concluido","detalhe":"Contexto avaliado pelo Jev Router (deepseek/deepseek-v4.1-flash-1017)"},{"noId":"no-triagem","nome":"Triagem Rápida","nivel":0,"estado":"concluido","detalhe":"Avaliação de integridade concluída"},{"noId":"no-canonico","nome":"Procedimento Canónico","nivel":1,"estado":"concluido","detalhe":"ocupacao-espaco-publico-esplanada"},{"noId":"no-mandato-d0","nome":"Mandato D0","nivel":2,"estado":"concluido","detalhe":"Ferramenta MCP: consultar_catalogo"}],"tempo_ms":3322,"categoria":"catalogo","confianca":0.98,"arvore_jev":{"foco":{"escolha":"primeiro_contacto","confianca":0.95,"probabilidades":{"primeiro_contacto":0.95}},"mandato":{"escolha":"D0","confianca":0.98,"probabilidades":{"D0":0.98}},"servico":{"escolha":"ocupacao-espaco-publico-esplanada","confianca":0.98,"probabilidades":{"ocupacao-espaco-publico-esplanada":0.98}},"ferramenta":{"escolha":"consultar_catalogo","confianca":0.8,"probabilidades":{"consultar_catalogo":0.8}},"comportamento":{"escolha":"responder","confianca":0.95,"probabilidades":{"responder":0.95}},"consentimento":{"noul":0}},"foco_servico":"primeiro_contacto","comportamento":"responder","mcp_ferramenta":"consultar_catalogo","probabilidades":{"ocupacao-espaco-publico-esplanada":0.98},"mudanca_servico":false,"mandato_inferido":"D0","servico_anterior":null,"perguntas_poupadas":0,"exige_consentimento":false},"hash_anterior":"e93820e56ee003a1f1da8a09cdaecd48cdf9895b823e53ff387c39ac08893c19","hash":"ff49d41b4d222e354f2239381d2ed724156cb89bfa07efbb3f362376e22342b7","seq":297}
+
+id: 298
+data: {"v":1,"id":"b1b53773-0009-412d-9c4b-715665e90416","ts":"2026-10-22T14:25:26.718Z","tipo":"porta.servico.obtido","origem":"porta","sessao":"demo","missao":null,"pessoa":null,"ator":"agente:porta","simulacao":false,"dados":{"fontes":["registo-oficial"],"versao":"2026-10-18.1","cliente":"henriques","mandato":"nenhum","servico":"ocupacao-espaco-publico-esplanada"},"hash_anterior":"ff49d41b4d222e354f2239381d2ed724156cb89bfa07efbb3f362376e22342b7","hash":"15d7f5835d4f2d4a5165579d3ba3c38b75448af5fa5e0fa4eda15c7c868433f3","seq":298}
+
+id: 299
+data: {"v":1,"id":"154a3737-7201-421b-bdb0-622129d5d57b","ts":"2026-10-22T14:25:29.976Z","tipo":"henriques.resposta.verificada","origem":"henriques","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:redator-openrouter","simulacao":false,"dados":{"versao":"2026-10-18.1","servico":"ocupacao-espaco-publico-esplanada","citacoes_ok":true,"gerado_por_llm":true,"modelo_redacao":"google/gemma-4-31b-it","tempo_redacao_ms":3252,"numeros_sem_fonte":0},"hash_anterior":"15d7f5835d4f2d4a5165579d3ba3c38b75448af5fa5e0fa4eda15c7c868433f3","hash":"59e86420e3c73fd46ec7808a22e3ebd98a98ee98125e5e8b407185d6434be6de","seq":299}
+
+id: 300
+data: {"v":1,"id":"b325d9a3-4ce2-4548-a1a5-d4742be48888","ts":"2026-10-22T14:25:29.979Z","tipo":"henriques.fontes.oferecidas","origem":"henriques","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:verificador","simulacao":false,"dados":{"forma":"botao","servico":"ocupacao-espaco-publico-esplanada","criterios_acionados":["implicacao_legal","metrica_tecnica","taxa"]},"hash_anterior":"59e86420e3c73fd46ec7808a22e3ebd98a98ee98125e5e8b407185d6434be6de","hash":"45761d0b1d84cb9bcf53a22c10c16cd9eccdf6929ce72934166cf2ef95bb3343","seq":300}
+
+id: 301
+data: {"v":1,"id":"0b06dfb3-601c-43f5-895d-6986a3bf9331","ts":"2026-10-22T14:25:29.981Z","tipo":"henriques.mensagem.fracionada","origem":"henriques","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:acolhimento","simulacao":false,"dados":{"baloes":3,"categoria":"catalogo","factor_variabilidade":0.92},"hash_anterior":"45761d0b1d84cb9bcf53a22c10c16cd9eccdf6929ce72934166cf2ef95bb3343","hash":"431ddcf6fa9f4663e1c62895d4a0d8beda4449857ccf869d3c00789c17adbda0","seq":301}
+
+id: 302
+data: {"v":1,"id":"12c6e43c-f939-4511-95c7-a76795dccaef","ts":"2026-10-22T14:25:32.175Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher o formulário OVP-SO, apresentar a certidão permanente e o seguro de responsabilidade civil.\n\nPara começar, a esplanada será apenas na fachada do seu café?\n\n📄 Fonte: <i>Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º e Anexo I) · consultado a 18/10/2026 (v2026-10-18.1)</i>"},"hash_anterior":"431ddcf6fa9f4663e1c62895d4a0d8beda4449857ccf869d3c00789c17adbda0","hash":"8102fe31f46f4112b6153a01361f11435a92688f1c33d03b65697857ce7bee06","seq":302}
+
+id: 303
+data: {"v":1,"id":"c8c8c3f6-3b60-40a9-a68c-a1af0d3a2f40","ts":"2026-10-22T14:25:35.013Z","tipo":"canal.botao.carregado","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"botao":"iniciar_esplanada"},"hash_anterior":"8102fe31f46f4112b6153a01361f11435a92688f1c33d03b65697857ce7bee06","hash":"246abbd4aca5d4dc462607549df9f14d1e57777a2206bbe941f1b9bcb91867a6","seq":303}
+
+id: 304
+data: {"v":1,"id":"3a88ace3-de16-4eeb-8a1d-c2393a61e6ca","ts":"2026-10-22T14:25:35.015Z","tipo":"mandato.concedido","origem":"mandatos","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"MAN-2026-0003","nivel":"D2","ambito":"ocupacao-espaco-publico","objeto":"Instrução de Esplanada","entidade":"Câmara Municipal de Guimarães","valido_ate":"2027-04-20"},"hash_anterior":"246abbd4aca5d4dc462607549df9f14d1e57777a2206bbe941f1b9bcb91867a6","hash":"1a704b5cea19a412333ca989fcb01374a921a3dbe5a242a63f9bf9eb8177635e","seq":304}
+
+id: 305
+data: {"v":1,"id":"d325405b-f4f3-4681-808f-4e08119997ac","ts":"2026-10-22T14:25:35.018Z","tipo":"missao.criada","origem":"orquestrador","sessao":"demo","missao":"MIS-0002","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"mandato":"MAN-2026-0003","servico":"ocupacao-espaco-publico-esplanada","objetivo":"Preparar pacote instrutório mínimo para Mera Comunicação Prévia","servico_titulo":"Ocupação do Espaço Público — Esplanada Aberta"},"hash_anterior":"1a704b5cea19a412333ca989fcb01374a921a3dbe5a242a63f9bf9eb8177635e","hash":"16595aaa21ca5dd264946c725bac6229feadd5f10855958ed675564f52d32660","seq":305}
+
+id: 306
+data: {"v":1,"id":"76997dd5-54e1-4b8e-8265-69f48b77968a","ts":"2026-10-22T14:25:35.020Z","tipo":"missao.checklist.gerada","origem":"orquestrador","sessao":"demo","missao":"MIS-0002","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"passos":[{"feito":true,"passo":"Identificar estabelecimento e localização em Guimarães"},{"feito":false,"passo":"Definir dimensões e número de mesas"},{"feito":false,"passo":"Validar corredor pedonal livre (>= 2,00 m)"},{"feito":false,"passo":"Submissão formal com Chave Móvel Digital (D3)"}]},"hash_anterior":"16595aaa21ca5dd264946c725bac6229feadd5f10855958ed675564f52d32660","hash":"da88321333cc5e7ce9834ffd46d178c634192659848a529b5d840899b32ffb96","seq":306}
+
+id: 307
+data: {"v":1,"id":"79699746-b231-4354-9ee4-a7a00241cbc9","ts":"2026-10-22T14:25:35.022Z","tipo":"henriques.missao_iniciada","origem":"henriques","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"mandato":"MAN-2026-0003","servico":"ocupacao-espaco-publico-esplanada"},"hash_anterior":"da88321333cc5e7ce9834ffd46d178c634192659848a529b5d840899b32ffb96","hash":"c894f73bb449fd1b160da5fe7eb7b3fe042d62636716d9c2fc607b87ef8037e6","seq":307}
+
+id: 308
+data: {"v":1,"id":"810bf7e0-deec-4fe2-ad7c-bdd6d3a9d630","ts":"2026-10-22T14:25:35.216Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2).\n\n📋 <b>Documentos Necessários para a Instrução:</b>\n1. Formulário Modelo OVP-SO (preenchido com estes dados);\n2. Planta de localização ou fotografia com corredor livre ≥ 2,00m;\n3. Certidão Permanente da empresa (ou início de atividade);\n4. Apólice de Seguro de Responsabilidade Civil.\n\nPara começarmos a instrução: qual é o <b>nome</b> e a <b>morada</b> do estabelecimento aqui em Guimarães?","botoes":[[{"dados":"d2_morada_joaquim","texto":"📍 Exemplo: Casa Joaquim (Largo da Oliveira)"}],[{"dados":"pessoa","texto":"👤 Falar com uma pessoa"}]],"entregue_no_canal":true},"hash_anterior":"c894f73bb449fd1b160da5fe7eb7b3fe042d62636716d9c2fc607b87ef8037e6","hash":"562ca5485f3036bf99ac58a4ca0551b5ed4eef0b2b7bc98f11a52295477ac992","seq":308}
+
+id: 309
+data: {"v":1,"id":"a69c4f67-f2e9-4543-b993-6886c4770c4d","ts":"2026-10-22T14:25:35.219Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2).\n\n📋 <b>Documentos Necessários para a Instrução:</b>\n1. Formulário Modelo OVP-SO (preenchido com estes dados);\n2. Planta de localização ou fotografia com corredor livre ≥ 2,00m;\n3. Certidão Permanente da empresa (ou início de atividade);\n4. Apólice de Seguro de Responsabilidade Civil.\n\nPara começarmos a instrução: qual é o <b>nome</b> e a <b>morada</b> do estabelecimento aqui em Guimarães?"},"hash_anterior":"562ca5485f3036bf99ac58a4ca0551b5ed4eef0b2b7bc98f11a52295477ac992","hash":"ce85da58dcf6ef94a3fa1d5cf40639f692041c65130bc0ee78271264803dde35","seq":309}
+
+: ping
+
+id: 310
+data: {"v":1,"id":"518c3c0b-154d-4d2f-a6b1-61f3fbf347f3","ts":"2026-10-22T14:25:43.120Z","tipo":"canal.botao.carregado","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"botao":"d2_morada_joaquim"},"hash_anterior":"ce85da58dcf6ef94a3fa1d5cf40639f692041c65130bc0ee78271264803dde35","hash":"c4f3adb25c5d7f97195a9fe73522a6de31361d6084f6ee0bed607619c2a7cd06","seq":310}
+
+id: 311
+data: {"v":1,"id":"fb0e9135-4e58-49ed-94a3-39ae2bebc8c1","ts":"2026-10-22T14:25:43.186Z","tipo":"cofre.item.guardado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"COF-0003","tipo":"intencao_negocio","camada":"intencoes","titulo":"Esplanada Casa Joaquim","finalidade":"Licenciamento de ocupação de espaço público","sensibilidade":"normal"},"hash_anterior":"c4f3adb25c5d7f97195a9fe73522a6de31361d6084f6ee0bed607619c2a7cd06","hash":"8eace3757847eb30b44ef0470d84f6a0962250df06622e0c6e07e29812ab6bf4","seq":311}
+
+id: 312
+data: {"v":1,"id":"e9af643e-58d0-4480-af65-4511578ae5b7","ts":"2026-10-22T14:25:43.374Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Perfeito, registei <b>Casa Joaquim, Largo da Oliveira, 12, Guimarães</b>.\n\nQuantas <b>mesas</b> e <b>cadeiras</b> planeia colocar no exterior?","botoes":[],"entregue_no_canal":true},"hash_anterior":"8eace3757847eb30b44ef0470d84f6a0962250df06622e0c6e07e29812ab6bf4","hash":"7f73742fe08c78b7e13f375ab82d96ca3d8c800c3d774087916260f9dc553178","seq":312}
+
+id: 313
+data: {"v":1,"id":"974bead1-31fe-4610-8549-08ef6e1b0d6e","ts":"2026-10-22T14:25:43.375Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Perfeito, registei <b>Casa Joaquim, Largo da Oliveira, 12, Guimarães</b>.\n\nQuantas <b>mesas</b> e <b>cadeiras</b> planeia colocar no exterior?"},"hash_anterior":"7f73742fe08c78b7e13f375ab82d96ca3d8c800c3d774087916260f9dc553178","hash":"2098609a053f1dad429d56be12c2be4e64867300b3f126cf2003e2934ac94e80","seq":313}
+
+: ping
+
+id: 314
+data: {"v":1,"id":"07f42f26-85b1-4ecd-8b96-cdb3a177bbc5","ts":"2026-10-22T14:25:56.441Z","tipo":"canal.mensagem.recebida","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"4 mesas e 20 cadeiras","entrada":"texto"},"hash_anterior":"2098609a053f1dad429d56be12c2be4e64867300b3f126cf2003e2934ac94e80","hash":"6424447b7cd46556929eeb0dc125b4a5fe0e1e936f74c53f70df01efd5cd812a","seq":314}
+
+id: 315
+data: {"v":1,"id":"32ef410a-9d47-4efe-84f5-d12729b13db8","ts":"2026-10-22T14:25:56.509Z","tipo":"cofre.item.guardado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"COF-0004","tipo":"dimensoes_esplanada","camada":"intencoes","titulo":"Dimensões da Esplanada","finalidade":"Aferição de taxas e corredor regulamentar","sensibilidade":"normal"},"hash_anterior":"6424447b7cd46556929eeb0dc125b4a5fe0e1e936f74c53f70df01efd5cd812a","hash":"c3b2d8c759357316512713372e78d15c3951f9968d1df88ae0e7b7ada713358a","seq":315}
+
+id: 316
+data: {"v":1,"id":"a4edfc4c-452f-494c-b6ab-c03a62c20c4a","ts":"2026-10-22T14:25:56.686Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Anotado: <b>4 mesas (~10 m²)</b>.\n\nSegundo o <b>Artigo 8.º do Regulamento Municipal</b>, é obrigatório salvaguardar um <b>corredor pedonal livre de pelo menos 2,00 metros</b> para circulação de peões e carrinhos de bebé.\n\nO passeio em frente garante esta largura livre de 2,00 metros?","botoes":[],"entregue_no_canal":true},"hash_anterior":"c3b2d8c759357316512713372e78d15c3951f9968d1df88ae0e7b7ada713358a","hash":"a6969dd0533c05a215ff7e308a14179522d54b3af9837be691efb426ec5076a9","seq":316}
+
+id: 317
+data: {"v":1,"id":"513fae11-d6dd-4281-b4a9-da6abb260978","ts":"2026-10-22T14:25:56.688Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"Anotado: <b>4 mesas (~10 m²)</b>.\n\nSegundo o <b>Artigo 8.º do Regulamento Municipal</b>, é obrigatório salvaguardar um <b>corredor pedonal livre de pelo menos 2,00 metros</b> para circulação de peões e carrinhos de bebé.\n\nO passeio em frente garante esta largura livre de 2,00 metros?"},"hash_anterior":"a6969dd0533c05a215ff7e308a14179522d54b3af9837be691efb426ec5076a9","hash":"32e16194c13c8f47975dc63a5578e934fb08d72cf3cdb76b6f35ee5720358379","seq":317}
+
+id: 318
+data: {"v":1,"id":"95b15126-6605-4aac-944f-a0e49ac683da","ts":"2026-10-22T14:25:56.691Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"tipo":"d2_passo_processado","estado":"aguarda_passeio"},"hash_anterior":"32e16194c13c8f47975dc63a5578e934fb08d72cf3cdb76b6f35ee5720358379","hash":"806febf03204aacacacfeac20ffd3c9feee130a4d6a33652cf496bea774b4631","seq":318}
+
+id: 319
+data: {"v":1,"id":"385fbbd4-705d-4986-b3fa-a1fa2aa52197","ts":"2026-10-22T14:26:02.611Z","tipo":"canal.mensagem.recebida","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"texto":"Sim","entrada":"texto"},"hash_anterior":"806febf03204aacacacfeac20ffd3c9feee130a4d6a33652cf496bea774b4631","hash":"0e09df02073dca24d32aa9ecec023b470b2123148c98ee73ec1fa3ed7d00bc87","seq":319}
+
+id: 320
+data: {"v":1,"id":"08da14dc-e8c1-40d7-8544-298b720b40b5","ts":"2026-10-22T14:26:02.614Z","tipo":"missao.estado.alterado","origem":"orquestrador","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"de":"cancelado","para":"preparado","motivo":"Requisitos validados e pacote mínimo preparado"},"hash_anterior":"0e09df02073dca24d32aa9ecec023b470b2123148c98ee73ec1fa3ed7d00bc87","hash":"6dc63527e7c4a8e561e88031f14519f8c86d61eccdd6a12ce7c22453273c4480","seq":320}
+
+id: 321
+data: {"v":1,"id":"cc11259c-951b-4242-9adc-8ee673a87701","ts":"2026-10-22T14:26:02.616Z","tipo":"cofre.pacote.preparado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"campos":["estabelecimento","morada","area_m2","numero_mesas","periodo","corredor_pedonal_livre"],"pacote":"PAC-0002","expira_em":"2026-11-21","finalidade":"Mera Comunicação Prévia de Esplanada","destinatario":"Câmara Municipal de Guimarães — Gabinete de Serviços Urbanos","nao_partilha":["terreno_ponte","conversas_privadas","declaracoes_fiscais","dados_bancarios"]},"hash_anterior":"6dc63527e7c4a8e561e88031f14519f8c86d61eccdd6a12ce7c22453273c4480","hash":"7de42090645c6f0dcfedc73d35822c281bb8dc1dffb072828d9049844770c90f","seq":321}
+
+id: 322
+data: {"v":1,"id":"a473de26-cb84-4a4e-bee7-1b81790ad5c7","ts":"2026-10-22T14:26:02.618Z","tipo":"henriques.pacote_preparado","origem":"henriques","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"mesas":4,"morada":"Casa Joaquim, Largo da Oliveira, 12, Guimarães","pacote":"PAC-0001","area_m2":10,"estabelecimento":"Casa Joaquim","conformidade_passeio":"conforme_art8"},"hash_anterior":"7de42090645c6f0dcfedc73d35822c281bb8dc1dffb072828d9049844770c90f","hash":"2b70c2e295622ae00cd5f694230bd8afa89d6bab7f4ccdcc0afe5b0472a02bd6","seq":322}
+
+id: 323
+data: {"v":1,"id":"c25ce7b5-48a1-4f0a-9937-159e088ce3c0","ts":"2026-10-22T14:26:02.814Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"📄 <b>MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO)</b>\n━━━━━━━━━━━━━━━━━━━━\n• <b>Requerente:</b> Identificado via Cofre Digital\n• <b>Estabelecimento:</b> Casa Joaquim\n• <b>Localização:</b> Casa Joaquim, Largo da Oliveira, 12, Guimarães\n• <b>Equipamento:</b> 4 mesas com cadeiras amovíveis\n• <b>Área Ocupada:</b> ~10 m² (contígua à fachada)\n• <b>Acessibilidade:</b> Corredor de 2,10m salvaguardado (conforme Art. 8.º >= 2,00m)\n• <b>Documentos:</b> Formulário OVP-SO e certidão reunidos no Pacote Mínimo (PAC-0001)\n━━━━━━━━━━━━━━━━━━━━\n\n🔒 <i>Princípio da Minimização RGPD: Dados bancários, fiscais e conversas privadas estão blindados no seu Cofre Pessoal e foram omitidos da Câmara.</i>\n\n<b>Tudo pronto.</b> Para dar entrada formal do pedido na Câmara Municipal com valor legal, confirme a sua autenticação:","botoes":[[{"dados":"assinar_com_chave_movel_digital","texto":"✍️ Autenticar com Chave Móvel Digital (Simulação)"}],[{"dados":"pessoa","texto":"👤 Falar com uma pessoa"}]],"entregue_no_canal":true},"hash_anterior":"2b70c2e295622ae00cd5f694230bd8afa89d6bab7f4ccdcc0afe5b0472a02bd6","hash":"1edb759c02908b003b5624521b5b7c3daf405566d7a41c5d58514e0fe281e6fe","seq":323}
+
+id: 324
+data: {"v":1,"id":"1ad0a209-4d4b-465a-b555-3533b437bf55","ts":"2026-10-22T14:26:02.816Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"📄 <b>MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO)</b>\n━━━━━━━━━━━━━━━━━━━━\n• <b>Requerente:</b> Identificado via Cofre Digital\n• <b>Estabelecimento:</b> Casa Joaquim\n• <b>Localização:</b> Casa Joaquim, Largo da Oliveira, 12, Guimarães\n• <b>Equipamento:</b> 4 mesas com cadeiras amovíveis\n• <b>Área Ocupada:</b> ~10 m² (contígua à fachada)\n• <b>Acessibilidade:</b> Corredor de 2,10m salvaguardado (conforme Art. 8.º >= 2,00m)\n• <b>Documentos:</b> Formulário OVP-SO e certidão reunidos no Pacote Mínimo (PAC-0001)\n━━━━━━━━━━━━━━━━━━━━\n\n🔒 <i>Princípio da Minimização RGPD: Dados bancários, fiscais e conversas privadas estão blindados no seu Cofre Pessoal e foram omitidos da Câmara.</i>\n\n<b>Tudo pronto.</b> Para dar entrada formal do pedido na Câmara Municipal com valor legal, confirme a sua autenticação:"},"hash_anterior":"1edb759c02908b003b5624521b5b7c3daf405566d7a41c5d58514e0fe281e6fe","hash":"12465ebc9792ee7f5afefbc9cbe5f8eec3a68a121e8c3ae20f8d66df696c5c9a","seq":324}
+
+id: 325
+data: {"v":1,"id":"9eb9e423-c662-48b8-b4e7-92df7b8a5961","ts":"2026-10-22T14:26:02.818Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"tipo":"d2_passo_processado","estado":"concluido"},"hash_anterior":"12465ebc9792ee7f5afefbc9cbe5f8eec3a68a121e8c3ae20f8d66df696c5c9a","hash":"b4e5755cafe2a1c433148318921afc974f05da7c4d23ca6c81d6ba18afef3f43","seq":325}
+
+id: 326
+data: {"v":1,"id":"aad7d59d-e9fc-401a-9d05-42f36c01cd0a","ts":"2026-10-22T14:26:08.296Z","tipo":"canal.botao.carregado","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":false,"dados":{"botao":"assinar_com_chave_movel_digital"},"hash_anterior":"b4e5755cafe2a1c433148318921afc974f05da7c4d23ca6c81d6ba18afef3f43","hash":"b753105823811fdb2437b3415b0ad22c5e2fdb780ddaca5d02aaa515257d5e37","seq":326}
+
+id: 327
+data: {"v":1,"id":"99355b3e-ed40-46b6-850b-018bd0facdb6","ts":"2026-10-22T14:26:08.298Z","tipo":"mandato.concedido","origem":"mandatos","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"id":"MAN-2026-0004","nivel":"D3","ambito":"ocupacao-espaco-publico","objeto":"Casa Joaquim (Largo da Oliveira)","entidade":"Câmara Municipal de Guimarães","valido_ate":"2027-04-20"},"hash_anterior":"b753105823811fdb2437b3415b0ad22c5e2fdb780ddaca5d02aaa515257d5e37","hash":"d92ae0e6118288178b7681d955d1cd18dbb332c7e63374ea8ce066c6f02264f3","seq":327}
+
+id: 328
+data: {"v":1,"id":"1c4c4fd5-0328-44be-9f2b-41b6b5d367df","ts":"2026-10-22T14:26:08.300Z","tipo":"cofre.pacote.aprovado","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"pessoa","simulacao":true,"dados":{"campos":["estabelecimento","morada","area_m2","numero_mesas","periodo","corredor_pedonal_livre"],"pacote":"PAC-0001","aprovado_em":"2026-10-22T14:26:08.300Z","nao_partilha":["terreno_ponte","conversas_privadas","declaracoes_fiscais","dados_bancarios"]},"hash_anterior":"d92ae0e6118288178b7681d955d1cd18dbb332c7e63374ea8ce066c6f02264f3","hash":"84986e8a182264344d2df1594b4b53cc9ad9262b732e7cc5ecb706e3fa4bad66","seq":328}
+
+id: 329
+data: {"v":1,"id":"7150f6c3-6e10-4f56-9a3e-17c70a64d639","ts":"2026-10-22T14:26:08.302Z","tipo":"politica.decisao","origem":"politica","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"sistema","simulacao":true,"dados":{"acao":"submeter_comunicacao_previa","regra":"conformidade_estrita","motivo":"Ação autorizada ao abrigo do mandato MAN-2026-0002 (D3).","mandatoId":"MAN-2026-0002","resultado":"permitir","exige_confirmacao":false},"hash_anterior":"84986e8a182264344d2df1594b4b53cc9ad9262b732e7cc5ecb706e3fa4bad66","hash":"7f3fc6f5967aee6a84bb64111104425150d7cd44c445d736ed9365e27f7c4b22","seq":329}
+
+id: 330
+data: {"v":1,"id":"dd41df29-35c1-42a5-adcd-fdb6baddeafa","ts":"2026-10-22T14:26:08.310Z","tipo":"porta.capacidade.chamada","origem":"porta","sessao":"demo","missao":null,"pessoa":null,"ator":"agente:porta","simulacao":true,"dados":{"fontes":["registo-oficial"],"cliente":"henriques","mandato":"MAN-2026-0004","resultado":"processo_submetido","simulacao":true,"capacidade":"submeter_comunicacao_previa"},"hash_anterior":"7f3fc6f5967aee6a84bb64111104425150d7cd44c445d736ed9365e27f7c4b22","hash":"ddc375aa6235747c95ae555f10762b6613c18be56f51d542ea577980da2cc83c","seq":330}
+
+id: 331
+data: {"v":1,"id":"b5116334-c22d-4b8b-895c-7916694a415f","ts":"2026-10-22T14:26:08.312Z","tipo":"su.processo.criado","origem":"su","sessao":"demo","missao":"MIS-0001","pessoa":"ines_guimaraes","ator":"sistema","simulacao":true,"dados":{"caso":"CASO-0001","estado":"submetido","servico":"ocupacao-espaco-publico-esplanada","processo":"OEP/2026/0001","servicoTitulo":"Ocupação do Espaço Público — Esplanada Aberta"},"hash_anterior":"ddc375aa6235747c95ae555f10762b6613c18be56f51d542ea577980da2cc83c","hash":"96bd36e23c78fcb61cefed8e5842fa9fa23e7693eafb05ead91510763e1fd3c9","seq":331}
+
+id: 332
+data: {"v":1,"id":"1dd11e1a-8846-4fd0-b648-4c628b4731aa","ts":"2026-10-22T14:26:08.316Z","tipo":"missao.estado.alterado","origem":"orquestrador","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"agente","simulacao":true,"dados":{"de":"preparado","para":"submetido","motivo":"Submetido com mandato D3 e Chave Móvel Digital (CMD-TOKEN-460754)"},"hash_anterior":"96bd36e23c78fcb61cefed8e5842fa9fa23e7693eafb05ead91510763e1fd3c9","hash":"4440f9c87333a47009ddd1163977c5212a507cc7c28512ce87b0c79d113fa54b","seq":332}
+
+id: 333
+data: {"v":1,"id":"c490b071-384a-4fd4-acbb-c905b11e9759","ts":"2026-10-22T14:26:08.316Z","tipo":"consola.caso.criado","origem":"consola","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"sistema","simulacao":true,"dados":{"caso":"CASO-0001","risco":"baixo","servico":"ocupacao-espaco-publico-esplanada","processo":"OEP/2026/0001","token_cmd":"CMD-TOKEN-460754"},"hash_anterior":"4440f9c87333a47009ddd1163977c5212a507cc7c28512ce87b0c79d113fa54b","hash":"55074dddae5be9f373d7bf48c919295a9acaedd5958d6f55e431bee99dcd0d21","seq":333}
+
+id: 334
+data: {"v":1,"id":"ba9fc18c-aaa7-4d80-9612-fd1e78a4d54b","ts":"2026-10-22T14:26:08.510Z","tipo":"canal.mensagem.enviada","origem":"canal","sessao":"demo","missao":null,"pessoa":"pessoa-369acaaece","ator":"agente:henriques","simulacao":false,"dados":{"texto":"✅ <b>Comunicação Prévia Submetida com Sucesso!</b>\n\nA sua assinatura digital com <b>Chave Móvel Digital</b> foi validada com sucesso.\nToken de Assinatura: <code>CMD-TOKEN-460754</code>\nNível de Representação: <b>Mandato D3</b> (MAN-2026-0004)\n\n<b>Processo Municipal:</b> <code>OEP/2026/0001</code> (Simulação)\n<b>Estado:</b> Em apreciação técnica pelo Gabinete de Serviços Urbanos.\n\nAvisarei assim que a técnica validar o processo na Consola Municipal.","botoes":[],"entregue_no_canal":true},"hash_anterior":"55074dddae5be9f373d7bf48c919295a9acaedd5958d6f55e431bee99dcd0d21","hash":"5ccb4d77113ff0486c8e91872cafd23bb3f2a3d29086bd757adb13dac249b663","seq":334}
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+id: 335
+data: {"v":1,"id":"7d148c69-c897-4a8e-a4f8-0b36db097e4f","ts":"2026-10-22T14:31:26.369Z","tipo":"cofre.chave.recolhida","origem":"cofre","sessao":"demo","missao":"MIS-0001","pessoa":"pessoa-369acaaece","ator":"sistema","simulacao":true,"dados":{"motivo":"expiracao_tempo"},"hash_anterior":"5ccb4d77113ff0486c8e91872cafd23bb3f2a3d29086bd757adb13dac249b663","hash":"a824050c8a4122f6ea91cc0cdead0201d679fa9500895ef6a5bb13dcde13ce45","seq":335}
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+
+: ping
+

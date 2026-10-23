@@ -33,3 +33,4 @@ videos/**/.hyperframes/
 # Python
 __pycache__/
 *.pyc
+*.webm

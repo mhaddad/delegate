@@ -1,0 +1,38 @@
+[
+ {
+  "t": 0,
+  "nome": "inicio"
+ },
+ {
+  "t": 1.5,
+  "nome": "resumo"
+ },
+ {
+  "t": 2.44,
+  "nome": "dados"
+ },
+ {
+  "t": 4.1,
+  "nome": "decisao-visivel"
+ },
+ {
+  "t": 4.94,
+  "nome": "aprovar"
+ },
+ {
+  "t": 8.22,
+  "nome": "nota"
+ },
+ {
+  "t": 9.04,
+  "nome": "confirmado"
+ },
+ {
+  "t": 12.85,
+  "nome": "missoes"
+ },
+ {
+  "t": 16.23,
+  "nome": "fim"
+ }
+]

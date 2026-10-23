@@ -1,0 +1,521 @@
+[
+ {
+  "t": 1.24,
+  "tipo": "inicio-reproducao"
+ },
+ {
+  "t": 1.27,
+  "tipo": "conversa",
+  "texto": "À espera da primeira mensagem."
+ },
+ {
+  "t": 1.27,
+  "tipo": "arvore",
+  "texto": "Envie uma mensagem ao Henriques. A árvore de decisão aparece aqui no instante em que o mot"
+ },
+ {
+  "t": 1.27,
+  "tipo": "cofre",
+  "texto": "Ainda não há cofres. Cada pessoa que falar com o Henriques ganha o seu, aqui."
+ },
+ {
+  "t": 1.29,
+  "tipo": "conversa",
+  "texto": "À espera da primeira mensagem."
+ },
+ {
+  "t": 1.29,
+  "tipo": "conversa",
+  "texto": "HOJE"
+ },
+ {
+  "t": 1.29,
+  "tipo": "conversa",
+  "texto": "🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe"
+ },
+ {
+  "t": 1.29,
+  "tipo": "conversa",
+  "texto": "/start 15:58✓✓"
+ },
+ {
+  "t": 1.29,
+  "tipo": "conversa",
+  "texto": ""
+ },
+ {
+  "t": 1.29,
+  "tipo": "arvore",
+  "texto": "“ /start"
+ },
+ {
+  "t": 1.29,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 1.3,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 0 Intenções 0 Mandatos 0 Missões "
+ },
+ {
+  "t": 1.31,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 1.32,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 2.01,
+  "tipo": "conversa",
+  "texto": "Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst"
+ },
+ {
+  "t": 2.01,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 3.41,
+  "tipo": "conversa",
+  "texto": "O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓"
+ },
+ {
+  "t": 3.41,
+  "tipo": "arvore",
+  "texto": "“ O que preciso para ter uma esplanada à porta do meu café?"
+ },
+ {
+  "t": 3.41,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 3.42,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 3.42,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 0 Intenções 0 Mandatos 0 Missões "
+ },
+ {
+  "t": 3.42,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 4.11,
+  "tipo": "arvore",
+  "texto": "“ O que preciso para ter uma esplanada à porta do meu café?"
+ },
+ {
+  "t": 4.11,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 4.14,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 7.27,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 8.26,
+  "tipo": "conversa",
+  "texto": "Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá"
+ },
+ {
+  "t": 9,
+  "tipo": "conversa",
+  "texto": "📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º"
+ },
+ {
+  "t": 10.41,
+  "tipo": "arvore",
+  "texto": "“ 🚀 Ajuda-me a tratar (Cofre D2)"
+ },
+ {
+  "t": 10.41,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 10.41,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": "HOJE"
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": "🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe"
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": "/start 15:58✓✓"
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": "Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst"
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": "O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓"
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": "Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá"
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": "📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º"
+ },
+ {
+  "t": 10.42,
+  "tipo": "conversa",
+  "texto": ""
+ },
+ {
+  "t": 10.43,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 11.11,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 11.12,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 0 Intenções 1 Mandatos 0 Missões "
+ },
+ {
+  "t": 11.81,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 0 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 12.52,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 0 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 12.8,
+  "tipo": "conversa",
+  "texto": "Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2). 📋 "
+ },
+ {
+  "t": 14.2,
+  "tipo": "arvore",
+  "texto": "“ 📍 Exemplo: Casa Joaquim (Largo da Oliveira)"
+ },
+ {
+  "t": 14.2,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 14.2,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 14.21,
+  "tipo": "conversa",
+  "texto": "HOJE"
+ },
+ {
+  "t": 14.21,
+  "tipo": "conversa",
+  "texto": "🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe"
+ },
+ {
+  "t": 14.21,
+  "tipo": "conversa",
+  "texto": "/start 15:58✓✓"
+ },
+ {
+  "t": 14.21,
+  "tipo": "conversa",
+  "texto": "Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst"
+ },
+ {
+  "t": 14.21,
+  "tipo": "conversa",
+  "texto": "O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓"
+ },
+ {
+  "t": 14.22,
+  "tipo": "conversa",
+  "texto": "Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá"
+ },
+ {
+  "t": 14.22,
+  "tipo": "conversa",
+  "texto": "📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º"
+ },
+ {
+  "t": 14.22,
+  "tipo": "conversa",
+  "texto": "Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2). 📋 "
+ },
+ {
+  "t": 14.22,
+  "tipo": "conversa",
+  "texto": ""
+ },
+ {
+  "t": 14.22,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 14.9,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 14.91,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 1 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 15.61,
+  "tipo": "conversa",
+  "texto": "Perfeito, registei Casa Joaquim, Largo da Oliveira, 12, Guimarães. Quantas mesas e cadeira"
+ },
+ {
+  "t": 17.01,
+  "tipo": "conversa",
+  "texto": "4 mesas 15:59✓✓"
+ },
+ {
+  "t": 17.01,
+  "tipo": "arvore",
+  "texto": "“ 4 mesas"
+ },
+ {
+  "t": 17.01,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 17.02,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 17.02,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 1 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 17.03,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 17.71,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 17.74,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 2 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 18.42,
+  "tipo": "conversa",
+  "texto": "Anotado: 4 mesas (~10 m²). Segundo o Artigo 8.º do Regulamento Municipal, é obrigatório sa"
+ },
+ {
+  "t": 20.52,
+  "tipo": "conversa",
+  "texto": "Sim 15:59✓✓"
+ },
+ {
+  "t": 20.52,
+  "tipo": "arvore",
+  "texto": "“ Sim"
+ },
+ {
+  "t": 20.52,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 20.53,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 20.54,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 2 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 20.54,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 21.23,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 21.24,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 2 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 21.38,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 2 Intenções 1 Mandatos 1 Missões "
+ },
+ {
+  "t": 22.21,
+  "tipo": "conversa",
+  "texto": "📄 MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO) ━━━━━━━━━━━━━━━━━━━━ • Requerente: Identifica"
+ },
+ {
+  "t": 24.32,
+  "tipo": "arvore",
+  "texto": "“ ✍️ Autenticar com Chave Móvel Digital (Simulação)"
+ },
+ {
+  "t": 24.32,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 24.33,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "HOJE"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "🔒 Conversa de pessoa-369acaaece. O painel vê só o pseudónimo, nunca o identificador da pe"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "/start 15:58✓✓"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "Olá, sou o Henriques, o seu representante digital que trabalha para si. Esta é uma demonst"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "O que preciso para ter uma esplanada à porta do meu café? 15:59✓✓"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "Olá! Posso tratar disso por si. Para ter a esplanada, vai precisar de preencher um formulá"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "📄 Fonte: Regulamento de Ocupação do Espaço Público e Publicidade de Guimarães (Artigo 8.º"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "Entendido! Vamos preparar o seu pedido de esplanada no Cofre Digital (sob Mandato D2). 📋 "
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "Perfeito, registei Casa Joaquim, Largo da Oliveira, 12, Guimarães. Quantas mesas e cadeira"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "4 mesas 15:59✓✓"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "Anotado: 4 mesas (~10 m²). Segundo o Artigo 8.º do Regulamento Municipal, é obrigatório sa"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "Sim 15:59✓✓"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": "📄 MINUTA DO REQUERIMENTO MUNICIPAL (OVP-SO) ━━━━━━━━━━━━━━━━━━━━ • Requerente: Identifica"
+ },
+ {
+  "t": 24.34,
+  "tipo": "conversa",
+  "texto": ""
+ },
+ {
+  "t": 24.34,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 25.03,
+  "tipo": "arvore",
+  "texto": ""
+ },
+ {
+  "t": 25.03,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 2 Intenções 2 Mandatos 1 Missões "
+ },
+ {
+  "t": 25.73,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave fechada 0 Identidade 0 Provas 2 Intenções 2 Mandatos 1 Missões "
+ },
+ {
+  "t": 26.59,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave aberta para MIS-0001 · fecha em 8:56 0 Identidade 0 Provas 2 In"
+ },
+ {
+  "t": 28.13,
+  "tipo": "cofre",
+  "texto": "36 pessoa-369acaaece Chave aberta para MIS-0001 · fecha em 8:55 0 Identidade 0 Provas 2 In"
+ },
+ {
+  "t": 28.4,
+  "tipo": "conversa",
+  "texto": "✅ Comunicação Prévia Submetida com Sucesso! A sua assinatura digital com Chave Móvel Digit"
+ }
+]
