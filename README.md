@@ -222,7 +222,7 @@ npm run nucleo
 
 ## Origem dos materiais e ferramentas
 
-Os documentos de conceito (roteiros e vídeos) e as especificações foram produzidos antes do arranque do hackathon. O código do protótipo foi criado a partir do arranque, a 19/10/2026.
+O código do protótipo foi criado a partir do arranque, a 19/10/2026.
 
 **Serviços e bibliotecas de terceiros:**
 
