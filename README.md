@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="site/assets/henriques-header.jpg" alt="O Henriques, o representante digital do Delegate, à porta de uma muralha com a inscrição «Guimarães»." width="100%">
+  <img src="images/thumb-video-delegate.png" alt="Delegate. Hack4Guimarães 2035, desafio 3.4. Diga o que precisa. O Henriques trata do resto. O Henriques, o representante digital, à porta de uma muralha com a inscrição «Guimarães»." width="100%">
 </p>
 
 # Delegate
