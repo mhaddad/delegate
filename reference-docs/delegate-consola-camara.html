@@ -3,165 +3,889 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Delegate — Solicitações da Câmara</title>
+  <title>Delegate · Consola da Câmara</title>
+  <link rel="icon" href="../design-system/logo/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../design-system/tokens.css">
+  <!--
+    Consola municipal · servida pelo núcleo em /consola
+    Design de delegate-consola-camara-v2.html (design system em design-system/)
+    com a lógica funcional da consola: pedidos de /api/consola/pedidos, decisões
+    em /api/consola/acao e eventos do barramento em /eventos/stream.
+    As vistas Missões, Relatórios e Intenções usam dados sintéticos (Simulação).
+    O logótipo da Câmara é uma cópia local de
+    https://www.cm-guimaraes.pt/cmguimaraes/layout/logo_guimaraes_branco.png
+    (assets/ aqui e em prototipo/apps/web/assets/), para a consola correr sem rede.
+  -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
-    :root{--paper:#f4efe6;--surface:#fffefa;--ink:#1d2430;--muted:#687080;--line:#e4ded3;--night:#0f1b2d;--night2:#17283d;--green:#1a7040;--green-soft:#e2eee4;--gold:#8a6210;--gold-soft:#fff4d8;--cyan:#167a76;--cyan-soft:#e0f1ef;--red:#a44132;--shadow:0 18px 50px #15223812}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:13px/1.5 Manrope,Arial,sans-serif}.app{min-height:100vh;display:grid;grid-template-columns:236px 1fr}.sidebar{background:var(--night);color:#e8edf3;padding:22px 15px;display:flex;flex-direction:column;gap:25px}.brand{display:flex;align-items:center;gap:10px;padding:0 9px;font-weight:800;font-size:20px;letter-spacing:-.06em}.brand-mark{height:32px;width:32px;display:grid;place-items:center;border:1px solid #34465f;border-radius:10px}.brand-mark svg{width:24px}.org{margin:0 7px;padding:11px 12px;border:1px solid #34465f;border-radius:10px;background:#16263d;color:#c7d0dc;font-size:10px}.org b{display:block;color:white;font-size:11px;margin-bottom:3px}.nav-label{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#8997aa;padding:0 10px;margin-bottom:7px}.nav{display:grid;gap:4px}.nav a{color:#aeb8c7;text-decoration:none;padding:10px;border-radius:8px;font-size:11px;display:flex;align-items:center;gap:10px}.nav a.active{background:#263c32;color:#b8ebc8;font-weight:700}.nav .icon{width:17px;text-align:center;font-size:14px}.nav .count{margin-left:auto;background:#28384d;color:#d5deea;border-radius:99px;padding:2px 7px;font-size:9px}.sidebar-bottom{margin-top:auto}.user{border-top:1px solid #34465f;padding:15px 8px 0;display:flex;gap:10px;align-items:center}.user-avatar{height:31px;width:31px;border-radius:50%;display:grid;place-items:center;background:#284631;color:#b8ebc8;font-size:10px;font-weight:800}.user b{display:block;font-size:10px}.user small{color:#a2adbd;font-size:9px}.main{min-width:0}.topbar{height:65px;background:#fffefa;border-bottom:1px solid var(--line);padding:0 27px;display:flex;justify-content:space-between;align-items:center;gap:16px}.crumb{color:var(--muted);font-size:10px}.crumb b{color:var(--ink)}.top-actions{display:flex;align-items:center;gap:12px}.search{height:33px;width:min(230px,25vw);border:1px solid var(--line);border-radius:8px;background:#fffefa;padding:0 10px;color:#8c929b;font:10px Manrope,Arial,sans-serif}.icon-btn{height:31px;width:31px;border:1px solid var(--line);border-radius:8px;background:#fffefa;color:#596576}.online{font-size:9px;color:var(--green);font-weight:700;white-space:nowrap}.online:before{content:"";display:inline-block;width:7px;height:7px;background:#36a769;border-radius:50%;margin-right:6px}.content{max-width:1550px;margin:auto;padding:24px 27px 35px}.heading{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px;gap:15px}.eyebrow{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:800}.heading h1{font-size:25px;letter-spacing:-.06em;line-height:1.15;margin:5px 0 3px}.heading p{color:var(--muted);font-size:10px;margin:0}.date{font-size:10px;color:var(--muted);white-space:nowrap}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:0 3px 15px #10203905}.stat-head{display:flex;justify-content:space-between;color:var(--muted);font-size:9px}.stat-icon{color:var(--green);font-size:13px}.stat strong{display:block;font-size:22px;letter-spacing:-.06em;margin:7px 0 1px}.stat small{font-size:8px;color:var(--muted)}.stat small em{color:var(--green);font-style:normal;font-weight:700}.workspace{display:grid;grid-template-columns:minmax(205px,.76fr) minmax(390px,1.6fr) minmax(230px,.85fr);gap:12px;align-items:stretch}.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;box-shadow:0 3px 15px #10203905;min-width:0}.card-head{height:51px;padding:0 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.card-head h2{font-size:11px;margin:0;letter-spacing:-.02em}.subtle{color:var(--muted);font-size:8px}.filter{border:1px solid var(--line);background:white;border-radius:6px;padding:5px 7px;color:#586271;font:9px Manrope,Arial,sans-serif}.inbox-tools{padding:10px 11px 7px;display:flex;gap:6px}.pill{border:1px solid var(--line);border-radius:99px;padding:5px 8px;color:#667080;font-size:8px;white-space:nowrap}.pill.selected{color:var(--green);border-color:#b9d8c3;background:var(--green-soft);font-weight:800}.threads{display:grid}.thread{padding:11px 12px;border-top:1px solid #eee9e0;cursor:pointer}.thread.selected{background:#edf4ed;border-left:3px solid var(--green);padding-left:9px}.thread-top{display:flex;align-items:center;justify-content:space-between;gap:6px}.thread b{font-size:9px}.thread time{font-size:8px;color:#858c97}.thread p{font-size:8px;color:#687080;margin:5px 0 7px;line-height:1.45}.thread-foot{display:flex;justify-content:space-between;align-items:center}.tag{font-size:7px;padding:3px 6px;border-radius:99px;background:#f1eee8;color:#616978}.tag.wait{background:#fff1d5;color:#87620d}.tag.ok{background:#e1eee4;color:#286b42}.unread{width:6px;height:6px;border-radius:50%;background:#24924f}.conversation{display:flex;flex-direction:column;min-height:520px}.conversation .card-head{flex:0 0 51px}.contact{display:flex;align-items:center;gap:9px}.contact-pic{height:29px;width:29px;display:grid;place-items:center;border-radius:50%;background:#f4e4cf;color:#785727;font-weight:800;font-size:9px}.contact b{display:block;font-size:10px}.contact small{font-size:8px;color:var(--muted)}.ai-chip{font-size:8px;color:#e8b44a;background:var(--night);border:1px solid #34465f;padding:5px 8px;border-radius:99px;white-space:nowrap}.chat{flex:1;padding:14px;background:#f7f4ee;display:flex;flex-direction:column;gap:9px;overflow:auto}.day{align-self:center;background:#e9e2d6;color:#74706a;font-size:7px;padding:4px 8px;border-radius:99px}.msg{max-width:88%;border:1px solid #e8e1d7;background:#fffefa;border-radius:3px 11px 11px 11px;padding:9px 10px;font-size:9px;line-height:1.5}.msg.user{align-self:flex-end;background:#e2eee4;border-color:#d3e4d6;border-radius:11px 3px 11px 11px}.msg p{margin:0}.msg small{display:block;color:#89909b;font-size:7px;text-align:right;margin-top:5px}.msg.assistant{border-left:3px solid var(--green)}.msg-label{font-size:7px;color:var(--green);font-weight:800;margin-bottom:3px}.source-box{margin-top:7px;border-top:1px solid #eee9e0;padding-top:6px;color:var(--green);font-size:7px;font-weight:800}.source-box span{display:block;color:#687080;font-weight:500;margin-top:2px}.draft{background:#fff8e8;border:1px solid #ead89f;border-radius:8px;padding:9px 10px;font-size:8px;color:#6a572e}.draft b{display:block;color:#80600f;margin-bottom:3px;font-size:8px}.draft-actions{display:flex;gap:6px;margin-top:8px}.draft-actions button,.composer button{border:0;border-radius:6px;padding:6px 8px;font:700 8px Manrope,Arial,sans-serif}.approve{background:var(--green);color:white}.edit{background:#fffefa;border:1px solid #e7dcbf!important;color:#715d30}.composer{border-top:1px solid var(--line);padding:10px;display:flex;gap:7px;align-items:center}.composer input{height:32px;border:1px solid var(--line);border-radius:7px;background:white;flex:1;min-width:0;padding:0 9px;font:9px Manrope,Arial,sans-serif}.composer button{height:32px;background:var(--night);color:#e8edf3;padding:0 12px}.context{padding-bottom:10px}.context-body{padding:12px}.person{display:flex;gap:10px;align-items:center;padding-bottom:11px;border-bottom:1px solid var(--line)}.person-pic{height:38px;width:38px;border-radius:50%;background:#f1e6d4;color:#876232;display:grid;place-items:center;font-weight:800}.person b{font-size:10px;display:block}.person small{font-size:8px;color:var(--muted)}.verified{margin-left:auto;font-size:7px;color:var(--green);background:var(--green-soft);padding:4px 6px;border-radius:99px}.info-group{padding:11px 0;border-bottom:1px solid #eee9e0}.info-group:last-child{border:0}.info-label{font-size:7px;color:#848b95;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}.info-row{display:flex;justify-content:space-between;gap:8px;font-size:8px;margin:5px 0}.info-row span{color:var(--muted)}.mission{padding:9px;border-radius:8px;background:#edf4ed;border:1px solid #d4e4d7}.mission b{display:block;font-size:8px;color:var(--green);margin-bottom:3px}.mission p{font-size:7px;color:#536455;margin:0;line-height:1.5}.consent{padding:8px;border-radius:8px;background:var(--gold-soft);border:1px solid #ead89f;color:#725b26;font-size:7px;line-height:1.5}.consent b{display:block;color:#85600e;font-size:8px;margin-bottom:3px}.audit{padding:0 12px 12px}.audit button{width:100%;padding:8px;border:1px solid var(--line);border-radius:7px;background:white;color:#586271;font:700 8px Manrope,Arial,sans-serif}.footnote{margin-top:14px;display:flex;justify-content:space-between;align-items:center;font-size:8px;color:#777e88}.footnote a{color:var(--green);text-decoration:none;font-weight:800}.prototype{color:var(--gold);background:var(--gold-soft);padding:4px 7px;border-radius:99px;font-weight:800}
-    @media(max-width:1180px){.app{grid-template-columns:205px 1fr}.workspace{grid-template-columns:minmax(195px,.75fr) minmax(350px,1.5fr)}.context{grid-column:1/-1}.context .context-body{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.person{border:0}.info-group{border:0;padding:0}.info-group:last-child{border:0}.audit{padding:0 12px 12px}}
-    @media(max-width:800px){.app{grid-template-columns:1fr}.sidebar{display:none}.topbar{padding:0 15px}.content{padding:18px 14px}.stats{grid-template-columns:1fr 1fr}.workspace{grid-template-columns:1fr}.context{grid-column:auto}.context .context-body{display:block}.info-group{padding:10px 0;border-bottom:1px solid #eee9e0}.heading{align-items:flex-start;flex-direction:column}.date{display:none}.inbox{min-height:300px}.conversation{min-height:510px}.search{width:150px}}
-    @media(max-width:470px){.topbar{height:54px}.crumb{font-size:9px}.search{display:none}.heading h1{font-size:22px}.stat{padding:10px}.stat strong{font-size:19px}.inbox-tools{overflow:auto}.msg{max-width:96%}.footnote{align-items:flex-start;flex-direction:column;gap:6px}}
-  </style>
-  <style>
-    .privacy-workspace{grid-template-columns:minmax(230px,.72fr) minmax(460px,1.55fr)}
-    .request-details{display:flex;flex-direction:column}
-    .request-body{padding:14px;display:grid;gap:14px}
-    .access-tag{padding:5px 8px;border-radius:99px;background:var(--green-soft);color:var(--green);font-size:8px;font-weight:800}
-    .privacy-callout{display:grid;gap:4px;padding:11px;border:1px solid #d4e4d7;border-radius:8px;background:var(--green-soft);color:#365743;font-size:9px}
-    .privacy-callout strong{font-size:10px;color:var(--green)}
-    .request-summary h3{font-size:14px;margin:4px 0}
-    .request-summary p{font-size:10px;color:var(--muted);margin:0}
-    .data-fields{padding:11px;border:1px solid var(--line);border-radius:8px;background:#fffefa}
-    .data-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #eee9e0;font-size:9px}
-    .data-row:last-child{border:0;padding-bottom:0}
-    .data-row span{color:var(--muted)}
-    .data-omitted{display:flex;flex-wrap:wrap;gap:6px}
-    .data-omitted .info-label{flex-basis:100%}
-    .privacy-chip{padding:5px 7px;border-radius:99px;background:#f1eee8;color:#687080;font-size:8px}
-    .request-footer{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-size:8px}
-    .privacy-actions{display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
-    .privacy-actions button{padding:8px 10px;border:0;border-radius:7px;font:700 9px Manrope,Arial,sans-serif;cursor:pointer}
-    .privacy-actions .approve{background:var(--green);color:#fff}
-    .privacy-actions .edit{border:1px solid var(--line)!important;background:#fffefa;color:#586271}
-    .privacy-actions{display:none!important}
-    .decision-card{grid-column:1/-1}
-    .decision-body{padding:14px;display:grid;gap:12px}
-    .decision-intro{margin:0;color:var(--muted);font-size:9px}
-    .decision-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-    .decision-option{min-height:40px;padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:#fffefa;color:#586271;font:700 9px Manrope,Arial,sans-serif;cursor:pointer}
-    .decision-option.approve,.decision-option.resolve{background:var(--green);border-color:var(--green);color:#fff}
-    .decision-option.reject{border-color:#e8c9c4;color:var(--red)}
-    .decision-form{padding:12px;border:1px solid var(--line);border-radius:8px;background:#fffefa}
-    .decision-form[hidden],.decision-result[hidden]{display:none}
-    .decision-form label{display:block;margin-bottom:6px;font-size:9px;font-weight:800}
-    .decision-form textarea{display:block;width:100%;min-height:72px;padding:9px;border:1px solid var(--line);border-radius:7px;resize:vertical;font:10px/1.5 Manrope,Arial,sans-serif}
-    .decision-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:9px}
-    .decision-form-actions button{padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:#fffefa;color:#586271;font:700 9px Manrope,Arial,sans-serif;cursor:pointer}
-    .decision-form-actions button[type=submit]{background:var(--night);border-color:var(--night);color:#fff}
-    .decision-result{margin:0;padding:9px 11px;border:1px solid #d4e4d7;border-radius:7px;background:var(--green-soft);color:#365743;font-size:9px}
-    .tag.refused{background:#f5e3e0;color:var(--red)}
-    .conversation,.chat,.composer,.context,.contact,.ai-chip,.msg,.draft,.draft-actions,.person,.verified,.mission,.consent,.audit{display:none!important}
-    @media(max-width:800px){.privacy-workspace{grid-template-columns:1fr}.privacy-actions{flex-direction:column}.decision-options{grid-template-columns:1fr 1fr}}
-    @media(max-width:470px){.decision-options{grid-template-columns:1fr}.decision-form-actions{flex-direction:column}.decision-form-actions button{width:100%}}
+    :root {
+      --texto-sobre-palco: #4e5967;  /* secundário sobre Palco: o Cinza falha AA aqui (README §2) */
+      --superficie-suave: #faf7f1;   /* hover e áreas recolhidas sobre Branco */
+      --borda-forte: #d6cfc2;        /* campos e hover de bordas */
+      --bastidores-linha: rgba(195, 204, 216, 0.16);
+      --bastidores-hover: rgba(195, 204, 216, 0.08);
+      --bastidores-realce: rgba(123, 204, 144, 0.14);
+      --sombra-cartao: 0 1px 2px #1720330a, 0 10px 28px #17203308;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--dlg-fundo);
+      color: var(--dlg-texto);
+      font: var(--dlg-peso-regular) var(--dlg-texto-corpo)/var(--dlg-linha-corpo) var(--dlg-fonte);
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--dlg-dourado); outline-offset: 2px; }
+    .sidebar :focus-visible { outline-color: var(--dlg-marca-dourado); }
+    [hidden] { display: none !important; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    .icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .etiqueta { font-size: var(--dlg-texto-etiqueta); font-weight: var(--dlg-peso-forte); letter-spacing: var(--dlg-tracking-etiqueta); line-height: 1.4; text-transform: uppercase; }
+
+    /* ── Estrutura ── */
+    .app { min-height: 100vh; display: grid; grid-template-columns: 288px minmax(0, 1fr); }
+
+    /* ── Barra lateral (Bastidores) ── */
+    .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; background: var(--dlg-bastidores); color: var(--dlg-branco); padding: 28px 20px 22px; display: flex; flex-direction: column; gap: 26px; }
+    .sidebar-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: grid; gap: 10px; padding: 0 8px; }
+    .brand img { display: block; height: 30px; width: auto; }
+    .menu-toggle { display: none; width: 44px; height: 44px; place-items: center; border: 1px solid var(--bastidores-linha); border-radius: var(--dlg-raio-pequeno); background: transparent; color: var(--dlg-branco); }
+
+    .instancia { display: grid; gap: 14px; padding: 18px 16px; border: 1px solid var(--bastidores-linha); border-radius: var(--dlg-raio-medio); background: rgba(255, 254, 250, 0.03); }
+    .instancia .etiqueta { color: var(--dlg-marca-dourado); }
+    .instancia img { display: block; width: 100%; max-width: 184px; height: auto; }
+    .instancia p { margin: 0; font-size: var(--dlg-texto-pequeno); line-height: 1.45; color: var(--dlg-bastidores-texto); }
+
+    .navegacao { display: flex; flex-direction: column; gap: 24px; flex: 1; }
+    .nav { display: grid; gap: 2px; }
+    .nav a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 12px; border-radius: var(--dlg-raio-pequeno); color: var(--dlg-bastidores-texto); text-decoration: none; font-size: 15px; font-weight: var(--dlg-peso-medio); transition: background-color .15s, color .15s; }
+    .nav a:hover { background: var(--bastidores-hover); color: var(--dlg-branco); }
+    .nav a[aria-current="page"] { background: var(--bastidores-realce); color: var(--dlg-marca-verde); font-weight: var(--dlg-peso-forte); }
+    .contador { margin-left: auto; min-width: 28px; padding: 1px 8px; border-radius: var(--dlg-raio-pilula); background: rgba(195, 204, 216, 0.14); color: var(--dlg-branco); font-size: 13px; font-weight: var(--dlg-peso-forte); text-align: center; font-variant-numeric: tabular-nums; }
+    .nav a[aria-current="page"] .contador { background: var(--dlg-marca-verde); color: var(--dlg-bastidores); }
+    .sidebar-fim { margin-top: auto; display: grid; gap: 16px; }
+    .utilizador { display: flex; align-items: center; gap: 12px; padding: 16px 8px 0; border-top: 1px solid var(--bastidores-linha); }
+    .avatar { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--bastidores-realce); color: var(--dlg-marca-verde); font-size: 14px; font-weight: var(--dlg-peso-forte); }
+    .utilizador b { display: block; font-size: 15px; }
+    .utilizador small { font-size: var(--dlg-texto-pequeno); color: var(--dlg-bastidores-texto); }
+
+    /* ── Barra superior ── */
+    .main { min-width: 0; }
+    .topbar { position: sticky; top: 0; z-index: 5; min-height: 76px; padding: 14px 32px; background: var(--dlg-superficie); border-bottom: 1px solid var(--dlg-borda); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .crumb { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--dlg-cinza); white-space: nowrap; }
+    .crumb b { color: var(--dlg-texto); font-weight: var(--dlg-peso-forte); }
+    .top-acoes { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .pesquisa { position: relative; min-width: 0; }
+    .pesquisa .icon { position: absolute; left: 14px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); color: var(--dlg-cinza); pointer-events: none; }
+    .pesquisa input { width: min(320px, 28vw); height: 44px; padding: 0 14px 0 42px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pequeno); background: var(--dlg-superficie); font-size: 15px; }
+    .pesquisa input::placeholder { color: var(--dlg-cinza); }
+    .pesquisa input:hover { border-color: var(--borda-forte); }
+    .botao-icone { position: relative; width: 44px; height: 44px; flex: none; display: grid; place-items: center; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pequeno); background: var(--dlg-superficie); color: var(--dlg-texto); }
+    .botao-icone:hover { background: var(--superficie-suave); border-color: var(--borda-forte); }
+    .botao-icone .ponto { position: absolute; top: 9px; right: 10px; width: 10px; height: 10px; border-radius: 50%; background: var(--dlg-terracota); border: 2px solid var(--dlg-superficie); }
+    .estado-sistema { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: var(--dlg-peso-forte); color: var(--dlg-verde); white-space: nowrap; }
+    .estado-sistema::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--dlg-verde); box-shadow: 0 0 0 4px var(--dlg-verde-suave); }
+    .estado-sistema.desligado { color: var(--dlg-autorizacao); }
+    .estado-sistema.desligado::before { background: var(--dlg-autorizacao); box-shadow: 0 0 0 4px var(--dlg-autorizacao-fundo); }
+    .botao-painel { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 16px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pequeno); background: var(--dlg-superficie); color: var(--dlg-texto); font-size: 14px; font-weight: var(--dlg-peso-forte); text-decoration: none; white-space: nowrap; }
+    .botao-painel:hover { background: var(--superficie-suave); border-color: var(--borda-forte); }
+    .botao-painel .icon { width: 18px; height: 18px; }
+    .partilha { display: grid; gap: 4px; padding: 14px 16px; border-radius: var(--dlg-raio-medio); background: var(--dlg-acao-fundo); font-size: 15px; }
+    .partilha strong { color: var(--dlg-acao); }
+    .decisao-intro { margin: 0; font-size: 15px; color: var(--texto-sobre-palco); }
+    .area:has(> .coluna[hidden]) { grid-template-columns: minmax(0, 1fr); }
+    .resultado.atencao { background: var(--dlg-atencao-fundo); }
+    .resultado.atencao .icon, .resultado.atencao strong { color: var(--dlg-atencao); }
+    .botao-primario:disabled { opacity: .7; cursor: progress; }
+
+    /* ── Conteúdo ── */
+    .conteudo { max-width: 1440px; margin: 0 auto; padding: 36px 32px 48px; }
+    .cabecalho { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 28px; }
+    .cabecalho .etiqueta { color: var(--dlg-verde); }
+    .cabecalho h1 { margin: 8px 0 0; font-size: clamp(2rem, 3vw, var(--dlg-texto-titulo)); font-weight: var(--dlg-peso-forte); letter-spacing: var(--dlg-tracking-titulo); line-height: var(--dlg-linha-titulo); }
+    .cabecalho-lado { display: grid; justify-items: end; gap: 10px; font-size: 15px; color: var(--texto-sobre-palco); white-space: nowrap; }
+    .selo-simulacao { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: var(--dlg-raio-pilula); background: var(--dlg-dourado-suave); color: var(--dlg-dourado); }
+
+    /* ── Indicadores ── */
+    .indicadores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .indicador { padding: 20px 22px; background: var(--dlg-superficie); border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-medio); box-shadow: var(--sombra-cartao); }
+    .indicador-topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px; font-weight: var(--dlg-peso-semi); color: var(--dlg-cinza); }
+    .indicador strong { display: block; margin: 12px 0 6px; font-size: 2.25rem; font-weight: var(--dlg-peso-forte); letter-spacing: -0.04em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .indicador small { font-size: 14px; color: var(--dlg-cinza); }
+    .indicador small em { font-style: normal; font-weight: var(--dlg-peso-forte); color: var(--dlg-verde); }
+
+    /* ── Área de trabalho ── */
+    .area { display: grid; grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.5fr); gap: 20px; align-items: start; }
+    .coluna { display: grid; gap: 20px; min-width: 0; }
+    .cartao { min-width: 0; overflow: hidden; background: var(--dlg-superficie); border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-grande); box-shadow: var(--sombra-cartao); }
+    .cartao-topo { min-height: 68px; padding: 14px 22px; border-bottom: 1px solid var(--dlg-borda); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .cartao-topo h2 { margin: 0; font-size: 19px; font-weight: var(--dlg-peso-forte); letter-spacing: -0.02em; }
+    .cartao-topo h2:focus { outline: none; }
+    .cartao-topo .meta { font-size: 14px; color: var(--dlg-cinza); }
+
+    /* Lista de solicitações */
+    .ordenar select { height: 40px; padding: 0 36px 0 12px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pequeno); background: var(--dlg-superficie) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23647080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center / 16px; appearance: none; font-size: 14px; font-weight: var(--dlg-peso-semi); }
+    .ordenar select:hover { border-color: var(--borda-forte); }
+    .filtros { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 22px; border-bottom: 1px solid var(--dlg-borda); }
+    .filtro { display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 6px 14px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pilula); background: var(--dlg-superficie); font-size: 14px; font-weight: var(--dlg-peso-semi); white-space: nowrap; transition: background-color .15s, border-color .15s; }
+    .filtro:hover { background: var(--superficie-suave); border-color: var(--borda-forte); }
+    .filtro[aria-pressed="true"] { background: var(--dlg-tinta); border-color: var(--dlg-tinta); color: var(--dlg-branco); }
+    .filtro .n { font-variant-numeric: tabular-nums; opacity: .8; }
+    .lista { list-style: none; margin: 0; padding: 0; }
+    .lista li + li { border-top: 1px solid var(--dlg-borda); }
+    .pedido { display: grid; gap: 6px; width: 100%; padding: 16px 22px; border: 0; background: transparent; text-align: left; transition: background-color .15s; }
+    .pedido:hover { background: var(--superficie-suave); }
+    .pedido:focus-visible { outline-offset: -3px; }
+    .pedido[aria-current="true"] { background: var(--dlg-palco); box-shadow: inset 4px 0 0 var(--dlg-tinta); }
+    .pedido-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .pedido-id { font-size: 15px; font-weight: var(--dlg-peso-forte); font-variant-numeric: tabular-nums; }
+    .pedido time { font-size: 14px; color: var(--texto-sobre-palco); font-variant-numeric: tabular-nums; }
+    .pedido-assunto { font-size: 16px; font-weight: var(--dlg-peso-medio); line-height: 1.4; }
+    .pedido-pe { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+    .prioridade { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: var(--dlg-peso-forte); }
+    .prioridade .icon { width: 16px; height: 16px; color: var(--dlg-terracota); }
+    .lista-vazia { margin: 0; padding: 28px 22px; font-size: 15px; color: var(--dlg-cinza); }
+
+    /* Etiquetas de estado: cor com significado */
+    .estado { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px; border: 1px solid transparent; border-radius: var(--dlg-raio-pilula); font-size: 13px; font-weight: var(--dlg-peso-forte); white-space: nowrap; }
+    .estado::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .estado.neutro { background: #ece7de; color: var(--dlg-texto); }
+    .estado.aguarda { background: var(--dlg-autorizacao-fundo); color: var(--dlg-autorizacao); }
+    .estado.concluido { background: var(--dlg-acao-fundo); color: var(--dlg-acao); }
+    .estado.atencao { background: var(--dlg-superficie); border-color: #e3b6a8; color: var(--dlg-atencao); }
+
+    /* Detalhe da solicitação */
+    .acesso { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pilula); font-size: 13px; font-weight: var(--dlg-peso-forte); }
+    .acesso .icon { width: 16px; height: 16px; color: var(--dlg-verde); }
+    .detalhe-corpo, .decisao-corpo { padding: 22px; display: grid; gap: 22px; }
+    .bloco > .etiqueta { display: block; margin-bottom: 10px; color: var(--dlg-cinza); }
+    .resumo h3 { margin: 0 0 8px; font-size: 1.5rem; font-weight: var(--dlg-peso-forte); letter-spacing: var(--dlg-tracking-interface); line-height: 1.25; }
+    .resumo p { margin: 0; font-size: 16px; color: var(--texto-sobre-palco); }
+    .dados { margin: 0; padding: 2px 18px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-medio); }
+    .dados div { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-top: 1px solid var(--dlg-borda); font-size: 15px; }
+    .dados div:first-child { border-top: 0; }
+    .dados dt { color: var(--texto-sobre-palco); }
+    .dados dd { margin: 0; font-weight: var(--dlg-peso-forte); text-align: right; }
+    .omitidos { display: flex; flex-wrap: wrap; gap: 8px; }
+    .detalhe-pe { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 18px; border-top: 1px solid var(--dlg-borda); font-size: 14px; color: var(--texto-sobre-palco); }
+
+    /* Decisão: selecionar → justificar → confirmar */
+    .opcoes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .opcao { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 12px 16px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-medio); background: var(--dlg-superficie); text-align: left; font-size: 15px; font-weight: var(--dlg-peso-forte); line-height: 1.3; transition: background-color .15s, border-color .15s; }
+    .opcao .icon { width: 22px; height: 22px; }
+    .opcao:hover { background: var(--superficie-suave); border-color: var(--borda-forte); }
+    .opcao[aria-pressed="true"] { background: var(--dlg-palco); border-color: var(--dlg-tinta); box-shadow: inset 0 0 0 1px var(--dlg-tinta); }
+    .opcao[data-tom="verde"] .icon { color: var(--dlg-acao); }
+    .opcao[data-tom="dourado"] .icon { color: var(--dlg-autorizacao); }
+    .opcao[data-tom="terracota"] .icon { color: var(--dlg-atencao); }
+
+    .formulario { display: grid; gap: 10px; padding: 18px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-medio); background: var(--superficie-suave); }
+    .formulario label { font-size: 16px; font-weight: var(--dlg-peso-forte); }
+    .formulario .opcional { font-weight: var(--dlg-peso-medio); color: var(--dlg-cinza); }
+    .formulario textarea { display: block; width: 100%; min-height: 112px; padding: 12px 14px; border: 1px solid var(--borda-forte); border-radius: var(--dlg-raio-pequeno); background: var(--dlg-superficie); font-size: 16px; line-height: 1.5; resize: vertical; }
+    .formulario textarea::placeholder { color: var(--dlg-cinza); }
+    .formulario textarea:hover { border-color: #bfb7a8; }
+    .formulario textarea[aria-invalid="true"] { border-color: var(--dlg-atencao); box-shadow: inset 3px 0 0 var(--dlg-atencao); }
+    .erro { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; font-weight: var(--dlg-peso-semi); }
+    .erro .icon { width: 18px; height: 18px; color: var(--dlg-atencao); }
+    .formulario-acoes { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+    .botao { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 18px; border: 1px solid transparent; border-radius: var(--dlg-raio-pequeno); font-size: 15px; font-weight: var(--dlg-peso-forte); transition: background-color .15s, border-color .15s; }
+    .botao-secundario { background: var(--dlg-superficie); border-color: var(--dlg-borda); }
+    .botao-secundario:hover { background: var(--dlg-palco); border-color: var(--borda-forte); }
+    .botao-primario { background: var(--dlg-acao); color: var(--dlg-branco); }
+    .botao-primario:hover { background: #155f36; }
+    .botao-primario[data-tom="bastidores"] { background: var(--dlg-bastidores); }
+    .botao-primario[data-tom="bastidores"]:hover { background: #1c2d47; }
+    .botao-primario[data-tom="terracota"] { background: var(--dlg-atencao); }
+    .botao-primario[data-tom="terracota"]:hover { background: #9a3c21; }
+    .resultado { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: var(--dlg-raio-medio); background: var(--dlg-acao-fundo); font-size: 15px; }
+    .resultado .icon { width: 22px; height: 22px; color: var(--dlg-acao); }
+    .resultado strong { display: block; color: var(--dlg-acao); font-size: 16px; }
+    .resultado p { margin: 2px 0 0; }
+    .resultado .nota { font-style: italic; }
+
+    /* ── Missões delegadas ── */
+    .nivel { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: var(--dlg-raio-pilula); background: var(--dlg-autorizacao-fundo); color: var(--dlg-autorizacao); font-size: 13px; font-weight: var(--dlg-peso-forte); white-space: nowrap; }
+    .nivel b { font-weight: 800; }
+    .percurso { list-style: none; margin: 0; padding: 0; }
+    .percurso li { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding-bottom: 18px; font-size: 15px; }
+    .percurso li:last-child { padding-bottom: 0; }
+    .percurso li::before { content: ""; position: absolute; left: 10px; top: 24px; bottom: 2px; width: 2px; border-radius: 2px; background: var(--dlg-borda); }
+    .percurso li:last-child::before { display: none; }
+    .percurso li.feito::before { background: var(--dlg-acao); }
+    .percurso .marca { width: 22px; height: 22px; display: grid; place-items: center; border: 2px solid var(--borda-forte); border-radius: 50%; background: var(--dlg-superficie); color: var(--dlg-branco); }
+    .percurso .marca .icon { width: 14px; height: 14px; stroke-width: 2.6; }
+    .percurso li.feito .marca { background: var(--dlg-acao); border-color: var(--dlg-acao); }
+    .percurso li.atual .marca { border-color: var(--dlg-tinta); background: var(--dlg-superficie); box-shadow: inset 0 0 0 4px var(--dlg-superficie), inset 0 0 0 10px var(--dlg-tinta); }
+    .percurso li.atual.aguarda .marca { border-color: var(--dlg-autorizacao); box-shadow: inset 0 0 0 4px var(--dlg-superficie), inset 0 0 0 10px var(--dlg-autorizacao); }
+    .percurso li.atual.cancelado .marca { border-color: var(--dlg-atencao); box-shadow: none; }
+    .percurso li.pendente { color: var(--dlg-cinza); }
+    .percurso li.atual b { font-weight: var(--dlg-peso-forte); }
+    .percurso small { display: block; margin-top: 2px; font-size: 14px; color: var(--texto-sobre-palco); }
+    .percurso time { font-size: 14px; color: var(--dlg-cinza); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .progresso { display: block; width: 120px; height: 8px; margin-top: 6px; margin-left: auto; overflow: hidden; border-radius: var(--dlg-raio-pilula); background: var(--dlg-palco); }
+    .progresso i { display: block; height: 100%; border-radius: var(--dlg-raio-pilula); background: var(--dlg-acao); }
+    .ligacao { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: var(--dlg-acao); font-size: 15px; font-weight: var(--dlg-peso-forte); text-decoration: underline; text-underline-offset: 3px; }
+    .ligacao:hover { color: #155f36; }
+    .fonte { display: inline-flex; padding: 6px 12px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pilula); font-size: 13px; font-weight: var(--dlg-peso-semi); font-variant-numeric: tabular-nums; }
+
+    /* ── Relatórios ── */
+    :root {
+      /* Categórica validada (dataviz/validate_palette.js, ordem fixa): verde · azul · dourado · terracota */
+      --grafico-1: #1a7040;
+      --grafico-2: #3f6fa8;
+      --grafico-3: #c8962e;
+      --grafico-4: #b4492a;
+      --grafico-outros: #b9b2a5;
+      /* Ordinal verde validada: do mais próximo (escuro) ao mais distante (claro) */
+      --rampa-1: #14532f;
+      --rampa-2: #2a7f4d;
+      --rampa-3: #4fa06e;
+      --rampa-4: #86c39a;
+      --grelha: #ece7de;
+      --oculto: repeating-linear-gradient(45deg, #f1ece3 0 6px, #e2dbcf 6px 8px);
+    }
+    .cabecalho h1:focus { outline: none; }
+    .secao { display: grid; gap: 20px; }
+    .secao + .secao { margin-top: 48px; padding-top: 40px; border-top: 1px solid #1d243018; }
+    .secao-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+    .secao-topo .etiqueta { display: block; margin-bottom: 6px; color: var(--dlg-acao); }
+    .secao-titulo { margin: 0; font-size: 1.75rem; font-weight: var(--dlg-peso-forte); letter-spacing: -0.035em; line-height: 1.15; }
+    .segmentado { display: inline-flex; gap: 4px; padding: 4px; background: var(--dlg-superficie); border: 1px solid var(--dlg-borda); border-radius: 12px; }
+    .segmentado button { min-height: 36px; padding: 6px 14px; border: 0; border-radius: 8px; background: transparent; font-size: 14px; font-weight: var(--dlg-peso-semi); }
+    .segmentado button:hover { background: var(--superficie-suave); }
+    .segmentado button[aria-pressed="true"] { background: var(--dlg-tinta); color: var(--dlg-branco); }
+    .indicador strong { font-variant-numeric: normal; }
+    .indicador .delta { font-style: normal; font-weight: var(--dlg-peso-forte); color: var(--dlg-acao); }
+    .grelha-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .grelha-2.larga { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); }
+    .cartao-topo h3 { margin: 0; font-size: 18px; font-weight: var(--dlg-peso-forte); letter-spacing: -0.02em; }
+    .cartao-corpo { padding: 20px 22px 22px; }
+
+    .dica { position: fixed; z-index: 20; pointer-events: none; padding: 8px 12px; border-radius: var(--dlg-raio-pequeno); background: var(--dlg-bastidores); color: var(--dlg-branco); font-size: 13px; line-height: 1.35; white-space: nowrap; transform: translate(-50%, calc(-100% - 10px)); box-shadow: 0 10px 28px #17203330; }
+    .dica strong { display: block; font-size: 16px; font-variant-numeric: tabular-nums; }
+    .dica span { color: var(--dlg-bastidores-texto); }
+
+    /* Colunas: volume no tempo */
+    .colunas { position: relative; height: 220px; margin-left: 44px; }
+    .linha-grelha { position: absolute; left: 0; right: 0; border-top: 1px solid var(--grelha); }
+    .linha-grelha.base { border-top-color: #cfc8bb; }
+    .linha-grelha span { position: absolute; right: calc(100% + 10px); top: -9px; font-size: 12px; color: var(--dlg-cinza); font-variant-numeric: tabular-nums; }
+    .barras-col { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 2px; }
+    .col { flex: 1; height: 100%; display: flex; align-items: flex-end; justify-content: center; }
+    .col i { display: block; width: 100%; max-width: 24px; border-radius: 4px 4px 0 0; background: var(--grafico-1); transition: background-color .15s; }
+    .col:hover i { background: #2f8a58; }
+    .eixo-x { display: flex; gap: 2px; margin: 8px 0 0 44px; font-size: 12px; color: var(--dlg-cinza); }
+    .eixo-x span { flex: 1; min-width: 0; text-align: center; white-space: nowrap; overflow: visible; }
+    .ver-tabela { margin-top: 18px; font-size: 14px; }
+    .ver-tabela summary { width: max-content; cursor: pointer; font-weight: var(--dlg-peso-semi); color: var(--dlg-acao); }
+    .tabela-simples { width: 100%; margin-top: 10px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .tabela-simples th, .tabela-simples td { padding: 7px 0; border-top: 1px solid var(--dlg-borda); text-align: left; font-weight: var(--dlg-peso-regular); }
+    .tabela-simples td { text-align: right; font-weight: var(--dlg-peso-forte); }
+
+    /* Barra empilhada + legenda */
+    .empilhada { display: flex; gap: 2px; height: 24px; }
+    .empilhada i { display: grid; place-items: center; min-width: 4px; height: 100%; font-size: 12px; font-style: normal; font-weight: var(--dlg-peso-forte); transition: filter .15s; }
+    .empilhada i:first-child { border-radius: 4px 0 0 4px; }
+    .empilhada i:last-child { border-radius: 0 4px 4px 0; }
+    .empilhada i:hover { filter: brightness(1.12); }
+    .legenda { list-style: none; margin: 20px 0 0; padding: 0; }
+    .legenda li { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-top: 1px solid var(--dlg-borda); font-size: 15px; }
+    .legenda li:first-child { border-top: 0; }
+    .amostra { width: 12px; height: 12px; flex: none; border-radius: 3px; }
+    .legenda .valor { margin-left: auto; font-weight: var(--dlg-peso-forte); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .legenda .pct { width: 44px; text-align: right; color: var(--dlg-cinza); font-variant-numeric: tabular-nums; }
+
+    /* Barras horizontais */
+    .barras-h { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+    .barras-h li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; font-size: 15px; }
+    .barras-h .valor { font-weight: var(--dlg-peso-forte); font-variant-numeric: tabular-nums; }
+    .barras-h .pista { grid-column: 1 / -1; height: 14px; }
+    .barras-h .pista i { display: block; height: 100%; min-width: 4px; border-radius: 0 4px 4px 0; background: var(--grafico-1); }
+    .barras-h li.outros .pista i { background: var(--grafico-outros); }
+
+    /* Lacunas de conteúdo */
+    .lacunas { width: 100%; border-collapse: collapse; font-size: 15px; }
+    .lacunas th { padding: 0 0 10px; text-align: left; color: var(--dlg-cinza); }
+    .lacunas th.num, .lacunas td.num { text-align: right; padding-right: 16px; }
+    .lacunas td { padding: 12px 0; border-top: 1px solid var(--dlg-borda); vertical-align: middle; }
+    .lacunas td.num { font-weight: var(--dlg-peso-forte); font-variant-numeric: tabular-nums; }
+    .lacunas td.acao { width: 1%; text-align: right; white-space: nowrap; }
+    .botao-pequeno { min-height: 36px; padding: 6px 12px; font-size: 14px; }
+    .botao .icon { width: 18px; height: 18px; }
+    .tarefa-criada { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: var(--dlg-peso-forte); color: var(--dlg-acao); }
+    .tarefa-criada .icon { width: 18px; height: 18px; }
+
+    /* Cofres: garantias, sinais e mapa */
+    .garantias { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .garantias li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--dlg-borda); border-radius: var(--dlg-raio-pilula); background: var(--dlg-superficie); font-size: 14px; font-weight: var(--dlg-peso-semi); }
+    .garantias .icon { width: 18px; height: 18px; color: var(--dlg-autorizacao); }
+    .sinais { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .sinal { padding: 22px; border-radius: var(--dlg-raio-grande); background: var(--dlg-bastidores); color: var(--dlg-branco); }
+    .sinal .etiqueta { color: var(--dlg-marca-dourado); }
+    .sinal strong { display: block; margin: 12px 0 6px; font-size: 2.25rem; font-weight: var(--dlg-peso-forte); letter-spacing: -0.04em; line-height: 1.1; }
+    .sinal p { margin: 0; font-size: 15px; color: var(--dlg-bastidores-texto); }
+
+    .mapa-wrap { overflow-x: auto; }
+    .mapa { width: 100%; min-width: 680px; table-layout: fixed; border-collapse: separate; border-spacing: 2px; font-size: 15px; }
+    .mapa thead th:first-child { width: 30%; }
+    .mapa thead th { padding: 0 0 6px; text-align: center; font-weight: var(--dlg-peso-semi); }
+    .mapa thead th:first-child { text-align: left; color: var(--dlg-cinza); font-size: 14px; }
+    .mapa thead button { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 6px 10px; border: 0; border-radius: 8px; background: transparent; font-size: 14px; font-weight: var(--dlg-peso-forte); }
+    .mapa thead button:hover { background: var(--superficie-suave); }
+    .mapa thead button .icon { width: 16px; height: 16px; opacity: 0; }
+    .mapa thead th[aria-sort="descending"] button { background: var(--dlg-palco); }
+    .mapa thead th[aria-sort="descending"] button .icon { opacity: 1; }
+    .mapa tbody th { padding-right: 16px; text-align: left; font-weight: var(--dlg-peso-semi); white-space: nowrap; }
+    .mapa tbody th, .mapa thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--dlg-superficie); }
+    .mapa td { height: 46px; border-radius: 6px; text-align: center; font-weight: var(--dlg-peso-forte); font-variant-numeric: tabular-nums; transition: box-shadow .15s; }
+    .mapa td:hover { box-shadow: inset 0 0 0 2px var(--dlg-tinta); }
+    .mapa td.oculto { background: var(--oculto); color: var(--texto-sobre-palco); font-size: 13px; font-weight: var(--dlg-peso-semi); }
+    .mapa-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 16px; font-size: 13px; color: var(--dlg-cinza); }
+    .mapa-legenda > span { display: inline-flex; align-items: center; gap: 8px; }
+    .escala { display: block; width: 120px; height: 10px; border-radius: var(--dlg-raio-pilula); background: linear-gradient(90deg, rgb(234, 244, 237), var(--rampa-1)); }
+    .amostra-oculta { display: block; width: 24px; height: 14px; border-radius: 4px; background: var(--oculto); }
+
+    .horizonte-legenda { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
+    .horizonte-legenda li { display: inline-flex; align-items: center; gap: 8px; }
+    .horizonte { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+    .horizonte li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: center; font-size: 15px; font-weight: var(--dlg-peso-semi); }
+
+    /* ── Responsivo ── */
+    @media (max-width: 1240px) {
+      .indicadores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .opcoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 1080px) {
+      .area, .grelha-2, .grelha-2.larga, .sinais { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 960px) {
+      .app { grid-template-columns: minmax(0, 1fr); }
+      .sidebar { position: static; height: auto; overflow: visible; padding: 14px 16px; gap: 14px; }
+      .brand { padding: 0; }
+      .brand img { height: 26px; }
+      .menu-toggle { display: grid; }
+      .instancia { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px 14px; padding: 12px 14px; }
+      .instancia .etiqueta { display: none; }
+      .instancia img { width: 112px; }
+      .navegacao { display: none; padding-top: 4px; }
+      .sidebar.aberta .navegacao { display: flex; }
+      .topbar { padding: 12px 16px; min-height: 68px; }
+      .conteudo { padding: 24px 16px 40px; }
+      .cabecalho { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .cabecalho-lado { justify-items: start; }
+    }
+    @media (max-width: 1240px) {
+      .botao-painel span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+      .botao-painel { padding: 10px 12px; }
+    }
+    @media (max-width: 640px) {
+      .crumb { display: none; }
+      .top-acoes { flex: 1; }
+      .pesquisa { flex: 1; }
+      .pesquisa input { width: 100%; }
+      .estado-sistema span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+      .indicadores { gap: 10px; }
+      .indicador { padding: 16px; }
+      .indicador-topo { font-size: 14px; }
+      .indicador-topo .icon { display: none; }
+      .indicador strong { font-size: 1.75rem; }
+      .cartao-topo, .filtros, .pedido { padding-left: 16px; padding-right: 16px; }
+      .detalhe-corpo, .decisao-corpo { padding: 18px 16px; }
+      .resumo h3 { font-size: 1.3rem; }
+      .dados { padding: 2px 14px; }
+      .opcoes { grid-template-columns: minmax(0, 1fr); }
+      .formulario-acoes { flex-direction: column-reverse; }
+      .formulario-acoes .botao { width: 100%; }
+      .secao-titulo { font-size: 1.5rem; }
+      .cartao-corpo { padding: 18px 16px; }
+      .horizonte li { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+      .eixo-x .alterno { visibility: hidden; }
+      .mapa { min-width: 600px; }
+      .mapa tbody th { max-width: 130px; white-space: normal; line-height: 1.3; font-size: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; scroll-behavior: auto !important; }
+    }
   </style>
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-caixa" viewBox="0 0 24 24"><path d="M4 13h4l2 3h4l2-3h4"/><path d="M6 5h12l2 8v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-5z"/></symbol>
+    <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-visto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-confirmar" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-missao" viewBox="0 0 24 24"><path d="M5.5 21V4.5h11.5l-2 4 2 4H5.5"/></symbol>
+    <symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></symbol>
+    <symbol id="i-grafico" viewBox="0 0 24 24"><path d="M5 19V10M12 19V5M19 19v-6"/></symbol>
+    <symbol id="i-sino" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-oculto" viewBox="0 0 24 24"><path d="m3 3 18 18"/><path d="M10.6 6.1Q11.3 6 12 6c5 0 8.5 4.5 9 6-.3.8-1.2 2.3-2.7 3.6M6.6 7.6C4.6 8.9 3.4 10.9 3 12c.5 1.5 4 6 9 6 1.6 0 3-.4 4.2-1"/></symbol>
+    <symbol id="i-documento" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></symbol>
+    <symbol id="i-aprovar" viewBox="0 0 24 24"><path d="M10 4h4a1 1 0 0 1 1 1v3.5c0 1-1 1.5-1 3V13h-4v-1.5c0-1.5-1-2-1-3V5a1 1 0 0 1 1-1z"/><path d="M5 13h14v4H5zM7 20.5h10"/></symbol>
+    <symbol id="i-recusar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m9 9 6 6M15 9l-6 6"/></symbol>
+    <symbol id="i-alerta" viewBox="0 0 24 24"><path d="M10.3 4.3 2.8 17.5A2 2 0 0 0 4.5 20.5h15a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4M12 17h.01"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-local" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-ruido" viewBox="0 0 24 24"><path d="M3 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0"/></symbol>
+    <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-seta-baixo" viewBox="0 0 24 24"><path d="M12 5v14m-5-5 5 5 5-5"/></symbol>
+    <symbol id="i-progresso" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-8-8"/><path d="M12 8v4l2.5 2.5"/><path d="M16 4.5 20 4l-.5 4"/></symbol>
+    <symbol id="i-externo" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  </svg>
+
   <div class="app">
-    <aside class="sidebar">
-      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 39V21a14 14 0 0 1 28 0v18M10 39h28" fill="none" stroke="#5bcf8a" stroke-width="4" stroke-linecap="round"/><circle cx="41" cy="35" r="3.5" fill="#e8b44a"/></svg></span>Delegate</div>
-      <div class="org"><b>Câmara Municipal de Guimarães</b>Consola de atendimento</div>
-      <div><div class="nav-label">Atendimento</div><nav class="nav"><a class="active" href="#"><span class="icon">▤</span>Solicitações <span class="count">12</span></a><a href="#"><span class="icon">◷</span>A aguardar análise <span class="count">4</span></a><a href="#"><span class="icon">✓</span>Concluídas</a></nav></div>
-      <div><div class="nav-label">Gestão</div><nav class="nav"><a href="#"><span class="icon">▧</span>Missões delegadas</a><a href="#"><span class="icon">⌕</span>Pesquisa de processos</a><a href="#"><span class="icon">◉</span>Relatórios</a></nav></div>
-      <div class="sidebar-bottom"><div class="nav-label">Espaço de trabalho</div><nav class="nav"><a href="#"><span class="icon">⚙</span>Definições</a></nav><div class="user"><span class="user-avatar">MC</span><div><b>Maria Costa</b><small>Atendimento · Operadora</small></div></div></div>
+    <aside class="sidebar" id="barra-lateral">
+      <div class="sidebar-topo">
+        <div class="brand">
+          <img src="../design-system/logo/delegate-logo-horizontal-escuro.svg" alt="Delegate">
+        </div>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navegacao" aria-label="Abrir navegação">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+
+      <div class="instancia">
+        <span class="etiqueta">Instância municipal</span>
+        <img src="assets/cm-guimaraes-logo-branco.png" alt="Câmara Municipal de Guimarães" width="666" height="219">
+        <p>Administrada pela Câmara Municipal de Guimarães</p>
+      </div>
+
+      <div class="navegacao" id="navegacao">
+        <nav class="nav" aria-label="Consola">
+          <a href="#solicitacoes" data-vista="solicitacoes" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-caixa"/></svg>Solicitações <span class="contador" id="contador-solicitacoes"></span></a>
+          <a href="#missoes" data-vista="missoes"><svg class="icon" aria-hidden="true"><use href="#i-missao"/></svg>Missões delegadas</a>
+          <a href="#relatorios" data-vista="relatorios"><svg class="icon" aria-hidden="true"><use href="#i-grafico"/></svg>Relatórios</a>
+          <a href="#intencoes" data-vista="intencoes"><svg class="icon" aria-hidden="true"><use href="#i-local"/></svg>Intenções do Concelho</a>
+        </nav>
+        <div class="sidebar-fim">
+          <div class="utilizador">
+            <span class="avatar" aria-hidden="true">MC</span>
+            <div><b>Maria Costa</b><small>Atendimento · Operadora</small></div>
+          </div>
+        </div>
+      </div>
     </aside>
+
     <main class="main">
       <header class="topbar">
-        <div class="crumb">Consola <span> / </span> <b>Solicitações</b></div>
-        <div class="top-actions">
-          <a href="/painel" style="text-decoration:none; display:flex; align-items:center; gap:6px; background:#16263d; color:#b8ebc8; font-size:11px; font-weight:700; padding:6px 12px; border-radius:8px; border:1px solid #34465f;">📱 Abrir Painel do Cidadão ↗</a>
-          <input class="search" id="input-pesquisa" placeholder="Pesquisar pedido…" aria-label="Pesquisar pedido">
-          <button class="icon-btn" aria-label="Notificações" title="Notificações">♧</button>
-          <span class="online" id="status-ligacao">Em direto (SSE)</span>
+        <div class="crumb">Consola <span aria-hidden="true">/</span> <b id="crumb-atual">Solicitações</b></div>
+        <div class="top-acoes">
+          <label class="pesquisa">
+            <span class="sr-only">Pesquisar pedido</span>
+            <svg class="icon" aria-hidden="true"><use href="#i-lupa"/></svg>
+            <input id="pesquisa" type="search" placeholder="Pesquisar pedido ou serviço…" autocomplete="off">
+          </label>
+          <a class="botao-painel" href="/painel" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-externo"/></svg><span>Abrir o Painel</span>
+          </a>
+          <span class="estado-sistema desligado" id="estado-ligacao" role="status"><span>A ligar…</span></span>
         </div>
       </header>
-      <div class="content">
-        <section class="heading">
+
+      <div class="conteudo">
+       <div class="vista" id="vista-solicitacoes">
+        <section class="cabecalho">
           <div>
-            <span class="eyebrow">Palco e Bastidores · Consola municipal</span>
-            <h1>Pedidos para análise</h1>
-            <p>A Câmara consulta apenas o resumo necessário. As conversas e os dados pessoais ficam no Delegate.</p>
+            <span class="etiqueta">Consola municipal</span>
+            <h1 tabindex="-1">Pedidos para análise</h1>
           </div>
-          <span class="date" id="data-topo">Guimarães · 2026</span>
+          <div class="cabecalho-lado">
+            <span class="etiqueta selo-simulacao">Simulação</span>
+            <span data-hoje></span>
+          </div>
         </section>
-        <section class="stats">
-          <article class="stat"><div class="stat-head"><span>Pedidos recebidos</span><span class="stat-icon">▤</span></div><strong id="stat-total">12</strong><small><em id="stat-novos">3 ativos</em> da demonstração</small></article>
-          <article class="stat"><div class="stat-head"><span>A aguardar análise</span><span class="stat-icon">◷</span></div><strong id="stat-aguarda">3</strong><small>Ação municipal necessária</small></article>
-          <article class="stat"><div class="stat-head"><span>Em preparação</span><span class="stat-icon">⌁</span></div><strong>8</strong><small><em>6 em curso</em> no Delegate</small></article>
-          <article class="stat"><div class="stat-head"><span>Tempo médio de resposta</span><span class="stat-icon">↗</span></div><strong>2h 18m</strong><small>Últimos 7 dias</small></article>
+
+        <section class="indicadores" aria-label="Indicadores do dia">
+          <article class="indicador">
+            <div class="indicador-topo"><span>Pedidos recebidos</span><svg class="icon" aria-hidden="true"><use href="#i-caixa"/></svg></div>
+            <strong data-contador="total"></strong><small><em data-contador="ativos"></em> na consola</small>
+          </article>
+          <article class="indicador">
+            <div class="indicador-topo"><span>A aguardar análise</span><svg class="icon" aria-hidden="true"><use href="#i-relogio"/></svg></div>
+            <strong data-contador="aguarda"></strong><small>Pedidos com ação municipal necessária</small>
+          </article>
+          <article class="indicador">
+            <div class="indicador-topo"><span>Em preparação</span><svg class="icon" aria-hidden="true"><use href="#i-progresso"/></svg></div>
+            <strong>8</strong><small><em>6 em curso</em> · 2 concluídos hoje</small>
+          </article>
+          <article class="indicador">
+            <div class="indicador-topo"><span>Tempo de resposta</span><svg class="icon" aria-hidden="true"><use href="#i-relogio"/></svg></div>
+            <strong>2h 18m</strong><small>Média dos últimos 7 dias</small>
+          </article>
         </section>
-        <section class="workspace privacy-workspace">
-          <article class="card inbox request-list">
-            <div class="card-head"><h2>Solicitações</h2><button class="filter">Mais recentes⌄</button></div>
-            <div class="inbox-tools">
-              <span class="pill selected" data-filtro="todas" id="filtro-todas">Todas · 12</span>
-              <span class="pill" data-filtro="aguarda" id="filtro-aguarda">A aguardar análise</span>
-              <span class="pill" data-filtro="concluidas" id="filtro-concluidas">Concluídas</span>
+
+        <section class="area">
+          <article class="cartao" aria-labelledby="titulo-lista">
+            <div class="cartao-topo">
+              <h2 id="titulo-lista">Solicitações</h2>
+              <label class="ordenar">
+                <span class="sr-only">Ordenar</span>
+                <select id="ordem">
+                  <option value="recentes">Mais recentes</option>
+                  <option value="antigas">Mais antigas</option>
+                </select>
+              </label>
             </div>
-            <div class="threads" id="lista-threads"></div>
-          </article>
-          <article class="card request-details">
-            <div class="card-head"><h2 id="detalhes-titulo">Solicitação</h2><span class="access-tag" id="detalhes-acesso">Partilha Mínima</span></div>
-            <div class="request-body">
-              <div class="privacy-callout">
-                <strong>Partilha mínima ativa</strong>
-                <span>A Câmara recebe apenas os dados necessários apresentados neste resumo. A conversa completa e o perfil da pessoa permanecem no Cofre Digital.</span>
-              </div>
-              <div class="request-summary">
-                <div class="info-label">Resumo para análise</div>
-                <h3 id="detalhes-resumo-titulo">Ocupação do espaço público</h3>
-                <p id="detalhes-resumo-desc">Avaliar pedido formal com Chave Móvel Digital.</p>
-              </div>
-              <div class="data-fields">
-                <div class="info-label">Dados incluídos neste pedido</div>
-                <div id="detalhes-dados-lista"></div>
-              </div>
-              <div class="data-omitted">
-                <div class="info-label">Não partilhado com a Câmara (Protegido no Cofre)</div>
-                <div id="detalhes-omitidos-lista" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
-              </div>
-              <div class="request-footer">
-                <span id="detalhes-meta">3 dados necessários · 0 mensagens partilhadas</span>
-                <span class="tag wait" id="detalhes-tag">Aguarda análise</span>
-              </div>
-              <div class="privacy-actions"><button class="approve">Encaminhar para análise</button><button class="edit">Pedir elemento necessário</button></div>
+            <div class="filtros" role="group" aria-label="Filtrar solicitações">
+              <button class="filtro" type="button" data-filtro="todas" aria-pressed="true">Todas <span class="n"></span></button>
+              <button class="filtro" type="button" data-filtro="andamento" aria-pressed="false">Em andamento <span class="n"></span></button>
+              <button class="filtro" type="button" data-filtro="aguarda" aria-pressed="false">A aguardar análise <span class="n"></span></button>
+              <button class="filtro" type="button" data-filtro="concluidas" aria-pressed="false">Concluídas <span class="n"></span></button>
             </div>
+            <ul class="lista" id="lista" aria-label="Solicitações"></ul>
+            <p class="lista-vazia" id="lista-vazia" hidden></p>
           </article>
-          <article class="card decision-card">
-            <div class="card-head"><h2 id="decisao-topo-titulo">Decisão e resolução</h2><span class="subtle" id="decisao-topo-sub">Processo Ativo</span></div>
-            <div class="decision-body">
-              <p class="decision-intro">A Câmara pode resolver o pedido, pedir apenas os elementos em falta, aprovar ou indeferir. O Delegate comunica a decisão sem abrir o chat privado.</p>
-              <div class="decision-options" role="group" aria-label="Ações sobre a solicitação">
-                <button class="decision-option resolve" type="button" data-decision="resolve">Marcar como resolvido</button>
-                <button class="decision-option" type="button" data-decision="documents">Solicitar documentos</button>
-                <button class="decision-option approve" type="button" data-decision="approve">Aprovar pedido</button>
-                <button class="decision-option reject" type="button" data-decision="reject">Indeferir pedido</button>
+
+          <div class="coluna" id="coluna-detalhe" hidden>
+            <article class="cartao" aria-labelledby="titulo-detalhe">
+              <div class="cartao-topo">
+                <h2 id="titulo-detalhe" tabindex="-1"></h2>
+                <span class="acesso"><svg class="icon" aria-hidden="true"><use href="#i-cadeado"/></svg>Partilha mínima</span>
               </div>
-              <form class="decision-form" hidden>
-                <label id="decision-label" for="decision-note"></label>
-                <textarea id="decision-note" rows="3"></textarea>
-                <div class="decision-form-actions">
-                  <button type="button" id="cancel-decision">Cancelar</button>
-                  <button type="submit" id="confirm-decision">Confirmar</button>
+              <div class="detalhe-corpo">
+                <p class="partilha"><strong>Partilha mínima ativa</strong>A Câmara recebe apenas os dados necessários apresentados neste resumo. A conversa completa e o perfil da pessoa ficam no Cofre Digital.</p>
+                <div class="bloco resumo">
+                  <span class="etiqueta">Resumo para análise</span>
+                  <h3 id="detalhe-assunto"></h3>
+                  <p id="detalhe-resumo"></p>
                 </div>
-              </form>
-              <p class="decision-result" role="status" aria-live="polite" hidden></p>
+                <div class="bloco">
+                  <span class="etiqueta">Dados incluídos neste pedido</span>
+                  <dl class="dados" id="detalhe-dados"></dl>
+                </div>
+                <div class="bloco">
+                  <span class="etiqueta">Não partilhado com a Câmara · protegido no Cofre</span>
+                  <div class="omitidos" id="detalhe-omitidos"></div>
+                </div>
+                <div class="detalhe-pe">
+                  <span id="detalhe-meta"></span>
+                  <span id="detalhe-estado"></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="cartao" aria-labelledby="titulo-decisao">
+              <div class="cartao-topo">
+                <h2 id="titulo-decisao">Decisão e resolução</h2>
+                <span class="meta" id="decisao-ref"></span>
+              </div>
+              <div class="decisao-corpo">
+                <p class="decisao-intro">A Câmara pode resolver o pedido, pedir apenas os elementos em falta, aprovar ou indeferir. O Henriques comunica a decisão à pessoa sem abrir a conversa privada.</p>
+                <div class="opcoes" role="group" aria-label="Ações sobre a solicitação">
+                  <button class="opcao" type="button" data-decisao="resolver" data-tom="verde" aria-pressed="false" aria-controls="formulario">
+                    <svg class="icon" aria-hidden="true"><use href="#i-visto"/></svg>Marcar como resolvido
+                  </button>
+                  <button class="opcao" type="button" data-decisao="documentos" data-tom="dourado" aria-pressed="false" aria-controls="formulario">
+                    <svg class="icon" aria-hidden="true"><use href="#i-documento"/></svg>Solicitar documentos
+                  </button>
+                  <button class="opcao" type="button" data-decisao="aprovar" data-tom="verde" aria-pressed="false" aria-controls="formulario">
+                    <svg class="icon" aria-hidden="true"><use href="#i-aprovar"/></svg>Aprovar pedido
+                  </button>
+                  <button class="opcao" type="button" data-decisao="indeferir" data-tom="terracota" aria-pressed="false" aria-controls="formulario">
+                    <svg class="icon" aria-hidden="true"><use href="#i-recusar"/></svg>Indeferir pedido
+                  </button>
+                </div>
+
+                <form class="formulario" id="formulario" novalidate hidden>
+                  <label for="nota" id="nota-rotulo"></label>
+                  <textarea id="nota" rows="4" aria-describedby="nota-erro"></textarea>
+                  <p class="erro" id="nota-erro" hidden><svg class="icon" aria-hidden="true"><use href="#i-alerta"/></svg>Indique a informação necessária para registar esta ação.</p>
+                  <div class="formulario-acoes">
+                    <button class="botao botao-secundario" type="button" id="cancelar">Cancelar</button>
+                    <button class="botao botao-primario" type="submit" id="confirmar"></button>
+                  </div>
+                </form>
+
+                <div class="resultado" id="resultado" role="status" aria-live="polite" hidden>
+                  <svg class="icon" aria-hidden="true"><use href="#i-visto" id="resultado-icone"/></svg>
+                  <div>
+                    <strong id="resultado-titulo"></strong>
+                    <p class="nota" id="resultado-nota" hidden></p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+       </div>
+
+       <div class="vista" id="vista-missoes" hidden>
+        <section class="cabecalho">
+          <div>
+            <span class="etiqueta">Henriques · mandatos dos munícipes</span>
+            <h1 tabindex="-1">Missões delegadas</h1>
+          </div>
+          <div class="cabecalho-lado">
+            <span class="etiqueta selo-simulacao">Simulação</span>
+            <span data-hoje></span>
+          </div>
+        </section>
+
+        <section class="indicadores" aria-label="Indicadores das missões">
+          <article class="indicador">
+            <div class="indicador-topo"><span>Missões ativas</span><svg class="icon" aria-hidden="true"><use href="#i-missao"/></svg></div>
+            <strong>46</strong><small><em>9 novas</em> esta semana</small>
+          </article>
+          <article class="indicador">
+            <div class="indicador-topo"><span>Aguardam o munícipe</span><svg class="icon" aria-hidden="true"><use href="#i-relogio"/></svg></div>
+            <strong>7</strong><small>Falta um elemento ou confirmação</small>
+          </article>
+          <article class="indicador">
+            <div class="indicador-topo"><span>Com técnico</span><svg class="icon" aria-hidden="true"><use href="#i-documento"/></svg></div>
+            <strong>5</strong><small>Em apreciação nos serviços</small>
+          </article>
+          <article class="indicador">
+            <div class="indicador-topo"><span>Respondidas</span><svg class="icon" aria-hidden="true"><use href="#i-visto"/></svg></div>
+            <strong>18</strong><small>Em outubro</small>
+          </article>
+        </section>
+
+        <section class="area">
+          <article class="cartao" aria-labelledby="titulo-missoes">
+            <div class="cartao-topo"><h2 id="titulo-missoes">Missões</h2></div>
+            <div class="filtros" role="group" aria-label="Filtrar missões">
+              <button class="filtro" type="button" data-filtro-missao="todas" aria-pressed="true">Todas <span class="n"></span></button>
+              <button class="filtro" type="button" data-filtro-missao="curso" aria-pressed="false">Em curso <span class="n"></span></button>
+              <button class="filtro" type="button" data-filtro-missao="municipe" aria-pressed="false">Aguardam o munícipe <span class="n"></span></button>
+              <button class="filtro" type="button" data-filtro-missao="respondidas" aria-pressed="false">Respondidas <span class="n"></span></button>
+            </div>
+            <ul class="lista" id="lista-missoes" aria-label="Missões"></ul>
+            <p class="lista-vazia" id="missoes-vazia" hidden>Nenhuma missão corresponde a este filtro.</p>
+          </article>
+
+          <article class="cartao" aria-labelledby="titulo-missao">
+            <div class="cartao-topo">
+              <h2 id="titulo-missao" tabindex="-1"></h2>
+              <span class="nivel" id="missao-nivel"></span>
+            </div>
+            <div class="detalhe-corpo">
+              <div class="bloco resumo">
+                <span class="etiqueta">Objetivo</span>
+                <h3 id="missao-objetivo"></h3>
+                <p id="missao-servico"></p>
+              </div>
+              <div class="bloco">
+                <span class="etiqueta">Percurso</span>
+                <ol class="percurso" id="missao-percurso"></ol>
+              </div>
+              <div class="bloco">
+                <span class="etiqueta">Mandato e preparação</span>
+                <dl class="dados" id="missao-dados"></dl>
+              </div>
+              <div class="bloco">
+                <span class="etiqueta">Fontes do Registo Canónico</span>
+                <div class="omitidos" id="missao-fontes"></div>
+              </div>
+              <div class="detalhe-pe">
+                <span id="missao-meta"></span>
+                <span id="missao-estado"></span>
+              </div>
             </div>
           </article>
         </section>
-        <footer class="footnote"><span><span class="prototype">PROTÓTIPO MUNICIPAL</span> A vista autárquica mostra apenas solicitações minimizadas; conversas e dados pessoais ficam fora da consola.</span></footer>
+       </div>
+
+       <div class="vista" id="vista-relatorios" hidden>
+        <section class="cabecalho">
+          <div>
+            <span class="etiqueta">Gestão</span>
+            <h1 tabindex="-1">Relatórios</h1>
+          </div>
+          <div class="cabecalho-lado">
+            <span class="etiqueta selo-simulacao">Dados sintéticos</span>
+            <span>Atualizado a 23 de outubro, 09:00</span>
+          </div>
+        </section>
+
+        <section class="secao" aria-labelledby="t-atendimentos">
+          <div class="secao-topo">
+            <div>
+              <span class="etiqueta">Todos os canais</span>
+              <h2 class="secao-titulo" id="t-atendimentos">Atendimentos via Henriques</h2>
+            </div>
+            <div class="segmentado" role="group" aria-label="Período">
+              <button type="button" data-periodo="7" aria-pressed="false">7 dias</button>
+              <button type="button" data-periodo="30" aria-pressed="false">30 dias</button>
+              <button type="button" data-periodo="90" aria-pressed="true">90 dias</button>
+            </div>
+          </div>
+
+          <div class="indicadores" id="kpis-atendimento" aria-live="polite"></div>
+
+          <div class="grelha-2 larga">
+            <article class="cartao" aria-labelledby="t-volume">
+              <div class="cartao-topo"><h3 id="t-volume"></h3><span class="meta" id="volume-meta"></span></div>
+              <div class="cartao-corpo">
+                <div class="colunas" id="colunas"></div>
+                <div class="eixo-x" id="eixo-x" aria-hidden="true"></div>
+                <details class="ver-tabela">
+                  <summary>Ver em tabela</summary>
+                  <table class="tabela-simples" id="tabela-volume"></table>
+                </details>
+              </div>
+            </article>
+            <article class="cartao" aria-labelledby="t-resultados">
+              <div class="cartao-topo"><h3 id="t-resultados">Como terminaram</h3><span class="meta">% dos atendimentos</span></div>
+              <div class="cartao-corpo">
+                <div class="empilhada" id="resultados-barra" aria-hidden="true"></div>
+                <ul class="legenda" id="resultados-legenda"></ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="grelha-2">
+            <article class="cartao" aria-labelledby="t-procura">
+              <div class="cartao-topo"><h3 id="t-procura">Procura por serviço</h3><span class="meta">Atendimentos</span></div>
+              <div class="cartao-corpo"><ul class="barras-h" id="procura"></ul></div>
+            </article>
+            <article class="cartao" aria-labelledby="t-lacunas">
+              <div class="cartao-topo"><h3 id="t-lacunas">Lacunas de conteúdo</h3><span class="meta">Abstenções agrupadas</span></div>
+              <div class="cartao-corpo">
+                <table class="lacunas">
+                  <thead><tr><th class="etiqueta" scope="col">Tema sem fonte válida</th><th class="etiqueta num" scope="col">Abstenções</th><th scope="col"><span class="sr-only">Ação</span></th></tr></thead>
+                  <tbody id="lacunas"></tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+        </section>
+
+       </div>
+
+       <div class="vista" id="vista-intencoes" hidden>
+        <section class="cabecalho">
+          <div>
+            <span class="etiqueta">Gestão</span>
+            <h1 tabindex="-1">Intenções do Concelho</h1>
+          </div>
+          <div class="cabecalho-lado">
+            <span class="etiqueta selo-simulacao">Dados sintéticos</span>
+            <span>Atualizado a 23 de outubro, 09:00</span>
+          </div>
+        </section>
+
+        <section class="secao" aria-label="Intenções do Concelho">
+            <ul class="garantias" aria-label="Garantias RGPD">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-visto"/></svg>Só com consentimento explícito</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-oculto"/></svg>Grupos com menos de 10 pessoas não publicados</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-ruido"/></svg>Ruído estatístico</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-cadeado"/></svg>Nenhum dado individual sai do Cofre</li>
+            </ul>
+
+          <div class="indicadores">
+            <article class="indicador">
+              <div class="indicador-topo"><span>Pessoas que consentiram</span></div>
+              <strong>1 240</strong><small>43% dos Cofres ativos</small>
+            </article>
+            <article class="indicador">
+              <div class="indicador-topo"><span>Intenções ativas</span></div>
+              <strong>2 041</strong><small>Em 5 temas</small>
+            </article>
+            <article class="indicador">
+              <div class="indicador-topo"><span>Para os próximos 6 meses</span></div>
+              <strong>59%</strong><small>1 211 intenções</small>
+            </article>
+            <article class="indicador">
+              <div class="indicador-topo"><span>Freguesias publicáveis</span></div>
+              <strong>31</strong><small>De 48 freguesias</small>
+            </article>
+          </div>
+
+          <div class="sinais">
+            <article class="sinal">
+              <span class="etiqueta">Painéis solares</span>
+              <strong>+38%</strong>
+              <p>Intenções no trimestre. 68% querem avançar nos próximos 6 meses.</p>
+            </article>
+            <article class="sinal">
+              <span class="etiqueta">Esplanadas · Centro histórico</span>
+              <strong>90</strong>
+              <p>Intenções em Oliveira, S. Paio e S. Sebastião, o maior grupo do concelho.</p>
+            </article>
+            <article class="sinal">
+              <span class="etiqueta">Construção · Ponte e Urgezes</span>
+              <strong>70</strong>
+              <p>Intenções acima da média das freguesias, a maioria a mais de 6 meses.</p>
+            </article>
+          </div>
+
+          <article class="cartao" aria-labelledby="t-mapa">
+            <div class="cartao-topo"><h3 id="t-mapa">Intenções por freguesia e tema</h3><span class="meta">8 freguesias com mais intenções</span></div>
+            <div class="cartao-corpo">
+              <div class="mapa-wrap">
+                <table class="mapa" id="mapa">
+                  <caption class="sr-only">Intenções por freguesia e tema. Grupos com menos de 10 pessoas não são publicados.</caption>
+                </table>
+              </div>
+              <div class="mapa-legenda">
+                <span>10 <i class="escala" aria-hidden="true"></i> 90 intenções</span>
+                <span><i class="amostra-oculta" aria-hidden="true"></i>&lt; 10 · não publicado</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="grelha-2">
+            <article class="cartao" aria-labelledby="t-motivacoes">
+              <div class="cartao-topo"><h3 id="t-motivacoes">Motivações</h3><span class="meta">% das intenções</span></div>
+              <div class="cartao-corpo"><ul class="barras-h" id="motivacoes"></ul></div>
+            </article>
+            <article class="cartao" aria-labelledby="t-desejos">
+              <div class="cartao-topo"><h3 id="t-desejos">Desejos para a cidade</h3><span class="meta">% dos desejos registados</span></div>
+              <div class="cartao-corpo"><ul class="barras-h" id="desejos"></ul></div>
+            </article>
+          </div>
+
+          <article class="cartao" aria-labelledby="t-horizonte">
+            <div class="cartao-topo"><h3 id="t-horizonte">Quando pretendem avançar</h3><span class="meta">% das intenções por tema</span></div>
+            <div class="cartao-corpo">
+              <ul class="horizonte-legenda" id="horizonte-legenda"></ul>
+              <ul class="horizonte" id="horizonte"></ul>
+            </div>
+          </article>
+        </section>
+       </div>
       </div>
     </main>
   </div>
+  <div class="dica" id="dica" role="tooltip" hidden></div>
+
   <script>
-    let solicitacoes = [
+    const ESTADOS = {
+      aguarda: { texto: "Aguarda análise", tom: "aguarda" },
+      documentos: { texto: "Aguarda documentos", tom: "aguarda" },
+      fornecido: { texto: "Elemento fornecido", tom: "neutro" },
+      resolvida: { texto: "Resolvida", tom: "concluido" },
+      aprovada: { texto: "Aprovada", tom: "concluido" },
+      indeferida: { texto: "Indeferida", tom: "atencao" }
+    };
+    // O estado chega da API e dos eventos como texto; aqui passa a chave
+    const CHAVE_ESTADO = { "Aguarda análise": "aguarda", "Aguarda documentos": "documentos", "Elemento fornecido": "fornecido", "Resolvida": "resolvida", "Aprovada": "aprovada", "Indeferida": "indeferida" };
+    const GRUPOS = { aguarda: "aguarda", fornecido: "aguarda", documentos: "andamento", resolvida: "concluidas", aprovada: "concluidas", indeferida: "concluidas" };
+
+    // acao: a chave que /api/consola/acao espera
+    const DECISOES = {
+      resolver: { acao: "resolve", estado: "resolvida", rotulo: "Nota de conclusão", obrigatorio: false, ajuda: "Registe brevemente como o pedido foi resolvido.", botao: "Confirmar resolução", tom: "verde", resultado: "Solicitação marcada como resolvida. Notificação enviada ao munícipe." },
+      documentos: { acao: "documents", estado: "documentos", rotulo: "Documento ou elemento em falta", obrigatorio: true, ajuda: "Indique o elemento necessário (ex.: confirme a largura da fachada do estabelecimento).", botao: "Pedir à pessoa pelo Henriques", tom: "bastidores", resultado: "Pedido de elementos enviado ao Henriques e entregue no Telegram da pessoa." },
+      aprovar: { acao: "approve", estado: "aprovada", rotulo: "Fundamentação da aprovação", obrigatorio: true, ajuda: "Registe a fundamentação regulamentar do deferimento.", botao: "Aprovar e notificar", tom: "verde", resultado: "Solicitação aprovada. Notificação enviada ao munícipe." },
+      indeferir: { acao: "reject", estado: "indeferida", rotulo: "Motivo do indeferimento", obrigatorio: true, ajuda: "Indique o motivo objetivo do indeferimento.", botao: "Confirmar indeferimento", tom: "terracota", resultado: "Solicitação indeferida. Notificação enviada ao munícipe." }
+    };
+    // O que se mostra num pedido decidido fora desta sessão (API ou evento)
+    const RESULTADO_ESTADO = {
+      aprovada: { titulo: "Processo aprovado e alvará digital emitido. Munícipe notificado no Telegram." },
+      indeferida: { titulo: "Processo indeferido. Munícipe notificado no Telegram.", atencao: true }
+    };
+
+    // Casos de arranque (Simulação), no formato de /api/consola/pedidos.
+    // Só aparecem se o núcleo não responder (ficheiro aberto sem servidor).
+    const SEMENTES = [
       {
-        id: "CASO-0001",
-        processo: "OEP/2026/0001",
-        codigo: "#OEP-0001",
-        titulo: "Ocupação do espaço público · Esplanada aberta",
-        servico: "Espaço Público (OVP-SO)",
-        hora: "10:42",
-        status: "Aguarda análise",
-        tagClass: "tag wait",
+        processo: "OEP/2026/0001", codigo: "#OEP-0001", hora: "10:42", status: "Aguarda análise",
+        titulo: "Ocupação do espaço público · Esplanada aberta", servico: "Espaço Público (OVP-SO)",
         resumo: "Avaliar a instalação de uma esplanada aberta no local indicado pela pessoa requerente (Largo da Oliveira).",
         dados: [
           { campo: "Processo Municipal", valor: "OEP/2026/0001" },
@@ -169,38 +893,26 @@
           { campo: "Local de intervenção", valor: "Largo da Oliveira, 12, Guimarães" },
           { campo: "Área e Instalação", valor: "10 m² · 4 Mesas e 8 Cadeiras" },
           { campo: "Corredor Pedonal", valor: "2,10m livres (Cumpre requisito Art. 8.º >= 2,00m)" },
-          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" },
+          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" }
         ],
-        omitidos: ["Conversa completa", "NIF e Contacto direto", "Faturamento do restaurante", "IBAN", "Situação fiscal"],
+        omitidos: ["Conversa completa", "NIF e Contacto direto", "Faturamento do restaurante", "IBAN", "Situação fiscal"]
       },
       {
-        id: "CASO-0002",
-        processo: "PIP/2026/0002",
-        codigo: "#PIP-0002",
-        titulo: "Pedido de Informação Prévia (PIP) · Viabilidade PDM",
-        servico: "Gestão Urbanística (Art. 14.º RJUE)",
-        hora: "10:18",
-        status: "Aguarda análise",
-        tagClass: "tag wait",
+        processo: "PIP/2026/0002", codigo: "#PIP-0002", hora: "10:18", status: "Aguarda análise",
+        titulo: "Pedido de Informação Prévia (PIP) · Viabilidade PDM", servico: "Gestão Urbanística (Art. 14.º RJUE)",
         resumo: "Apreciação prévia vinculativa de viabilidade de construção de moradia unifamiliar em Silvares.",
         dados: [
           { campo: "Processo Municipal", valor: "PIP/2026/0002" },
           { campo: "Localização do Terreno", valor: "Silvares, Guimarães (41.4425, -8.2918)" },
           { campo: "Classificação no PDM", valor: "Solo Urbano · Espaço Residencial Nível 2" },
           { campo: "Caderneta Predial", valor: "Artigo Matricial 1420 (Silvares, Guimarães)" },
-          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" },
+          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" }
         ],
-        omitidos: ["Conversa completa", "Restante património imobiliário", "Dados bancários"],
+        omitidos: ["Conversa completa", "Restante património imobiliário", "Dados bancários"]
       },
       {
-        id: "CASO-0003",
-        processo: "EVT/2026/0003",
-        codigo: "#EVT-0003",
-        titulo: "Autorização para Prova Desportiva na Via Pública",
-        servico: "Divisão de Trânsito e Polícia Municipal",
-        hora: "09:54",
-        status: "Aguarda análise",
-        tagClass: "tag wait",
+        processo: "EVT/2026/0003", codigo: "#EVT-0003", hora: "09:54", status: "Aguarda análise",
+        titulo: "Autorização para Prova Desportiva na Via Pública", servico: "Divisão de Trânsito e Polícia Municipal",
         resumo: "Licenciamento e parecer para realização da 1.ª Corrida Popular de Azurém (10 Km).",
         dados: [
           { campo: "Processo Municipal", valor: "EVT/2026/0003" },
@@ -208,265 +920,236 @@
           { campo: "Data do Evento", valor: "15 de Outubro de 2026 (09:30 às 12:30)" },
           { campo: "Apólice de Seguro", valor: "N.º 98765432-FID/2026 (Fidelidade Seguros · DL 10/2009)" },
           { campo: "Termo de Responsabilidade", valor: "Assinado com declaração de limpeza da via" },
-          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" },
+          { campo: "Assinatura Digital", valor: "Chave Móvel Digital (Mandato D3)" }
         ],
-        omitidos: ["Conversa completa", "Dados pessoais de atletas inscritos", "Dados bancários"],
+        omitidos: ["Conversa completa", "Dados pessoais de atletas inscritos", "Dados bancários"]
       },
       {
-        id: "DG-2045",
-        processo: "RES/2026/0112",
-        codigo: "#DG-2045",
-        titulo: "Recolha de resíduos volumosos",
-        servico: "Serviços Urbanos e Ambiente",
-        hora: "09:32",
-        status: "Resolvida",
-        tagClass: "tag ok",
+        processo: "RES/2026/0112", codigo: "#DG-2045", hora: "09:32", status: "Resolvida",
+        titulo: "Recolha de resíduos volumosos", servico: "Serviços Urbanos e Ambiente",
         resumo: "Agendamento de recolha de móveis e eletrodomésticos no domicílio.",
         dados: [
           { campo: "Serviço", valor: "Recolha de Monstros" },
           { campo: "Freguesia", valor: "Creixomil, Guimarães" },
-          { campo: "Tipologia", valor: "2 volumes (sofá e frigorífico)" },
+          { campo: "Tipologia", valor: "2 volumes (sofá e frigorífico)" }
         ],
-        omitidos: ["Conversa completa", "Contacto telefónico"],
+        omitidos: ["Conversa completa", "Contacto telefónico"]
       }
     ];
 
-    let solicitacaoSelecionada = solicitacoes[0];
-    let filtroAtual = "todas";
+    const agora = () => new Date().toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
+    // O texto dos pedidos vem do munícipe, pela conversa: nunca entra no HTML sem escape
+    const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-    const decisionActions = {
-      resolve: {
-        label: "Nota de conclusão (opcional)",
-        placeholder: "Registe brevemente como o pedido foi resolvido.",
-        required: false,
-        status: "Resolvida",
-        tagClass: "tag ok",
-        button: "Confirmar resolução",
-        result: "Solicitação marcada como resolvida com sucesso."
-      },
-      documents: {
-        label: "Documento ou elemento em falta",
-        placeholder: "Indique o elemento necessário (ex.: Por favor confirme a largura da fachada do estabelecimento).",
-        required: true,
-        status: "Aguarda documentos",
-        tagClass: "tag wait",
-        button: "Pedir à Pessoa pelo Henriques",
-        result: "Pedido de elementos enviado ao Henriques e entregue no Telegram da pessoa."
-      },
-      approve: {
-        label: "Fundamentação da aprovação",
-        placeholder: "Registe a fundamentação regulamentar do deferimento.",
-        required: true,
-        status: "Aprovada",
-        tagClass: "tag ok",
-        button: "Aprovar e Notificar",
-        result: "Solicitação aprovada formalmente. Notificação enviada ao cidadão."
-      },
-      reject: {
-        label: "Motivo do indeferimento",
-        placeholder: "Indique o motivo objetivo do indeferimento.",
-        required: true,
-        status: "Indeferida",
-        tagClass: "tag refused",
-        button: "Confirmar indeferimento",
-        result: "Solicitação indeferida pelos serviços municipais."
-      }
-    };
-
-    function renderizarSolicitacoes() {
-      const container = document.getElementById("lista-threads");
-      if (!container) return;
-      container.innerHTML = "";
-
-      const termoBusca = (document.getElementById("input-pesquisa")?.value || "").toLowerCase().trim();
-
-      const filtradas = solicitacoes.filter((s) => {
-        if (termoBusca && !s.titulo.toLowerCase().includes(termoBusca) && !s.processo.toLowerCase().includes(termoBusca) && !s.codigo.toLowerCase().includes(termoBusca)) {
-          return false;
-        }
-        if (filtroAtual === "aguarda") return s.status.includes("Aguarda");
-        if (filtroAtual === "concluidas") return s.status === "Aprovada" || s.status === "Resolvida";
-        return true;
-      });
-
-      filtradas.forEach((s) => {
-        const item = document.createElement("div");
-        item.className = "thread" + (s.processo === solicitacaoSelecionada?.processo ? " selected" : "");
-        item.innerHTML = `
-          <div class="thread-top">
-            <b>${s.codigo}</b>
-            <time>${s.hora}</time>
-          </div>
-          <p>${s.titulo}</p>
-          <div class="thread-foot">
-            <span class="${s.tagClass}">${s.status}</span>
-          </div>
-        `;
-        item.addEventListener("click", () => {
-          solicitacaoSelecionada = s;
-          renderizarSolicitacoes();
-          renderizarDetalhes(s);
-        });
-        container.appendChild(item);
-      });
-
-      document.getElementById("stat-total").textContent = solicitacoes.length;
-      document.getElementById("stat-aguarda").textContent = solicitacoes.filter((s) => s.status.includes("Aguarda")).length;
+    function normalizar(s) {
+      return {
+        processo: s.processo,
+        codigo: s.codigo || `#${s.processo.replace(/\//g, "-")}`,
+        hora: s.hora || agora(),
+        assunto: s.titulo,
+        resumo: s.resumo,
+        dados: (s.dados || []).map((d) => [d.campo, d.valor]),
+        omitidos: s.omitidos || [],
+        estado: CHAVE_ESTADO[s.status] ?? "aguarda"
+      };
     }
 
-    function renderizarDetalhes(s) {
-      if (!s) return;
-      document.getElementById("detalhes-titulo").textContent = `Solicitação ${s.codigo}`;
-      document.getElementById("detalhes-resumo-titulo").textContent = s.titulo;
-      document.getElementById("detalhes-resumo-desc").textContent = s.resumo;
+    let pedidos = [];
+    let selecionado = null;
+    let carregado = false;
+    let filtro = "todas";
+    let termo = "";
+    let ordem = "recentes";
+    let decisaoAtiva = null;
 
-      const dadosLista = document.getElementById("detalhes-dados-lista");
-      dadosLista.innerHTML = (s.dados || [])
-        .map((d) => `<div class="data-row"><span>${d.campo}</span><b>${d.valor}</b></div>`)
-        .join("");
+    const $ = (seletor) => document.querySelector(seletor);
+    const lista = $("#lista");
+    const formulario = $("#formulario");
+    const nota = $("#nota");
+    const erro = $("#nota-erro");
+    const resultado = $("#resultado");
+    const pedidoAtual = () => pedidos.find((p) => p.processo === selecionado);
 
-      const omitidosLista = document.getElementById("detalhes-omitidos-lista");
-      omitidosLista.innerHTML = (s.omitidos || [])
-        .map((o) => `<span class="privacy-chip">${o}</span>`)
-        .join("");
+    function etiquetaEstado(chave) {
+      const e = ESTADOS[chave];
+      return `<span class="estado ${e.tom}">${e.texto}</span>`;
+    }
 
-      const tagDetalhes = document.getElementById("detalhes-tag");
-      tagDetalhes.textContent = s.status;
-      tagDetalhes.className = s.tagClass;
+    function passaFiltro(p, f) {
+      if (f === "todas") return true;
+      return GRUPOS[p.estado] === f;
+    }
 
-      document.getElementById("detalhes-meta").textContent = `${s.dados?.length ?? 3} dados necessários · 0 mensagens partilhadas`;
-      document.getElementById("decisao-topo-titulo").textContent = `Decisão e resolução`;
-      document.getElementById("decisao-topo-sub").textContent = `${s.codigo} · ${s.processo}`;
+    function desenharLista() {
+      const t = termo.trim().toLowerCase();
+      const itens = pedidos
+        .filter((p) => passaFiltro(p, filtro))
+        .filter((p) => !t || `${p.codigo} ${p.processo} ${p.assunto} ${p.dados.map((d) => d[1]).join(" ")}`.toLowerCase().includes(t))
+        .sort((a, b) => (ordem === "recentes" ? b.hora.localeCompare(a.hora) : a.hora.localeCompare(b.hora)));
 
-      // Reset form
-      document.querySelector(".decision-form").hidden = true;
-      if (s.status === "Aprovada") {
-        decisionResult.textContent = `✅ Processo aprovado e alvará digital emitido. Cidadão notificado no Telegram.`;
-        decisionResult.hidden = false;
-      } else if (s.status === "Indeferida") {
-        decisionResult.textContent = `❌ Processo indeferido. Cidadão notificado no Telegram.`;
-        decisionResult.hidden = false;
+      lista.innerHTML = itens.map((p) => `
+        <li><button type="button" class="pedido" data-id="${esc(p.processo)}" aria-current="${p.processo === selecionado}">
+          <span class="pedido-topo"><span class="pedido-id">${esc(p.codigo)}</span><time>${esc(p.hora)}</time></span>
+          <span class="pedido-assunto">${esc(p.assunto)}</span>
+          <span class="pedido-pe">${etiquetaEstado(p.estado)}</span>
+        </button></li>`).join("");
+      $("#lista-vazia").hidden = itens.length > 0;
+      $("#lista-vazia").textContent = !carregado ? "A carregar solicitações…"
+        : pedidos.length ? "Nenhuma solicitação corresponde a este filtro."
+        : "Ainda não há solicitações. Os pedidos que o Henriques submete à Câmara aparecem aqui, em direto.";
+
+      const conta = (f) => pedidos.filter((p) => passaFiltro(p, f)).length;
+      document.querySelectorAll("[data-filtro]").forEach((botao) => {
+        botao.querySelector(".n").textContent = `· ${conta(botao.dataset.filtro)}`;
+      });
+      const contadores = { total: pedidos.length, aguarda: conta("aguarda"), ativos: `${conta("aguarda") + conta("andamento")} em curso` };
+      document.querySelectorAll("[data-contador]").forEach((el) => { el.textContent = contadores[el.dataset.contador]; });
+      $("#contador-solicitacoes").textContent = pedidos.length;
+    }
+
+    function mostrarResultado(r) {
+      resultado.hidden = !r;
+      if (!r) return;
+      resultado.classList.toggle("atencao", Boolean(r.atencao));
+      $("#resultado-icone").setAttribute("href", r.atencao ? "#i-recusar" : "#i-visto");
+      $("#resultado-titulo").textContent = r.titulo;
+      $("#resultado-nota").hidden = !r.nota;
+      $("#resultado-nota").textContent = r.nota ? `«${r.nota}»` : "";
+    }
+
+    function desenharDetalhe() {
+      const p = pedidoAtual();
+      $("#coluna-detalhe").hidden = !p;
+      if (!p) return;
+      $("#titulo-detalhe").textContent = `Solicitação ${p.codigo}`;
+      $("#decisao-ref").textContent = `${p.codigo} · ${p.processo}`;
+      $("#detalhe-assunto").textContent = p.assunto;
+      $("#detalhe-resumo").textContent = p.resumo;
+      $("#detalhe-dados").innerHTML = p.dados.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+      $("#detalhe-omitidos").innerHTML = p.omitidos.map((o) => `<span class="fonte">${esc(o)}</span>`).join("");
+      $("#detalhe-meta").textContent = `${p.dados.length} dados necessários · 0 mensagens partilhadas`;
+      $("#detalhe-estado").innerHTML = etiquetaEstado(p.estado);
+      mostrarResultado(p.decisao ?? RESULTADO_ESTADO[p.estado]);
+    }
+
+    function fecharFormulario({ devolverFoco = false } = {}) {
+      const ativo = document.querySelector('.opcao[aria-pressed="true"]');
+      formulario.hidden = true;
+      decisaoAtiva = null;
+      document.querySelectorAll(".opcao").forEach((b) => b.setAttribute("aria-pressed", "false"));
+      if (devolverFoco && ativo) ativo.focus();
+    }
+
+    function selecionar(id, { foco = false } = {}) {
+      selecionado = id;
+      fecharFormulario();
+      desenharLista();
+      desenharDetalhe();
+      if (foco && matchMedia("(max-width: 1080px)").matches) {
+        $("#titulo-detalhe").scrollIntoView({ behavior: "smooth", block: "start" });
+        $("#titulo-detalhe").focus({ preventScroll: true });
       } else {
-        decisionResult.hidden = true;
+        [...lista.querySelectorAll(".pedido")].find((b) => b.dataset.id === id)?.focus();
       }
     }
 
-    // Filtros
-    document.querySelectorAll(".inbox-tools .pill").forEach((pill) => {
-      pill.addEventListener("click", () => {
-        document.querySelectorAll(".inbox-tools .pill").forEach((p) => p.classList.remove("selected"));
-        pill.classList.add("selected");
-        filtroAtual = pill.dataset.filtro || "todas";
-        renderizarSolicitacoes();
+    // Lista: clique e setas para navegar
+    lista.addEventListener("click", (e) => {
+      const botao = e.target.closest(".pedido");
+      if (botao) selecionar(botao.dataset.id, { foco: true });
+    });
+    function ligarSetas(alvo) {
+      alvo.addEventListener("keydown", (e) => {
+        if (!["ArrowDown", "ArrowUp"].includes(e.key)) return;
+        const botoes = [...alvo.querySelectorAll(".pedido")];
+        const i = botoes.indexOf(document.activeElement);
+        if (i < 0) return;
+        e.preventDefault();
+        botoes[Math.min(botoes.length - 1, Math.max(0, i + (e.key === "ArrowDown" ? 1 : -1)))].focus();
+      });
+    }
+    ligarSetas(lista);
+
+    document.querySelectorAll("[data-filtro]").forEach((botao) => {
+      botao.addEventListener("click", () => {
+        filtro = botao.dataset.filtro;
+        document.querySelectorAll("[data-filtro]").forEach((b) => b.setAttribute("aria-pressed", String(b === botao)));
+        desenharLista();
+      });
+    });
+    $("#pesquisa").addEventListener("input", (e) => { termo = e.target.value; desenharLista(); });
+    $("#ordem").addEventListener("change", (e) => { ordem = e.target.value; desenharLista(); });
+
+    // Decisão: selecionar → justificar → confirmar
+    document.querySelectorAll("[data-decisao]").forEach((botao) => {
+      botao.addEventListener("click", () => {
+        if (botao.getAttribute("aria-pressed") === "true") return fecharFormulario({ devolverFoco: true });
+        decisaoAtiva = DECISOES[botao.dataset.decisao];
+        document.querySelectorAll(".opcao").forEach((b) => b.setAttribute("aria-pressed", String(b === botao)));
+        $("#nota-rotulo").innerHTML = decisaoAtiva.rotulo + (decisaoAtiva.obrigatorio ? "" : ' <span class="opcional">(opcional)</span>');
+        nota.placeholder = decisaoAtiva.ajuda;
+        $("#confirmar").textContent = decisaoAtiva.botao;
+        $("#confirmar").dataset.tom = decisaoAtiva.tom;
+        nota.required = decisaoAtiva.obrigatorio;
+        nota.value = "";
+        nota.removeAttribute("aria-invalid");
+        erro.hidden = true;
+        resultado.hidden = true;
+        formulario.hidden = false;
+        nota.focus();
       });
     });
 
-    document.getElementById("input-pesquisa")?.addEventListener("input", () => {
-      renderizarSolicitacoes();
+    nota.addEventListener("input", () => {
+      if (nota.value.trim()) { nota.removeAttribute("aria-invalid"); erro.hidden = true; }
+    });
+    $("#cancelar").addEventListener("click", () => fecharFormulario({ devolverFoco: true }));
+    formulario.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") fecharFormulario({ devolverFoco: true });
     });
 
-    // Ações de Decisão
-    const decisionForm = document.querySelector(".decision-form");
-    const decisionNote = document.getElementById("decision-note");
-    const decisionResult = document.querySelector(".decision-result");
-    let selectedDecisionKey = null;
-    let selectedDecision = null;
-
-    document.querySelectorAll("[data-decision]").forEach((button) => {
-      button.addEventListener("click", () => {
-        selectedDecisionKey = button.dataset.decision;
-        selectedDecision = decisionActions[selectedDecisionKey];
-        document.getElementById("decision-label").textContent = selectedDecision.label;
-        document.getElementById("confirm-decision").textContent = selectedDecision.button;
-        decisionNote.placeholder = selectedDecision.placeholder;
-        decisionNote.required = selectedDecision.required;
-        decisionNote.value = "";
-        decisionNote.setCustomValidity("");
-        decisionResult.hidden = true;
-        decisionForm.hidden = false;
-        decisionNote.focus();
-      });
-    });
-
-    decisionNote.addEventListener("input", () => decisionNote.setCustomValidity(""));
-    document.getElementById("cancel-decision").addEventListener("click", () => {
-      decisionForm.hidden = true;
-      selectedDecision = null;
-      selectedDecisionKey = null;
-    });
-
-    decisionForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      if (!selectedDecision || !solicitacaoSelecionada) return;
-      if (selectedDecision.required && !decisionNote.value.trim()) {
-        decisionNote.setCustomValidity("Indique a informação necessária para registar esta ação.");
-        decisionNote.reportValidity();
+    formulario.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!decisaoAtiva) return;
+      const texto = nota.value.trim();
+      if (decisaoAtiva.obrigatorio && !texto) {
+        nota.setAttribute("aria-invalid", "true");
+        erro.hidden = false;
+        nota.focus();
         return;
       }
-
-      const nota = decisionNote.value.trim();
-      const btn = document.getElementById("confirm-decision");
-      btn.disabled = true;
-      btn.textContent = "A registar…";
-
+      const p = pedidoAtual();
+      const decisao = decisaoAtiva;
+      const confirmar = $("#confirmar");
+      confirmar.disabled = true;
+      confirmar.textContent = "A registar…";
       try {
         const resp = await fetch("/api/consola/acao", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            processo: solicitacaoSelecionada.processo,
-            acao: selectedDecisionKey,
-            nota: nota || undefined,
-          }),
+          body: JSON.stringify({ processo: p.processo, acao: decisao.acao, nota: texto || undefined })
         });
-
-        if (!resp.ok) {
-          throw new Error("Falha na comunicação com o servidor.");
-        }
-
-        solicitacaoSelecionada.status = selectedDecision.status;
-        solicitacaoSelecionada.tagClass = selectedDecision.tagClass;
-
-        decisionResult.textContent = `${selectedDecision.result} Notificação enviada para o canal do cidadão.`;
-        decisionResult.hidden = false;
-        decisionForm.hidden = true;
-
-        renderizarSolicitacoes();
-        renderizarDetalhes(solicitacaoSelecionada);
+        if (!resp.ok) throw new Error(`o núcleo respondeu ${resp.status}`);
+        p.estado = decisao.estado;
+        p.decisao = { titulo: decisao.resultado, nota: texto, atencao: decisao.estado === "indeferida" };
+        atualizarMissao(p.processo, decisao.estado, texto);
+        fecharFormulario();
+        desenharLista();
+        desenharDetalhe();
       } catch (err) {
-        decisionResult.textContent = `Aviso: ${err.message}. A ação foi registada localmente.`;
-        decisionResult.hidden = false;
+        mostrarResultado({ titulo: `A decisão não foi registada no núcleo (${err.message}). Tente de novo.`, atencao: true });
       } finally {
-        btn.disabled = false;
-        btn.textContent = selectedDecision.button;
+        confirmar.disabled = false;
+        confirmar.textContent = decisao.botao;
       }
     });
 
-    // Ligação em Tempo Real ao Barramento SSE (/eventos/stream)
-    function ligarEventos() {
-      const statusLigacao = document.getElementById("status-ligacao");
-      const es = new EventSource("/eventos/stream");
-
-      es.onopen = () => {
-        if (statusLigacao) {
-          statusLigacao.textContent = "● Em direto (SSE)";
-          statusLigacao.style.color = "var(--green)";
-        }
-      };
-
-      es.onerror = () => {
-        if (statusLigacao) {
-          statusLigacao.textContent = "○ A reconectar…";
-          statusLigacao.style.color = "var(--gold)";
-        }
-      };
-
-      es.onmessage = (event) => {
-        try {
-          const ev = JSON.parse(event.data);
-          tratarEvento(ev);
-        } catch (_) {}
-      };
+    // ── Ligação ao núcleo: pedidos da API e eventos do barramento ──
+    function mudarEstado(processo, estado) {
+      const p = pedidos.find((x) => x.processo === processo);
+      if (!p) return null;
+      p.estado = estado;
+      return p;
     }
 
     function tratarEvento(ev) {
@@ -475,120 +1158,544 @@
 
       if (ev.tipo === "consola.caso.criado") {
         const processo = d.processo || "OEP/2026/0001";
-        const codigo = `#${processo.replace(/[/]/g, "-")}`;
-        let casoExistente = solicitacoes.find((s) => s.processo === processo);
-
-        const dadosExtraidos = [
-          { campo: "Processo Municipal", valor: processo },
-          { campo: "Serviço", valor: d.servico || "Serviço Municipal" },
-          { campo: "Nível de Risco", valor: d.risco ? d.risco.toUpperCase() : "BAIXO" },
+        const dados = [
+          ["Processo Municipal", processo],
+          ["Serviço", d.servico || "Serviço Municipal"],
+          ["Nível de Risco", d.risco ? d.risco.toUpperCase() : "BAIXO"]
         ];
+        if (d.estabelecimento) dados.push(["Estabelecimento", d.estabelecimento]);
+        if (d.morada) dados.push(["Local de intervenção", d.morada]);
+        if (d.mesas) dados.push(["Área e Instalação", `${d.area_m2 || d.mesas * 2.5} m² · ${d.mesas} mesas`]);
+        if (d.largura_livre) dados.push(["Corredor Pedonal", d.largura_livre]);
+        dados.push(["Assinatura Digital", d.token_cmd ? `Chave Móvel Digital (${d.token_cmd})` : "Chave Móvel Digital (Mandato D3)"]);
+        if (Array.isArray(d.documentos)) dados.push(["Documentos Instruídos", d.documentos.join(", ")]);
 
-        if (d.estabelecimento) dadosExtraidos.push({ campo: "Estabelecimento", valor: d.estabelecimento });
-        if (d.morada) dadosExtraidos.push({ campo: "Local de intervenção", valor: d.morada });
-        if (d.mesas) dadosExtraidos.push({ campo: "Área e Instalação", valor: `${d.area_m2 || d.mesas * 2.5} m² · ${d.mesas} mesas` });
-        if (d.largura_livre) dadosExtraidos.push({ campo: "Corredor Pedonal", valor: d.largura_livre });
-        dadosExtraidos.push({ campo: "Assinatura Digital", valor: d.token_cmd ? `Chave Móvel Digital (${d.token_cmd})` : "Chave Móvel Digital (Mandato D3)" });
-
-        if (d.documentos && Array.isArray(d.documentos)) {
-          dadosExtraidos.push({ campo: "Documentos Instruídos", valor: d.documentos.join(", ") });
-        }
-
-        if (casoExistente) {
-          casoExistente.status = "Aguarda análise";
-          casoExistente.tagClass = "tag wait";
-          if (d.estabelecimento) {
-            casoExistente.resumo = `Avaliar instalação de esplanada aberta no estabelecimento ${d.estabelecimento}.`;
-          }
-          casoExistente.dados = dadosExtraidos;
-          solicitacaoSelecionada = casoExistente;
+        const existente = pedidos.find((p) => p.processo === processo);
+        if (existente) {
+          existente.estado = "aguarda";
+          existente.decisao = null;
+          existente.dados = dados;
+          if (d.estabelecimento) existente.resumo = `Avaliar instalação de esplanada aberta no estabelecimento ${d.estabelecimento}.`;
         } else {
-          const novoCaso = {
-            id: `CASO-${processo.replace(/[/]/g, "-")}`,
+          pedidos.unshift({
             processo,
-            codigo,
-            titulo: d.servico?.includes("urbanismo")
+            codigo: `#${processo.replace(/\//g, "-")}`,
+            hora: agora(),
+            assunto: d.servico?.includes("urbanismo")
               ? "Pedido de Informação Prévia (PIP) · Viabilidade PDM"
               : d.servico?.includes("desportiv")
                 ? "Autorização para Prova Desportiva na Via Pública"
                 : "Ocupação do espaço público · Esplanada aberta",
-            servico: d.servico || "Serviço Municipal",
-            hora: new Date().toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" }),
-            status: "Aguarda análise",
-            tagClass: "tag wait",
             resumo: `Processo ${processo} submetido com Chave Móvel Digital e pronto para triagem técnica.`,
-            dados: dadosExtraidos,
+            dados,
             omitidos: ["Conversa completa", "NIF e Contacto direto", "Dados bancários"],
-          };
-          solicitacoes.unshift(novoCaso);
-          solicitacaoSelecionada = novoCaso;
+            estado: "aguarda"
+          });
         }
-
-        renderizarSolicitacoes();
-        renderizarDetalhes(solicitacaoSelecionada);
+        selecionado = processo;
+        fecharFormulario();
       } else if (ev.tipo === "consola.caso.despachado") {
-        const caso = solicitacoes.find((s) => s.processo === d.processo);
-        if (caso) {
-          caso.status = d.decisao === "aprovado" ? "Aprovada" : "Indeferida";
-          caso.tagClass = d.decisao === "aprovado" ? "tag ok" : "tag refused";
-          renderizarSolicitacoes();
-          if (solicitacaoSelecionada?.processo === caso.processo) {
-            renderizarDetalhes(caso);
-          }
-        }
+        mudarEstado(d.processo, d.decisao === "aprovado" ? "aprovada" : "indeferida");
       } else if (ev.tipo === "consola.elemento.solicitado") {
-        const caso = solicitacoes.find((s) => s.processo === d.processo);
-        if (caso) {
-          caso.status = "Aguarda documentos";
-          caso.tagClass = "tag wait";
-          renderizarSolicitacoes();
-          if (solicitacaoSelecionada?.processo === caso.processo) {
-            renderizarDetalhes(caso);
-          }
-        }
-      } else if (ev.tipo === "missao.transicao") {
-        if (d.para === "com_tecnico") {
-          const caso = solicitacoes.find((s) => s.processo === "OEP/2026/0001");
-          if (caso) {
-            caso.status = "Elemento fornecido";
-            caso.tagClass = "tag ok";
-            caso.dados.push({ campo: "Elemento Adicional", valor: "Fachada: 8 metros" });
-            renderizarSolicitacoes();
-            if (solicitacaoSelecionada?.processo === caso.processo) {
-              renderizarDetalhes(caso);
-            }
-          }
-        }
+        mudarEstado(d.processo, "documentos");
+      } else if (ev.tipo === "missao.transicao" && d.para === "com_tecnico") {
+        const p = mudarEstado("OEP/2026/0001", "fornecido");
+        if (p && !p.dados.some(([k]) => k === "Elemento Adicional")) p.dados.push(["Elemento Adicional", "Fachada: 8 metros"]);
+      } else {
+        return;
       }
+      desenharLista();
+      desenharDetalhe();
     }
 
-    // Carregamento dinâmico a partir da API da Consola Municipal
     async function carregarPedidos() {
       try {
         const resp = await fetch("/api/consola/pedidos");
-        if (resp.ok) {
-          const lista = await resp.json();
-          if (Array.isArray(lista) && lista.length > 0) {
-            solicitacoes = lista;
-            if (!solicitacaoSelecionada || !solicitacoes.some((s) => s.processo === solicitacaoSelecionada.processo)) {
-              solicitacaoSelecionada = solicitacoes[0];
-            } else {
-              solicitacaoSelecionada = solicitacoes.find((s) => s.processo === solicitacaoSelecionada.processo) || solicitacoes[0];
-            }
-            renderizarSolicitacoes();
-            renderizarDetalhes(solicitacaoSelecionada);
-          }
-        }
+        if (!resp.ok) throw new Error(`o núcleo respondeu ${resp.status}`);
+        const vindos = await resp.json();
+        pedidos = Array.isArray(vindos) ? vindos.map(normalizar) : [];
       } catch (err) {
-        console.warn("Aviso ao carregar pedidos da API:", err);
+        console.warn("Sem pedidos do núcleo; a mostrar os casos de arranque (Simulação):", err);
+        pedidos = SEMENTES.map(normalizar);
+      }
+      carregado = true;
+      if (!pedidoAtual()) selecionado = pedidos[0]?.processo ?? null;
+      desenharLista();
+      desenharDetalhe();
+    }
+
+    function ligarEventos() {
+      const estado = $("#estado-ligacao");
+      const marcar = (ligado, texto) => {
+        estado.classList.toggle("desligado", !ligado);
+        estado.firstElementChild.textContent = texto;
+      };
+      try {
+        const fonte = new EventSource("/eventos/stream");
+        fonte.onopen = () => marcar(true, "Em direto");
+        fonte.onerror = () => marcar(false, "A religar…");
+        fonte.onmessage = (m) => {
+          try { tratarEvento(JSON.parse(m.data)); } catch (_) {}
+        };
+      } catch (_) {
+        marcar(false, "Sem ligação ao núcleo");
       }
     }
 
-    // Inicialização
-    renderizarSolicitacoes();
-    renderizarDetalhes(solicitacaoSelecionada);
-    carregarPedidos();
-    ligarEventos();
+    // ── Missões delegadas · dados demonstrativos fictícios ──
+    const ETAPAS = ["Entendido", "A verificar", "Preparado", "Submetido", "Respondido"];
+    const ESTADOS_MISSAO = {
+      curso: { texto: "Em curso", tom: "neutro" },
+      municipe: { texto: "Aguarda o munícipe", tom: "aguarda" },
+      tecnico: { texto: "Com técnico", tom: "neutro" },
+      respondida: { texto: "Respondida", tom: "concluido" },
+      cancelada: { texto: "Cancelada", tom: "atencao" }
+    };
+    const NIVEIS = { D0: "Informar", D1: "Vigiar", D2: "Preparar", D3: "Agir com confirmação" };
+    // etapa: índice em ETAPAS · datas: quando cada etapa foi atingida
+    const missoes = [
+      { id: "MIS-0012", atualizada: "10:42", objetivo: "Esplanada aberta de maio a setembro", ficha: "ocupacao-espaco-publico-esplanada", servico: "Pôr uma esplanada à porta do estabelecimento", nivel: "D3", validade: "19 out 2027", estado: "curso", etapa: 3, datas: ["20 out", "21 out", "22 out", "23 out"], passos: [6, 6], partilhados: 6, fontes: ["cmg-formulario-ovp-so", "cm-licenciamento-zero", "rttl-2025-esplanadas"], solicitacao: "OEP/2026/0001" },
+      { id: "MIS-0011", atualizada: "10:05", objetivo: "Música ao ar livre numa festa de bairro, num sábado", ficha: "licenca-especial-ruido", servico: "Fazer barulho autorizado numa festa, evento ou obra", nivel: "D2", validade: "30 nov 2026", estado: "curso", etapa: 1, datas: ["22 out", "23 out"], passos: [2, 5], partilhados: 3, fontes: ["corpus-proc-ruido"] },
+      { id: "MIS-0010", atualizada: "09:48", objetivo: "Construir habitação própria num terreno em Ponte", ficha: "pedido-informacao-previa-urbanismo", servico: "Saber o que o PDM permite no meu terreno", nivel: "D2", validade: "23 abr 2027", estado: "municipe", motivo: "Falta a planta de localização do terreno", etapa: 1, datas: ["19 out", "21 out"], passos: [3, 6], partilhados: 2, fontes: ["pdm-guimaraes-aviso-23214-2020", "rjue-dl-555-99-art14", "cm-portal-municipio-urbanismo"] },
+      { id: "MIS-0009", atualizada: "09:32", objetivo: "Andaime para obras de fachada durante três semanas", ficha: "ocupacao-espaco-publico-andaimes", servico: "Pôr andaime ou tapume na rua durante obras", nivel: "D3", validade: "31 dez 2026", estado: "tecnico", etapa: 3, datas: ["17 out", "18 out", "20 out", "23 out"], passos: [5, 5], partilhados: 4, fontes: ["rttl-2025-andaimes"] },
+      { id: "MIS-0008", atualizada: "Ontem", objetivo: "Número de porta para a casa nova", ficha: "atribuicao-numero-porta", servico: "Pedir número de porta para casa nova", nivel: "D2", validade: "22 jan 2027", estado: "curso", etapa: 2, datas: ["20 out", "21 out", "22 out"], passos: [4, 4], partilhados: 3, fontes: ["corpus-proc-numero-porta"] },
+      { id: "MIS-0007", atualizada: "09:10", objetivo: "Prolongar o horário do restaurante às sextas e sábados", ficha: "autorizacao-prolongamento-horario", servico: "Prolongar o horário do estabelecimento comercial ou restauração", nivel: "D3", validade: "15 out 2027", estado: "respondida", etapa: 4, datas: ["15 out", "16 out", "17 out", "18 out", "23 out"], passos: [5, 5], partilhados: 4, fontes: ["corpus-proc-horarios"] },
+      { id: "MIS-0006", atualizada: "21 out", objetivo: "Cartão de residente para estacionar perto de casa", ficha: "cartao-residente-estacionamento", servico: "Cartão de residente para estacionar perto de casa", nivel: "D2", validade: "21 abr 2027", estado: "curso", etapa: 0, datas: ["21 out"], passos: [1, 4], partilhados: 0, fontes: ["corpus-proc-transito"] },
+      { id: "MIS-0005", atualizada: "18 out", objetivo: "Palco temporário para a festa da freguesia", ficha: "recintos-festividades-temporarios", servico: "Organizar uma festa ou montar um palco no espaço público", nivel: "D2", validade: "Revogado a 18 out", estado: "cancelada", motivo: "Mandato revogado pelo munícipe", etapa: 1, datas: ["13 out", "14 out"], passos: [2, 6], partilhados: 0, fontes: ["corpus-proc-eventos-recintos"] }
+    ];
+    let missaoSelecionada = "MIS-0012";
+    let filtroMissao = "todas";
+    const listaMissoes = $("#lista-missoes");
+    const missaoAtual = () => missoes.find((m) => m.id === missaoSelecionada);
+
+    function passaFiltroMissao(m, f) {
+      if (f === "todas") return true;
+      if (f === "curso") return m.estado === "curso" || m.estado === "tecnico";
+      if (f === "respondidas") return m.estado === "respondida";
+      return m.estado === f;
+    }
+
+    function etiquetaMissao(chave) {
+      const e = ESTADOS_MISSAO[chave];
+      return `<span class="estado ${e.tom}">${e.texto}</span>`;
+    }
+
+    function desenharListaMissoes() {
+      const itens = missoes.filter((m) => passaFiltroMissao(m, filtroMissao));
+      listaMissoes.innerHTML = itens.map((m) => `
+        <li><button type="button" class="pedido" data-missao="${m.id}" aria-current="${m.id === missaoSelecionada}">
+          <span class="pedido-topo"><span class="pedido-id">${m.id}</span><time>${m.atualizada}</time></span>
+          <span class="pedido-assunto">${m.objetivo}</span>
+          <span class="pedido-pe">${etiquetaMissao(m.estado)}<span class="nivel"><b>${m.nivel}</b>${NIVEIS[m.nivel]}</span></span>
+        </button></li>`).join("");
+      $("#missoes-vazia").hidden = itens.length > 0;
+      document.querySelectorAll("[data-filtro-missao]").forEach((botao) => {
+        botao.querySelector(".n").textContent = `· ${missoes.filter((m) => passaFiltroMissao(m, botao.dataset.filtroMissao)).length}`;
+      });
+    }
+
+    function desenharMissao() {
+      const m = missaoAtual();
+      $("#titulo-missao").textContent = `Missão ${m.id}`;
+      $("#missao-nivel").innerHTML = `<b>${m.nivel}</b>${NIVEIS[m.nivel]}`;
+      $("#missao-objetivo").textContent = m.objetivo;
+      $("#missao-servico").textContent = m.servico;
+
+      $("#missao-percurso").replaceChildren(...ETAPAS.map((nome, i) => {
+        const terminada = m.estado === "respondida" || m.estado === "cancelada";
+        const feito = i < m.etapa || (i === m.etapa && m.estado === "respondida");
+        const atual = i === m.etapa && !feito;
+        const classe = feito ? "feito" : atual ? `atual ${m.estado === "municipe" ? "aguarda" : ""} ${m.estado === "cancelada" ? "cancelado" : ""}` : "pendente";
+        const detalhe = atual && m.estado !== "curso" ? el("small", {}, ESTADOS_MISSAO[m.estado].texto + (m.motivo ? ` · ${m.motivo}` : "")) : null;
+        return el("li", { class: classe.trim() },
+          el("span", { class: "marca" }, feito ? icone("i-confirmar") : null),
+          el("span", {}, atual ? el("b", {}, nome) : nome, detalhe),
+          el("time", {}, m.datas[i] || (terminada ? "" : "—")));
+      }));
+
+      const pct = Math.round((m.passos[0] / m.passos[1]) * 100);
+      const linha = (rotulo, ...valor) => el("div", {}, el("dt", {}, rotulo), el("dd", {}, ...valor));
+      const linhas = [
+        linha("Ficha do serviço", m.ficha),
+        linha("Mandato", m.nivel === "D3" ? "Assinatura simulada" : "Consentimento na conversa", el("small", { style: { display: "block", fontWeight: 500, color: "var(--texto-sobre-palco)" } }, m.validade.startsWith("Revogado") ? m.validade : `Válido até ${m.validade}`)),
+        linha("Checklist", `${m.passos[0]} de ${m.passos[1]} passos`, el("span", { class: "progresso" }, el("i", { style: { width: `${pct}%` } }))),
+        linha("Dados partilhados com a Câmara", String(m.partilhados))
+      ];
+      const pedido = pedidos.find((p) => p.processo === m.solicitacao);
+      if (pedido) {
+        linhas.push(linha("Solicitação", el("button", { class: "ligacao", type: "button", "data-ir-solicitacao": pedido.processo }, pedido.codigo)));
+      }
+      $("#missao-dados").replaceChildren(...linhas);
+      $("#missao-fontes").replaceChildren(...m.fontes.map((f) => el("span", { class: "fonte" }, f)));
+      $("#missao-meta").textContent = `Atualizada: ${m.atualizada}`;
+      $("#missao-estado").innerHTML = etiquetaMissao(m.estado);
+    }
+
+    function selecionarMissao(id, { foco = false } = {}) {
+      missaoSelecionada = id;
+      desenharListaMissoes();
+      desenharMissao();
+      if (foco && matchMedia("(max-width: 1080px)").matches) {
+        $("#titulo-missao").scrollIntoView({ behavior: "smooth", block: "start" });
+        $("#titulo-missao").focus({ preventScroll: true });
+      } else {
+        listaMissoes.querySelector(`[data-missao="${id}"]`)?.focus();
+      }
+    }
+
+    // Uma decisão na solicitação chega à missão do munícipe
+    function atualizarMissao(idSolicitacao, estadoPedido, texto) {
+      const m = missoes.find((x) => x.solicitacao === idSolicitacao);
+      if (!m) return;
+      m.atualizada = "Agora";
+      if (estadoPedido === "documentos") {
+        m.estado = "municipe";
+        m.motivo = texto || "A Câmara pediu um elemento";
+        return;
+      }
+      m.estado = "respondida";
+      m.motivo = null;
+      m.etapa = 4;
+      m.datas[4] = dataCurta(new Date());
+    }
+
+    listaMissoes.addEventListener("click", (e) => {
+      const botao = e.target.closest("[data-missao]");
+      if (botao) selecionarMissao(botao.dataset.missao, { foco: true });
+    });
+    ligarSetas(listaMissoes);
+    document.querySelectorAll("[data-filtro-missao]").forEach((botao) => {
+      botao.addEventListener("click", () => {
+        filtroMissao = botao.dataset.filtroMissao;
+        document.querySelectorAll("[data-filtro-missao]").forEach((b) => b.setAttribute("aria-pressed", String(b === botao)));
+        desenharListaMissoes();
+      });
+    });
+    $("#missao-dados").addEventListener("click", (e) => {
+      const botao = e.target.closest("[data-ir-solicitacao]");
+      if (!botao) return;
+      selecionado = botao.dataset.irSolicitacao;
+      fecharFormulario();
+      desenharLista();
+      desenharDetalhe();
+      location.hash = "#solicitacoes";
+    });
+
+    // ── Relatórios · dados sintéticos ──
+    const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+    const DIAS = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+    const HOJE = new Date(2026, 9, 23);
+    const num = (v) => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, " "); // separador de milhares: espaço
+    const decimal = (v) => v.toLocaleString("pt-PT", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    const dataCurta = (d) => `${d.getDate()} ${MESES[d.getMonth()]}`;
+
+    const SEMANAS_90 = [248, 262, 251, 270, 288, 301, 296, 318, 334, 329, 352, 371, 394];
+    const ULTIMOS_7 = [44, 37, 72, 76, 58, 64, 61]; // 17 a 23 de outubro (sábado e domingo primeiro)
+    const PERIODOS = {
+      7: { titulo: "Atendimentos por dia", anterior: "vs. 7 dias anteriores", delta: 8, completos: 84, dCompletos: 3, ato: 3.9, dAto: -0.4, resultados: [73, 8, 12, 7], passoEixo: 1 },
+      30: { titulo: "Atendimentos por dia", anterior: "vs. 30 dias anteriores", delta: 12, completos: 82, dCompletos: 5, ato: 4.2, dAto: -0.8, resultados: [72, 8, 12, 8], passoEixo: 5 },
+      90: { titulo: "Atendimentos por semana", anterior: "vs. 90 dias anteriores", delta: 27, completos: 79, dCompletos: 11, ato: 4.6, dAto: -2.1, resultados: [71, 8, 13, 8], passoEixo: 2 }
+    };
+    const RESULTADOS = [
+      { nome: "Respondido com fonte oficial", cor: "var(--grafico-1)", texto: "#fff" },
+      { nome: "Submetido à Câmara", cor: "var(--grafico-2)", texto: "#fff" },
+      { nome: "Encaminhado a outra entidade", cor: "var(--grafico-3)", texto: "var(--dlg-tinta)" },
+      { nome: "Abstenção · sem fonte válida", cor: "var(--grafico-4)", texto: "#fff" }
+    ];
+    const SERVICOS = [["Espaço público", 23], ["Resíduos e limpeza urbana", 17], ["Urbanismo e obras", 15], ["Água e saneamento", 10], ["Atestados e certidões", 9], ["Eventos e cultura", 6], ["Outros serviços", 20]];
+    const LACUNAS = [
+      { id: "ruido", tema: "Ruído de obras ao fim de semana", n90: 64 },
+      { id: "ambulante", tema: "Venda ambulante em feiras", n90: 41 },
+      { id: "ecocentro", tema: "Horário do ecocentro em feriados", n90: 28 },
+      { id: "reabilitacao", tema: "Apoios à reabilitação no centro histórico", n90: 22 }
+    ];
+    const tarefasCriadas = new Set();
+
+    const TEMAS = [
+      { nome: "Esplanadas", total: 312, horizonte: [38, 30, 20, 12] },
+      { nome: "Obras", total: 486, horizonte: [29, 31, 26, 14] },
+      { nome: "Construção", total: 401, horizonte: [12, 19, 33, 36] },
+      { nome: "Eventos", total: 244, horizonte: [44, 28, 18, 10] },
+      { nome: "Painéis solares", total: 598, horizonte: [41, 27, 21, 11] }
+    ];
+    // Contagens com ruído; abaixo de 10 nunca são mostradas
+    const FREGUESIAS = [
+      { nome: "Oliveira, S. Paio e S. Sebastião", v: [90, 42, 12, 55, 18] },
+      { nome: "Azurém", v: [24, 38, 27, 14, 61] },
+      { nome: "Creixomil", v: [11, 33, 21, 7, 44] },
+      { nome: "Urgezes", v: [6, 29, 34, 9, 39] },
+      { nome: "Fermentões", v: [8, 26, 31, 5, 47] },
+      { nome: "Costa", v: [19, 22, 15, 31, 12] },
+      { nome: "Ponte", v: [3, 18, 36, 4, 28] },
+      { nome: "Caldelas", v: [9, 21, 17, 12, 33] }
+    ];
+    const LIMIAR = 10;
+    const HORIZONTES = [
+      { nome: "Próximos 3 meses", cor: "var(--rampa-1)", texto: "#fff" },
+      { nome: "3 a 6 meses", cor: "var(--rampa-2)", texto: "#fff" },
+      { nome: "6 a 12 meses", cor: "var(--rampa-3)", texto: "var(--dlg-tinta)" },
+      { nome: "Mais de 12 meses", cor: "var(--rampa-4)", texto: "var(--dlg-tinta)" }
+    ];
+    const MOTIVACOES = [["Abrir ou ampliar um negócio", 27], ["Melhorar a habitação", 24], ["Reduzir a fatura de energia", 21], ["Dinamizar a vida do bairro", 11], ["Construir casa própria", 10], ["Outras motivações", 7]];
+    const DESEJOS = [["Licenciamento mais rápido e previsível", 34], ["Apoio à eficiência energética", 22], ["Mais espaço público para comércio e lazer", 16], ["Estacionamento perto do centro histórico", 12], ["Agenda de eventos de bairro", 9], ["Outros desejos", 7]];
+
+    let periodo = 90;
+    let ordenarMapa = null;
+
+    function el(tag, props = {}, ...filhos) {
+      const n = document.createElement(tag);
+      for (const [k, v] of Object.entries(props)) {
+        if (k === "class") n.className = v;
+        else if (k === "style") Object.assign(n.style, v);
+        else n.setAttribute(k, v);
+      }
+      n.append(...filhos.filter((f) => f != null && f !== false));
+      return n;
+    }
+    const icone = (id) => {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("class", "icon");
+      svg.setAttribute("aria-hidden", "true");
+      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      use.setAttribute("href", `#${id}`);
+      svg.append(use);
+      return svg;
+    };
+
+    // Dica partilhada: o valor primeiro, o rótulo depois
+    const dica = $("#dica");
+    function ligarDica(alvo, valor, rotulo, ancora = alvo) {
+      const mostrar = () => {
+        dica.replaceChildren(el("strong", {}, valor), el("span", {}, rotulo));
+        const r = ancora.getBoundingClientRect();
+        dica.style.left = `${Math.min(Math.max(r.left + r.width / 2, 90), innerWidth - 90)}px`;
+        dica.style.top = `${r.top}px`;
+        dica.hidden = false;
+      };
+      const esconder = () => { dica.hidden = true; };
+      alvo.addEventListener("pointerenter", mostrar);
+      alvo.addEventListener("pointerleave", esconder);
+      alvo.addEventListener("focus", mostrar);
+      alvo.addEventListener("blur", esconder);
+    }
+    addEventListener("scroll", () => { dica.hidden = true; }, { passive: true });
+
+    function serieAtendimentos(p) {
+      if (p === 90) {
+        return SEMANAS_90.map((v, i) => {
+          const d = new Date(HOJE); d.setDate(d.getDate() - (12 - i) * 7 - 6);
+          return { v, curto: dataCurta(d), longo: `Semana de ${dataCurta(d)}` };
+        });
+      }
+      return Array.from({ length: p }, (_, i) => {
+        const d = new Date(HOJE); d.setDate(d.getDate() - (p - 1 - i));
+        const fimDeSemana = d.getDay() === 0 || d.getDay() === 6;
+        const v = i >= p - 7 ? ULTIMOS_7[i - (p - 7)] : Math.round(46 + i * 0.6 - (fimDeSemana ? 16 : 0) + ((i * 37) % 11) - 5);
+        return { v, curto: dataCurta(d), longo: `${DIAS[d.getDay()]}, ${dataCurta(d)}` };
+      });
+    }
+
+    function desenharAtendimentos() {
+      const cfg = PERIODOS[periodo];
+      const serie = serieAtendimentos(periodo);
+      const total = serie.reduce((s, x) => s + x.v, 0);
+      const escala = total / SEMANAS_90.reduce((s, v) => s + v, 0);
+
+      const tile = (rotulo, valor, delta, resto) => el("article", { class: "indicador" },
+        el("div", { class: "indicador-topo" }, el("span", {}, rotulo)),
+        el("strong", {}, valor),
+        el("small", {}, delta ? el("em", { class: "delta" }, delta) : null, resto));
+      $("#kpis-atendimento").replaceChildren(
+        tile("Atendimentos", num(total), `+${cfg.delta}%`, ` ${cfg.anterior}`),
+        tile("Respostas com fonte oficial", "100%", null, "Meta: 100%"),
+        tile("Pedidos completos à primeira", `${cfg.completos}%`, `+${cfg.dCompletos} p.p.`, ` ${cfg.anterior}`),
+        tile("Tempo até ao ato", `${decimal(cfg.ato)} dias`, `−${decimal(Math.abs(cfg.dAto))} dias`, ` ${cfg.anterior}`)
+      );
+
+      // Colunas
+      $("#t-volume").textContent = cfg.titulo;
+      $("#volume-meta").textContent = `${num(total)} no período`;
+      const max = Math.max(...serie.map((x) => x.v));
+      const passo = max > 300 ? 100 : max > 60 ? 25 : 20;
+      const topo = Math.ceil(max / passo) * passo;
+      const grelha = [];
+      for (let t = 0; t <= topo; t += passo) {
+        grelha.push(el("div", { class: `linha-grelha${t === 0 ? " base" : ""}`, style: { bottom: `${(t / topo) * 100}%` } }, el("span", {}, num(t))));
+      }
+      const barras = el("div", { class: "barras-col" });
+      serie.forEach((x) => {
+        const barra = el("i", { style: { height: `${(x.v / topo) * 100}%` } });
+        const col = el("div", { class: "col" }, barra);
+        ligarDica(col, num(x.v), x.longo, barra);
+        barras.append(col);
+      });
+      $("#colunas").replaceChildren(...grelha, barras);
+      $("#eixo-x").replaceChildren(...serie.map((x, i) => {
+        const k = serie.length - 1 - i; // conta a partir da data mais recente
+        if (k % cfg.passoEixo !== 0) return el("span");
+        return el("span", { class: (k / cfg.passoEixo) % 2 ? "alterno" : "" }, x.curto);
+      }));
+      $("#tabela-volume").replaceChildren(
+        el("thead", {}, el("tr", {}, el("th", { scope: "col" }, periodo === 90 ? "Semana" : "Dia"), el("th", { scope: "col", style: { textAlign: "right" } }, "Atendimentos"))),
+        el("tbody", {}, ...serie.map((x) => el("tr", {}, el("th", { scope: "row" }, x.longo), el("td", {}, num(x.v)))))
+      );
+
+      // Como terminaram
+      const barra = $("#resultados-barra");
+      barra.replaceChildren();
+      $("#resultados-legenda").replaceChildren(...RESULTADOS.map((r, i) => {
+        const pct = cfg.resultados[i];
+        const seg = el("i", { style: { width: `${pct}%`, background: r.cor, color: r.texto } }, pct >= 10 ? `${pct}%` : "");
+        ligarDica(seg, `${pct}%`, r.nome);
+        barra.append(seg);
+        return el("li", {}, el("span", { class: "amostra", style: { background: r.cor } }), r.nome,
+          el("span", { class: "valor" }, num(Math.round((total * pct) / 100))), el("span", { class: "pct" }, `${pct}%`));
+      }));
+
+      // Procura por serviço
+      const maxServ = Math.max(...SERVICOS.slice(0, -1).map((s) => s[1]));
+      $("#procura").replaceChildren(...SERVICOS.map(([nome, share], i) => {
+        const n = Math.round((total * share) / 100);
+        return el("li", { class: i === SERVICOS.length - 1 ? "outros" : "" }, el("span", {}, nome), el("span", { class: "valor" }, num(n)),
+          el("span", { class: "pista" }, el("i", { style: { width: `${Math.min(100, (share / maxServ) * 100)}%` } })));
+      }));
+
+      // Lacunas de conteúdo
+      $("#lacunas").replaceChildren(...LACUNAS.map((l) => {
+        const acao = tarefasCriadas.has(l.id)
+          ? el("span", { class: "tarefa-criada" }, icone("i-visto"), "Tarefa criada")
+          : el("button", { class: "botao botao-secundario botao-pequeno", type: "button", "data-lacuna": l.id }, icone("i-mais"), "Criar tarefa");
+        return el("tr", {}, el("td", {}, l.tema), el("td", { class: "num" }, num(Math.max(1, Math.round(l.n90 * escala)))), el("td", { class: "acao" }, acao));
+      }));
+    }
+
+    $("#lacunas").addEventListener("click", (e) => {
+      const botao = e.target.closest("[data-lacuna]");
+      if (!botao) return;
+      tarefasCriadas.add(botao.dataset.lacuna);
+      desenharAtendimentos();
+    });
+    document.querySelectorAll("[data-periodo]").forEach((botao) => {
+      botao.addEventListener("click", () => {
+        periodo = Number(botao.dataset.periodo);
+        document.querySelectorAll("[data-periodo]").forEach((b) => b.setAttribute("aria-pressed", String(b === botao)));
+        desenharAtendimentos();
+      });
+    });
+
+    function corMapa(v) {
+      const visiveis = FREGUESIAS.flatMap((f) => f.v).filter((x) => x >= LIMIAR);
+      const t = (v - LIMIAR) / (Math.max(...visiveis) - LIMIAR);
+      const a = [234, 244, 237], b = [20, 83, 47];
+      return { fundo: `rgb(${a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(",")})`, texto: t > 0.45 ? "#fff" : "var(--dlg-tinta)" };
+    }
+
+    function desenharMapa() {
+      const linhas = [...FREGUESIAS];
+      if (ordenarMapa !== null) linhas.sort((a, b) => b.v[ordenarMapa] - a.v[ordenarMapa]);
+      const cab = el("tr", {}, el("th", { scope: "col" }, "Freguesia"), ...TEMAS.map((t, i) => {
+        const botao = el("button", { type: "button", "data-ordenar": i }, t.nome, icone("i-seta-baixo"));
+        return el("th", { scope: "col", "aria-sort": ordenarMapa === i ? "descending" : "none" }, botao);
+      }));
+      const corpo = linhas.map((f) => el("tr", {}, el("th", { scope: "row" }, f.nome), ...f.v.map((v, i) => {
+        if (v < LIMIAR) {
+          const td = el("td", { class: "oculto" }, "< 10");
+          ligarDica(td, "Não publicado", `${f.nome} · ${TEMAS[i].nome} · menos de 10 pessoas`);
+          return td;
+        }
+        const c = corMapa(v);
+        const td = el("td", { style: { background: c.fundo, color: c.texto } }, num(v));
+        ligarDica(td, `${num(v)} intenções`, `${f.nome} · ${TEMAS[i].nome}`);
+        return td;
+      })));
+      const mapa = $("#mapa");
+      const legenda = mapa.querySelector("caption");
+      mapa.replaceChildren(legenda, el("thead", {}, cab), el("tbody", {}, ...corpo));
+    }
+    $("#mapa").addEventListener("click", (e) => {
+      const botao = e.target.closest("[data-ordenar]");
+      if (!botao) return;
+      const i = Number(botao.dataset.ordenar);
+      ordenarMapa = ordenarMapa === i ? null : i;
+      desenharMapa();
+      $(`#mapa [data-ordenar="${i}"]`).focus();
+    });
+
+    function barrasPercentuais(alvo, itens) {
+      const max = Math.max(...itens.slice(0, -1).map((x) => x[1]));
+      alvo.replaceChildren(...itens.map(([nome, pct], i) => el("li", { class: i === itens.length - 1 ? "outros" : "" },
+        el("span", {}, nome), el("span", { class: "valor" }, `${pct}%`),
+        el("span", { class: "pista" }, el("i", { style: { width: `${(pct / max) * 100}%` } })))));
+    }
+
+    function desenharCofres() {
+      desenharMapa();
+      barrasPercentuais($("#motivacoes"), MOTIVACOES);
+      barrasPercentuais($("#desejos"), DESEJOS);
+      $("#horizonte-legenda").replaceChildren(...HORIZONTES.map((h) => el("li", {}, el("span", { class: "amostra", style: { background: h.cor } }), h.nome)));
+      $("#horizonte").replaceChildren(...TEMAS.map((t) => {
+        const barra = el("div", { class: "empilhada", role: "img", "aria-label": `${t.nome}: ${t.horizonte.map((p, i) => `${HORIZONTES[i].nome} ${p}%`).join(", ")}` });
+        t.horizonte.forEach((p, i) => {
+          const seg = el("i", { style: { width: `${p}%`, background: HORIZONTES[i].cor, color: HORIZONTES[i].texto } }, p >= 10 ? `${p}%` : "");
+          ligarDica(seg, `${p}%`, `${t.nome} · ${HORIZONTES[i].nome}`);
+          barra.append(seg);
+        });
+        return el("li", {}, el("span", {}, t.nome), barra);
+      }));
+    }
+
+    // ── Vistas ──
+    const VISTAS = {
+      solicitacoes: { titulo: "Solicitações", documento: "Delegate · Consola da Câmara" },
+      missoes: { titulo: "Missões delegadas", documento: "Delegate · Missões delegadas", desenhar: () => { desenharListaMissoes(); desenharMissao(); }, sempre: true },
+      relatorios: { titulo: "Relatórios", documento: "Delegate · Relatórios", desenhar: desenharAtendimentos },
+      intencoes: { titulo: "Intenções do Concelho", documento: "Delegate · Intenções do Concelho", desenhar: desenharCofres }
+    };
+    const desenhadas = new Set();
+    function mostrarVista({ foco = false } = {}) {
+      const pedida = location.hash.slice(1);
+      const nome = pedida in VISTAS ? pedida : "solicitacoes";
+      document.querySelectorAll(".vista").forEach((v) => { v.hidden = v.id !== `vista-${nome}`; });
+      document.querySelectorAll("[data-vista]").forEach((a) => {
+        if (a.dataset.vista === nome) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      });
+      $("#crumb-atual").textContent = VISTAS[nome].titulo;
+      $(".pesquisa").hidden = nome !== "solicitacoes";
+      document.title = VISTAS[nome].documento;
+      dica.hidden = true;
+      if (VISTAS[nome].desenhar && (VISTAS[nome].sempre || !desenhadas.has(nome))) {
+        VISTAS[nome].desenhar();
+        desenhadas.add(nome);
+      }
+      if (foco) {
+        scrollTo(0, 0);
+        $(`#vista-${nome} h1`).focus({ preventScroll: true });
+      }
+    }
+    addEventListener("hashchange", () => {
+      mostrarVista({ foco: true });
+      $("#barra-lateral").classList.remove("aberta");
+      menu.setAttribute("aria-expanded", "false");
+      menu.setAttribute("aria-label", "Abrir navegação");
+    });
+    document.querySelectorAll(".nav a:not([data-vista])").forEach((a) => a.addEventListener("click", (e) => e.preventDefault()));
+
+    // Navegação em ecrãs estreitos
+    const menu = $(".menu-toggle");
+    menu.addEventListener("click", () => {
+      const aberta = $("#barra-lateral").classList.toggle("aberta");
+      menu.setAttribute("aria-expanded", String(aberta));
+      menu.setAttribute("aria-label", aberta ? "Fechar navegação" : "Abrir navegação");
+    });
+
+    const hoje = new Date().toLocaleDateString("pt-PT", { weekday: "long", day: "numeric", month: "long" });
+    document.querySelectorAll("[data-hoje]").forEach((el) => { el.textContent = hoje.charAt(0).toUpperCase() + hoje.slice(1); });
+
+    desenharLista();
+    desenharDetalhe();
+    mostrarVista();
+    carregarPedidos().then(ligarEventos);
   </script>
 </body>
 </html>
