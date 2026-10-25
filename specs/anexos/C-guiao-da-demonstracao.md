@@ -28,17 +28,17 @@ Escolha do jurado: o que estiver mais ao centro da mesa ou, se for possível ide
 | Tempo | Slide / ecrã | Matheus diz | Paulo / Daiana |
 |---|---|---|---|
 | 0:00–0:05 | Capa | «Boa tarde. Somos o Delegate.» | Paulo avança logo |
-| 0:05–0:22 | O problema | «A Inês herdou do avô um restaurante no centro de Guimarães e quer pôr uma esplanada à porta. Que licença? Que documentos? Quanto custa? A resposta existe, mas está espalhada por regulamentos, tabelas de taxas, formulários e balcões.» | — |
+| 0:05–0:22 | O problema | «A Inês herdou do avô um restaurante no centro de Guimarães e quer pôr uma esplanada à porta. Que licença? Que documentos? Quanto custa? A resposta existe, mas está espalhada por regulamentos, tabelas de taxas, formulários e balcões. Um labirinto, e quem o percorre é a Inês.» | — |
 | 0:22–0:40 | Guimarães | «E não é só a Inês. Em dez meses de 2025, o Balcão Único de Guimarães fez mais de vinte e dois mil atendimentos presenciais e atendeu mais de quarenta e um mil chamadas. A Câmara já tem um atendedor com IA. O que falta?» | — |
 | 0:40–1:00 | A solução | «Falta alguém do lado da pessoa. O Delegate dá a cada munícipe um representante digital: o Henriques. Um nome que, aqui, dispensa apresentações. Responde com a fonte à vista, trata do pedido por si e entrega à Câmara o caso pronto, para um técnico decidir.» | Daiana desbloqueia o telemóvel e entrega-o com o cartão |
 | 1:00–1:05 | Ao vivo | «Mas não acreditem em nós. Peço-lhe que faça a pergunta da Inês ao Henriques.» | Paulo muda para o Painel quando o jurado começa a escrever |
 | 1:05–2:10 | **Painel** | Narração curta da demo (secção 4) | Daiana guia o jurado pelo cartão |
 | 2:10–2:32 | Por baixo · Cofre | «O que viram é a superfície. Por baixo, há três peças. Primeiro, o Cofre Digital Pessoal: os dados, documentos, desejos e intenções da Inês, cifrados e controlados por ela. Com essa memória, o Henriques antecipa-se: sabe que ela tem um restaurante e avisa-a de que o letreiro na fachada não precisa de pedido à Câmara. A lei já o permite.» | Paulo volta aos slides; Daiana recolhe o telemóvel |
-| 2:32–2:50 | Por baixo · Jev | «Segundo, a forma como o Henriques entende. Não deixamos um modelo de linguagem adivinhar. Com o TypeSafe Jev, cada mensagem passa por escolhas tipadas, definidas em código: que serviço, se responde, se abstém, encaminha ou recusa, que mandato. Cada ramo fica registado: é a árvore que viram no Painel.» | — |
+| 2:32–2:50 | Por baixo · Jev | «Segundo, o TypeSafe Jev. Não é um chatbot: cada mensagem percorre uma árvore de decisão definida em código. Que serviço é, se responde ou se abstém, com que mandato, de informar até pagar, e se precisa do consentimento da pessoa. O modelo só escolhe e redige; um número sem fonte é travado.» | — |
 | 2:50–3:10 | Por baixo · Porta | «Terceiro, a Porta Agêntica. Invertemos a integração: a Câmara não abre os seus sistemas, implementa um contrato aberto, em MCP e REST, serviço a serviço. Começa só com o que está no site e sobe até à ação. E a mesma porta serve o atendedor da Câmara, bancos ou contabilistas, com as mesmas regras.» | — |
-| 3:10–3:30 | Impacto | «O que vale isto para Guimarães? Se um em cada cinco contactos for resolvido pelo Henriques, a Câmara liberta perto de três mil horas em dez meses, e um pedido de esplanada passa de sessenta e nove para vinte e sete minutos de trabalho. São horas para decidir, não cortes, e o piloto mede estas hipóteses.» | — |
-| 3:30–3:46 | Continuidade | «Começa com um piloto de cinco meses, com a Câmara e as Juntas de Freguesia, que mede o que hoje é hipótese. Depois, o mesmo contrato para os oito municípios do Ave. Código aberto, e o munícipe nunca paga.» | — |
-| 3:46–4:00 | Fecho | (abrandar) «Onde nasceu Portugal, pode nascer uma nova relação entre as pessoas e a Câmara. Diga o que precisa. O Henriques trata do resto. Obrigado.» | O slide com o código QR fica no ecrã durante as perguntas |
+| 3:10–3:35 | Impacto | «O que vale isto para Guimarães? Tempo: perto de três mil horas libertadas em dez meses, e um pedido de esplanada passa de sessenta e nove para vinte e sete minutos. E visão: com consentimento, as intenções dos Cofres juntam-se, anónimas, e a Câmara vê o que a cidade quer fazer, freguesia a freguesia, para decidir e medir o efeito de cada medida.» | — |
+| 3:35–3:50 | Continuidade | «Começa com um piloto de cinco meses, com a Câmara e as Juntas de Freguesia, que mede o que hoje é hipótese. Depois, o mesmo contrato para os oito municípios do Ave. Código aberto, e o munícipe nunca paga.» | — |
+| 3:50–4:00 | Fecho | (abrandar) «Onde nasceu Portugal, pode nascer uma nova relação entre as pessoas e a Câmara. Diga o que precisa. O Henriques trata do resto. Obrigado.» | O slide do fecho fica no ecrã durante as perguntas |
 
 O texto é apertado para 4:00: cerca de 420 palavras fora da demo, mais 65 segundos de demo. A margem está na demo: se derrapar, corta-se lá (secção 4), nunca nos slides «Por baixo» nem nos do fim. Se os ensaios passarem de 4:00, a primeira frase a sair é «E não é só a Inês» (o slide fala por si).
 
@@ -49,7 +49,9 @@ O texto é apertado para 4:00: cerca de 420 palavras fora da demo, mais 65 segun
 | Cofre | Três camadas (identidade, provas, intenções), cifra AES-256-GCM, pacote mínimo por missão | `nucleo/cofre/`, [specs/14](../14-governacao-privacidade-seguranca.md) |
 | Cofre | O letreiro com o nome do estabelecimento, em bem privado, dispensa licença e mera comunicação prévia, mesmo visível da via pública, dentro dos critérios municipais | Lei n.º 97/88, art. 1.º, n.º 3, al. b), e n.º 5, na redação do DL 48/2011 (texto da [CNE, versão de 2012](https://www.cne.pt/sites/default/files/dl/legis_lei_97_88_versao2012.pdf)). **Exemplo ilustrativo**: o aviso proativo não está no fluxo da demo |
 | Jev | Escolhas fechadas por critérios em código (foco, serviço, comportamento, mandato, ferramenta MCP); verificador de números; contingência local | `nucleo/typesafe/criterios.ts`, `motor-decisao.ts`, [ADR-024](../21-registo-de-decisoes.md#adr-024) |
+| Jev | Árvore de sete colunas, como na cena 8 do vídeo de visão geral; caminho e percentagens da sessão real de 22/10/2026 (serviço 97%, D0 95%, `consultar_catalogo` 90%, consentimento não exigido 95%, decisão em 2 559 ms) | `videos/delegate-visao-geral/captura/sessao-esplanada.json`, evento 425 |
 | Porta | Integração invertida, contrato aberto MCP + REST, níveis I0–I3 | [specs/24](../24-processos-canonicos-e-integracao.md), [ADR-020](../21-registo-de-decisoes.md#adr-020) |
+| Impacto | Intenções do Concelho: agregação anónima, só com consentimento, grupos com menos de 10 pessoas não publicados; exemplo de 90 intenções de esplanada no centro histórico | Consola v2 (`reference-docs/delegate-consola-camara-v2.html`), **dados sintéticos**; [RF-MAP-01/02](../07-requisitos-funcionais.md) |
 
 Desde o ADR-024 a confiança do Jev é **declarada pelo modelo, não calibrada**. Não dizer «probabilidades calibradas».
 
@@ -99,7 +101,6 @@ Respostas de 15 a 20 segundos. Responde Matheus; Paulo só entra nas técnicas, 
 - [ ] Gravar o vídeo de plano B (secção 7) e copiar para o ambiente de trabalho do portátil A e para uma pen.
 - [ ] Gravar uma sessão completa no Painel (tecla **G**) e guardar o JSON junto ao vídeo.
 - [ ] Exportar o deck em PDF e PPTX (cópia offline).
-- [ ] Gerar o código QR do bot alojado na nuvem e pô-lo no slide «Fecho».
 
 ### 24 e 25/10: ensaios
 
